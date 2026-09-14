@@ -3,254 +3,186 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="用 before/after 代码、真实 VCS 时序和指令账，解释小行 gather 从 1857 降到 1448 cycles 的原因。">
-<title>小行 Gather：409 cycles 省在哪里</title>
+<meta name="description" content="直接画出小行 gather 修复前后删除的 mask 内存往返与循环控制，再用 VCS 实验说明 409 cycles 的收益。">
+<title>小行 Gather：究竟删掉了什么</title>
 <link rel="icon" href="data:,">
 <style>
-:root{--bg:#f2f5f6;--surface:#fff;--surface2:#e8edef;--line:#cfd9dd;--ink:#101619;--soft:#46565d;--muted:#647780;--ld:#9a6e14;--ldbg:#f7ebcf;--bad:#a8442a;--badbg:#f3dad1;--ct:#0e6a87;--ctbg:#d6e9f0;--good:#1f6b4c;--goodbg:#d4eadd;--vp:#6a4c93;--vpbg:#e7e0f2;color-scheme:light}
-@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0d1316;--surface:#151e22;--surface2:#1d282d;--line:#2c3b42;--ink:#e8f0f3;--soft:#a9bcc4;--muted:#8aa0a9;--ld:#e0b45c;--ldbg:#3a2e14;--bad:#ec8760;--badbg:#402016;--ct:#58bedc;--ctbg:#113039;--good:#63c795;--goodbg:#12331f;--vp:#b49be0;--vpbg:#2a2140;color-scheme:dark}}
-:root[data-theme=dark]{--bg:#0d1316;--surface:#151e22;--surface2:#1d282d;--line:#2c3b42;--ink:#e8f0f3;--soft:#a9bcc4;--muted:#8aa0a9;--ld:#e0b45c;--ldbg:#3a2e14;--bad:#ec8760;--badbg:#402016;--ct:#58bedc;--ctbg:#113039;--good:#63c795;--goodbg:#12331f;--vp:#b49be0;--vpbg:#2a2140;color-scheme:dark}
-*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:28px}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.75 "IBM Plex Sans",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}.wrap{max-width:1160px;margin:auto;padding:30px 26px 70px}.top{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:38px}.top a{color:var(--muted);font-size:12px;text-decoration:none}button{font:inherit;cursor:pointer;background:var(--surface);color:var(--soft);border:1px solid var(--line);border-radius:3px;padding:7px 12px}button:hover{border-color:var(--ct);color:var(--ct)}button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--ct);outline-offset:4px}.eyebrow,.mono{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Consolas,monospace}.eyebrow{font-size:11px;letter-spacing:.14em;color:var(--muted);margin:0 0 10px}.hero{margin-bottom:30px}h1{font-size:clamp(28px,4.5vw,46px);letter-spacing:-.035em;line-height:1.25;margin:0 0 17px;font-weight:600}.lede{font-size:17px;color:var(--soft);max-width:850px;margin:0}.lede strong{color:var(--ink)}h2{font:600 12px/1.7 "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.07em;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:10px;margin:0 0 20px}h3{font-size:16px;margin:0 0 8px}section{margin-top:38px}.panel,.card{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:22px}.panel>p:first-child{margin-top:0}p{margin:10px 0}.muted,.note{color:var(--soft)}.note{font-size:13px}.small{font-size:12px;color:var(--muted)}a{color:var(--ct);text-underline-offset:3px}code,pre{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Consolas,monospace}code{font-size:.88em;background:var(--surface2);padding:2px 5px;border-radius:2px;overflow-wrap:anywhere}pre{font-size:12px;line-height:1.85;margin:0;overflow:auto;color:var(--soft);tab-size:2}pre code{padding:0;background:none;font-size:inherit;overflow-wrap:normal}.cm{color:var(--muted)}.removed{color:var(--bad)}.added{color:var(--good)}.blue{color:var(--ct)}.purple{color:var(--vp)}.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:26px 0 0;border-radius:3px;overflow:hidden}.kpi{background:var(--surface);padding:18px 20px}.kpi .label{font-size:11px;color:var(--muted);letter-spacing:.05em}.value{font-size:29px;font-weight:600;line-height:1.35;font-variant-numeric:tabular-nums;margin:6px 0}.value.good{color:var(--good)}.nav{display:flex;gap:20px;flex-wrap:wrap;margin-top:24px;font-size:12px}.nav a{color:var(--soft);text-decoration:none;border-bottom:1px solid var(--line)}.cols{display:grid;grid-template-columns:1fr 1fr;gap:20px}.tag{display:inline-block;font:11px/1.7 ui-monospace,monospace;padding:2px 7px;background:var(--surface2);color:var(--soft);border-radius:2px;margin-bottom:8px}.tag.bad{color:var(--bad);background:var(--badbg)}.tag.good{color:var(--good);background:var(--goodbg)}.flow{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin:17px 0;font-size:11px}.node{border:1px solid var(--line);padding:5px 9px;border-radius:2px;background:var(--surface2)}.node.ct{border-color:var(--ct);color:var(--ct);background:var(--ctbg)}.node.bad{border-color:var(--bad);color:var(--bad);background:var(--badbg)}.node.good{border-color:var(--good);color:var(--good);background:var(--goodbg)}.arrow{color:var(--muted)}.callout{border-left:3px solid var(--ct);padding:12px 16px;background:var(--surface2);font-size:13px;color:var(--soft);margin-top:18px}.callout.good{border-color:var(--good)}.callout.bad{border-color:var(--bad)}.terms{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px}.term{border-top:2px solid var(--line);padding-top:12px}.term b{font-size:14px}.term p{font-size:13px;color:var(--soft);margin:5px 0}.rows-demo{display:grid;grid-template-columns:80px 1fr;gap:7px;align-items:center;font:12px/1.5 ui-monospace,monospace;margin:20px 0}.row-demo{display:flex;align-items:center;background:var(--ldbg);border:1px solid var(--ld);color:var(--ld);height:30px;padding:0 10px;justify-content:space-between}.row-demo small{opacity:.8}.demo-label{color:var(--muted)}.controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:18px}.controls span{font-size:12px;color:var(--muted);margin-right:5px}.controls button[aria-pressed=true]{background:var(--ctbg);border-color:var(--ct);color:var(--ct);font-weight:600}.version-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:24px}.facts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}.fact{padding:13px 15px;background:var(--surface2)}.fact b{display:block;font-size:23px;line-height:1.4;font-variant-numeric:tabular-nums}.fact span{font-size:12px;color:var(--muted)}.version-code{min-height:335px}.table-wrap{overflow:auto}table{border-collapse:collapse;width:100%;font-size:13px}th,td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--muted);font-size:12px;font-weight:500;background:var(--surface2)}td.num{text-align:right;white-space:nowrap;font:13px/1.7 ui-monospace,monospace}th.num{text-align:right}tbody tr:last-child td{border-bottom:0}.good-text{color:var(--good);font-weight:600}.chart-scroll{overflow-x:auto}.timeline{min-width:720px}.group{margin-top:21px}.group-title{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 8px;font-size:13px}.group-title b{font-weight:600}.group-title span{color:var(--muted);font:11px ui-monospace,monospace}.tl-row{display:grid;grid-template-columns:76px 1fr;gap:10px;align-items:center;margin:5px 0}.tl-label{font:11px ui-monospace,monospace;text-align:right;color:var(--muted)}.lane{position:relative;height:24px;background:var(--surface2);border-radius:2px;background-image:linear-gradient(to right,var(--line) 1px,transparent 1px);background-size:26.31579% 100%}.bar{position:absolute;top:0;height:24px;border:1px solid var(--ld);background:var(--ldbg);color:var(--ld);border-radius:2px;display:flex;align-items:center;justify-content:center;font:10px ui-monospace,monospace;cursor:help}.bar.vp{background:var(--vpbg);border-color:var(--vp);color:var(--vp)}.bar.st{background:var(--ctbg);border-color:var(--ct);color:var(--ct)}.bar:focus-visible{outline:2px solid var(--ink);outline-offset:2px}.ticks{margin-left:86px;position:relative;height:20px;color:var(--muted);font:10px ui-monospace,monospace}.ticks span{position:absolute;top:4px}.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--soft);margin:20px 0 0}.legend span{display:flex;align-items:center;gap:6px}.sw{width:12px;height:12px;border:1px solid var(--ld);background:var(--ldbg)}.sw.vp{background:var(--vpbg);border-color:var(--vp)}.sw.st{background:var(--ctbg);border-color:var(--ct)}#event-detail{min-height:42px;margin-top:12px;font:12px/1.6 ui-monospace,monospace;padding:10px 12px;background:var(--surface2);color:var(--soft)}.equation{font:600 clamp(17px,3vw,25px)/1.6 ui-monospace,monospace;text-align:center;padding:18px;background:var(--goodbg);color:var(--good);margin-top:16px}.ledger{border:1px solid var(--line);margin-top:20px}.ledger-row{display:grid;grid-template-columns:1fr auto;gap:18px;border-bottom:1px solid var(--line);padding:15px 18px}.ledger-row:last-child{border:0;background:var(--surface2)}.ledger-row b{font-weight:600}.ledger-row small{display:block;color:var(--muted);font-size:12px}.ledger-row .amount{font:600 19px ui-monospace,monospace;color:var(--good);white-space:nowrap}.details-list{display:grid;gap:12px}details{border:1px solid var(--line);background:var(--surface);border-radius:3px}summary{cursor:pointer;padding:14px 18px;font-weight:500;font-size:14px}details>.inside{padding:0 18px 18px;font-size:13px;color:var(--soft)}.inside ul{padding-left:20px}.inside li{margin:6px 0}.footer{margin-top:38px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);overflow-wrap:anywhere}.noscript{padding:14px;background:var(--badbg);color:var(--bad)}
-@media(max-width:800px){.cols,.version-grid{grid-template-columns:1fr}.terms{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}.wrap{padding:22px 18px 48px}.panel,.card{padding:17px}.top{margin-bottom:27px}.version-code{min-height:0}.nav{gap:14px}.group-title{gap:15px}.lede{font-size:15px}section{margin-top:28px}.value{font-size:25px}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{.top,.nav,.controls{display:none}.wrap{max-width:none;padding:0}.panel,.card{break-inside:avoid}body{font-size:12px}.chart-scroll{overflow:visible}.timeline{min-width:0}a{color:inherit}}
-/* Pair the same dynamic instruction across versions on a common origin. */
-.instruction-map{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:14px;margin:20px 0}.instruction-map>div{border:1px solid var(--line);padding:15px;background:var(--surface2)}.instruction-map strong{display:block;margin-top:7px;font-size:14px}.instruction-map p{font-size:13px;color:var(--soft)}.iid{display:inline-block;padding:2px 8px;border:1px solid currentColor;font:600 13px ui-monospace,monospace;color:var(--ld);border-radius:3px}.iid.purple{color:var(--vp)}.iid.blue{color:var(--ct)}.cause-path{padding:16px;border:1px solid var(--line)}.cause-path ol{padding-left:21px;margin:8px 0;font-size:13px}.cause-path li{margin:8px 0}.cause-path del{color:var(--bad)}.timeline{min-width:980px}.pair{padding:16px 0;border-top:1px solid var(--line)}.pair-heading{display:flex;gap:12px;align-items:center;margin:0 0 12px;font-size:14px}.pair-heading .gain{margin-left:auto;color:var(--good);font:12px ui-monospace,monospace}.pair-desc{font-size:12px;color:var(--muted);margin:0 0 9px}.pair-row{display:grid;grid-template-columns:72px 1fr 172px;gap:10px;align-items:center;margin:7px 0}.pair-label{font:12px ui-monospace,monospace;color:var(--soft);text-align:right}.pair-lane{height:32px;position:relative;border-left:2px solid var(--ink);background:var(--surface2)}.preelapsed{position:absolute;left:0;top:0;height:32px;display:flex;align-items:center;justify-content:center;color:var(--muted);background:repeating-linear-gradient(135deg,transparent,transparent 5px,var(--line) 5px,var(--line) 6px);font-size:11px;border:1px solid var(--line);white-space:nowrap}.pair-lane .bar{height:32px;font-size:11px;font-weight:600}.pair-metric{font:11px/1.6 ui-monospace,monospace;color:var(--soft)}.pair-metric b{color:var(--ink)}.pair-ruler{display:grid;grid-template-columns:72px 1fr 172px;gap:10px;margin-bottom:9px}.pair-ruler .axis{height:23px;position:relative;border-bottom:1px solid var(--line);font:11px ui-monospace,monospace;color:var(--muted)}.pair-ruler .axis span{position:absolute;bottom:4px}.pair-ruler .zero-label{font-size:11px;color:var(--soft);text-align:right}.pair-ruler .metric-label{font-size:11px;color:var(--muted)}.prep-sw{background:repeating-linear-gradient(135deg,transparent,transparent 3px,var(--line) 3px,var(--line) 4px);border-color:var(--muted)}
-@media(max-width:800px){.instruction-map{grid-template-columns:1fr}.pair-heading{font-size:13px}}
-.cols>*{min-width:0}
+:root{--bg:#f2f5f6;--paper:#fff;--tint:#e8edef;--line:#cfd9dd;--ink:#101619;--soft:#46565d;--muted:#647780;--blue:#0e6a87;--bluebg:#d6e9f0;--red:#a8442a;--redbg:#f3dad1;--green:#1f6b4c;--greenbg:#d4eadd;--gold:#9a6e14;--goldbg:#f7ebcf;color-scheme:light}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0d1316;--paper:#151e22;--tint:#1d282d;--line:#2c3b42;--ink:#e8f0f3;--soft:#a9bcc4;--muted:#8aa0a9;--blue:#58bedc;--bluebg:#113039;--red:#ec8760;--redbg:#402016;--green:#63c795;--greenbg:#12331f;--gold:#e0b45c;--goldbg:#3a2e14;color-scheme:dark}}
+:root[data-theme=dark]{--bg:#0d1316;--paper:#151e22;--tint:#1d282d;--line:#2c3b42;--ink:#e8f0f3;--soft:#a9bcc4;--muted:#8aa0a9;--blue:#58bedc;--bluebg:#113039;--red:#ec8760;--redbg:#402016;--green:#63c795;--greenbg:#12331f;--gold:#e0b45c;--goldbg:#3a2e14;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.75 system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif}.wrap{max-width:1160px;margin:auto;padding:28px 24px 60px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px}a{color:var(--blue);text-underline-offset:3px}.top a{font-size:12px;text-decoration:none;color:var(--muted)}button{background:var(--paper);border:1px solid var(--line);border-radius:3px;color:var(--soft);font:inherit;padding:7px 12px;cursor:pointer}button:hover{border-color:var(--blue)}button[aria-pressed=true]{background:var(--bluebg);border-color:var(--blue);color:var(--blue)}:focus-visible{outline:3px solid var(--blue);outline-offset:3px}h1{font-size:clamp(28px,4vw,42px);line-height:1.25;letter-spacing:-.03em;font-weight:600;margin:10px 0 18px}h2{font-size:17px;font-weight:600;margin:0 0 15px;padding-bottom:12px;border-bottom:1px solid var(--line)}h3{font-size:15px;margin:0 0 8px}.eyebrow{font:11px ui-monospace,monospace;letter-spacing:.12em;color:var(--muted)}.lede{font-size:17px;color:var(--soft);max-width:860px}.lede strong{color:var(--ink)}p{margin:10px 0}.small{font-size:12px;color:var(--muted)}.note{font-size:13px;color:var(--soft)}.panel{border:1px solid var(--line);background:var(--paper);padding:22px;border-radius:3px;margin-top:28px}.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}.cols>*{min-width:0}.kpis{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);background:var(--line);gap:1px;margin:25px 0}.kpi{background:var(--paper);padding:16px 20px}.kpi b{display:block;font-size:27px;line-height:1.5;font-variant-numeric:tabular-nums}.kpi small{color:var(--muted);font-size:12px}.green{color:var(--green)}.red{color:var(--red)}.blue{color:var(--blue)}code,pre{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}code{font-size:.9em;background:var(--tint);padding:1px 4px;border-radius:2px;overflow-wrap:anywhere}pre{overflow:auto;font-size:12px;line-height:1.8;margin:0;color:var(--soft)}pre code{background:none;padding:0;font-size:inherit;overflow-wrap:normal}.cm{color:var(--muted)}.nav{display:flex;gap:20px;flex-wrap:wrap;font-size:12px}.nav a{text-decoration:none;color:var(--soft);border-bottom:1px solid var(--line)}.callout{border-left:3px solid var(--green);background:var(--greenbg);padding:13px 16px;font-size:14px;margin-top:18px}.callout.neutral{background:var(--tint);border-color:var(--muted);color:var(--soft);font-size:13px}.source{border-left:3px solid var(--blue);padding:10px 16px;background:var(--tint);margin:18px 0}.diagram-scroll,.table-scroll{overflow-x:auto}.diagram{min-width:960px}.phase-head{display:grid;grid-template-columns:98px 1fr 35px 1.2fr;gap:8px;margin:14px 0 8px;font-size:12px;color:var(--soft)}.phase-head>span:nth-child(2){border-bottom:2px solid var(--red);padding-bottom:7px}.phase-head>span:nth-child(4){border-bottom:2px solid var(--blue);padding-bottom:7px}.process-row{display:grid;grid-template-columns:98px 1fr 35px 1.2fr;gap:8px;align-items:center;margin:7px 0}.rid{font:12px ui-monospace,monospace;color:var(--soft)}.rid b{font-weight:600;color:var(--ink)}.steps{display:flex;gap:3px;min-width:0}.step{flex:1;border:1px solid var(--blue);background:var(--bluebg);color:var(--blue);padding:9px 4px;text-align:center;font-size:12px;line-height:1.55;border-radius:2px;white-space:nowrap;cursor:help}.step b{font-weight:600}.step small{display:block;font:10px/1.6 ui-monospace,monospace;opacity:.85}.step.cut{color:var(--red);border-color:var(--red);background:var(--redbg)}.step.dma{color:var(--gold);border-color:var(--gold);background:var(--goldbg);flex:.8}.bridge{font-size:18px;text-align:center;color:var(--muted)}.diagram-title{display:flex;justify-content:space-between;align-items:baseline;gap:20px;margin-top:22px}.diagram-title b{font-size:14px}.diagram-title span{font-size:12px;color:var(--muted)}.loop-strip{margin:8px 0 12px 106px;border:1px dashed var(--red);background:var(--redbg);color:var(--red);font-size:12px;padding:8px 12px}.loop-strip.keep{border-color:var(--green);background:var(--greenbg);color:var(--green)}.after-head{display:grid;grid-template-columns:98px 1fr 35px 1.2fr;gap:8px;font-size:12px;color:var(--soft);margin:14px 0 8px}.after-head span:nth-child(2){border-bottom:2px solid var(--green);padding-bottom:7px}.after-head span:nth-child(4){border-bottom:2px solid var(--green);padding-bottom:7px}.deleted{border:1px dashed var(--green);background:var(--greenbg);color:var(--green);text-align:center;padding:8px;font-size:12px;line-height:1.6}.legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:18px;font-size:12px;color:var(--soft)}.legend span{display:flex;align-items:center;gap:7px}.sw{width:12px;height:12px;border:1px solid var(--blue);background:var(--bluebg)}.sw.cut{background:var(--redbg);border-color:var(--red)}.sw.dma{background:var(--goldbg);border-color:var(--gold)}.sw.save{background:var(--greenbg);border-color:var(--green)}.row-detail{font-size:13px;padding:12px 15px;background:var(--tint);min-height:48px;margin-top:14px;color:var(--soft)}.mechanism{border-top:1px solid var(--line);margin-top:20px;padding-top:16px}.mechanism p{font-size:14px}.mechanism b{color:var(--ink)}.experiment{display:grid;grid-template-columns:140px 1fr 86px;gap:12px;align-items:center;margin:15px 0}.experiment-label{font-size:13px}.experiment-label small{display:block;color:var(--muted);font-size:11px}.exp-track{height:39px;display:flex;background:var(--tint)}.exp-run{height:39px;background:var(--bluebg);border:1px solid var(--blue);color:var(--blue);display:flex;align-items:center;justify-content:center;font:600 13px ui-monospace,monospace}.exp-save{height:39px;border:1px dashed var(--green);background:var(--greenbg);color:var(--green);display:flex;align-items:center;justify-content:center;font:11px ui-monospace,monospace}.exp-number{font:600 14px ui-monospace,monospace;text-align:right}.ledger{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}.ledger>div{border:1px solid var(--line);padding:16px}.ledger strong{display:block;font-size:26px;color:var(--green);margin-bottom:5px}.ledger p{font-size:13px;color:var(--soft)}.equation{font:600 clamp(17px,3vw,23px)/1.6 ui-monospace,monospace;color:var(--green);text-align:center;background:var(--greenbg);padding:15px;margin-top:16px}details{border:1px solid var(--line);background:var(--paper);margin-top:14px;border-radius:3px}summary{font-size:14px;font-weight:500;padding:15px 18px;cursor:pointer}details>.inside{padding:0 18px 18px;color:var(--soft);font-size:13px}.inside li{margin:6px 0}.inside ul{padding-left:20px}table{width:100%;border-collapse:collapse;font-size:12px}td,th{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}th{background:var(--tint);font-weight:500;color:var(--muted)}.num{text-align:right;white-space:nowrap;font-family:ui-monospace,monospace}.fact{background:var(--tint);padding:15px}.fact h3{font-size:14px}.fact p{font-size:13px;color:var(--soft)}.footer{font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;margin-top:30px;overflow-wrap:anywhere}.trace-chart{min-width:740px}.trace-group{margin-top:15px}.trace-title{font-size:13px;font-weight:600;margin-bottom:8px}.trace-row{display:grid;grid-template-columns:70px 1fr;gap:8px;align-items:center;margin:5px 0}.trace-label{font:11px ui-monospace,monospace;text-align:right}.trace-lane{height:27px;background:var(--tint);position:relative}.trace-block{position:absolute;height:27px;background:var(--goldbg);color:var(--gold);border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;font:11px ui-monospace,monospace;cursor:help}.trace-block.st{color:var(--blue);background:var(--bluebg);border-color:var(--blue)}.trace-block.vp{color:var(--muted);background:var(--tint);border-color:var(--muted)}.ruler{height:23px;position:relative;margin-left:78px;border-bottom:1px solid var(--line);font:10px ui-monospace,monospace}.ruler span{position:absolute;top:4px}
+@media(max-width:800px){.wrap{padding:22px 16px 45px}.panel{padding:17px}.cols,.ledger{grid-template-columns:1fr}.kpis{grid-template-columns:1fr}.kpi{display:flex;justify-content:space-between;align-items:center;gap:15px}.kpi b{font-size:24px}.kpi small{max-width:46%}.lede{font-size:15px}.experiment{grid-template-columns:95px 1fr;gap:8px}.experiment .exp-number{display:none}.exp-save{font-size:10px}.exp-run{font-size:12px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{.top,.nav{display:none}.wrap{max-width:none;padding:0}.panel{break-inside:avoid}.diagram-scroll{overflow:visible}.diagram{min-width:0}.step{font-size:9px}.step small{font-size:8px}}
 </style>
 </head>
-<body>
-<main class="wrap">
+<body><main class="wrap">
 <div class="top"><a href="./index.html">← 技术报告</a><button id="theme" type="button" aria-label="切换明暗主题">切换明暗</button></div>
-<header class="hero">
-<p class="eyebrow">STRUCTUREDTOMEMREF · ISSUE #153 · VCS 实测 · 2026-09-14</p>
-<h1>小行 Gather：<br>409 cycles 省在哪里</h1>
-<p class="lede">四行数据，仍然搬四次。优化让编译器少做一遍 mask 的临时存储，少走行循环的控制路径，<strong>第一行搬运提前 384 cycles</strong>。4 × 128 BF16 的最小 kernel，从 <strong>1857 降到 1448 cycles</strong>。</p>
-<div class="kpis">
-<div class="kpi"><div class="label">KERNEL CYCLES</div><div class="value good">−22.02%</div><div class="small">1857 → 1448 · 少 409 cy</div></div>
-<div class="kpi"><div class="label">首行 LD 提前</div><div class="value">384 cy</div><div class="small">从进入 kernel 开始计时</div></div>
-<div class="kpi"><div class="label">动态 CT 指令事件</div><div class="value">418 → 306</div><div class="small">减少 112 个 · 非静态代码行数</div></div>
-<div class="kpi"><div class="label">数据行搬运总量</div><div class="value">4 × 256 B</div><div class="small">前后相同 · 每行 128 个 BF16</div></div>
-</div>
-<nav class="nav" aria-label="文章目录"><a href="#pattern">看懂 pattern</a><a href="#paths">Before / After</a><a href="#versions">三步对比</a><a href="#trace">真实时序</a><a href="#instructions">指令账</a><a href="#scope">验证与边界</a></nav>
+<header>
+<p class="eyebrow">ISSUE #153 · STRUCTUREDTOMEMREF · 4 行 × 128 BF16</p>
+<h1>四行 Gather，究竟删掉了什么？</h1>
+<p class="lede">本来只需要“读 flag → 判断 → 搬这一行”，编译器却先把判断结果写进临时内存，随后又读回来判断。<strong>去掉这圈内存往返，再去掉行循环的重复控制，kernel 少了 409 cycles。</strong></p>
+<div class="kpis"><div class="kpi"><b>1857 → 1448 cy</b><small>同参 VCS 实测 · 减少 22.02%</small></div><div class="kpi"><b class="green">少 112 个 CT 事件</b><small>减少控制工作，不是减少数据量</small></div><div class="kpi"><b>仍搬 4 × 256 B</b><small>四条 LD 还没有实现并行连发</small></div></div>
+<nav class="nav" aria-label="文章目录"><a href="#trace">主图：删掉的工作</a><a href="#cycles">省多少 cycles</a><a href="#code">对应代码</a><a href="#evidence">验证与原始时序</a></nav>
 </header>
-<noscript><p class="noscript">当前禁用了 JavaScript。静态 before/after、数值表和边界说明仍可阅读；交互时序图需要启用 JavaScript。</p></noscript>
 
-<section id="pattern" class="panel">
-<h2>01 / 编译时知道取四行，不知道取哪四行</h2>
-<div class="cols"><div>
-<pre><code><span class="cm"># row_ids、flags 都是运行时输入</span>
-ids   = tl.load(row_ids_ptr + rows)
-flags = tl.load(flags_ptr + rows)
-tile  = tl.load(
-    src + ids[:, None] * K + cols[None, :],
-    mask=(flags[:, None] != 0),
-    other=0,
-)</code></pre>
-<p class="note">为了看清主路径，这里省略列 tail；实测 kernel 保留运行时 <code>K</code>、<code>k_offset</code> 和列边界保护。</p>
-</div><div>
-<p class="small">示意 ids = [7, 2, 7, 10]，不是验收输入的实际取值</p>
-<div class="rows-demo"><span class="demo-label">result[0]</span><div class="row-demo"><span>src[7, :]</span><small>连续 256 B →</small></div><span class="demo-label">result[1]</span><div class="row-demo"><span>src[2, :]</span><small>连续 256 B →</small></div><span class="demo-label">result[2]</span><div class="row-demo"><span>src[7, :]</span><small>连续 256 B →</small></div><span class="demo-label">result[3]</span><div class="row-demo"><span>src[10, :]</span><small>连续 256 B →</small></div></div>
+<section id="trace" class="panel">
+<h2>一张图看懂：每一行从 flag 到 LD，原来绕了什么路</h2>
+<p class="note"><b>①～④ 对应四条数据行 load。</b> flag 决定这一行要不要搬，ids 决定从源矩阵的哪一行搬。下面把 CT（控制核）做的工作写在色块里，红色是多余步骤，黄色才是搬数据的 LD。</p>
+<div class="source"><code>if flags[r] != 0: result[r, :] = src[ids[r], :]</code><p class="small">这是这一行的核心语义。所有示意都保留 mask 判断；源行号 ids[r] 仍是运行时值。</p></div>
+<div class="diagram-scroll"><div class="diagram">
+<div class="diagram-title"><b>Before：先为四行生成临时 mask，再逐行读回并搬运</b><span>下面两阶段按先后执行</span></div>
+<div class="phase-head"><span></span><span>阶段 A · CT 生成整份 mask_tmp</span><span></span><span>阶段 B · CT 读回 mask，控制四条 LD</span></div>
+<div id="before-rows"></div>
+<div class="loop-strip"><b>额外循环控制：</b>阶段 A 和 B 各有一个行循环，每轮都要判断 r &lt; 4、计算动态行偏移、r++、跳回循环头。</div>
+<div class="diagram-title"><b>After：省掉阶段 A，直接读原始 flag，控制这一行的 LD</b><span>四份固定行号代码，无 gather 行循环</span></div>
+<div class="after-head"><span></span><span>不再生成 mask_tmp</span><span></span><span>在这里直接判断 flag</span></div>
+<div id="after-rows"></div>
+<div class="loop-strip keep"><b>循环也展开了：</b>直接处理第 0、1、2、3 行，去掉行循环的测试、递增和回跳；保留每行的有效性判断、动态源地址计算与搬运。</div>
 </div></div>
-<div class="terms"><div class="term"><b>静态小行数</b><p>编译时知道 <code>M=4</code>，所以可以把循环写成四份。源行号 <code>ids[r]</code> 仍是动态值。</p></div><div class="term"><b>非末维 gather</b><p>在二维 <code>[行, 列]</code> 的行维度选数据，不是在每一行内部随机选列。</p></div><div class="term"><b>末维连续 payload</b><p>一行内的 128 个元素连续，最后一维 stride=1；每行可以按连续数据段搬运。</p></div></div>
+<div class="legend"><span><i class="sw cut"></i>被消除的中间存储与重复处理</span><span><i class="sw"></i>仍需执行的 CT 工作</span><span><i class="sw dma"></i>LD：真正搬一行数据</span><span><i class="sw save"></i>删除的路径</span></div>
+<p class="small"><b>这是工作流程图，横向表示处理步骤，不是 cycle 比例尺。</b>四行左对齐便于对照，不表示四条 LD 同时发出。Before 先完成全部阶段 A，再进入阶段 B；清零、mail 和列边界处理未画在主图，真实时序在下方可展开核对。</p>
+<div id="row-detail" class="row-detail" aria-live="polite">读第①行：Before “flag → 比较 → 存 mask_tmp → 读 mask_tmp → 再判断”；After “flag → 直接判断”。少的是中间绕路，这一行的数据仍要搬。</div>
+<div class="mechanism"><div class="cols"><div><h3>删掉的第一类工作：布尔值的内存往返</h3><p>判断结果原本已经在 CT 中，却被变成 0/1，写入 L2 的 <code>mask_tmp</code>，之后读回再判断。After 直接用原始 flag，不再需要临时 mask buffer 和生成它的循环。</p></div><div><h3>删掉的第二类工作：循环控制和动态行偏移</h3><p>行数编译时已知，展开成四份代码后，<code>r &lt; 4</code>、<code>r++</code>、回跳及部分 <code>base + r × 4</code> 寻址可以消除。<code>ids[r] × K</code> 仍需运行时计算。</p></div></div></div>
+<div class="callout"><b>用一句话对应参考图：</b>参考例子把“四次等待”重叠起来；本次把“生成临时 mask 再读回”和“重复循环控制”删掉。优化机制不同，所以这里用删除的工作解释收益。</div>
 </section>
 
-<section id="paths">
-<h2>02 / Before 有两个循环，After 直接让 flag 控制每一行</h2>
-<div class="cols">
-<article class="card"><span class="tag bad">BEFORE · 两个循环</span><h3>先生成 mask，再读回来</h3>
-<div class="flow"><span class="node">flags</span><span class="arrow">→</span><span class="node ct">比较 → 0/1</span><span class="arrow">→</span><span class="node bad">mask_tmp 写入 / 回读</span><span class="arrow">→</span><span class="node">分支 + LD</span></div>
-<pre><code>ids, flags = load_metadata()
+<section id="cycles" class="panel">
+<h2>409 cycles 怎么来的？看三个真实编译版本</h2>
+<p class="note">为了分清贡献，先只展开 gather 行循环，再加入 mask 优化。下图每根蓝条代表<b>整个 kernel 的实测耗时</b>，绿色代表与上一版本的实验差值；不是把某段指令强行标成 89 或 320 cy。</p>
+<div class="experiment"><div class="experiment-label"><b>Before</b><small>两个行循环</small></div><div class="exp-track"><div class="exp-run" style="width:100%">1857 cy</div></div><div class="exp-number">基线</div></div>
+<div class="experiment"><div class="experiment-label"><b>仅展开</b><small>仍有 mask_tmp</small></div><div class="exp-track"><div class="exp-run" style="width:95.2073%">1768 cy</div><div class="exp-save" style="width:4.7927%" title="仅展开相对 Before 少 89 cycles">89</div></div><div class="exp-number green">−89 cy</div></div>
+<div class="experiment"><div class="experiment-label"><b>完整修复</b><small>去掉 mask_tmp</small></div><div class="exp-track"><div class="exp-run" style="width:77.9752%">1448 cy</div><div class="exp-save" style="width:17.2321%" title="mask 优化相对仅展开再少 320 cycles">320</div><div class="exp-save" style="width:4.7927%" title="第一步已省的 89 cycles">89</div></div><div class="exp-number green">−409 cy</div></div>
+<div class="ledger"><div><strong>−89 cycles</strong><b>只展开 gather 行循环</b><p>动态 CT 事件 <code>418 → 378</code>。少执行循环判断、递增、回跳和部分动态寻址；阶段 A 的 mask 生成仍在。</p></div><div><strong>再 −320 cycles</strong><b>消除临时 mask 物化</b><p>动态 CT 事件 <code>378 → 306</code>。不再执行阶段 A；阶段 B 直接读原始 flag 来控制 LD。</p></div></div>
+<div class="equation">1857 − 89 − 320 = 1448 cycles</div>
+<p class="small">指令条数不是 cycles。访存、分支、等待和调度重叠都会影响净收益；这两步的贡献取自上述顺序的实测 A/B，不能直接外推到任意 kernel。</p>
+<div class="callout neutral"><b>为什么第一条 LD 能提前？</b> CT 少走了生成 mask 的循环，以及第一行的部分控制路径，后面的清零配置、地址准备和 LD 可以更早推进。首行 LD 从 kernel 起点后的 898 cy 提前到 514 cy，这是结果证据，不是“898 cy 全是阻塞”。</div>
+</section>
 
-<span class="cm"># C1：生成临时谓词的 CT 指令组</span>
-<span class="removed">mask_tmp = alloc(4 × int32)
+<section id="code" class="panel">
+<h2>把图里的红色部分，对回编译器实际生成的代码</h2>
+<p class="note">根据真实 ZeusHigh IR 简化为等价伪代码。地址配置、mail、列 tail 和资源释放省略。图中①～④分别对应 <code>load_row(0～3)</code>。</p>
+<div class="cols"><div class="fact"><h3>Before · 两个循环</h3><pre><code>ids, flags = load_metadata()
+
+<span class="red">mask_tmp = alloc(4 × int32)
 for r in range(4):
     mask_tmp[r] = int(flags[r] != 0)</span>
 
-result = alloc(4, 128)
-fill_zero(result)                  <span class="purple"># F0</span>
+fill_zero(result)
+<span class="red">for r in range(4):</span>
+    if <span class="red">mask_tmp[r]</span> != 0:
+        load_row(r)  <span class="cm"># ① ② ③ ④</span>
+store(result)</code></pre></div><div class="fact"><h3>After · 直接判 flag</h3><pre><code>ids, flags = load_metadata()
 
-<span class="cm"># C2：循环控制 / 行偏移 / 读回谓词</span>
-<span class="removed">for r in range(4):
-    valid = mask_tmp[r] != 0</span>
-    if valid:
-        <span class="cm"># C3 算地址和配置；G0～G3 搬数据</span>
-        load_row(src + ids[r] * K,
-                 result + r * 128) <span class="blue"># G[r]</span>
-store(result)                     <span class="blue"># S0</span></code></pre>
-<p class="note">真实 IR 中，谓词以 <code>i32</code> 存储，4 行分配 <b>16 bytes</b>。每次循环还要比较边界、递增、回跳和计算动态访问偏移。</p>
-</article>
-<article class="card"><span class="tag good">AFTER · 展开 + 标量谓词</span><h3>读 flag，直接分支</h3>
-<div class="flow"><span class="node">flags[常量行号]</span><span class="arrow">→</span><span class="node ct">与 0 比较</span><span class="arrow">→</span><span class="node good">分支 + LD</span></div>
-<pre><code>ids, flags = load_metadata()
-result = alloc(4, 128)
-fill_zero(result)                  <span class="purple"># F0</span>
+<span class="green"># 整个 mask_tmp 生成循环消失</span>
+fill_zero(result)
 
-<span class="added">if flags[0] != 0:</span>
-    load_row(src + ids[0] * K, result + 0)   <span class="blue"># G0</span>
-<span class="added">if flags[1] != 0:</span>
-    load_row(src + ids[1] * K, result + 128) <span class="blue"># G1</span>
-<span class="added">if flags[2] != 0:</span>
-    load_row(src + ids[2] * K, result + 256) <span class="blue"># G2</span>
-<span class="added">if flags[3] != 0:</span>
-    load_row(src + ids[3] * K, result + 384) <span class="blue"># G3</span>
+if <span class="green">flags[0]</span> != 0: load_row(0) <span class="cm"># ①</span>
+if <span class="green">flags[1]</span> != 0: load_row(1) <span class="cm"># ②</span>
+if <span class="green">flags[2]</span> != 0: load_row(2) <span class="cm"># ③</span>
+if <span class="green">flags[3]</span> != 0: load_row(3) <span class="cm"># ④</span>
 
-store(result)                     <span class="blue"># S0</span></code></pre>
-<p class="note">不再生成 <code>mask_tmp</code>，行索引成为常量。<b>源地址 <code>ids[r] * K</code> 仍需要运行时计算</b>，无效行的 guard 与结果填零仍保留。</p>
-</article></div>
-<div class="callout"><b>“单用途、纯 pointwise”是什么意思？</b> mask 没有其他需要保留其结果的消费者；每一行的布尔计算只依赖对应行输入，不做归约、不读写外部状态。本 MR 只接受满足检查的整数比较和布尔运算，不把任意 tensor 计算都重算一遍。</div>
+store(result)</code></pre></div></div>
+<details><summary>展开：这些步骤对应哪些 CT 指令？</summary><div class="inside">
+<div class="table-scroll"><table><thead><tr><th>图中的工作</th><th>相关指令类别</th><th>本次如何变化</th></tr></thead><tbody>
+<tr><td>读 flag / 读临时 mask</td><td><code>CT_MOV_R_[R]</code></td><td>原来有生成时读 flag、消费时读 mask 两次；现在直接读 flag 一次</td></tr>
+<tr><td>比较、形成 0/1、再次判断</td><td><code>CT_SUB / CT_JNZ / CT_MOV / CT_JMP</code></td><td>消除生成并保存整数布尔值的路径，保留直接分支判断</td></tr>
+<tr><td>临时 mask 写入</td><td><code>CT_MOV_[R]_R</code></td><td>不再写入 mask_tmp</td></tr>
+<tr><td>动态行偏移</td><td><code>CT_MULU / CT_ADD</code></td><td>行号变常量，消除部分动态寻址</td></tr>
+<tr><td>循环初始化、边界、递增、回跳</td><td><code>CT_MOV / CT_SUB / CT_JO / CT_JL / CT_ADD / CT_JMP</code></td><td>展开 gather 循环；mask 生成循环整体删除</td></tr>
+<tr><td>源地址与行搬运</td><td>宽地址计算、descriptor 配置、<code>LD_MOV</code></td><td>仍需要，未变成一条跨行 DMA</td></tr>
+</tbody></table></div>
+<p>第二步少掉的 72 个 CT 事件：3 个临时 mask descriptor 配置 + 29 个循环控制 + 40 个四行 mask 生成主体事件。它们对应路径中的实际指令，不能把 72 当作 72 cycles。</p>
+<p>仅展开版本中，mask 循环的 69 个事件跨越约 240 cycles；消除这条路径的 kernel 净收益为 320 cycles，包含后续执行和等待变化。此处没有逐条指令的独立延迟归因。</p>
+</div></details>
 </section>
 
-<section id="versions" class="panel">
-<h2>03 / 分开做实验，才能知道哪一步带来收益</h2>
-<div class="controls" aria-label="编译版本"><span>选择版本</span><button type="button" data-version="before" aria-pressed="false">原始循环</button><button type="button" data-version="unroll" aria-pressed="false">仅展开</button><button type="button" data-version="after" aria-pressed="true">完整修复</button></div>
-<div class="version-grid"><div><h3 id="version-title">完整修复：直接消费 flag</h3><p class="note" id="version-desc">展开行循环，并消除 mask 的中间存储。</p><div class="facts"><div class="fact"><b id="version-cycles">1448</b><span>kernel cycles</span></div><div class="fact"><b id="version-count">306</b><span>动态 CT 指令事件</span></div><div class="fact"><b id="version-saving">−409 cy</b><span>相对原始版本</span></div><div class="fact"><b id="version-bytes">3104 B</b><span>zbin 总大小</span></div></div><p class="note" id="version-job">VCS job：56c506041183</p></div><pre class="version-code"><code id="version-code">if flags[0] != 0: load_row(0)
-if flags[1] != 0: load_row(1)
-if flags[2] != 0: load_row(2)
-if flags[3] != 0: load_row(3)</code></pre></div>
-<div class="ledger"><div class="ledger-row"><div><b>第一步：只展开 gather 行循环</b><small>1857 → 1768；少 40 个动态 CT 事件，mask 生成循环还在</small></div><span class="amount">−89 cy</span></div><div class="ledger-row"><div><b>第二步：再消除 mask 物化</b><small>1768 → 1448；再少 72 个动态 CT 事件</small></div><span class="amount">−320 cy</span></div><div class="ledger-row"><div><b>完整修复的净收益</b><small>这是上述实验顺序下的增量收益，包含后续调度与等待变化</small></div><span class="amount">−409 cy</span></div></div>
-</section>
+<section id="evidence">
+<h2 style="margin-top:30px">验证与边界：需要深入时再展开</h2>
+<details><summary>四条 LD 现在能并行发了吗？还没有，这也是剩余优化方向。</summary><div class="inside">
+<p>目标四行互不重叠，重复源行也只是重复读取。从这个最小 kernel 的数据语义看，存在重叠执行的空间。但验收汇编仍有 <code>LD_MAIL → CT_MAIL</code> 等待链，下一行的地址准备受到前面 LD 的制约。</p>
+<pre><code>当前仍近似：发 LD① → 等 LD → 准备②的地址 → 发 LD② → …
+期望研究：  发 LD① → 在搬①时准备②的地址 → 尽早发 LD② → …</code></pre>
+<p>修复后 LD 启动间隔约 223 cy，而自身执行约 113 cy。尚未追清每条依赖来自 alias、descriptor 保护还是控制流规划，不能直接删 mail，也不能把间隔都算作可消除的等待。</p>
+</div></details>
 
-<section id="trace" class="panel">
-<h2>04 / 先认指令，再看同一条指令前后怎么变</h2>
-<p class="note"><b>F0 清零 → G0 / G1 / G2 / G3 搬四行 → S0 写回结果。</b> 下面的 ID 在代码、时序图和解释中保持一致，表示对应的动态指令实例，不是汇编 PC。CT 控制代码用 C1～C3 标注为指令组，避免和单条搬运指令混淆。</p>
-<div class="instruction-map">
-<div><b class="iid purple">F0</b><strong>VP_STSR · 结果清零</strong><p>给 result 的 4 × 128 个 BF16 填 0，保证被 mask 掉的行和列仍为 0。图里原来的紫色“83”就是它执行了 83 cy。</p></div>
-<div><b class="iid">G0–G3</b><strong>LD_MOV · 分别搬四行</strong><p>G0：src[ids[0]] → result[0]；G1、G2、G3 同理。每条搬 256 B，黄色块代表实际执行，左边的路程代表开始前已过去的时间。</p></div>
-<div><b class="iid blue">S0</b><strong>ST_MOV · 结果写回</strong><p>把 L2 中的 result 写到输出内存。蓝色块前后均为 116 cy；它提前完成，是因为前面的工作更早完成。</p></div>
-</div>
-<div class="cols cause-paths">
-<div class="cause-path"><span class="tag bad">BEFORE · 读懂代码顺序（非等比例）</span><ol><li><code>C1</code> CT 循环读 flags，生成 0/1，写 mask_tmp。</li><li><code>F0</code> 配置并启动 result 清零。</li><li><code>C2</code> CT 用 r 判断循环、算偏移、读 mask_tmp。</li><li><code>C3</code> 有效行读 ids[r]、算源地址、配置 descriptor → <code>G0</code>。</li><li>重复 C2 / C3，启动 <code>G1 → G2 → G3</code>，最后 <code>S0</code> 写回。</li></ol></div>
-<div class="cause-path"><span class="tag good">AFTER · 对应代码顺序（非等比例）</span><ol><li><del>C1 生成 mask_tmp 的整个循环</del>：删除。</li><li><code>F0</code> 可更早配置、启动清零。</li><li><del>C2 的循环控制和动态行偏移</del>：删除或常量折叠；直接读 flags[0] 判断。</li><li><code>C3</code> 仍需读 ids[0]、算源地址、配置 descriptor → <code>G0</code>。</li><li>用常量行号直接处理 <code>G1 → G2 → G3</code>，最后 <code>S0</code> 写回。</li></ol></div>
-</div>
-<p class="note"><b>这张图与“DMA 批量化”的例子不同：</b> 本次四行 LD 没有同时连发。先保留真实先后顺序，把开始前的路程标出来；不能为了对齐，把尚未发生的并行画出来。</p>
-<div class="controls" aria-label="时序起点"><span>对齐方式</span><button id="align-kernel" type="button" aria-pressed="true">共同 kernel 起点：看谁提前</button><button id="align-instruction" type="button" aria-pressed="false">各指令从 0 开始：看执行耗时</button></div>
-<p id="axis-explainer" class="callout">所有横条从同一条 cycle 0 竖线出发。斜纹段 = 从 kernel 起点到该指令开始前已经经过的时间；实色段 = 指令实际执行。斜纹不是这条指令的阻塞时间，包含前序工作、重叠执行和等待。</p>
-<div class="controls"><span>中间实验</span><button id="show-middle" type="button" aria-pressed="false">显示“仅展开”时序</button></div>
-<div class="chart-scroll"><div id="timeline" class="timeline"></div></div>
-<div class="legend"><span><i class="sw prep-sw"></i>开始前已过去的时间（不是 stall 归因）</span><span><i class="sw"></i>G0–G3：LD 搬行</span><span><i class="sw vp"></i>F0：VP 清零</span><span><i class="sw st"></i>S0：ST 写回</span></div>
-<div id="event-detail" aria-live="polite">读 G0 这一对：Before 先经过 898 cy，再执行 114 cy；After 先经过 514 cy，再执行 113 cy。主要变化是提前开始了 384 cy，执行本身只少 1 cy。</div>
-<div class="callout good"><b>收益主要发生在开始搬运之前。</b> 四条数据行 LD 的执行时长合计只从 460 降到 452 cycles，最终 ST 前后都是 116 cycles。不是少搬数据，也不是 DMA 带宽提升了 22%。</div>
-<div class="table-wrap" style="margin-top:20px"><table><thead><tr><th>把整个 kernel 分成三个相邻区间</th><th class="num">Before</th><th class="num">After</th><th class="num">节省 cycles</th></tr></thead><tbody><tr><td>kernel 起点 → 首行 LD 开始</td><td class="num">898</td><td class="num">514</td><td class="num good-text">384</td></tr><tr><td>首行 LD 开始 → 最后一行 LD 完成</td><td class="num">808</td><td class="num">782</td><td class="num good-text">26</td></tr><tr><td>最后一行 LD 完成 → kernel 结束</td><td class="num">151</td><td class="num">152</td><td class="num">−1</td></tr><tr><td><b>合计</b></td><td class="num">1857</td><td class="num">1448</td><td class="num good-text">409</td></tr></tbody></table></div>
-<div class="equation">384 + 26 − 1 = 409 cycles</div>
-<p class="small">这是可加总的时间区间分解，不是各类指令的独立延迟之和。CT / LD / VP / ST 存在重叠，不能把各模块 busy time 直接相加。</p>
-</section>
+<details id="raw-trace"><summary>查看原始 VCS 时序：确认搬运更早开始，而不是搬运变快了</summary><div class="inside">
+<p>旧图里的“开始前已过 696 cy”指的是：清零指令在 kernel 启动后第 696 cy 才开始，第 779 cy 结束，自身只执行 83 cy。此前还有元数据加载、mask 生成等工作；696 不是清零的等待耗时，也不是本次省下的 cycles。</p>
+<p>下面只用于核对时间。共同 kernel 起点、同一 1900 cy 比例尺；①～④是四条 LD，条形是实际执行区间。未绘制区间不等于空闲或某条指令的阻塞。零初始化与最终写回是保留的工作，不是本次删除项。</p>
+<div class="diagram-scroll"><div id="raw-timeline" class="trace-chart"></div></div>
+<div id="trace-detail" class="row-detail" aria-live="polite">悬停、点击或键盘聚焦时间块，可查看准确起止时间。</div>
+<div class="table-scroll" style="margin-top:16px"><table><thead><tr><th>指令</th><th>Before 开始→结束</th><th>After 开始→结束</th><th>执行耗时</th></tr></thead><tbody id="raw-table"></tbody></table></div>
+<p>四条数据行 LD 的执行时长合计 <b>460 → 452 cy</b>，最终 ST 均为 <b>116 cy</b>，搬运量没有减少。</p>
+<div class="table-scroll"><table><thead><tr><th>三个相邻时间区间</th><th class="num">Before</th><th class="num">After</th><th class="num">差值</th></tr></thead><tbody><tr><td>kernel 起点 → 首行 LD 开始</td><td class="num">898</td><td class="num">514</td><td class="num">384</td></tr><tr><td>首行 LD 开始 → 末行 LD 完成</td><td class="num">808</td><td class="num">782</td><td class="num">26</td></tr><tr><td>末行 LD 完成 → kernel 结束</td><td class="num">151</td><td class="num">152</td><td class="num">−1</td></tr></tbody></table></div>
+<p><b>384 + 26 − 1 = 409 cy。</b>这是整段运行时间的分解，与上面的两步优化 A/B 是两种观察角度，不能相互重复相加。</p>
+</div></details>
 
-<section id="instructions">
-<h2>05 / 从汇编看，少执行了哪些指令</h2>
-<div class="cols"><article class="card"><span class="tag bad">移除：mask 生成与临时存储</span><pre><code><span class="cm">; Before，每行执行</span>
-CT_MULU_R_R_I   <span class="cm">; r * 4</span>
-CT_ADD_R_R_I    <span class="cm">; flags 地址</span>
-CT_MOV_R_[R]    <span class="cm">; 读取 flag</span>
-CT_SUB_R_R_R    <span class="cm">; 与 0 比较</span>
-CT_JNZ         <span class="cm">; 分支</span>
-CT_MOV...      <span class="cm">; 形成整数 0/1</span>
-CT_ADD_R_R_I    <span class="cm">; mask_tmp 地址</span>
-<span class="removed">CT_MOV_[R]_R   ; 写回 mask_tmp</span>
-<span class="cm">; 后面的 gather 还要重新读取 mask_tmp</span></code></pre><p class="note">这是指令类别摘录，不是可直接汇编的完整指令序列。真实判定路径包含额外跳转和寄存器赋值。</p></article>
-<article class="card"><span class="tag good">保留：读取 flag，直接控制 load</span><pre><code><span class="cm">; After，每行直接使用原始 flag</span>
-CT_MOV_R_[R]    <span class="cm">; 固定行偏移读取 flag</span>
-CT_SUB_R_R_I    <span class="cm">; 与 0 比较</span>
-CT_JNZ         <span class="cm">; 进入该行 load</span>
+<details><summary>“静态小行数、非末维、连续 payload、单用途 mask”到底限制了什么？</summary><div class="inside">
+<ul><li><b>静态小行数：</b>编译时知道要取 4 行；具体取哪行仍由运行时 ids 决定。默认 <code>gather-unroll-limit=16</code>，超过阈值保留循环，0 关闭。16 是策略，不是全局最优证明。</li><li><b>非末维、末维连续：</b>在 [行, 列] 的行维选择数据，一行内元素连续，末维 stride=1 且长度大于 1。</li><li><b>单用途、纯 pointwise mask：</b>每行判断只依赖对应行输入；只接受满足检查的整数比较/布尔运算，不能任意重算共享或有副作用的计算。</li><li>动态/大行数、1D/末维 gather、singleton、非连续 payload、scatter 保留原路径；共享或不满足检查的 mask 保留物化。用户外循环不展开。</li><li>保留 mask 保护、独立输出分配和填零，不把输入当 scratch。只克隆并删除新生成的 gather loop，不删除仍有消费者的上游 producer。</li></ul>
+</div></details>
 
-<span class="cm">; 行号展开后不再需要：</span>
-<span class="removed">循环边界比较 / 递增 / 回跳
-部分 r * 4 与 base + r 的动态寻址
-mask_tmp 的生成、存储及描述符</span></code></pre><p class="note">标量 flag 的读取仍在。直接消费 flags 替代了原先对 mask_tmp 的消费，不是把分支保护删掉。</p></article></div>
-<div class="panel" style="margin-top:20px"><h3>第二步少掉的 72 个动态 CT 事件</h3><div class="table-wrap"><table><thead><tr><th>删除的工作</th><th>相关指令</th><th class="num">事件数</th></tr></thead><tbody><tr><td>临时 mask 的 descriptor 配置</td><td><code>CT_SETBI_A / CT_SETBM_AM_A / CT_SETBS_A</code></td><td class="num">3</td></tr><tr><td>mask 循环初始化、测试、递增、回跳</td><td><code>CT_MOV / CT_SUB / CT_JO / CT_JL / CT_ADD / CT_JMP</code></td><td class="num">29</td></tr><tr><td>四行的寻址、读取、形成 0/1、存储</td><td><code>CT_MULU / CT_ADD / CT_MOV / CT_SUB / CT_JNZ / CT_JMP</code></td><td class="num">40</td></tr><tr><td><b>合计</b></td><td>与 trace 的 378 → 306 事件差相符</td><td class="num good-text">72</td></tr></tbody></table></div><p class="note">不含 descriptor 配置的 69 个循环事件，在“仅展开”版本中从相对 cycle 371 到 611，跨越 <b>240 cycles</b>；推导的执行路径与 trace opcode 低 4 bit 序列一致。</p><div class="callout"><b>72 条 ≠ 72 cycles，240 cycles 也 ≠ 净收益 320 cycles。</b> 指令依赖、分支、标量访存和模块等待会改变执行跨度；去掉这段代码还让后续工作更早开始。当前证据支持“这段路径消失后净省 320 cycles”，没有逐条指令的独立 cycle 归因。</div></div>
+<details><summary>性能、数值与代价：已测范围和完整参数</summary><div class="inside">
+<div class="table-scroll"><table><thead><tr><th>行数 × 列数</th><th class="num">Before cy</th><th class="num">After cy</th><th class="num">减少</th><th>zbin 总大小</th></tr></thead><tbody><tr><td>4 × 128</td><td class="num">1857</td><td class="num">1448</td><td class="num">22.02%</td><td>1912 → 3104 B</td></tr><tr><td>8 × 128</td><td class="num">3050</td><td class="num">2359</td><td class="num">22.66%</td><td>1912 → 5152 B</td></tr><tr><td>16 × 128</td><td class="num">5451</td><td class="num">4224</td><td class="num">22.51%</td><td>1912 → 9256 B</td></tr></tbody></table></div>
+<p>代码体积增加，用静态代码换取更少动态控制工作。4 行仅展开版本：1768 cy，3312 B。</p>
+<ul><li>验收提交 FULL 构建成功，默认测试 822/822 PASS。4/8/16 行 full、全 masked、三 block 混合 mask、偶数列 tail 六组 VCS 完整输出 bit-exact。</li><li>最小 kernel 不含 PE；原始 MoE 只验证到 ASM 编译。本页收益不代表完整 MoE 收益。</li><li>奇数 BF16 tail（K=95，k_offset=16）前后都有相同错误输出，本 MR 未修复。早期不完整分配的 8/16 行实验已作废，引用的是修正后的完整重跑。</li></ul>
+<p>400 MHz，VCS core 0 kernel span；不是仿真 wall time。4 行参数：<code>N_src=16 K=128 k_offset=0 BLOCK_M=4 BLOCK_K=128 NUM_BLOCKS=1 MASK_MODE=0</code>。8 行改 BLOCK_M=8；16 行改 N_src=32、BLOCK_M=16。mask 实际全 true，编译时仍未知。</p>
+<p>4 行 job：Before <code>0e30569680f9</code>，仅展开 <code>64bdc094378b</code>，完整修复 <code>56c506041183</code>。8 行：<code>4e0f393e2717 → 1158ac6c5420</code>；16 行：<code>fe30eb481488 → 31809d75c571</code>。各 A/B 输入和 golden 一致。</p>
+<p>测量基线 <code>ae17c9386719b79c07217b06994b96ff1c74fbbc</code>，验收修复 <code>8120141c0d6db775c49e2fe8c1e422edc0cbe198</code>，配套 Triton <code>67b32ec4b860377c1d97833009bc3896a4d6b13f</code>。MR 后续已 rebase，本页保留原验收数据，不把它冒充新 head 的重测结果。</p>
+</div></details>
 </section>
-
-<section id="scope">
-<h2>06 / 收益、代价和已验证范围</h2>
-<div class="panel"><div class="table-wrap"><table><thead><tr><th>行数</th><th class="num">Before cy</th><th class="num">After cy</th><th class="num">减少</th><th class="num">zbin 大小</th></tr></thead><tbody><tr><td>4 × 128</td><td class="num">1857</td><td class="num">1448</td><td class="num good-text">22.02%</td><td class="num">1912 → 3104 B</td></tr><tr><td>8 × 128</td><td class="num">3050</td><td class="num">2359</td><td class="num good-text">22.66%</td><td class="num">1912 → 5152 B</td></tr><tr><td>16 × 128</td><td class="num">5451</td><td class="num">4224</td><td class="num good-text">22.51%</td><td class="num">1912 → 9256 B</td></tr></tbody></table></div><p class="note">用更多静态代码换更少动态控制开销。测试均不含 PE，收益属于抽取的 gather pattern，不外推为完整 MoE 的收益。</p></div>
-<div class="details-list" style="margin-top:18px">
-<details open><summary>gather-unroll-limit=16：匹配规则与回退</summary><div class="inside"><p>在非末维 gather、末维 stride=1 且长度大于 1、生成的行循环次数为静态值且不超过阈值时，全展开该循环。<code>16</code> 是策略阈值，不是硬件常量，也不是“展开 16 次一定最快”的证明；设为 <code>0</code> 关闭。</p><p>动态 / 大行数、1D / 末维 gather、singleton payload、非连续 payload 和 scatter 保留原路径。共享、output-dependent、非 identity 或不满足纯整数比较/布尔运算检查的 mask 保留 tensor 物化。用户外循环不在展开范围。</p></div></details>
-<details><summary>数值正确性与已知未覆盖问题</summary><div class="inside"><ul><li>FULL 构建成功，默认测试 822/822 PASS。</li><li>4/8/16 行 full、全 masked、三 block 混合 mask、偶数列 tail：六组 VCS 完整输出 bit-exact。无效行使用 poisoned id，有效行覆盖重复 source row。</li><li>最终源码生成的六组 zbin、输入和 golden 与验收 job 逐字节一致；构建时间字段用 SOURCE_DATE_EPOCH 固定。</li><li>原始 MoE case 只验证到 ASM 编译，没有跑完整 MoE RTL。</li><li>奇数 BF16 tail（K=95，k_offset=16）前后均存在相同错误输出，本 MR 未修复；偶数列 tail PASS 不代表任意 tail 都正确。</li><li>早期 8/16 行与多 block 的不完整分配实验已经作废，本页引用的是修正后完整重跑结果。</li></ul></div></details>
-<details><summary>为什么还不能说已达到最少 cycles？</summary><div class="inside"><p>运行时源地址计算、逐行 descriptor 配置和 CT_MAIL / LD_MAIL 等等待仍在。修复后四行 LD 的启动间隔约 223、223、222 cycles，每行 LD 自身约 113 cycles。行间控制路径还值得分析，但不能把二者差值直接当作可消除时间。</p><p>本 MR 证明了这类 pattern 的 lowering 可以更快；还没有证明全局最优，也没有扩大到地址位宽、后端调度或新的 gather 硬件映射。</p></div></details>
-<details><summary>证据口径、完整参数与 job</summary><div class="inside"><p>400 MHz，VCS trace core 0 kernel span；不是排队时间或仿真 wall time。4 行：<code>N_src=16 K=128 k_offset=0 BLOCK_M=4 BLOCK_K=128 NUM_BLOCKS=1 MASK_MODE=0</code>。8 行改 BLOCK_M=8；16 行改 N_src=32、BLOCK_M=16。mask 的实际值全为 true，但编译时仍未知。</p><div class="table-wrap"><table><thead><tr><th>case</th><th>原循环 job</th><th>修复 job</th></tr></thead><tbody><tr><td>4 行</td><td><code>0e30569680f9</code></td><td><code>56c506041183</code></td></tr><tr><td>8 行</td><td><code>4e0f393e2717</code></td><td><code>1158ac6c5420</code></td></tr><tr><td>16 行</td><td><code>fe30eb481488</code></td><td><code>31809d75c571</code></td></tr></tbody></table></div><p>4 行仅展开：<code>64bdc094378b</code>，1768 cycles，zbin 3312 B。上表 8/16 行基线使用相同候选编译器关闭选项；输入和 golden 与修复一致。</p><p>基线：<code>ae17c9386719b79c07217b06994b96ff1c74fbbc</code><br>修复：<code>8120141c0d6db775c49e2fe8c1e422edc0cbe198</code><br>配套 Triton：<code>67b32ec4b860377c1d97833009bc3896a4d6b13f</code></p></div></details>
-</div>
-</section>
-<footer class="footer"><p>2026-09-14 · 根据匹配的 IR、zbin 反汇编和完整 VCS trace 整理。页面图形由内嵌实测数据绘制，离线也可阅读。</p><p><a href="http://172.16.116.216:30000/compilergroup/triton_shared/merge_requests/986">MR !986（需内网）</a> · <a href="./2026-09-03-batch-scalar-dma-loads-explained.html">参考：标量 DMA 批量化</a> · <a href="./index.html">全部技术报告</a></p></footer>
+<footer class="footer"><p>2026-09-14 · 主图说明代码机制；cycles 来自匹配的原始 VCS 产物。图中①～④是逻辑行 load 的 ID，不是汇编 PC。所有内容内嵌，离线可读。</p><p><a href="http://172.16.116.216:30000/compilergroup/triton_shared/merge_requests/986">MR !986（需内网）</a> · <a href="./2026-09-03-batch-scalar-dma-loads-explained.html">参考：标量 DMA 批量化</a> · <a href="./index.html">全部报告</a></p></footer>
 </main>
 <script>
-// Keep measurement data separate from the explanatory code snippets.
-const versions={
- before:{title:'原始版本：先做 mask，再循环 gather',desc:'mask 生成循环 + gather 行循环；布尔结果写入临时 buffer 后再读回。',cycles:1857,count:418,bytes:1912,job:'0e30569680f9',code:'ids, flags = load_metadata()\n\nmask_tmp = alloc(4 × int32)\nfor r in range(4):\n    mask_tmp[r] = int(flags[r] != 0)\n\nfill_zero(result)\nfor r in range(4):\n    if mask_tmp[r] != 0:\n        load_row(r)\n\nstore(result)'},
- unroll:{title:'中间版本：只展开 gather 行循环',desc:'行号成为常量，但前面仍需用一个循环生成并存储 mask。',cycles:1768,count:378,bytes:3312,job:'64bdc094378b',code:'ids, flags = load_metadata()\n\nmask_tmp = alloc(4 × int32)\nfor r in range(4):\n    mask_tmp[r] = int(flags[r] != 0)\n\nfill_zero(result)\nif mask_tmp[0] != 0: load_row(0)\nif mask_tmp[1] != 0: load_row(1)\nif mask_tmp[2] != 0: load_row(2)\nif mask_tmp[3] != 0: load_row(3)\nstore(result)'},
- after:{title:'完整修复：直接消费 flag',desc:'展开行循环，并消除 mask 的中间存储。源行号和源地址仍是动态的。',cycles:1448,count:306,bytes:3104,job:'56c506041183',code:'ids, flags = load_metadata()\nfill_zero(result)\n\nif flags[0] != 0: load_row(0)\nif flags[1] != 0: load_row(1)\nif flags[2] != 0: load_row(2)\nif flags[3] != 0: load_row(3)\n\nstore(result)\n\n# load_row(r) 内仍计算 ids[r] * K\n# 保留行 mask 和列 tail 的保护'}
-};
-const traces=[
- {key:'before',name:'Before · 两个循环',cycles:1857,vp:[696,779],ld:[[898,1012],[1128,1244],[1360,1472],[1588,1706]],st:[1741,1857]},
- {key:'unroll',name:'中间版本 · 仅展开',cycles:1768,vp:[702,785],ld:[[822,936],[1047,1170],[1280,1392],[1502,1616]],st:[1652,1768]},
- {key:'after',name:'After · 展开 + 标量谓词',cycles:1448,vp:[292,375],ld:[[514,627],[737,850],[960,1072],[1182,1296]],st:[1332,1448]}
-];
-document.querySelectorAll('[data-version]').forEach(button=>button.addEventListener('click',()=>{
- const v=versions[button.dataset.version];
- document.querySelectorAll('[data-version]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
- document.getElementById('version-title').textContent=v.title;
- document.getElementById('version-desc').textContent=v.desc;
- document.getElementById('version-cycles').textContent=v.cycles;
- document.getElementById('version-count').textContent=v.count;
- document.getElementById('version-saving').textContent=v.cycles===1857?'基线':`−${1857-v.cycles} cy`;
- document.getElementById('version-bytes').textContent=`${v.bytes} B`;
- document.getElementById('version-job').textContent=`VCS job：${v.job}`;
- document.getElementById('version-code').textContent=v.code;
-}));
-document.querySelector('[data-version="after"]').click();
-const timeline=document.getElementById('timeline');
-const detail=document.getElementById('event-detail');
-// Stable semantic IDs match dynamic work across binaries; they are not PCs.
-const instructionDefs=[
- {id:'F0',name:'结果清零',asm:'VP_STSR',kind:'vp',range:t=>t.vp,desc:'将 result 填 0，保证无效行 / 列输出为 0。'},
- ...[0,1,2,3].map(i=>({id:`G${i}`,name:`搬入第 ${i} 行`,asm:'LD_MOV',kind:'ld',range:t=>t.ld[i],desc:`src[ids[${i}], :] → result[${i}, :]；128 个 BF16，共 256 B。`})),
- {id:'S0',name:'写回结果',asm:'ST_MOV',kind:'st',range:t=>t.st,desc:'将 result 的 4 × 128 个 BF16 写到输出内存。'}
-];
-let showMiddle=false, alignInstruction=false;
-function renderTimeline(){
- timeline.replaceChildren();
- const scale=alignInstruction?140:1900;
- const ticks=alignInstruction?[0,20,40,60,80,100,120,140]:[0,500,1000,1500,1900];
- const ruler=document.createElement('div');ruler.className='pair-ruler';
- const origin=document.createElement('span');origin.className='zero-label';origin.textContent='共同起点 →';
- const axis=document.createElement('div');axis.className='axis';
- ticks.forEach(n=>{const tick=document.createElement('span');tick.style.left=`${n/scale*100}%`;tick.style.transform=n===scale?'translateX(-100%)':'';tick.textContent=n===0?'0 cy':String(n);axis.append(tick);});
- const endLabel=document.createElement('span');endLabel.className='metric-label';endLabel.textContent='原始开始 → 完成 / 执行耗时';
- ruler.append(origin,axis,endLabel);timeline.append(ruler);
- instructionDefs.forEach(inst=>{
-  const pair=document.createElement('div');pair.className='pair';pair.dataset.id=inst.id;
-  const heading=document.createElement('div');heading.className='pair-heading';
-  const id=document.createElement('b');id.className='iid'+(inst.kind==='vp'?' purple':inst.kind==='st'?' blue':'');id.textContent=inst.id;
-  const name=document.createElement('b');name.textContent=`${inst.name} · ${inst.asm}`;
-  const [bs,be]=inst.range(traces[0]),[as,ae]=inst.range(traces[2]);
-  const gain=document.createElement('span');gain.className='gain';gain.textContent=alignInstruction?`执行 ${be-bs} → ${ae-as} cy`:`开始提前 ${bs-as} cy`;
-  heading.append(id,name,gain);pair.append(heading);
-  const desc=document.createElement('p');desc.className='pair-desc';desc.textContent=inst.desc;pair.append(desc);
-  traces.filter(t=>showMiddle||t.key!=='unroll').forEach(t=>{
-   const [start,end]=inst.range(t),duration=end-start;
-   const row=document.createElement('div');row.className='pair-row';
-   const label=document.createElement('span');label.className='pair-label';label.textContent=t.key==='before'?'Before':t.key==='after'?'After':'仅展开';
-   const lane=document.createElement('div');lane.className='pair-lane';
-   if(!alignInstruction){const pre=document.createElement('span');pre.className='preelapsed';pre.style.width=`${start/scale*100}%`;pre.textContent=`开始前已过 ${start} cy`;lane.append(pre);}
-   const bar=document.createElement('span');bar.className=`bar ${inst.kind}`;bar.style.left=`${(alignInstruction?0:start)/scale*100}%`;bar.style.width=`${duration/scale*100}%`;bar.textContent=alignInstruction?`${inst.id} · ${inst.asm} · ${duration} cy`:inst.id;
-   const text=`${inst.id} ${inst.name} / ${label.textContent}：从 kernel 起点经过 ${start} cy 开始，${end} cy 完成；指令执行 ${duration} cy。`;
-   bar.title=text;bar.tabIndex=0;bar.setAttribute('aria-label',text);
-   ['mouseenter','focus','click'].forEach(event=>bar.addEventListener(event,()=>{detail.textContent=text;}));
-   lane.append(bar);
-   const metric=document.createElement('span');metric.className='pair-metric';
-   const time=document.createElement('b');time.textContent=`${start} → ${end} cy`;
-   metric.append(time,document.createElement('br'),document.createTextNode(`执行 ${duration} cy`));
-   row.append(label,lane,metric);pair.append(row);
-  });
-  timeline.append(pair);
- });
- document.getElementById('axis-explainer').textContent=alignInstruction
- ?'当前把每条指令自己的开始时刻对齐到 0，只比较执行耗时；这不是它们在真实 kernel 中同时开始。你会看到前后条形长度几乎相同，收益主要来自更早开始。右侧保留原始 kernel 时间。'
- :'所有横条从同一条 cycle 0 竖线出发。斜纹段 = 从 kernel 起点到该指令开始前已经经过的时间；实色段 = 指令实际执行。斜纹不是这条指令的阻塞时间，包含前序工作、重叠执行和等待。';
+// The main diagram expresses work and ordering, not measured cycle durations.
+const ids=['①','②','③','④'];
+function block(label,subtitle,kind,explanation){
+ const el=document.createElement('div');el.className='step '+kind;el.tabIndex=0;
+ const title=document.createElement('b');title.textContent=label;
+ const sub=document.createElement('small');sub.textContent=subtitle;
+ el.append(title,sub);el.title=explanation;el.setAttribute('aria-label',label+'：'+explanation);
+ ['mouseenter','focus','click'].forEach(event=>el.addEventListener(event,()=>{document.getElementById('row-detail').textContent=explanation;}));
+ return el;
 }
-renderTimeline();
-document.getElementById('show-middle').addEventListener('click',function(){showMiddle=!showMiddle;this.setAttribute('aria-pressed',String(showMiddle));this.textContent=showMiddle?'隐藏“仅展开”时序':'显示“仅展开”时序';renderTimeline();});
-[['align-kernel',false],['align-instruction',true]].forEach(([id,mode])=>document.getElementById(id).addEventListener('click',()=>{alignInstruction=mode;document.getElementById('align-kernel').setAttribute('aria-pressed',String(!mode));document.getElementById('align-instruction').setAttribute('aria-pressed',String(mode));renderTimeline();}));
+for(let r=0;r<4;r++){
+ for(const version of ['before','after']){
+  const row=document.createElement('div');row.className='process-row';
+  const id=document.createElement('span');id.className='rid';id.innerHTML='<b>'+ids[r]+' LD'+r+'</b><br>result['+r+']';
+  const prep=document.createElement('div');
+  if(version==='before'){
+   prep.className='steps';
+   prep.append(block('CT 读 flag','flags['+r+']','',ids[r]+' Before：先读取这行的原始 flag。After 把这次读取移到直接控制该行 LD 的位置。'),
+    block('比较 → 0/1','flag != 0','cut',ids[r]+' 将比较结果物化成整数 0 或 1，准备写入临时 mask；After 无需保存这个中间值。'),
+    block('写临时 mask','mask_tmp['+r+']','cut',ids[r]+' 将这行的 0/1 写进 L2 临时 mask buffer；本次消除这次中间写入。'));
+  }else{prep.className='deleted';prep.innerHTML='<b>删除整段 mask 生成路径</b><br>无需分配、写入 mask_tmp';}
+  const arrow=document.createElement('span');arrow.className='bridge';arrow.textContent=version==='before'?'→':'';
+  const work=document.createElement('div');work.className='steps';
+  work.append(block(version==='before'?'读回 mask':'CT 读 flag',version==='before'?'mask_tmp['+r+']':'flags['+r+']',version==='before'?'cut':'',ids[r]+(version==='before'?' Before：又从临时 buffer 读取刚生成的 0/1。':' After：直接读取原始 flag，不再消费临时 mask。')),
+   block(version==='before'?'再次判断':'直接判断','是否有效',version==='before'?'cut':'',ids[r]+' 有效性判断保留；false 时不能访问无效源地址。'),
+   block('算源地址','ids['+r+'] × K','',ids[r]+' 仍需读取运行时源行号、计算地址并配置 descriptor；此框表示一组控制指令。'),
+   block('LD'+r+' 搬行','256 B','dma',ids[r]+' LD_MOV：src[ids['+r+'], :] → result['+r+', :]。前后搬运量相同。'));
+  row.append(id,prep,arrow,work);document.getElementById(version+'-rows').append(row);
+ }
+}
+// Exact trace evidence is secondary and remains at the original measurement scope.
+const traces=[
+ {name:'Before · 1857 cy',vp:[696,779],ld:[[898,1012],[1128,1244],[1360,1472],[1588,1706]],st:[1741,1857]},
+ {name:'After · 1448 cy',vp:[292,375],ld:[[514,627],[737,850],[960,1072],[1182,1296]],st:[1332,1448]}
+];
+const evidence=document.getElementById('raw-timeline');
+traces.forEach(t=>{
+ const g=document.createElement('div');g.className='trace-group';
+ const title=document.createElement('div');title.className='trace-title';title.textContent=t.name;g.append(title);
+ const lanes=[['清零',[{range:t.vp,label:'清零',kind:'vp'}]],['四行 LD',t.ld.map((range,i)=>({range,label:ids[i],kind:'ld'}))],['写回',[{range:t.st,label:'ST',kind:'st'}]]];
+ lanes.forEach(([name,events])=>{
+  const row=document.createElement('div');row.className='trace-row';const label=document.createElement('span');label.className='trace-label';label.textContent=name;
+  const lane=document.createElement('div');lane.className='trace-lane';
+  events.forEach(e=>{const [s,end]=e.range;const b=document.createElement('span');b.className='trace-block '+e.kind;b.style.left=(s/1900*100)+'%';b.style.width=((end-s)/1900*100)+'%';b.textContent=e.label;b.tabIndex=0;
+   const text=t.name+' / '+e.label+'：'+s+' → '+end+' cy，执行 '+(end-s)+' cy';b.title=text;b.setAttribute('aria-label',text);['mouseenter','focus','click'].forEach(event=>b.addEventListener(event,()=>{document.getElementById('trace-detail').textContent=text;}));lane.append(b);});
+  row.append(label,lane);g.append(row);
+ });
+ const ruler=document.createElement('div');ruler.className='ruler';[0,500,1000,1500,1900].forEach(n=>{const span=document.createElement('span');span.textContent=n+' cy';span.style.left=(n/1900*100)+'%';if(n===1900)span.style.transform='translateX(-100%)';ruler.append(span);});g.append(ruler);evidence.append(g);
+});
+const dataRows=[['清零',traces[0].vp,traces[1].vp],...ids.map((id,i)=>[id+' LD'+i,traces[0].ld[i],traces[1].ld[i]]),['ST 写回',traces[0].st,traces[1].st]];
+dataRows.forEach(([name,b,a])=>{const tr=document.createElement('tr');[name,b.join(' → '),a.join(' → '),(b[1]-b[0])+' → '+(a[1]-a[0])+' cy'].forEach(value=>{const td=document.createElement('td');td.textContent=value;tr.append(td);});document.getElementById('raw-table').append(tr);});
 document.getElementById('theme').addEventListener('click',()=>{const root=document.documentElement;const dark=root.dataset.theme?root.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;root.dataset.theme=dark?'light':'dark';});
 </script>
-</body>
-</html>
+</body></html>
