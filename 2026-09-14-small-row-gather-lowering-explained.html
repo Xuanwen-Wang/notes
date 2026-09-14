@@ -23,7 +23,7 @@
 </head>
 <body><main class="wrap">
 <div class="top"><a href="./index.html">← 技术报告</a><button id="theme" type="button" aria-label="切换明暗主题">切换明暗</button></div>
-<p class="callout"><b>后续首版已实现：</b>MR !988 复用父路径已有 LD 等待，真实 VCS 从 1448 降到 1028 cy；没有移动 CT 读取。<a href="./2026-09-14-gather-parent-acquire-first.html">看新时序图、420 cy 对账与残留 58 条 CT</a>。下文保留 MR !986 和手工原型的历史对照。</p>
+<p class="callout"><b>最新决策：本次只落地 C1。</b>MR !988 复用父路径已有 LD 等待，真实 VCS 从 1448 降到 1028 cy；没有移动 CT 读取。手工 C2 集中准备四行后反而变成 1124 cy，暂不继续。<a href="./2026-09-14-gather-parent-acquire-first.html#c2">看 CT 准备与 LD 同起点图、C2 慢 96 cy 的对账</a>。下文保留 MR !986 和早期 1040 cy 原型的历史对照。</p>
 <header>
 <p class="eyebrow">ISSUE #153 · STRUCTUREDTOMEMREF · 4 × 128 BF16</p>
 <h1>四行 Gather：已经省了什么，<br>为什么还能更快？</h1>
@@ -103,16 +103,17 @@ store(result)</code></pre></div></div>
 <div class="schedule"><div class="schedule-head"><b>A · 修复前 —— 搬一行，再推进下一行</b><span>首条 LD 在 kernel 898 cy 开始 · kernel 共 1857 cy</span></div><div id="schedule-before"></div><p class="schedule-reading">四条 LD 走完跨越 <b>808 cy</b>；相邻两条之间各隔 <b>116 cy</b>。</p></div>
 <div class="schedule"><div class="schedule-head"><b>B · 当前 MR —— 整体更早，但阶梯形状基本没变</b><span>首条 LD 在 kernel 514 cy 开始 · kernel 共 1448 cy</span></div><div id="schedule-after"></div><p class="schedule-reading">四条 LD 走完仍跨越 <b>782 cy</b>；每条 LD 自身约 <b>113 cy</b>，三段行间间隔仍各有 <b>110 cy</b>。</p></div>
 <div class="schedule"><div class="schedule-head"><b>C₁ · 新原型实测 —— 提前读行号，下一条不再等上一条完成</b><span>首条 LD 在 kernel 536 cy 开始 · kernel 共 1040 cy</span></div><div id="schedule-prototype"></div><p class="schedule-reading">与 A / B 共用 <b>900 cy</b> 比例尺、首条 LD 起点为 0。四条走完缩至 <b>352 cy</b>；②在①完成前 <b>55 cy</b> 就已开始，③、④也与前一条重叠。</p></div>
-<div class="schedule future-schedule"><div class="schedule-head"><b>C₂ · 进一步目标 —— 地址提前备好，四条 LD 紧邻提交</b><span class="scope-label">尚未实现 · 调度示意，无 cycle 预测</span></div>
+<div class="schedule future-schedule"><div class="schedule-head"><b>C₂ · 早期设想 —— 地址提前备好，四条 LD 紧邻提交</b><span class="scope-label">历史示意 · 实测后本次不采用</span></div>
+<p class="callout"><b>该设想已有手工实测：</b>四行整体搬运跨度缩短 155 cy，但首条推迟 251 cy，kernel 从 1028 增至 1124 cy。<a href="./2026-09-14-gather-parent-acquire-first.html#c2">以新的同起点实测图为准</a>；以下虚线只保留早期设想，不代表当前成果或后续承诺。</p>
 <div class="future-prep">先准备有效行的 ids、地址和 descriptor；保留每行 mask 保护。然后连续提交下方四条 LD。</div>
 <div id="schedule-future"></div>
 <p class="schedule-reading"><b>时间向右 →</b> 虚线黄色块表示命令在途（含排队与搬运），重叠表示允许多个请求尚未完成；不表示硬件同时传输四份数据。此图无数值比例尺。</p>
 </div>
 </div></div>
-<div class="legend"><span><i class="sw dma"></i>A / B / C₁ 黄色：实测 LD 执行</span><span><i class="sw"></i>蓝色：行间处理时间</span><span><i class="sw save"></i>C₂ 虚线：待验证的紧邻提交</span></div>
+<div class="legend"><span><i class="sw dma"></i>A / B / C₁ 黄色：历史实测 LD 执行</span><span><i class="sw"></i>蓝色：行间处理时间</span><span><i class="sw save"></i>C₂ 虚线：早期设想，本次不采用</span></div>
 <div id="schedule-detail" class="row-detail" aria-live="polite">看②这一行：当前①在 627 cy 完成，②到 737 cy 才开始；中间 110 cy 还包含下一行地址准备等工作。要继续提速，应让这些准备尽早与①的搬运重叠。</div>
 <p class="footnote">蓝色区间由相邻 LD 的结束 / 开始时间相减得到，包含地址准备、配置、同步及发射推进等，不能全部叫“CT 阻塞”，也不能把 3 × 110 cy 当作一定能省下的 cycles。</p>
-<div class="compare-notes"><div><h3>MR 已经做的：把整条链提前</h3><p>不再先生成临时 mask，再读回判断；展开小行数循环，减少动态控制。首条 LD 提前 384 cy，后续工作随之前移。</p></div><div><h3>新原型已验证：改变这条链的形状</h3><p>C₁ 让下一行 CT 准备与上一行搬运重叠，再省 408 cy。C₂ 的四条紧邻提交仍待实现；C₁ 的结果不能当作正式 Pass 或本 MR 的新增收益。</p></div></div>
+<div class="compare-notes"><div><h3>MR !986 已经做的：把整条链提前</h3><p>不再先生成临时 mask，再读回判断；展开小行数循环，减少动态控制。首条 LD 提前 384 cy，后续工作随之前移。</p></div><div><h3>历史原型与当前落地方案</h3><p>这里的 C₁ 是提前读取 metadata 的 1040 cy 原型。MR !988 用 parent acquire 复用实现 1028 cy，保留原 CT 顺序；本次落地这一版。C₂ 集中准备方案实测回退，暂停推进。</p></div></div>
 </section>
 <section id="cycles" class="panel">
 <h2>409 cycles 的贡献：89 来自展开，再 320 来自 mask 优化</h2>
@@ -148,7 +149,7 @@ store(result)</code></pre></div></div>
 <h3 style="margin-top:22px">BatchScalarDmaLoadsPass 能直接做吗？不能，匹配的对象不同</h3>
 <p class="note">该 Pass 要求单元素暂存、单 DMA writer、单 CT reader，且三者同 block。这里 ids 是四元素 buffer、四个 reader 分散在不同 if；payload 每行 256 B，最终由 ST 消费。把元素数限制放宽不会自动解决跨分支依赖，其地址闭包也不允许任意移动有副作用的 <code>memref.load</code>。</p>
 <div class="cols"><div class="fact"><h3>优先方案：复用 parent 的就绪证明</h3><p>扩展 InjectSync / Staircase：parent 已经确认 metadata 完成，就让这份证明覆盖后续 if 内的同版本读取。检查支配关系、无覆盖写、同一 epoch 和 MAIL 配对。保留原 guard，也避免全 false 时多读 ids。</p></div><div class="fact"><h3>备选方案：有界的只读 metadata 提前读取</h3><p>把 C₁ 原型做成独立中端优化：只移动已完整初始化、界内、无后续写入的 metadata 读取。需控制稀疏 mask 的无用读取与寄存器压力，不宜直接改成“所有 LD 都往前排”。</p></div></div>
-<p class="note"><b>要接近 C₂，还需要第二步。</b>我另试了在 ZeusHigh 中把地址算式也提前，最终汇编与 C₁ 完全相同：descriptor lowering 在各消费点又构造了宽地址运算。正式优化需要保留低层地址计算结果或做有界 CT 调度，并权衡 GPR / BReg 活跃区间、spill 和队列带宽。</p>
+<p class="note"><b>历史评估：</b>当时在 ZeusHigh 中提前地址算式，最终汇编与 C₁ 相同，因为 descriptor lowering 又在各消费点构造宽地址运算。后续直接手工重排汇编验证了 C₂：集中准备四行会推迟首条 LD，净慢 96 cy。<a href="./2026-09-14-gather-parent-acquire-first.html#c2">最新分析与实验边界</a>；本次不继续该方向。</p>
 <div class="callout"><b>C₁ 实验对账：</b>首行前多准备 22 cy，四行搬运阶段从 782 缩到 352 cy（少 430），收尾不变。净省 <b>430 − 22 = 408 cy</b>，kernel <b>1448 → 1040 cy（−28.2%）</b>。两组 VCS 输出均与 golden 逐字节一致。④自身耗时反而由 114 增至 149 cy，因此应看整段 kernel 收益，不能简单相加单条 LD 时长。</div>
 <details><summary>C₁ 原型的精确时间与验证范围</summary><div class="inside"><div class="table-scroll"><table><thead><tr><th>指令</th><th>B · 当前 MR</th><th>C₁ · IR 原型</th></tr></thead><tbody><tr><td>① LD0</td><td>514 → 627</td><td>536 → 648</td></tr><tr><td>② LD1</td><td>737 → 850</td><td>593 → 706</td></tr><tr><td>③ LD2</td><td>960 → 1072</td><td>666 → 777</td></tr><tr><td>④ LD3</td><td>1182 → 1296</td><td>739 → 888</td></tr><tr><td>最终 ST</td><td>1332 → 1448</td><td>924 → 1040</td></tr></tbody></table></div><p>2026-09-14 VCS jobs：baseline <code>ca64d0fb6e83</code>；原型 <code>746647fbd043</code>。同一份输入 / golden，4 行全有效、K=128、单 block、1 core。只是原验收 build 的受控 IR 实验，未写成生产 Pass，未验收全 false、混合 mask、更多行数或 loop。</p><p>两次以第一条 CT 事件（绝对时间戳 1924）为 0，统计到最终 ST 完成；trace 没有 TASK_START 标记，但有 task-done，解码完整且无未配对事件。静态 LD_MOV 均为 7；LD_MAIL 从 4 降到 0，CT_MAIL 从 6 降到 3，ST_MAIL 均为 4。减少 MAIL 条数不是逐指令 cycle 归因。</p></div></details>
 <details><summary>核对汇编位置与 trace 口径</summary><div class="inside"><pre><code>0x5c8  LD_MOV ... BRx[6] BRa[8]       # Row 0
