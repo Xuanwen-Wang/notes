@@ -22,8 +22,41 @@
 <h1>四行 Gather，究竟删掉了什么？</h1>
 <p class="lede">本来只需要“读 flag → 判断 → 搬这一行”，编译器却先把判断结果写进临时内存，随后又读回来判断。<strong>去掉这圈内存往返，再去掉行循环的重复控制，kernel 少了 409 cycles。</strong></p>
 <div class="kpis"><div class="kpi"><b>1857 → 1448 cy</b><small>同参 VCS 实测 · 减少 22.02%</small></div><div class="kpi"><b class="green">少 112 个 CT 事件</b><small>减少控制工作，不是减少数据量</small></div><div class="kpi"><b>仍搬 4 × 256 B</b><small>四条 LD 还没有实现并行连发</small></div></div>
-<nav class="nav" aria-label="文章目录"><a href="#trace">主图：删掉的工作</a><a href="#cycles">省多少 cycles</a><a href="#code">对应代码</a><a href="#evidence">验证与原始时序</a></nav>
+<nav class="nav" aria-label="文章目录"><a href="#pattern">先看原始 kernel</a><a href="#trace">主图：删掉的工作</a><a href="#cycles">省多少 cycles</a><a href="#code">对应代码</a><a href="#evidence">验证与原始时序</a></nav>
 </header>
+
+<section id="pattern" class="panel">
+<h2>先看原始 kernel：按行号取四行，flag 决定这一行要不要取</h2>
+<p class="note">这是从 issue #153 抽出的最小 Triton pattern：从 BF16 源矩阵中按运行时行号取数据，写到一个 4 × 128 的输出块。没有 PE 计算，便于单独观察 gather 的下降开销。</p>
+<div class="cols"><div class="fact"><h3>Triton 输入代码 · 优化前后写法相同</h3>
+<pre><code><span class="cm"># Single block, full columns: K = 128</span>
+rows = tl.arange(0, 4)
+cols = tl.arange(0, 128)
+ids = tl.load(row_ids_ptr + rows)
+flags = tl.load(flags_ptr + rows)
+
+tile = tl.load(
+    src + ids[:, None] * K + cols[None, :],
+    mask=(flags[:, None] != 0),
+    other=0,
+)
+tl.store(
+    dst + rows[:, None] * 128 + cols[None, :],
+    tile,
+)</code></pre>
+<p class="small">为说明主路径，这里只展示单 block、完整列的核心代码，省略 JIT 包装。实际测试 kernel 还保留运行时 K、k_offset、列边界保护和多 block 路径。</p></div>
+<div><h3>把变量对到实际数据</h3>
+<p class="note"><code>src</code>：16 × 128 源矩阵；<code>row_ids</code>：4 个源行号；<code>flags</code>：4 个有效性标记；<code>dst</code>：4 × 128 输出。每行 128 个 BF16，连续 <b>256 B</b>。</p>
+<p class="small">示意：ids = [7, 2, 7, 10]，flags = [1, 1, 0, 1]。这组值用于解释语义，不是性能验收输入；性能图中四行 flag 都为真。</p>
+<div class="table-scroll"><table><thead><tr><th>输出行</th><th>来源 / 结果</th></tr></thead><tbody>
+<tr><td>① dst[0, :]</td><td>取 src[7, :]，搬 256 B</td></tr>
+<tr><td>② dst[1, :]</td><td>取 src[2, :]，搬 256 B</td></tr>
+<tr><td>③ dst[2, :]</td><td>flag 为 0，不读源数据，输出全 0</td></tr>
+<tr><td>④ dst[3, :]</td><td>取 src[10, :]，搬 256 B</td></tr>
+</tbody></table></div>
+<p class="note"><code>ids[:, None]</code> 给每行一个源行号，<code>cols[None, :]</code> 给这一行的 128 个连续列位置；二者组成 4 × 128 的地址块。flag 沿列广播，控制整行是否读取；<code>other=0</code> 保证未读取的位置为 0。</p></div></div>
+<div class="callout neutral"><b>编译时知道“要处理四行”，不知道“取哪四行、哪些行有效”。</b>这就是静态小行数、非末维 gather、末维连续 payload：在行维选数据，每行内部连续。下面比较的是同一段 Triton 被编译器生成了什么代码；临时 <code>mask_tmp</code> 和两个行循环都是下降后的产物。</div>
+</section>
 
 <section id="trace" class="panel">
 <h2>一张图看懂：每一行从 flag 到 LD，原来绕了什么路</h2>
