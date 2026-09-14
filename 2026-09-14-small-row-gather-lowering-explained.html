@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="直接画出小行 gather 修复前后删除的 mask 内存往返与循环控制，再用 VCS 实验说明 409 cycles 的收益。">
-<title>小行 Gather：究竟删掉了什么</title>
+<title>四行 Gather：已省的 cycles 与 LD 并行空间</title>
 <link rel="icon" href="data:,">
 <style>
 :root{--bg:#f2f5f6;--paper:#fff;--tint:#e8edef;--line:#cfd9dd;--ink:#101619;--soft:#46565d;--muted:#647780;--blue:#0e6a87;--bluebg:#d6e9f0;--red:#a8442a;--redbg:#f3dad1;--green:#1f6b4c;--greenbg:#d4eadd;--gold:#9a6e14;--goldbg:#f7ebcf;color-scheme:light}
@@ -13,18 +13,22 @@
 *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.75 system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif}.wrap{max-width:1160px;margin:auto;padding:28px 24px 60px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px}a{color:var(--blue);text-underline-offset:3px}.top a{font-size:12px;text-decoration:none;color:var(--muted)}button{background:var(--paper);border:1px solid var(--line);border-radius:3px;color:var(--soft);font:inherit;padding:7px 12px;cursor:pointer}button:hover{border-color:var(--blue)}button[aria-pressed=true]{background:var(--bluebg);border-color:var(--blue);color:var(--blue)}:focus-visible{outline:3px solid var(--blue);outline-offset:3px}h1{font-size:clamp(28px,4vw,42px);line-height:1.25;letter-spacing:-.03em;font-weight:600;margin:10px 0 18px}h2{font-size:17px;font-weight:600;margin:0 0 15px;padding-bottom:12px;border-bottom:1px solid var(--line)}h3{font-size:15px;margin:0 0 8px}.eyebrow{font:11px ui-monospace,monospace;letter-spacing:.12em;color:var(--muted)}.lede{font-size:17px;color:var(--soft);max-width:860px}.lede strong{color:var(--ink)}p{margin:10px 0}.small{font-size:12px;color:var(--muted)}.note{font-size:13px;color:var(--soft)}.panel{border:1px solid var(--line);background:var(--paper);padding:22px;border-radius:3px;margin-top:28px}.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}.cols>*{min-width:0}.kpis{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);background:var(--line);gap:1px;margin:25px 0}.kpi{background:var(--paper);padding:16px 20px}.kpi b{display:block;font-size:27px;line-height:1.5;font-variant-numeric:tabular-nums}.kpi small{color:var(--muted);font-size:12px}.green{color:var(--green)}.red{color:var(--red)}.blue{color:var(--blue)}code,pre{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}code{font-size:.9em;background:var(--tint);padding:1px 4px;border-radius:2px;overflow-wrap:anywhere}pre{overflow:auto;font-size:12px;line-height:1.8;margin:0;color:var(--soft)}pre code{background:none;padding:0;font-size:inherit;overflow-wrap:normal}.cm{color:var(--muted)}.nav{display:flex;gap:20px;flex-wrap:wrap;font-size:12px}.nav a{text-decoration:none;color:var(--soft);border-bottom:1px solid var(--line)}.callout{border-left:3px solid var(--green);background:var(--greenbg);padding:13px 16px;font-size:14px;margin-top:18px}.callout.neutral{background:var(--tint);border-color:var(--muted);color:var(--soft);font-size:13px}.source{border-left:3px solid var(--blue);padding:10px 16px;background:var(--tint);margin:18px 0}.diagram-scroll,.table-scroll{overflow-x:auto}.diagram{min-width:960px}.phase-head{display:grid;grid-template-columns:98px 1fr 35px 1.2fr;gap:8px;margin:14px 0 8px;font-size:12px;color:var(--soft)}.phase-head>span:nth-child(2){border-bottom:2px solid var(--red);padding-bottom:7px}.phase-head>span:nth-child(4){border-bottom:2px solid var(--blue);padding-bottom:7px}.process-row{display:grid;grid-template-columns:98px 1fr 35px 1.2fr;gap:8px;align-items:center;margin:7px 0}.rid{font:12px ui-monospace,monospace;color:var(--soft)}.rid b{font-weight:600;color:var(--ink)}.steps{display:flex;gap:3px;min-width:0}.step{flex:1;border:1px solid var(--blue);background:var(--bluebg);color:var(--blue);padding:9px 4px;text-align:center;font-size:12px;line-height:1.55;border-radius:2px;white-space:nowrap;cursor:help}.step b{font-weight:600}.step small{display:block;font:10px/1.6 ui-monospace,monospace;opacity:.85}.step.cut{color:var(--red);border-color:var(--red);background:var(--redbg)}.step.dma{color:var(--gold);border-color:var(--gold);background:var(--goldbg);flex:.8}.bridge{font-size:18px;text-align:center;color:var(--muted)}.diagram-title{display:flex;justify-content:space-between;align-items:baseline;gap:20px;margin-top:22px}.diagram-title b{font-size:14px}.diagram-title span{font-size:12px;color:var(--muted)}.loop-strip{margin:8px 0 12px 106px;border:1px dashed var(--red);background:var(--redbg);color:var(--red);font-size:12px;padding:8px 12px}.loop-strip.keep{border-color:var(--green);background:var(--greenbg);color:var(--green)}.after-head{display:grid;grid-template-columns:98px 1fr 35px 1.2fr;gap:8px;font-size:12px;color:var(--soft);margin:14px 0 8px}.after-head span:nth-child(2){border-bottom:2px solid var(--green);padding-bottom:7px}.after-head span:nth-child(4){border-bottom:2px solid var(--green);padding-bottom:7px}.deleted{border:1px dashed var(--green);background:var(--greenbg);color:var(--green);text-align:center;padding:8px;font-size:12px;line-height:1.6}.legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:18px;font-size:12px;color:var(--soft)}.legend span{display:flex;align-items:center;gap:7px}.sw{width:12px;height:12px;border:1px solid var(--blue);background:var(--bluebg)}.sw.cut{background:var(--redbg);border-color:var(--red)}.sw.dma{background:var(--goldbg);border-color:var(--gold)}.sw.save{background:var(--greenbg);border-color:var(--green)}.row-detail{font-size:13px;padding:12px 15px;background:var(--tint);min-height:48px;margin-top:14px;color:var(--soft)}.mechanism{border-top:1px solid var(--line);margin-top:20px;padding-top:16px}.mechanism p{font-size:14px}.mechanism b{color:var(--ink)}.experiment{display:grid;grid-template-columns:140px 1fr 86px;gap:12px;align-items:center;margin:15px 0}.experiment-label{font-size:13px}.experiment-label small{display:block;color:var(--muted);font-size:11px}.exp-track{height:39px;display:flex;background:var(--tint)}.exp-run{height:39px;background:var(--bluebg);border:1px solid var(--blue);color:var(--blue);display:flex;align-items:center;justify-content:center;font:600 13px ui-monospace,monospace}.exp-save{height:39px;border:1px dashed var(--green);background:var(--greenbg);color:var(--green);display:flex;align-items:center;justify-content:center;font:11px ui-monospace,monospace}.exp-number{font:600 14px ui-monospace,monospace;text-align:right}.ledger{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}.ledger>div{border:1px solid var(--line);padding:16px}.ledger strong{display:block;font-size:26px;color:var(--green);margin-bottom:5px}.ledger p{font-size:13px;color:var(--soft)}.equation{font:600 clamp(17px,3vw,23px)/1.6 ui-monospace,monospace;color:var(--green);text-align:center;background:var(--greenbg);padding:15px;margin-top:16px}details{border:1px solid var(--line);background:var(--paper);margin-top:14px;border-radius:3px}summary{font-size:14px;font-weight:500;padding:15px 18px;cursor:pointer}details>.inside{padding:0 18px 18px;color:var(--soft);font-size:13px}.inside li{margin:6px 0}.inside ul{padding-left:20px}table{width:100%;border-collapse:collapse;font-size:12px}td,th{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}th{background:var(--tint);font-weight:500;color:var(--muted)}.num{text-align:right;white-space:nowrap;font-family:ui-monospace,monospace}.fact{background:var(--tint);padding:15px}.fact h3{font-size:14px}.fact p{font-size:13px;color:var(--soft)}.footer{font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;margin-top:30px;overflow-wrap:anywhere}.trace-chart{min-width:740px}.trace-group{margin-top:15px}.trace-title{font-size:13px;font-weight:600;margin-bottom:8px}.trace-row{display:grid;grid-template-columns:70px 1fr;gap:8px;align-items:center;margin:5px 0}.trace-label{font:11px ui-monospace,monospace;text-align:right}.trace-lane{height:27px;background:var(--tint);position:relative}.trace-block{position:absolute;height:27px;background:var(--goldbg);color:var(--gold);border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;font:11px ui-monospace,monospace;cursor:help}.trace-block.st{color:var(--blue);background:var(--bluebg);border-color:var(--blue)}.trace-block.vp{color:var(--muted);background:var(--tint);border-color:var(--muted)}.ruler{height:23px;position:relative;margin-left:78px;border-bottom:1px solid var(--line);font:10px ui-monospace,monospace}.ruler span{position:absolute;top:4px}
 @media(max-width:800px){.wrap{padding:22px 16px 45px}.panel{padding:17px}.cols,.ledger{grid-template-columns:1fr}.kpis{grid-template-columns:1fr}.kpi{display:flex;justify-content:space-between;align-items:center;gap:15px}.kpi b{font-size:24px}.kpi small{max-width:46%}.lede{font-size:15px}.experiment{grid-template-columns:95px 1fr;gap:8px}.experiment .exp-number{display:none}.exp-save{font-size:10px}.exp-run{font-size:12px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{.top,.nav{display:none}.wrap{max-width:none;padding:0}.panel{break-inside:avoid}.diagram-scroll{overflow:visible}.diagram{min-width:0}.step{font-size:9px}.step small{font-size:8px}}
+
+/* Shared lanes keep each logical load in the same row across the comparison. */
+.compare-scroll{overflow-x:auto}.compare-chart{min-width:820px}.schedule{margin:24px 0 30px}.schedule:last-child{margin-bottom:0}.schedule-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:10px}.schedule-head b{font-size:14px}.schedule-head span{font-size:12px;color:var(--muted)}.load-row{display:grid;grid-template-columns:85px 1fr;gap:10px;align-items:center;margin:7px 0}.load-id{font:12px ui-monospace,monospace;color:var(--soft);white-space:nowrap}.load-lane{position:relative;height:38px;background:var(--tint)}.load-block{position:absolute;top:0;height:38px;display:flex;justify-content:center;align-items:center;border:1px solid var(--gold);background:var(--goldbg);color:var(--gold);font:11px ui-monospace,monospace;text-align:center;white-space:nowrap;cursor:help}.load-block.gap{background:var(--bluebg);border-color:var(--blue);color:var(--blue);flex-direction:column;font-size:11px;line-height:1.35}.load-block.gap small{font-size:10px}.load-block.planned{border-style:dashed}.load-axis{position:relative;height:24px;margin-left:95px;font:10px ui-monospace,monospace;color:var(--muted)}.load-axis span{position:absolute;border-left:1px solid var(--line);padding-left:4px}.schedule-reading{margin:8px 0 0 95px;color:var(--soft);font-size:12px}.future-schedule{padding:16px 0;border-top:1px dashed var(--green)}.future-prep{margin:0 0 12px 95px;padding:8px 12px;border:1px solid var(--blue);background:var(--bluebg);color:var(--blue);font-size:12px}.future-space{position:absolute;left:46%;width:51%;height:38px;border:1px dashed var(--green);background:var(--greenbg);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:12px}.compare-notes{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}.compare-notes p{font-size:13px;color:var(--soft)}.compare-notes b{color:var(--ink)}.overview{margin-top:20px}.overview-row{display:grid;grid-template-columns:85px 1fr;gap:10px;align-items:center;margin:10px 0;font-size:12px}.overview-lane{display:flex;height:50px;background:var(--tint)}.overview-part{display:flex;align-items:center;justify-content:center;flex-direction:column;font-size:11px;line-height:1.4;border:1px solid var(--blue);background:var(--bluebg);color:var(--blue);text-align:center}.overview-part.data{border-color:var(--gold);background:var(--goldbg);color:var(--gold)}.overview-part.finish{border-color:var(--muted);color:var(--muted);background:var(--tint)}.overview-part.saved{border-color:var(--green);color:var(--green);background:var(--greenbg);border-style:dashed}.overview-part strong{font:600 12px ui-monospace,monospace}.plain-flow{font:12px/2 ui-monospace,monospace;overflow-x:auto;padding:10px 14px;background:var(--tint);margin:12px 0}.evidence-chain{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:15px 0}.evidence-chain>div{padding:10px 13px;border:1px solid var(--line);background:var(--tint);font-size:12px}.evidence-chain strong{display:block;font:600 16px ui-monospace,monospace;color:var(--ink)}.scope-label{display:inline-block;padding:2px 8px;border:1px solid var(--green);color:var(--green);font-size:11px;white-space:nowrap}.footnote{font-size:12px;color:var(--muted)}
+.load-axis span{white-space:nowrap}.schedule-head .scope-label{color:var(--green)}
+@media(max-width:650px){.compare-notes{grid-template-columns:1fr}.overview{overflow-x:auto}.overview-inner{min-width:680px}.schedule-head{align-items:flex-start}}
+
 </style>
 </head>
 <body><main class="wrap">
 <div class="top"><a href="./index.html">← 技术报告</a><button id="theme" type="button" aria-label="切换明暗主题">切换明暗</button></div>
 <header>
-<p class="eyebrow">ISSUE #153 · STRUCTUREDTOMEMREF · 4 行 × 128 BF16</p>
-<h1>四行 Gather，究竟删掉了什么？</h1>
-<p class="lede">本来只需要“读 flag → 判断 → 搬这一行”，编译器却先把判断结果写进临时内存，随后又读回来判断。<strong>去掉这圈内存往返，再去掉行循环的重复控制，kernel 少了 409 cycles。</strong></p>
-<div class="kpis"><div class="kpi"><b>1857 → 1448 cy</b><small>同参 VCS 实测 · 减少 22.02%</small></div><div class="kpi"><b class="green">少 112 个 CT 事件</b><small>减少控制工作，不是减少数据量</small></div><div class="kpi"><b>仍搬 4 × 256 B</b><small>四条 LD 还没有实现并行连发</small></div></div>
-<nav class="nav" aria-label="文章目录"><a href="#pattern">先看原始 kernel</a><a href="#trace">主图：删掉的工作</a><a href="#cycles">省多少 cycles</a><a href="#code">对应代码</a><a href="#evidence">验证与原始时序</a></nav>
+<p class="eyebrow">ISSUE #153 · STRUCTUREDTOMEMREF · 4 × 128 BF16</p>
+<h1>四行 Gather：已经省了什么，<br>为什么还能更快？</h1>
+<p class="lede">同一段 Triton，仍然取四行数据。本次修复删掉临时 mask 的读写和行循环控制，kernel 从 <strong>1857 降到 1448 cycles</strong>。但四条 LD 仍一条接一条：<strong>第一条提前了，后面还没并行起来。</strong></p>
+<nav class="nav" aria-label="文章目录" style="margin-top:20px"><a href="#pattern">原始 kernel</a><a href="#code">本次删掉什么</a><a href="#trace">四条 LD 的对照图</a><a href="#cycles">409 cy 对账</a><a href="#parallel">下一步怎么优化</a></nav>
 </header>
-
 <section id="pattern" class="panel">
 <h2>先看原始 kernel：按行号取四行，flag 决定这一行要不要取</h2>
 <p class="note">这是从 issue #153 抽出的最小 Triton pattern：从 BF16 源矩阵中按运行时行号取数据，写到一个 4 × 128 的输出块。没有 PE 计算，便于单独观察 gather 的下降开销。</p>
@@ -58,42 +62,11 @@ tl.store(
 <div class="callout neutral"><b>编译时知道“要处理四行”，不知道“取哪四行、哪些行有效”。</b>这就是静态小行数、非末维 gather、末维连续 payload：在行维选数据，每行内部连续。下面比较的是同一段 Triton 被编译器生成了什么代码；临时 <code>mask_tmp</code> 和两个行循环都是下降后的产物。</div>
 </section>
 
-<section id="trace" class="panel">
-<h2>一张图看懂：每一行从 flag 到 LD，原来绕了什么路</h2>
-<p class="note"><b>①～④ 对应四条数据行 load。</b> flag 决定这一行要不要搬，ids 决定从源矩阵的哪一行搬。下面把 CT（控制核）做的工作写在色块里，红色是多余步骤，黄色才是搬数据的 LD。</p>
-<div class="source"><code>if flags[r] != 0: result[r, :] = src[ids[r], :]</code><p class="small">这是这一行的核心语义。所有示意都保留 mask 判断；源行号 ids[r] 仍是运行时值。</p></div>
-<div class="diagram-scroll"><div class="diagram">
-<div class="diagram-title"><b>Before：先为四行生成临时 mask，再逐行读回并搬运</b><span>下面两阶段按先后执行</span></div>
-<div class="phase-head"><span></span><span>阶段 A · CT 生成整份 mask_tmp</span><span></span><span>阶段 B · CT 读回 mask，控制四条 LD</span></div>
-<div id="before-rows"></div>
-<div class="loop-strip"><b>额外循环控制：</b>阶段 A 和 B 各有一个行循环，每轮都要判断 r &lt; 4、计算动态行偏移、r++、跳回循环头。</div>
-<div class="diagram-title"><b>After：省掉阶段 A，直接读原始 flag，控制这一行的 LD</b><span>四份固定行号代码，无 gather 行循环</span></div>
-<div class="after-head"><span></span><span>不再生成 mask_tmp</span><span></span><span>在这里直接判断 flag</span></div>
-<div id="after-rows"></div>
-<div class="loop-strip keep"><b>循环也展开了：</b>直接处理第 0、1、2、3 行，去掉行循环的测试、递增和回跳；保留每行的有效性判断、动态源地址计算与搬运。</div>
-</div></div>
-<div class="legend"><span><i class="sw cut"></i>被消除的中间存储与重复处理</span><span><i class="sw"></i>仍需执行的 CT 工作</span><span><i class="sw dma"></i>LD：真正搬一行数据</span><span><i class="sw save"></i>删除的路径</span></div>
-<p class="small"><b>这是工作流程图，横向表示处理步骤，不是 cycle 比例尺。</b>四行左对齐便于对照，不表示四条 LD 同时发出。Before 先完成全部阶段 A，再进入阶段 B；清零、mail 和列边界处理未画在主图，真实时序在下方可展开核对。</p>
-<div id="row-detail" class="row-detail" aria-live="polite">读第①行：Before “flag → 比较 → 存 mask_tmp → 读 mask_tmp → 再判断”；After “flag → 直接判断”。少的是中间绕路，这一行的数据仍要搬。</div>
-<div class="mechanism"><div class="cols"><div><h3>删掉的第一类工作：布尔值的内存往返</h3><p>判断结果原本已经在 CT 中，却被变成 0/1，写入 L2 的 <code>mask_tmp</code>，之后读回再判断。After 直接用原始 flag，不再需要临时 mask buffer 和生成它的循环。</p></div><div><h3>删掉的第二类工作：循环控制和动态行偏移</h3><p>行数编译时已知，展开成四份代码后，<code>r &lt; 4</code>、<code>r++</code>、回跳及部分 <code>base + r × 4</code> 寻址可以消除。<code>ids[r] × K</code> 仍需运行时计算。</p></div></div></div>
-<div class="callout"><b>用一句话对应参考图：</b>参考例子把“四次等待”重叠起来；本次把“生成临时 mask 再读回”和“重复循环控制”删掉。优化机制不同，所以这里用删除的工作解释收益。</div>
-</section>
-
-<section id="cycles" class="panel">
-<h2>409 cycles 怎么来的？看三个真实编译版本</h2>
-<p class="note">为了分清贡献，先只展开 gather 行循环，再加入 mask 优化。下图每根蓝条代表<b>整个 kernel 的实测耗时</b>，绿色代表与上一版本的实验差值；不是把某段指令强行标成 89 或 320 cy。</p>
-<div class="experiment"><div class="experiment-label"><b>Before</b><small>两个行循环</small></div><div class="exp-track"><div class="exp-run" style="width:100%">1857 cy</div></div><div class="exp-number">基线</div></div>
-<div class="experiment"><div class="experiment-label"><b>仅展开</b><small>仍有 mask_tmp</small></div><div class="exp-track"><div class="exp-run" style="width:95.2073%">1768 cy</div><div class="exp-save" style="width:4.7927%" title="仅展开相对 Before 少 89 cycles">89</div></div><div class="exp-number green">−89 cy</div></div>
-<div class="experiment"><div class="experiment-label"><b>完整修复</b><small>去掉 mask_tmp</small></div><div class="exp-track"><div class="exp-run" style="width:77.9752%">1448 cy</div><div class="exp-save" style="width:17.2321%" title="mask 优化相对仅展开再少 320 cycles">320</div><div class="exp-save" style="width:4.7927%" title="第一步已省的 89 cycles">89</div></div><div class="exp-number green">−409 cy</div></div>
-<div class="ledger"><div><strong>−89 cycles</strong><b>只展开 gather 行循环</b><p>动态 CT 事件 <code>418 → 378</code>。少执行循环判断、递增、回跳和部分动态寻址；阶段 A 的 mask 生成仍在。</p></div><div><strong>再 −320 cycles</strong><b>消除临时 mask 物化</b><p>动态 CT 事件 <code>378 → 306</code>。不再执行阶段 A；阶段 B 直接读原始 flag 来控制 LD。</p></div></div>
-<div class="equation">1857 − 89 − 320 = 1448 cycles</div>
-<p class="small">指令条数不是 cycles。访存、分支、等待和调度重叠都会影响净收益；这两步的贡献取自上述顺序的实测 A/B，不能直接外推到任意 kernel。</p>
-<div class="callout neutral"><b>为什么第一条 LD 能提前？</b> CT 少走了生成 mask 的循环，以及第一行的部分控制路径，后面的清零配置、地址准备和 LD 可以更早推进。首行 LD 从 kernel 起点后的 898 cy 提前到 514 cy，这是结果证据，不是“898 cy 全是阻塞”。</div>
-</section>
 
 <section id="code" class="panel">
-<h2>把图里的红色部分，对回编译器实际生成的代码</h2>
-<p class="note">根据真实 ZeusHigh IR 简化为等价伪代码。地址配置、mail、列 tail 和资源释放省略。图中①～④分别对应 <code>load_row(0～3)</code>。</p>
+<h2>同一段 Triton，编译器为什么多做了一圈？</h2>
+<p class="note"><b>先认清谁在做事：</b>CT（控制核）读行号、判断 flag、计算地址；LD 按配置把源数据搬到 L2 中的 <code>result</code>；最后 ST 把 <code>result</code> 写到输出 <code>dst</code>。因此“四条数据 LD”之外，还存在一段 CT 控制工作。</p>
+<p class="note">先看下降后的两条路径。左边先把四个 flag 的比较结果写进 L2 临时 buffer，再逐行读回；右边直接用 flag 控制搬运。下面是依据真实 ZeusHigh IR 简化的伪代码，省略地址配置、mail、列 tail 和资源释放。</p>
 <div class="cols"><div class="fact"><h3>Before · 两个循环</h3><pre><code>ids, flags = load_metadata()
 
 <span class="red">mask_tmp = alloc(4 × int32)
@@ -115,6 +88,39 @@ if <span class="green">flags[2]</span> != 0: load_row(2) <span class="cm"># ③<
 if <span class="green">flags[3]</span> != 0: load_row(3) <span class="cm"># ④</span>
 
 store(result)</code></pre></div></div>
+<p class="note"><b>这里省掉两类工作：</b>临时 mask 的生成、写入和读回；行循环的边界判断、递增、回跳及部分动态行偏移。<code>ids[r] × K</code> 的源地址计算和每行 mask 保护仍然需要。<code>fill_zero</code> 对应结果清零，<code>store</code> 对应最终写回。</p></section>
+<section id="trace" class="panel">
+<h2>四条 LD 的时序：修复前 / 当前修复 / 下一步目标</h2>
+<p class="note"><b>先看整段 kernel：主要是第一条 LD 更早开始了。</b>“首行前准备”包含读参数与元数据、mask 处理、清零和第一行地址准备；下面的伪代码已经标出其中删除的工作。</p>
+<div class="overview"><div class="overview-inner">
+<div class="overview-row"><b>修复前</b><div class="overview-lane"><div class="overview-part" style="width:48.3576%">首行前准备<strong>898 cy</strong></div><div class="overview-part data" style="width:43.511%">四行搬运及行间处理<strong>808 cy</strong></div><div class="overview-part finish" style="width:8.1314%">收尾<strong>151</strong></div></div></div>
+<div class="overview-row"><b>当前修复</b><div class="overview-lane"><div class="overview-part" style="width:27.6791%">首行前准备<strong>514 cy</strong></div><div class="overview-part data" style="width:42.111%">四行搬运及行间处理<strong>782 cy</strong></div><div class="overview-part finish" style="width:8.1852%">收尾<strong>152</strong></div><div class="overview-part saved" style="width:22.0247%">已经省下<strong>409 cy</strong></div></div></div>
+</div></div>
+<p class="footnote">两条总览从同一个 kernel 起点开始、同一比例尺。首行前少 384 cy，搬运阶段少 26 cy，收尾多 1 cy，合计少 409 cy。</p>
+<p class="note" style="margin-top:24px"><b>再把四行搬运放大：每条 LD 单独一行，①～④始终对应同一输出行。</b>为看清行与行之间的关系，A、B 都把<b>第一条数据 LD 的开始对齐到 0</b>，共用 900 cy 比例尺。黄色是这条 LD 的执行，蓝色是前一条完成后、这一条启动前的行间处理。</p>
+<div class="compare-scroll"><div class="compare-chart">
+<div class="schedule"><div class="schedule-head"><b>A · 修复前 —— 搬一行，再推进下一行</b><span>首条 LD 在 kernel 898 cy 开始 · kernel 共 1857 cy</span></div><div id="schedule-before"></div><p class="schedule-reading">四条 LD 走完跨越 <b>808 cy</b>；相邻两条之间各隔 <b>116 cy</b>。</p></div>
+<div class="schedule"><div class="schedule-head"><b>B · 当前 MR —— 整体更早，但阶梯形状基本没变</b><span>首条 LD 在 kernel 514 cy 开始 · kernel 共 1448 cy</span></div><div id="schedule-after"></div><p class="schedule-reading">四条 LD 走完仍跨越 <b>782 cy</b>；每条 LD 自身约 <b>113 cy</b>，三段行间间隔仍各有 <b>110 cy</b>。</p></div>
+<div class="schedule future-schedule"><div class="schedule-head"><b>C · 下一步目标 —— 地址提前备好，让多条 LD 同时在途</b><span class="scope-label">尚未实现 · 调度示意，无 cycle 预测</span></div>
+<div class="future-prep">先准备有效行的 ids、地址和 descriptor；保留每行 mask 保护。然后连续提交下方四条 LD。</div>
+<div id="schedule-future"></div>
+<p class="schedule-reading"><b>时间向右 →</b> 虚线黄色块表示命令在途（含排队与搬运），重叠表示允许多个请求尚未完成；不表示硬件同时传输四份数据。此图无数值比例尺。</p>
+</div>
+</div></div>
+<div class="legend"><span><i class="sw dma"></i>A / B 黄色：实测 LD 执行</span><span><i class="sw"></i>蓝色：行间处理时间</span><span><i class="sw save"></i>C 虚线：待验证的重叠调度</span></div>
+<div id="schedule-detail" class="row-detail" aria-live="polite">看②这一行：当前①在 627 cy 完成，②到 737 cy 才开始；中间 110 cy 还包含下一行地址准备等工作。要继续提速，应让这些准备尽早与①的搬运重叠。</div>
+<p class="footnote">蓝色区间由相邻 LD 的结束 / 开始时间相减得到，包含地址准备、配置、同步及发射推进等，不能全部叫“CT 阻塞”，也不能把 3 × 110 cy 当作一定能省下的 cycles。</p>
+<div class="compare-notes"><div><h3>本次已经做的：把整条链提前</h3><p>不再先生成临时 mask，再读回判断；展开小行数循环，减少动态控制。首条 LD 提前 384 cy，后续工作随之前移。</p></div><div><h3>下一步要做的：改变这条链的形状</h3><p>先让②的地址准备与①的搬运重叠，再研究多个 LD 连续提交。图 C 画的是这个目标；本 MR 还没有把它实现。</p></div></div>
+</section>
+<section id="cycles" class="panel">
+<h2>409 cycles 的贡献：89 来自展开，再 320 来自 mask 优化</h2>
+<p class="note">为了分清贡献，先只展开 gather 行循环，再加入 mask 优化。下图每根蓝条代表<b>整个 kernel 的实测耗时</b>，绿色代表与上一版本的实验差值；不是把某段指令强行标成 89 或 320 cy。</p>
+<div class="experiment"><div class="experiment-label"><b>Before</b><small>两个行循环</small></div><div class="exp-track"><div class="exp-run" style="width:100%">1857 cy</div></div><div class="exp-number">基线</div></div>
+<div class="experiment"><div class="experiment-label"><b>仅展开</b><small>仍有 mask_tmp</small></div><div class="exp-track"><div class="exp-run" style="width:95.2073%">1768 cy</div><div class="exp-save" style="width:4.7927%" title="仅展开相对 Before 少 89 cycles">89</div></div><div class="exp-number green">−89 cy</div></div>
+<div class="experiment"><div class="experiment-label"><b>完整修复</b><small>去掉 mask_tmp</small></div><div class="exp-track"><div class="exp-run" style="width:77.9752%">1448 cy</div><div class="exp-save" style="width:17.2321%" title="mask 优化相对仅展开再少 320 cycles">320</div><div class="exp-save" style="width:4.7927%" title="第一步已省的 89 cycles">89</div></div><div class="exp-number green">−409 cy</div></div>
+<div class="ledger"><div><strong>−89 cycles</strong><b>只展开 gather 行循环</b><p>动态 CT 事件 <code>418 → 378</code>。少执行循环判断、递增、回跳和部分动态寻址；阶段 A 的 mask 生成仍在。</p></div><div><strong>再 −320 cycles</strong><b>消除临时 mask 物化</b><p>动态 CT 事件 <code>378 → 306</code>。不再执行阶段 A；阶段 B 直接读原始 flag 来控制 LD。</p></div></div>
+<div class="equation">1857 − 89 − 320 = 1448 cycles</div>
+<p class="small">指令条数不是 cycles。访存、分支、等待和调度重叠都会影响净收益；这两步的贡献取自上述顺序的实测 A/B，不能直接外推到任意 kernel。</p>
 <details><summary>展开：这些步骤对应哪些 CT 指令？</summary><div class="inside">
 <div class="table-scroll"><table><thead><tr><th>图中的工作</th><th>相关指令类别</th><th>本次如何变化</th></tr></thead><tbody>
 <tr><td>读 flag / 读临时 mask</td><td><code>CT_MOV_R_[R]</code></td><td>原来有生成时读 flag、消费时读 mask 两次；现在直接读 flag 一次</td></tr>
@@ -128,16 +134,25 @@ store(result)</code></pre></div></div>
 <p>仅展开版本中，mask 循环的 69 个事件跨越约 240 cycles；消除这条路径的 kernel 净收益为 320 cycles，包含后续执行和等待变化。此处没有逐条指令的独立延迟归因。</p>
 </div></details>
 </section>
-
+<section id="parallel" class="panel">
+<h2>下一步卡在哪里？①完成之后，CT 才开始读②的行号</h2>
+<p class="note">下面不是猜测空白区。验收汇编与 CT 事件序列对齐后，能定位到这条具体依赖链：</p>
+<div class="evidence-chain"><div><strong>627 cy</strong>① LD 完成</div><span>→</span><div><strong>629 cy</strong>CT 开始读 ids[1]</div><span>→</span><div><strong>693 cy</strong>② 地址 / descriptor<br>最后一条 CT 配置</div><span>→</span><div><strong>737 cy</strong>② LD 开始</div></div>
+<div class="plain-flow"><b>当前：</b>发① → 等① → 读②行号、算②地址 → 发②<br><b>先尝试：</b>发① → 趁①搬运时准备② → 尽早发②<br><b>进一步：</b>预备多个有效行的地址 → 连发①②③④ → 等完成后写回</div>
+<p class="note"><b>为什么值得尝试？</b>①写 result[0]，②写 result[1]，目标区间互不重叠；源行即使相同也只是重复读。②的行号来自独立的元数据，不是①搬回的数据，所以数据语义没有要求“①搬完才读②行号”。</p>
+<p class="note"><b>为什么还不能直接删掉等待？</b>当前汇编复用了目标 descriptor <code>BRx[6]</code>，每行都会重配它的行偏移；还要保留条件分支中的 mailbox 顺序与输出清零依赖。必须查明等待保护的是哪项资源，并证明配置何时被硬件采样，必要时分开 descriptor 的生命周期。</p>
+<p class="note">因此应分别验证<b>地址准备与 DMA 重叠</b>、<b>多条 DMA 在途</b>两步。后者还取决于 credit、队列和内存带宽；即使四条都能提交，也不能把四个执行时长直接当成完全重叠。新的 kernel cycles 需要实际调度原型与 VCS 对比，本页没有给未来方案编造收益。</p>
+<details><summary>核对汇编位置与 trace 口径</summary><div class="inside"><pre><code>0x5c8  LD_MOV ... BRx[6] BRa[8]       # Row 0
+0x600  LD_MAIL SendMails[CT]
+0x618  CT_MAIL RecvMails[LD]
+0x620  CT_MOV_R_[R] ...              # Read ids[1]
+       ...                          # Address arithmetic and configuration
+0x7c0  CT_SETBM_PI_A ... BRx[6] PIW[1]
+0x7c8  LD_MOV ... BRx[6] BRa[9]       # Row 1</code></pre>
+<p>上述地址来自验收修复的反汇编；从 0x3e0 起的 242 条动态 CT 指令按全 true 分支路径展开，与 trace 的 opcode 低 4 位序列唯一连续匹配，起点为 CT 事件索引 63。CT 事件记录的是指令时点；629 与 693 分别是该地址准备段首尾 CT 事件，不是逐条独立 latency 之和。当前源行地址计算含多条宽整数运算，下一行准备的成本也值得继续检查。</p></div></details>
+</section>
 <section id="evidence">
 <h2 style="margin-top:30px">验证与边界：需要深入时再展开</h2>
-<details><summary>四条 LD 现在能并行发了吗？还没有，这也是剩余优化方向。</summary><div class="inside">
-<p>目标四行互不重叠，重复源行也只是重复读取。从这个最小 kernel 的数据语义看，存在重叠执行的空间。但验收汇编仍有 <code>LD_MAIL → CT_MAIL</code> 等待链，下一行的地址准备受到前面 LD 的制约。</p>
-<pre><code>当前仍近似：发 LD① → 等 LD → 准备②的地址 → 发 LD② → …
-期望研究：  发 LD① → 在搬①时准备②的地址 → 尽早发 LD② → …</code></pre>
-<p>修复后 LD 启动间隔约 223 cy，而自身执行约 113 cy。尚未追清每条依赖来自 alias、descriptor 保护还是控制流规划，不能直接删 mail，也不能把间隔都算作可消除的等待。</p>
-</div></details>
-
 <details id="raw-trace"><summary>查看原始 VCS 时序：确认搬运更早开始，而不是搬运变快了</summary><div class="inside">
 <p>旧图里的“开始前已过 696 cy”指的是：清零指令在 kernel 启动后第 696 cy 才开始，第 779 cy 结束，自身只执行 83 cy。此前还有元数据加载、mask 生成等工作；696 不是清零的等待耗时，也不是本次省下的 cycles。</p>
 <p>下面只用于核对时间。共同 kernel 起点、同一 1900 cy 比例尺；①～④是四条 LD，条形是实际执行区间。未绘制区间不等于空闲或某条指令的阻塞。零初始化与最终写回是保留的工作，不是本次删除项。</p>
@@ -162,39 +177,12 @@ store(result)</code></pre></div></div>
 <p>测量基线 <code>ae17c9386719b79c07217b06994b96ff1c74fbbc</code>，验收修复 <code>8120141c0d6db775c49e2fe8c1e422edc0cbe198</code>，配套 Triton <code>67b32ec4b860377c1d97833009bc3896a4d6b13f</code>。MR 后续已 rebase，本页保留原验收数据，不把它冒充新 head 的重测结果。</p>
 </div></details>
 </section>
-<footer class="footer"><p>2026-09-14 · 主图说明代码机制；cycles 来自匹配的原始 VCS 产物。图中①～④是逻辑行 load 的 ID，不是汇编 PC。所有内容内嵌，离线可读。</p><p><a href="http://172.16.116.216:30000/compilergroup/triton_shared/merge_requests/986">MR !986（需内网）</a> · <a href="./2026-09-03-batch-scalar-dma-loads-explained.html">参考：标量 DMA 批量化</a> · <a href="./index.html">全部报告</a></p></footer>
+
+<footer class="footer"><p>2026-09-14 · A / B 图来自原始 VCS 产物；C 图是未来调度目标，未做性能预测。图中①～④是逻辑行 load 的 ID，不是汇编 PC。所有内容内嵌，离线可读。</p><p><a href="http://172.16.116.216:30000/compilergroup/triton_shared/merge_requests/986">MR !986（需内网）</a> · <a href="./2026-09-03-batch-scalar-dma-loads-explained.html">参考：标量 DMA 批量化</a> · <a href="./index.html">全部报告</a></p></footer>
+
 </main>
 <script>
-// The main diagram expresses work and ordering, not measured cycle durations.
 const ids=['①','②','③','④'];
-function block(label,subtitle,kind,explanation){
- const el=document.createElement('div');el.className='step '+kind;el.tabIndex=0;
- const title=document.createElement('b');title.textContent=label;
- const sub=document.createElement('small');sub.textContent=subtitle;
- el.append(title,sub);el.title=explanation;el.setAttribute('aria-label',label+'：'+explanation);
- ['mouseenter','focus','click'].forEach(event=>el.addEventListener(event,()=>{document.getElementById('row-detail').textContent=explanation;}));
- return el;
-}
-for(let r=0;r<4;r++){
- for(const version of ['before','after']){
-  const row=document.createElement('div');row.className='process-row';
-  const id=document.createElement('span');id.className='rid';id.innerHTML='<b>'+ids[r]+' LD'+r+'</b><br>result['+r+']';
-  const prep=document.createElement('div');
-  if(version==='before'){
-   prep.className='steps';
-   prep.append(block('CT 读 flag','flags['+r+']','',ids[r]+' Before：先读取这行的原始 flag。After 把这次读取移到直接控制该行 LD 的位置。'),
-    block('比较 → 0/1','flag != 0','cut',ids[r]+' 将比较结果物化成整数 0 或 1，准备写入临时 mask；After 无需保存这个中间值。'),
-    block('写临时 mask','mask_tmp['+r+']','cut',ids[r]+' 将这行的 0/1 写进 L2 临时 mask buffer；本次消除这次中间写入。'));
-  }else{prep.className='deleted';prep.innerHTML='<b>删除整段 mask 生成路径</b><br>无需分配、写入 mask_tmp';}
-  const arrow=document.createElement('span');arrow.className='bridge';arrow.textContent=version==='before'?'→':'';
-  const work=document.createElement('div');work.className='steps';
-  work.append(block(version==='before'?'读回 mask':'CT 读 flag',version==='before'?'mask_tmp['+r+']':'flags['+r+']',version==='before'?'cut':'',ids[r]+(version==='before'?' Before：又从临时 buffer 读取刚生成的 0/1。':' After：直接读取原始 flag，不再消费临时 mask。')),
-   block(version==='before'?'再次判断':'直接判断','是否有效',version==='before'?'cut':'',ids[r]+' 有效性判断保留；false 时不能访问无效源地址。'),
-   block('算源地址','ids['+r+'] × K','',ids[r]+' 仍需读取运行时源行号、计算地址并配置 descriptor；此框表示一组控制指令。'),
-   block('LD'+r+' 搬行','256 B','dma',ids[r]+' LD_MOV：src[ids['+r+'], :] → result['+r+', :]。前后搬运量相同。'));
-  row.append(id,prep,arrow,work);document.getElementById(version+'-rows').append(row);
- }
-}
 // Exact trace evidence is secondary and remains at the original measurement scope.
 const traces=[
  {name:'Before · 1857 cy',vp:[696,779],ld:[[898,1012],[1128,1244],[1360,1472],[1588,1706]],st:[1741,1857]},
@@ -217,5 +205,35 @@ traces.forEach(t=>{
 const dataRows=[['清零',traces[0].vp,traces[1].vp],...ids.map((id,i)=>[id+' LD'+i,traces[0].ld[i],traces[1].ld[i]]),['ST 写回',traces[0].st,traces[1].st]];
 dataRows.forEach(([name,b,a])=>{const tr=document.createElement('tr');[name,b.join(' → '),a.join(' → '),(b[1]-b[0])+' → '+(a[1]-a[0])+' cy'].forEach(value=>{const td=document.createElement('td');td.textContent=value;tr.append(td);});document.getElementById('raw-table').append(tr);});
 document.getElementById('theme').addEventListener('click',()=>{const root=document.documentElement;const dark=root.dataset.theme?root.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;root.dataset.theme=dark?'light':'dark';});
+
+// Show measured gaps without attributing the whole interval to a CT stall.
+const schedules=[
+ {id:'schedule-before',origin:898,rows:[[0,114],[230,346],[462,574],[690,808]]},
+ {id:'schedule-after',origin:514,rows:[[0,113],[223,336],[446,558],[668,782]]}
+];
+function timingBlock(parent,label,start,end,kind,description,scale=900){
+ const b=document.createElement('span');b.className='load-block '+kind;b.style.left=(start/scale*100)+'%';b.style.width=((end-start)/scale*100)+'%';b.textContent=label;b.tabIndex=0;b.title=description;b.setAttribute('aria-label',description);
+ ['mouseenter','focus','click'].forEach(event=>b.addEventListener(event,()=>{document.getElementById('schedule-detail').textContent=description;}));
+ parent.append(b);return b;
+}
+function lane(parent,i){
+ const row=document.createElement('div');row.className='load-row';const label=document.createElement('span');label.className='load-id';label.textContent=ids[i]+' LD'+i;const track=document.createElement('div');track.className='load-lane';row.append(label,track);parent.append(row);return track;
+}
+schedules.forEach(v=>{
+ const root=document.getElementById(v.id);
+ v.rows.forEach(([start,end],i)=>{
+  const track=lane(root,i);
+  if(i>0){const prev=v.rows[i-1][1];const gap=timingBlock(track,'行间 '+(start-prev)+' cy',prev,start,'gap',ids[i-1]+' LD 在 kernel '+(v.origin+prev)+' cy 完成，'+ids[i]+' LD 在 '+(v.origin+start)+' cy 开始。间隔 '+(start-prev)+' cy 包含下一行地址准备、配置、同步和发射推进，不是全部 CT stall。');const sub=document.createElement('small');sub.textContent='地址准备 / 配置等';gap.append(sub);}
+  timingBlock(track,ids[i]+' LD · '+(end-start)+' cy',start,end,'',ids[i]+' LD_MOV：kernel '+(v.origin+start)+' → '+(v.origin+end)+' cy，执行 '+(end-start)+' cy，搬运 256 B。图中 0 对齐这一版本的首条数据 LD。');
+ });
+ const axis=document.createElement('div');axis.className='load-axis';[0,200,400,600,800,900].forEach(n=>{const t=document.createElement('span');t.textContent=n+' cy';t.style.left=n/900*100+'%';if(n===900)t.style.transform='translateX(-100%)';axis.append(t);});root.append(axis);
+});
+const future=document.getElementById('schedule-future');
+ids.forEach((id,i)=>{
+ const track=lane(future,i);
+ timingBlock(track,id+' LD 在途',i*3,28+i*3,'planned',id+' 未来调度示意：请求可在前一条完成前提交；包括排队与实际搬运，没有指定 cycle 或预测带宽。',100);
+ if(i===3){const space=document.createElement('span');space.className='future-space';space.textContent='目标：把四级阶梯压成重叠在途；收益待实测';track.append(space);}
+});
+
 </script>
 </body></html>
