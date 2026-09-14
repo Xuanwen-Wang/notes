@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gather 首版：四条 LD 已重叠，还剩多少 CT？</title><link rel="icon" href="data:,">
+<style>
+:root{--bg:#f2f5f6;--paper:#fff;--lane:#e8edef;--line:#cfd9dd;--ink:#101619;--soft:#536870;--gold:#9a6e14;--goldbg:#f7ebcf;--blue:#0e6a87;--bluebg:#d6e9f0;--green:#1f6b4c;--greenbg:#d4eadd;--red:#a8442a;--redbg:#f3dad1}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.75 system-ui,"Microsoft YaHei",sans-serif}.wrap{max-width:1220px;margin:auto;padding:36px 24px 64px}h1{font-size:32px;line-height:1.35;margin:12px 0}h2{font-size:15px;border-bottom:1px solid var(--line);padding-bottom:12px;margin:0 0 18px;color:var(--soft)}h3{font-size:15px;margin:16px 0 10px}p{margin:10px 0}a{color:var(--blue)}.eyebrow,.small{font-size:12px;color:var(--soft)}.panel{background:var(--paper);border:1px solid var(--line);padding:24px;margin-top:24px;border-radius:3px}.lead{font-size:17px;max-width:900px}.result{font-size:30px;font-weight:650;color:var(--green)}.good{background:var(--greenbg);border-left:3px solid var(--green);padding:12px 16px}.note{color:var(--soft);font-size:13px}.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}.card{background:var(--bg);padding:16px}pre{font:12px/1.9 ui-monospace,monospace;overflow:auto;margin:0}code{font:0.92em ui-monospace,monospace;background:var(--lane);padding:2px 4px}.cut{color:var(--red);background:var(--redbg)}.scroll{overflow-x:auto}.chart{min-width:820px}.chart-title{display:flex;justify-content:space-between;margin:24px 0 12px;font-size:14px}.row{display:grid;grid-template-columns:100px 1fr 112px;gap:10px;margin:6px 0;align-items:center}.label{font:12px ui-monospace,monospace;text-align:right}.lane{height:34px;position:relative;background:var(--lane);border-left:1px solid var(--soft)}.block{position:absolute;height:34px;background:var(--goldbg);border:1px solid var(--gold);color:var(--gold);font:600 12px ui-monospace,monospace;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:2px}.block.st{color:var(--blue);border-color:var(--blue);background:var(--bluebg)}.block:hover,.block:focus-visible{outline:2px solid var(--ink);z-index:2}.row.selected .lane{box-shadow:0 0 0 2px var(--blue)}.time{font:11px ui-monospace,monospace;color:var(--soft)}.axis{position:relative;height:24px;margin:8px 122px 0 110px;border-top:1px solid var(--line)}.axis span{position:absolute;top:2px;font:11px ui-monospace,monospace;color:var(--soft);transform:translateX(-50%)}.axis span:first-child{transform:none}.axis span:last-child{transform:translateX(-100%)}.save{position:absolute;top:0;height:34px;display:flex;align-items:center;justify-content:center;background:var(--greenbg);border:1px dashed var(--green);color:var(--green);font-size:12px}.legend{display:flex;gap:20px;flex-wrap:wrap;margin-top:18px;font-size:13px;color:var(--soft)}.sw{display:inline-block;width:12px;height:12px;margin-right:6px;background:var(--goldbg);border:1px solid var(--gold)}.sw.blue{background:var(--bluebg);border-color:var(--blue)}.detail{min-height:48px;background:var(--bg);padding:10px 14px;font-size:13px;margin-top:16px}.ctbar{display:flex;height:42px;min-width:600px;font-size:12px;text-align:center;line-height:42px;margin:12px 0}.ctbar span{border:1px solid var(--line);background:var(--bluebg);white-space:nowrap}.ctbar .wide{background:var(--redbg);color:var(--red)}table{width:100%;border-collapse:collapse;font-size:13px;min-width:650px}th,td{border-bottom:1px solid var(--line);padding:10px;text-align:left}th{color:var(--soft);background:var(--bg)}details{margin-top:16px}summary{cursor:pointer;color:var(--blue)}footer{margin-top:28px;color:var(--soft);font-size:12px}.metric{font-variant-numeric:tabular-nums;white-space:nowrap}@media(max-width:750px){.wrap{padding:20px 14px}.panel{padding:18px}.cols{grid-template-columns:1fr}h1{font-size:26px}}@media print{.wrap{max-width:none}.panel{break-inside:avoid}.scroll{overflow:visible}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="eyebrow">ISSUE #153 · MR !988 · 2026-09-14 · 真实 VCS 对照</div>
+<h1>四条 Gather LD 已经重叠。<br>下一步，才是缩短中间的 CT。</h1>
+<p class="lead">首版复用父路径已有的完成等待，消除分支里重复的 <code>LD_MAIL + CT_MAIL</code>。4 行全有效：<span class="result">1448 → 1028 cy</span>，减少 <b>420 cy / 29.01%</b>。</p>
+<p class="small"><a href="http://172.16.116.216:30000/compilergroup/triton_shared/merge_requests/988">查看 MR !988（内网）</a> · 基线为 MR !986 合入后的 master <code>3871f44e2</code>。这是编译器首版实测，和此前手工提前 ids 的 1040 cy 原型分开。</p>
+
+<section class="panel"><h2>01 / 先看 kernel：从 src 任意取四行，写到连续的 dst</h2>
+<div class="cols"><pre>ids   = load(row_ids[0:4])
+valid = load(flags[0:4]) != 0
+result = zeros((4, 128), bf16)
+for r in range(4):
+    if valid[r]:
+        result[r, :] = src[ids[r], :128]
+store(dst, result)</pre><div><p><b>G0 / G1 / G2 / G3</b> 对应四行 payload LD，每行 128 个 BF16，即 256 B。<b>S</b> 是最后 1024 B 输出 ST。</p><p class="note">主例 K=128、k_offset=0，四个 flag 全有效。实际 kernel 带运行时列边界和 mask；无效行保持 0。MR !986 已展开行循环，本版优化展开后的同步。</p></div></div>
+</section>
+
+<section class="panel"><h2>02 / 同一个起点、同一个比例：Before 与 After</h2>
+<p>每条 LD 单独一行，条内直接标指令 ID，右侧给出执行起止 cycle。<b>After 的 G1 在 G0 结束前就开始了</b>；G2、G3 同样重叠。</p>
+<p class="note">两组都从 kernel 的 0 开始，横轴同为 0–1448 cy；没有放大短指令。灰底未画出参数搬运、mask/地址计算等操作，不能视为空闲，也不能把条起点当作 dispatch 时刻。</p>
+<div class="scroll"><div id="timeline" class="chart"></div></div>
+<div class="legend"><span><i class="sw"></i>G0–G3：payload LD 执行</span><span><i class="sw blue"></i>S：最终输出 ST</span><span>点击或键盘聚焦色块，比较同一条指令</span></div>
+<div id="detail" class="detail" aria-live="polite">第一条 LD 只提前 6 cy；主要变化是后面三条不再被重复等待串起来。</div>
+<p class="good"><b>省掉的时间能对上账：</b>三段相邻 LD 起点间隔从 <code>223 / 223 / 222</code> 变成 <code>71 / 87 / 87</code> cy，合计缩短 423 cy；首条提前 6 cy，末条自身多花 9 cy，净省 <b>423 + 6 − 9 = 420 cy</b>。最后 LD→ST 的间隔和 ST 耗时没变。</p>
+</section>
+
+<section class="panel"><h2>03 / 只少四对 MAIL，为什么会省这么多？</h2>
+<p>前面已经执行 <b>P：LD ids → Q：LD flags → R：CT 等待 Q</b>。LD 按序完成，所以 R 通过时 P 也已经完成。分支里的重复等待又排到了前一条 payload LD 后面，反而把下一行卡住。</p>
+<div class="cols"><div class="card"><h3>Before：拿到 G0 完成，才能确认旧 ids 已完成</h3><pre>G0: LD_MOV payload row 0
+    CT 读 flag[1]、判断分支
+<span class="cut">    LD_MAIL SendMails[CT]  ← 排在 G0 后
+    CT_MAIL RecvMails[LD]  ← 卡住后续派发</span>
+    CT 读 ids[1]、计算地址
+G1: LD_MOV payload row 1</pre></div><div class="card"><h3>After：ids 的可读性由前面已有的 R 证明</h3><pre>G0: LD_MOV payload row 0
+    CT 读 flag[1]、判断分支
+
+    CT 读 ids[1]、计算地址
+    ↑ 这部分可与在途 G0 重叠
+G1: LD_MOV payload row 1</pre></div></div>
+<p class="note">以上是指令顺序示意，省略其它单元同步。没有移动 CT 读值或 payload LD，没有删除原始 RAW 依赖；只是把四条 ids 依赖归到已有 parent acquire。420 cy 是整条链的实测收益，不能除以 4 当成每对 MAIL 的固定耗时。</p>
+</section>
+
+<section class="panel"><h2>04 / 剩余空间：G0 和 G1 之间，还有 58 条 CT</h2>
+<p><b>你指出的 CT 阻挡下一条 LD，仍然存在。</b>前端 <code>dispatch_rdy</code> 受 <code>ct_inst_rdy</code> 约束；已经排入 LD 队列的命令可继续运行，后面的 LD 不能越过尚未放行的 CT。</p>
+<div class="scroll"><div class="ctbar"><span style="flex:4">flag 4</span><span style="flex:2">ids 2</span><span class="wide" style="flex:43">宽地址乘加 / 进位 / byte offset：43 条 CT</span><span style="flex:9">descriptor 等 9</span></div></div>
+<p class="note">这条带按<b>指令条数</b>划分，不是 cycle 时间轴。Before 是同样的 58 条，再加一条 CT_MAIL。43 条宽地址运算目前一条没少。</p>
+<div class="cols"><div class="card"><h3>这一版已做到</h3><p>四对重复等待消失，LD 执行重叠；相邻起点仍隔 <b>71 / 87 / 87 cy</b>。最晚一条 LD 在 753 cy 才开始。</p></div><div class="card"><h3>下一阶段需要单独做的事</h3><p>先评估如何减少这 <b>43 条宽地址计算</b>，再安排可提前计算的地址和 descriptor。保留 mask、溢出语义和 snapshot 契约，才能进一步靠近连续发射。<b>还没有实现，也没有承诺 cycle 数字。</b></p></div></div>
+</section>
+
+<section class="panel"><h2>05 / 正确性与性能：不只测全有效</h2>
+<div class="scroll"><table><thead><tr><th>场景</th><th>Before</th><th>After</th><th>结果</th></tr></thead><tbody>
+<tr><td>4 行全有效</td><td>1448 cy</td><td>1028 cy</td><td>−29.01%；bit-exact</td></tr>
+<tr><td>4 行交错 mask</td><td>1013 cy</td><td>864 cy</td><td>−14.71%；bit-exact</td></tr>
+<tr><td>4 行全无效</td><td>621 cy</td><td>621 cy</td><td>无退化；全零 bit-exact</td></tr>
+<tr><td>8 行，K=144 / offset=128，交错 mask</td><td>1468 cy</td><td>1100 cy</td><td>−25.07%；bit-exact</td></tr>
+<tr><td>4 行 × 2 block，交错 mask</td><td>1771 cy</td><td>1771 cy</td><td>循环回退；bit-exact</td></tr>
+</tbody></table></div>
+<p class="note">上述十个 VCS job 都完整输出 bit-exact，退出 9×9 mailbox 全零。另测 K=145 / offset=128 的奇数 BF16 tail：前后均失败，错误输出逐字节相同；它是未解决的既有边界，不计入 PASS。</p>
+<details><summary>实现范围、验证口径与 job ID</summary><p>只匹配无循环函数、root 的直接 If arm、精确 L2 RAW，以及支配分支的已有 LD→CT 等待；消费者的全部 RAW writer 都要由同一个有序 LD completion 覆盖。不满足时保留原规划。</p><p>默认测试 844/844 PASS；InjectSync 门禁 1712 组符合预期。新增覆盖 sibling、跨 block、反序 producer、缺失/条件 acquire、覆盖写、嵌套和循环。三类故障注入由独立 coverage/timing 验证器拒绝。</p><p>cycles 取完整 trace 的首条 CT 到最后 ST 完成，与 relay 的 rtl_trace_global_span 一致。trace 完整且有 TASK_DONE，但没有 TASK_START；以上不是 LD dispatch trace，也不是原始大 MoE case 的性能结论。</p><pre>全有效：8c79d5f24b86 / d30f418ddf33
+交错：  847e9cd99931 / 3e09bf6897da
+全无效：7c8e5d0e1b51 / ef710ee0c2df
+偶数尾：9b83429fcd8c / 918f6fb72d43
+循环：  68ad3be7198e / 2ee1a364a117
+奇数尾：08256bf60a8d / 629f06827435（均 FAIL）</pre></details>
+</section>
+<footer>2026-09-14 · 实现提交 <code>65f2b699c</code> · <a href="http://172.16.116.216:30000/compilergroup/triton_shared/merge_requests/988">MR !988</a> · <a href="./2026-09-14-small-row-gather-lowering-explained.html">此前 gather lowering 说明</a> · 单文件离线可读。</footer>
+</main><script>
+const rows=[['G0','行 0',[514,627],[508,620]],['G1','行 1',[737,850],[579,692]],['G2','行 2',[960,1072],[666,776]],['G3','行 3',[1182,1296],[753,876]],['S','输出 ST',[1332,1448],[912,1028]]];
+const host=document.getElementById('timeline'),detail=document.getElementById('detail');
+['Before · 重复等待串行','After · 复用 parent acquire'].forEach((name,v)=>{
+ const group=document.createElement('div');group.innerHTML=`<div class="chart-title"><b>${name}</b><span>${v?1028:1448} cy</span></div>`;
+ rows.forEach(([id,label,before,after])=>{const t=v?after:before,row=document.createElement('div');row.className='row';row.dataset.id=id;
+ row.innerHTML=`<div class="label">${id} · ${label}</div><div class="lane"><button type="button" class="block ${id==='S'?'st':''}" style="left:${t[0]/1448*100}%;width:${(t[1]-t[0])/1448*100}%" aria-label="${name} ${id} ${t[0]} 到 ${t[1]} cycles">${id}</button>${v&&id==='S'?'<span class="save" style="left:70.9945%;width:29.0055%">净省 420 cy</span>':''}</div><div class="time">${t[0]} → ${t[1]} cy</div>`;
+ const show=()=>{document.querySelectorAll('.row').forEach(el=>el.classList.toggle('selected',el.dataset.id===id));detail.textContent=`${id} ${label}：Before ${before[0]}–${before[1]} cy（执行 ${before[1]-before[0]} cy），After ${after[0]}–${after[1]} cy（执行 ${after[1]-after[0]} cy）。开始提前 ${before[0]-after[0]} cy，完成提前 ${before[1]-after[1]} cy。`;};
+ row.querySelector('button').addEventListener('click',show);row.querySelector('button').addEventListener('focus',show);group.append(row);
+ });const axis=document.createElement('div');axis.className='axis';axis.innerHTML=[0,400,800,1200,1448].map(t=>`<span style="left:${t/1448*100}%">${t}</span>`).join('');group.append(axis);host.append(group);
+});
+</script></body></html>
