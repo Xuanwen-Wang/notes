@@ -1,0 +1,69 @@
+{
+  "updated": "2026-10-28",
+  "articles": [
+    {
+      "file": "ldg-bandwidth-explained-2026-10-15.html",
+      "category": "hardware",
+      "title": "Zeus518硬件 - LDG 带宽：从 RTL 到 2.14 TB/s",
+      "description": "沿着 Weight DRAM → WL1 → PE 的供数路径，拆解并行读取、credit 周转与带宽公式。",
+      "date": "2026-10-15",
+      "tags": ["RTL", "WL1", "带宽分析"]
+    },
+    {
+      "file": "2026-09-14-gather-parent-acquire-first.html",
+      "category": "compiler",
+      "title": "TritonShared - Gather C1 优化与 C2 性能回退分析",
+      "description": "从父路径等待复用到 LD 时序对照，解释 C1 的收益，以及 C2 重叠更多却变慢的原因。",
+      "date": "2026-10-15",
+      "tags": ["Gather", "InjectSync", "VCS"]
+    },
+    {
+      "file": "2026-09-14-small-row-gather-lowering-explained.html",
+      "category": "compiler",
+      "title": "TritonShared - 四行 Gather：周期收益与 LD 并行空间",
+      "description": "对照 Triton、lowering 与搬运时间线，看清 mask 优化省下了什么，以及并行空间在哪里。",
+      "date": "2026-10-15",
+      "tags": ["Gather", "Lowering", "数据搬运"]
+    },
+    {
+      "file": "2026-09-08-device-fused-uscale-gemm.html",
+      "category": "compiler",
+      "title": "TritonShared - Device-Fused UScale GEMM",
+      "description": "串起双侧 per-group 量化、WUS 页布局、编译器接口与 kernel 实现，说明融合的适用边界。",
+      "date": "2026-09-09",
+      "tags": ["GEMM", "UScale", "量化"]
+    },
+    {
+      "file": "ZeusV3_Deployment_Perf_Optimization.html",
+      "category": "compiler",
+      "title": "TritonShared - 模型部署性能优化的三个层次",
+      "description": "从模型部署到算子编译，再到 Block、layout 与微架构，建立性能优化的分层视角。",
+      "date": "2026-09-07",
+      "tags": ["模型部署", "性能优化", "Layout"]
+    },
+    {
+      "file": "2026-09-03-batch-scalar-dma-loads-explained.html",
+      "category": "compiler",
+      "title": "TritonShared - 标量 DMA 批量化",
+      "description": "用四条 load 的前后时序，解释 BatchScalarDmaLoadsPass 如何减少重复的数据搬运。",
+      "date": "2026-09-07",
+      "tags": ["DMA", "Pass", "数据搬运"]
+    },
+    {
+      "file": "2026-09-01-moe-ffn-flow-visual-guide.html",
+      "category": "compiler",
+      "title": "TritonShared - MoE FFN：从 Dense 到真实算子",
+      "description": "从 Dense FFN 出发，跟着 token 经过 Router、Experts 与加权合并，理解真实算子的数据流。",
+      "date": "2026-09-07",
+      "tags": ["MoE", "数据流", "交互图解"]
+    },
+    {
+      "file": "codex-switch-guide.html",
+      "category": "tools",
+      "title": "工具 - Codex 账号切换器",
+      "description": "账号切换器的部署、额度查看、日常使用与脚本定制说明。",
+      "date": "2026-09-07",
+      "tags": ["Codex", "CLI", "使用手册"]
+    }
+  ]
+}

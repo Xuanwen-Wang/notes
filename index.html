@@ -3,111 +3,130 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>技术报告</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400&display=swap">
+<meta name="description" content="编译、硬件与工具的技术笔记。TritonShared 编译与算子实践、Zeus518 硬件架构图解，以及日常工具手册。">
+<meta name="theme-color" content="#f7f8f5">
+<title>技术笔记 · Xuanwen Wang</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23243832'/%3E%3Cpath d='M12 10h16v21H12zM16 16h8M16 21h8' stroke='%23f7f8f5' stroke-width='2' fill='none'/%3E%3C/svg%3E">
 <style>
-  :root {
-    --ground:#F4F6F8; --surface:#FFFFFF; --ink:#1A2430; --soft:#5A6B7A;
-    --faint:#8A97A4; --rule:#DDE3E9; --accent:#A8762C;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --ground:#141A21; --surface:#1B222B; --ink:#DDE4EA; --soft:#A3B0BC;
-      --faint:#75838F; --rule:#2E3742; --accent:#D9A248;
-    }
-  }
-  :root[data-theme="dark"] {
-    --ground:#141A21; --surface:#1B222B; --ink:#DDE4EA; --soft:#A3B0BC;
-    --faint:#75838F; --rule:#2E3742; --accent:#D9A248;
-  }
-  html { color-scheme: light dark; }
-  body {
-    margin:0; background:var(--ground); color:var(--ink);
-    font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
-    line-height:1.6; -webkit-font-smoothing:antialiased;
-  }
-  .wrap { max-width:46rem; margin:0 auto; padding:4rem 1.5rem 5rem; }
-  h1 { font-size:1.75rem; margin:0 0 .375rem; letter-spacing:-.01em; }
-  .sub { color:var(--soft); margin:0 0 2.5rem; font-size:.9375rem; }
-  ul { list-style:none; padding:0; margin:0; border-top:1px solid var(--rule); }
-  .row {
-    display:grid; grid-template-columns:1fr auto auto; gap:1rem; align-items:baseline;
-    padding:.875rem .25rem; border-bottom:1px solid var(--rule);
-  }
-  .row:hover { background:var(--surface); }
-  .t { color:var(--ink); text-decoration:none; font-weight:500; }
-  .t:hover { color:var(--accent); text-decoration:underline; text-underline-offset:3px; }
-  .d,.s {
-    font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:.75rem;
-    color:var(--faint); font-variant-numeric:tabular-nums; white-space:nowrap;
-  }
-  .empty { padding:2rem .25rem; color:var(--faint); }
-  footer { margin-top:2.5rem; font-size:.75rem; color:var(--faint);
-            font-family:"IBM Plex Mono",monospace; }
-  @media (max-width:32rem) {
-    .row { grid-template-columns:1fr auto; }
-    .s { display:none; }
-  }
-  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+:root{color-scheme:light;--paper:#f7f8f5;--surface:#fff;--ink:#243832;--muted:#62716b;--line:#dfe5df;--accent:#bb532d;--green:#426556;--sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;--mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.65;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}button,a,input{-webkit-tap-highlight-color:transparent}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:5px}[hidden]{display:none!important}.skip{position:fixed;top:-80px;left:20px;background:var(--ink);color:white;padding:10px;z-index:5}.skip:focus{top:10px}
+.site-header{max-width:1240px;margin:auto;padding:27px 42px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:12px;font-size:17px;font-weight:700;letter-spacing:-.4px}.brand-icon{width:31px;height:34px;border:1.5px solid var(--ink);border-radius:3px;display:grid;place-content:center;position:relative}.brand-icon:before{content:"";width:11px;height:2px;background:var(--accent);box-shadow:0 6px 0 var(--accent)}.brand-icon:after{content:"";position:absolute;left:5px;top:0;bottom:0;border-left:1px solid var(--ink)}.header-link{font:12px var(--mono);color:var(--muted)}.header-link:hover{color:var(--accent)}
+.layout{max-width:1240px;margin:auto;display:grid;grid-template-columns:208px minmax(0,1fr);gap:57px;padding:48px 42px 0}.sidebar{padding-top:4px}.rail-label{font:10px var(--mono);letter-spacing:2px;color:var(--muted);margin:0 0 18px}.nav-items{display:grid;gap:7px}.nav-item{display:flex;align-items:center;gap:11px;padding:10px 12px;border:0;border-radius:5px;background:transparent;text-align:left;color:var(--muted);font-size:13px;white-space:nowrap}.nav-item:hover{background:#edf0ea}.nav-item[aria-pressed="true"]{background:#e7ede5;color:var(--ink);font-weight:600}.nav-icon{width:16px;height:16px;display:grid;place-content:center;font:16px var(--mono)}.nav-count{margin-left:auto;font:11px var(--mono);color:var(--muted)}.rail-note{margin-top:38px;padding:21px 12px 0;border-top:1px solid var(--line)}.rail-note p{font-size:12px;color:var(--muted);line-height:1.9;margin:8px 0}.rail-note strong{font-size:12px;font-weight:600}.rail-bottom{font:10px var(--mono);color:var(--muted);margin:32px 12px;line-height:2}
+main{min-width:0}.eyebrow{font:11px var(--mono);letter-spacing:1.6px;color:var(--accent);display:flex;align-items:center;gap:9px}.eyebrow:before{content:"";width:7px;height:7px;background:var(--accent);border-radius:50%}.intro{display:flex;justify-content:space-between;gap:24px;align-items:flex-end;margin:0 0 31px}.intro h1{font-size:48px;font-weight:650;line-height:1.25;letter-spacing:-2px;margin:17px 0 13px}.intro p{font-size:14px;color:var(--muted);margin:0}.intro-number{text-align:right;flex-shrink:0;padding-bottom:3px}.intro-number b{display:block;font:42px var(--mono);font-weight:400;color:#83948a;line-height:1.2}.intro-number span{font-size:11px;color:var(--muted)}
+.featured{display:grid;grid-template-columns:minmax(0,1fr) 235px;background:var(--surface);border:1px solid var(--line);border-radius:9px;overflow:hidden;transition:border-color .18s}.featured:hover{border-color:#8d9f91}.feature-copy{padding:27px 30px}.feature-label{font-size:11px;color:var(--green);display:flex;gap:10px;align-items:center}.feature-label span:first-child{background:#edf2e9;padding:2px 8px;border-radius:3px}.featured h2{font-size:22px;line-height:1.55;font-weight:600;letter-spacing:-.5px;margin:17px 0 10px}.featured h2 small{display:block;font-size:11px;font-weight:500;color:var(--muted);margin-bottom:4px;letter-spacing:0}.featured p{font-size:12px;color:var(--muted);margin:0;max-width:350px}.read-link{font-size:12px;color:var(--ink);margin-top:21px;display:block;font-weight:600}.read-link span{margin-left:10px;color:var(--accent)}.feature-visual{background:#243e34;color:#eaf1e6;position:relative;display:flex;flex-direction:column;justify-content:center;padding:24px;overflow:hidden}.feature-visual:before{content:"";position:absolute;inset:0;background-image:linear-gradient(#ffffff08 1px,transparent 1px),linear-gradient(90deg,#ffffff08 1px,transparent 1px);background-size:22px 22px}.feature-visual>*{position:relative}.visual-label{font:9px var(--mono);color:#b5c8b8;letter-spacing:1.3px}.bandwidth{font:48px var(--mono);letter-spacing:-3px;line-height:1.3;margin-top:17px}.bandwidth span{font-size:17px;letter-spacing:-1px;margin-left:6px}.visual-caption{font-size:10px;color:#c3d1c5;margin-bottom:25px}.visual-flow{display:flex;align-items:center;gap:7px;font:10px var(--mono)}.visual-flow b{border:1px solid #7e9c85;padding:5px 7px;border-radius:3px;font-weight:400}.visual-flow span{color:#b8caad}.visual-foot{margin-top:11px;font:9px var(--mono);color:#c3d1c5}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:18px;margin:39px 0 0;padding-bottom:16px;border-bottom:1px solid var(--line)}.results-title{font-size:14px;font-weight:600;white-space:nowrap}.results-title span{font:11px var(--mono);color:var(--muted);margin-left:10px}.search{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:5px;padding:7px 11px;width:252px;color:var(--muted)}.search svg{width:15px;height:15px;flex-shrink:0}.search input{width:100%;min-width:0;border:0;background:transparent;color:var(--ink);font-size:12px;outline:none}.search:focus-within{border-color:var(--accent)}.search input:focus-visible{outline:0}.search input::placeholder{color:var(--muted)}
+.category{margin-top:29px}.section-heading>div{display:flex;align-items:center;gap:10px}.section-index{font:10px var(--mono);color:var(--accent)}.section-heading h2{font-size:15px;font-weight:600;margin:0}.section-count{font:10px var(--mono);color:var(--muted);background:#e9eee7;border-radius:3px;padding:0 5px}.section-heading>p{font-size:11px;color:var(--muted);margin:5px 0 10px 24px}.note{padding:19px 0 19px 24px;border-bottom:1px solid var(--line);display:flex;gap:16px;justify-content:space-between}.note-main{min-width:0}.note h3{font-size:14px;line-height:1.6;font-weight:600;margin:0 0 6px}.note h3 a:hover{color:var(--accent);text-decoration:underline;text-underline-offset:4px}.note p{font-size:12px;color:var(--muted);margin:0 0 11px;max-width:580px}.tags{display:flex;flex-wrap:wrap;gap:6px}.tags span{font-size:10px;color:#566b60;background:#edf0e9;border:1px solid #e4e9e1;border-radius:3px;padding:0 6px;line-height:1.8}.note-meta{display:flex;align-items:center;align-self:flex-start;gap:20px;padding-top:3px;white-space:nowrap}.note-meta time{font:10px var(--mono);color:var(--muted)}.arrow{font-size:17px;color:#7e9284;line-height:1}.empty{text-align:center;padding:45px 0;color:var(--muted);font-size:14px}.empty button{display:block;margin:16px auto;background:transparent;color:var(--accent);border:1px solid var(--line);padding:6px 15px;border-radius:4px;font-size:12px}
+.footer{display:flex;justify-content:space-between;gap:15px;margin-top:43px;padding:19px 0 28px;border-top:1px solid var(--line);font-size:10px;color:var(--muted)}.footer span:last-child{font-family:var(--mono)}.sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(min-width:1000px){.sidebar-inner{position:sticky;top:30px}}@media(max-width:1050px){.layout{gap:30px;grid-template-columns:180px minmax(0,1fr);padding-left:30px;padding-right:30px}.featured{grid-template-columns:minmax(0,1fr) 190px}.feature-copy{padding:24px}.featured h2{font-size:19px}.feature-visual{padding:18px}.bandwidth{font-size:42px}.note-meta{gap:10px}.note-meta time{font-size:9px}}
+@media(max-width:800px){.site-header{padding:20px 24px}.layout{display:block;padding:25px 24px 0}.sidebar{margin-bottom:30px}.rail-label,.rail-note,.rail-bottom{display:none}.nav-items{display:flex;gap:5px;flex-wrap:wrap}.nav-item{font-size:12px;padding:8px 10px;gap:7px}.nav-count{margin-left:4px}.nav-icon{display:none}.intro h1{font-size:40px}.featured{grid-template-columns:minmax(0,1fr) 215px}.note-meta time{font-size:10px}}
+@media(max-width:540px){.site-header{padding:18px 20px}.header-link{font-size:10px}.brand{font-size:15px}.layout{padding:22px 20px 0}.nav-items{gap:3px}.nav-item{font-size:11px;padding:8px}.nav-count{font-size:9px}.sidebar{margin-bottom:28px}.intro{gap:12px;margin-bottom:25px}.intro h1{font-size:37px;letter-spacing:-1.5px}.intro p{font-size:12px;max-width:220px}.intro-number b{font-size:33px}.intro-number span{font-size:10px}.eyebrow{font-size:9px}.featured{grid-template-columns:1fr}.feature-copy{padding:23px}.featured h2{font-size:21px}.feature-visual{display:none}.toolbar{align-items:flex-start;flex-direction:column;gap:13px;margin-top:29px}.search{width:100%;padding:10px 11px}.search input{font-size:13px}.category{margin-top:25px}.section-heading>p{line-height:1.8}.note{padding:17px 0 17px 0;gap:8px}.note h3{font-size:14px}.note p{font-size:12px}.note-meta time{display:none}.note-meta{padding-top:0}.note-meta .arrow{font-size:18px}.footer{flex-direction:column;gap:5px;margin-top:30px}.tags span{font-size:10px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}@media print{.sidebar,.toolbar,.featured,.header-link{display:none}.layout{display:block;padding:20px}.note,.category{break-inside:avoid}.note-meta time{display:block}.footer{margin-top:20px}}
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <h1>技术报告</h1>
-    <p class="sub">共 10 篇 · 点标题直接阅读</p>
-    <ul>
-      <li class="row">
-        <a class="t" href="./ldg-bandwidth-explained-2026-10-15.html">LDG 带宽：从 RTL 到 2.14 TB/s｜Zeus518 图解</a>
-        <span class="d">2026-10-15</span>
-        <span class="s">298 KB</span>
-      </li>
-      <li class="row">
-        <a class="t" href="./2026-09-14-gather-parent-acquire-first.html">Gather：落地 C1，C2 为何反而慢了 96 cy？</a>
-        <span class="d">2026-10-15</span>
-        <span class="s">280 KB</span>
-      </li>
-      <li class="row">
-        <a class="t" href="./2026-09-14-small-row-gather-lowering-explained.html">四行 Gather：已省的 cycles 与 LD 并行空间</a>
-        <span class="d">2026-10-15</span>
-        <span class="s">46 KB</span>
-      </li>
-      <li class="row">
-        <a class="t" href="./2026-09-08-device-fused-uscale-gemm.html">Device-Fused UScale GEMM</a>
-        <span class="d">2026-09-09</span>
-        <span class="s">146 KB</span>
-      </li>
-      <li class="row">
-        <a class="t" href="./codex-switch-guide.html">Codex 账号切换器</a>
-        <span class="d">2026-09-07</span>
-        <span class="s">30 KB</span>
-      </li>
-      <li class="row">
-        <a class="t" href="./weekly-2026-07-01.html">本周工作会议报告 - PE / InjectSync / DSA / GEMM VCS / VCS 测试</a>
-        <span class="d">2026-09-07</span>
-        <span class="s">31 KB</span>
-      </li>
-      <li class="row">
-        <a class="t" href="./weekly-2026-07-08.html">王选文组会汇报 - 2026-07-08</a>
-        <span class="d">2026-09-07</span>
-        <span class="s">52 KB</span>
-      </li>
-      <li class="row">
-        <a class="t" href="./ZeusV3_Deployment_Perf_Optimization.html">Zeus V3 模型部署性能优化 · 三个层次</a>
-        <span class="d">2026-09-07</span>
-        <span class="s">23 KB</span>
-      </li>
-      <li class="row">
-        <a class="t" href="./2026-09-03-batch-scalar-dma-loads-explained.html">标量 DMA 批量化</a>
-        <span class="d">2026-09-07</span>
-        <span class="s">19 KB</span>
-      </li>
-      <li class="row">
-        <a class="t" href="./2026-09-01-moe-ffn-flow-visual-guide.html">MoE FFN 零基础交互课 · 从 Dense 到真实算子</a>
-        <span class="d">2026-09-07</span>
-        <span class="s">140 KB</span>
-      </li>
-    </ul>
-    <footer>最近更新 2026-10-15</footer>
-  </div>
+<a class="skip" href="#main">跳到文章目录</a>
+<header class="site-header"><a class="brand" href="./" aria-label="Notes 首页"><span class="brand-icon" aria-hidden="true"></span> Xuanwen / Notes</a><a class="header-link" href="https://github.com/Xuanwen-Wang/notes">GitHub ↗</a></header>
+<div class="layout">
+<aside class="sidebar" aria-label="笔记分类"><div class="sidebar-inner">
+  <p class="rail-label">THE NOTEBOOK</p>
+  <nav class="nav-items" aria-label="按分类筛选">
+    <button class="nav-item" data-filter="all" aria-pressed="true"><span class="nav-icon" aria-hidden="true">▦</span>全部笔记<span class="nav-count">8</span></button>
+    <button class="nav-item" data-filter="compiler" aria-pressed="false"><span class="nav-icon" aria-hidden="true">⌘</span>TritonShared<span class="nav-count">6</span></button>
+    <button class="nav-item" data-filter="hardware" aria-pressed="false"><span class="nav-icon" aria-hidden="true">⊞</span>Zeus518硬件<span class="nav-count">1</span></button>
+    <button class="nav-item" data-filter="tools" aria-pressed="false"><span class="nav-icon" aria-hidden="true">↗</span>工具<span class="nav-count">1</span></button>
+  </nav>
+  <div class="rail-note"><strong>沿着数据流，理解细节。</strong><p>编译管线、硬件架构，<br>以及解决实际问题的工具。<br>图解、源码与实践记录。</p></div>
+  <div class="rail-bottom">8 NOTES / 3 TOPICS<br>持续整理，随时查阅。</div>
+</div></aside>
+<main id="main">
+  <div class="intro"><div><div class="eyebrow">ENGINEERING NOTES</div><h1>技术笔记</h1><p>编译、硬件与工具。把实现细节，整理成可读的笔记。</p></div><div class="intro-number"><b>8</b><span>篇笔记 · 3 个主题</span></div></div>
+  <a class="featured" href="./ldg-bandwidth-explained-2026-10-15.html">
+    <div class="feature-copy"><div class="feature-label"><span>深入阅读</span><span>硬件架构图解</span></div><h2><small>Zeus518硬件</small>LDG 带宽：<br>从 RTL 到 2.14 TB/s</h2><p>沿着一次权重读取，理解并行 MC、credit 与稳态供数带宽。</p><span class="read-link">阅读图解<span aria-hidden="true">↗</span></span></div>
+    <div class="feature-visual" aria-hidden="true"><div class="visual-label">WEIGHT DATA PATH</div><div class="bandwidth">2.14<span>TB/s</span></div><div class="visual-caption">设计稳态估算 · 每核 · 400 MHz</div><div class="visual-flow"><b>DRAM</b><span>→</span><b>WL1</b><span>→</span><b>PE</b></div><div class="visual-foot">256 MC · 15 credits · 23 cycles</div></div>
+  </a>
+  <div class="toolbar"><div class="results-title">文章目录<span id="result-count" role="status" aria-live="polite">8 篇</span></div><label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><span class="sr-only">搜索笔记</span><input id="search" type="search" placeholder="搜索标题、关键词…" autocomplete="off"></label></div>
+  <noscript><p>全部文章可直接阅读；分类筛选与搜索需要启用 JavaScript。</p></noscript>
+  <div id="articles"><section class="category" data-category="compiler" aria-labelledby="heading-compiler">
+  <div class="section-heading"><div><span class="section-index">01</span><h2 id="heading-compiler">编译与算子</h2><span class="section-count">06</span></div><p>从 IR 变换到 kernel 实现，沿着编译管线理解优化。</p></div>
+  <div class="note-list"><article class="note" data-search="TritonShared - Gather C1 优化与 C2 性能回退分析 从父路径等待复用到 LD 时序对照，解释 C1 的收益，以及 C2 重叠更多却变慢的原因。 Gather InjectSync VCS">
+  <div class="note-main"><h3><a href="./2026-09-14-gather-parent-acquire-first.html">TritonShared - Gather C1 优化与 C2 性能回退分析</a></h3>
+  <p>从父路径等待复用到 LD 时序对照，解释 C1 的收益，以及 C2 重叠更多却变慢的原因。</p><div class="tags"><span>Gather</span><span>InjectSync</span><span>VCS</span></div></div>
+  <div class="note-meta"><time datetime="2026-10-15">2026-10-15</time><span aria-hidden="true" class="arrow">↗</span></div>
+</article><article class="note" data-search="TritonShared - 四行 Gather：周期收益与 LD 并行空间 对照 Triton、lowering 与搬运时间线，看清 mask 优化省下了什么，以及并行空间在哪里。 Gather Lowering 数据搬运">
+  <div class="note-main"><h3><a href="./2026-09-14-small-row-gather-lowering-explained.html">TritonShared - 四行 Gather：周期收益与 LD 并行空间</a></h3>
+  <p>对照 Triton、lowering 与搬运时间线，看清 mask 优化省下了什么，以及并行空间在哪里。</p><div class="tags"><span>Gather</span><span>Lowering</span><span>数据搬运</span></div></div>
+  <div class="note-meta"><time datetime="2026-10-15">2026-10-15</time><span aria-hidden="true" class="arrow">↗</span></div>
+</article><article class="note" data-search="TritonShared - Device-Fused UScale GEMM 串起双侧 per-group 量化、WUS 页布局、编译器接口与 kernel 实现，说明融合的适用边界。 GEMM UScale 量化">
+  <div class="note-main"><h3><a href="./2026-09-08-device-fused-uscale-gemm.html">TritonShared - Device-Fused UScale GEMM</a></h3>
+  <p>串起双侧 per-group 量化、WUS 页布局、编译器接口与 kernel 实现，说明融合的适用边界。</p><div class="tags"><span>GEMM</span><span>UScale</span><span>量化</span></div></div>
+  <div class="note-meta"><time datetime="2026-09-09">2026-09-09</time><span aria-hidden="true" class="arrow">↗</span></div>
+</article><article class="note" data-search="TritonShared - 模型部署性能优化的三个层次 从模型部署到算子编译，再到 Block、layout 与微架构，建立性能优化的分层视角。 模型部署 性能优化 Layout">
+  <div class="note-main"><h3><a href="./ZeusV3_Deployment_Perf_Optimization.html">TritonShared - 模型部署性能优化的三个层次</a></h3>
+  <p>从模型部署到算子编译，再到 Block、layout 与微架构，建立性能优化的分层视角。</p><div class="tags"><span>模型部署</span><span>性能优化</span><span>Layout</span></div></div>
+  <div class="note-meta"><time datetime="2026-09-07">2026-09-07</time><span aria-hidden="true" class="arrow">↗</span></div>
+</article><article class="note" data-search="TritonShared - 标量 DMA 批量化 用四条 load 的前后时序，解释 BatchScalarDmaLoadsPass 如何减少重复的数据搬运。 DMA Pass 数据搬运">
+  <div class="note-main"><h3><a href="./2026-09-03-batch-scalar-dma-loads-explained.html">TritonShared - 标量 DMA 批量化</a></h3>
+  <p>用四条 load 的前后时序，解释 BatchScalarDmaLoadsPass 如何减少重复的数据搬运。</p><div class="tags"><span>DMA</span><span>Pass</span><span>数据搬运</span></div></div>
+  <div class="note-meta"><time datetime="2026-09-07">2026-09-07</time><span aria-hidden="true" class="arrow">↗</span></div>
+</article><article class="note" data-search="TritonShared - MoE FFN：从 Dense 到真实算子 从 Dense FFN 出发，跟着 token 经过 Router、Experts 与加权合并，理解真实算子的数据流。 MoE 数据流 交互图解">
+  <div class="note-main"><h3><a href="./2026-09-01-moe-ffn-flow-visual-guide.html">TritonShared - MoE FFN：从 Dense 到真实算子</a></h3>
+  <p>从 Dense FFN 出发，跟着 token 经过 Router、Experts 与加权合并，理解真实算子的数据流。</p><div class="tags"><span>MoE</span><span>数据流</span><span>交互图解</span></div></div>
+  <div class="note-meta"><time datetime="2026-09-07">2026-09-07</time><span aria-hidden="true" class="arrow">↗</span></div>
+</article></div>
+</section>
+<section class="category" data-category="hardware" aria-labelledby="heading-hardware">
+  <div class="section-heading"><div><span class="section-index">02</span><h2 id="heading-hardware">硬件与架构</h2><span class="section-count">01</span></div><p>从 RTL、数据通路与时序，理解硬件的工作方式。</p></div>
+  <div class="note-list"><article class="note" data-search="Zeus518硬件 - LDG 带宽：从 RTL 到 2.14 TB/s 沿着 Weight DRAM → WL1 → PE 的供数路径，拆解并行读取、credit 周转与带宽公式。 RTL WL1 带宽分析">
+  <div class="note-main"><h3><a href="./ldg-bandwidth-explained-2026-10-15.html">Zeus518硬件 - LDG 带宽：从 RTL 到 2.14 TB/s</a></h3>
+  <p>沿着 Weight DRAM → WL1 → PE 的供数路径，拆解并行读取、credit 周转与带宽公式。</p><div class="tags"><span>RTL</span><span>WL1</span><span>带宽分析</span></div></div>
+  <div class="note-meta"><time datetime="2026-10-15">2026-10-15</time><span aria-hidden="true" class="arrow">↗</span></div>
+</article></div>
+</section>
+<section class="category" data-category="tools" aria-labelledby="heading-tools">
+  <div class="section-heading"><div><span class="section-index">03</span><h2 id="heading-tools">工具与实践</h2><span class="section-count">01</span></div><p>把日常使用、部署和定制的方法整理成手册。</p></div>
+  <div class="note-list"><article class="note" data-search="工具 - Codex 账号切换器 账号切换器的部署、额度查看、日常使用与脚本定制说明。 Codex CLI 使用手册">
+  <div class="note-main"><h3><a href="./codex-switch-guide.html">工具 - Codex 账号切换器</a></h3>
+  <p>账号切换器的部署、额度查看、日常使用与脚本定制说明。</p><div class="tags"><span>Codex</span><span>CLI</span><span>使用手册</span></div></div>
+  <div class="note-meta"><time datetime="2026-09-07">2026-09-07</time><span aria-hidden="true" class="arrow">↗</span></div>
+</article></div>
+</section></div>
+  <div id="empty" class="empty" hidden><p>没有找到匹配的笔记。</p><button id="reset" type="button">清除筛选</button></div>
+  <footer class="footer"><span>每一篇笔记，都是一次理解的记录。</span><span>目录整理 2026-10-28</span></footer>
+</main>
+</div>
+<script>
+(() => {
+  const search = document.querySelector('#search');
+  const buttons = [...document.querySelectorAll('[data-filter]')];
+  const sections = [...document.querySelectorAll('[data-category]')];
+  const labels = {all: '全部笔记', compiler: 'TritonShared', hardware: 'Zeus518硬件', tools: '工具'};
+  let selected = 'all';
+  function filter() {
+    // Search terms are plain text; source links remain usable without JavaScript.
+    const terms = search.value.toLocaleLowerCase().trim().split(/\s+/).filter(Boolean);
+    let total = 0;
+    for (const section of sections) {
+      let count = 0;
+      for (const note of section.querySelectorAll('.note')) {
+        const matches = (selected === 'all' || selected === section.dataset.category)
+          && terms.every(term => note.dataset.search.toLocaleLowerCase().includes(term));
+        note.hidden = !matches;
+        if (matches) count++;
+      }
+      section.hidden = count === 0;
+      section.querySelector('.section-count').textContent = String(count).padStart(2, '0');
+      total += count;
+    }
+    document.querySelector('#result-count').textContent = `${total} 篇 · ${labels[selected]}`;
+    document.querySelector('#empty').hidden = total !== 0;
+    document.querySelector('.featured').hidden = selected !== 'all' || terms.length !== 0;
+    for (const button of buttons) button.setAttribute('aria-pressed', String(button.dataset.filter === selected));
+  }
+  for (const button of buttons) button.addEventListener('click', () => { selected = button.dataset.filter; filter(); });
+  search.addEventListener('input', filter);
+  search.addEventListener('keydown', event => { if (event.key === 'Escape') { search.value = ''; filter(); } });
+  document.querySelector('#reset').addEventListener('click', () => { selected = 'all'; search.value = ''; filter(); search.focus(); });
+})();
+</script>
 </body>
 </html>

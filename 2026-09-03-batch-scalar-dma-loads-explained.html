@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>标量 DMA 批量化</title>
+<title>TritonShared - 标量 DMA 批量化</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
   :root {
@@ -166,7 +166,7 @@
 
   <header>
     <p class="eyebrow">ZeusHigh 中端 Pass · MoE T=4 bf16</p>
-    <h1>一图看懂 BatchScalarDmaLoadsPass</h1>
+    <h1>TritonShared - 标量 DMA 批量化</h1>
     <p class="lede">MoE T=4 每轮循环开头读四个 routing metadata 标量。硬件本可以让它们同时在飞，但中端把每个消费者钉在自己的 DMA 后面，CT 只能一个一个等。把 DMA 全部提到消费之前，<b>每轮省约 500 cycle，全 kernel 22,517 → 20,012</b>。</p>
   </header>
 

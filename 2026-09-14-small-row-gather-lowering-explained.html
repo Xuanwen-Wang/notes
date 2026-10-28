@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="直接画出小行 gather 修复前后删除的 mask 内存往返与循环控制，再用 VCS 实验说明 409 cycles 的收益。">
-<title>四行 Gather：已省的 cycles 与 LD 并行空间</title>
+<title>TritonShared - 四行 Gather：周期收益与 LD 并行空间</title>
 <link rel="icon" href="data:,">
 <style>
 :root{--bg:#f2f5f6;--paper:#fff;--tint:#e8edef;--line:#cfd9dd;--ink:#101619;--soft:#46565d;--muted:#647780;--blue:#0e6a87;--bluebg:#d6e9f0;--red:#a8442a;--redbg:#f3dad1;--green:#1f6b4c;--greenbg:#d4eadd;--gold:#9a6e14;--goldbg:#f7ebcf;color-scheme:light}
@@ -26,7 +26,7 @@
 <p class="callout"><b>最新决策：本次只落地 C1。</b>MR !988 复用父路径已有 LD 等待，真实 VCS 从 1448 降到 1028 cy；没有移动 CT 读取。手工 C2 集中准备四行后反而变成 1124 cy，暂不继续。<a href="./2026-09-14-gather-parent-acquire-first.html#c2">看 CT 准备与 LD 同起点图、C2 慢 96 cy 的对账</a>。下文保留 MR !986 和早期 1040 cy 原型的历史对照。</p>
 <header>
 <p class="eyebrow">ISSUE #153 · STRUCTUREDTOMEMREF · 4 × 128 BF16</p>
-<h1>四行 Gather：已经省了什么，<br>为什么还能更快？</h1>
+<h1>TritonShared - 四行 Gather<br>周期收益与 LD 并行空间</h1>
 <p class="lede">同一段 Triton，仍然取四行数据。MR 修复删掉临时 mask 的读写和行循环控制，kernel 从 <strong>1857 降到 1448 cycles</strong>。9 月 14 日进一步评估：提前读取行号的手工 IR 原型已让相邻 LD 重叠，降到 <strong>1040 cycles</strong>；这项实验尚未写成正式 Pass。</p>
 <nav class="nav" aria-label="文章目录" style="margin-top:20px"><a href="#pattern">原始 kernel</a><a href="#code">本次删掉什么</a><a href="#trace">四条 LD 的对照图</a><a href="#cycles">409 cy 对账</a><a href="#parallel">下一步怎么优化</a></nav>
 </header>

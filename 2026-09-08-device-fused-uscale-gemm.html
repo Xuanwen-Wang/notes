@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Device-Fused UScale GEMM</title>
+<title>TritonShared - Device-Fused UScale GEMM</title>
 <link rel="icon" href="data:,">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
@@ -876,7 +876,7 @@
 <main class="wrap">
   <header>
     <p class="eyebrow">Zeus V3 编译器 · 新特性说明 · 面向算法与 Kernel 团队</p>
-    <h1>Device-Fused UScale：在 Zeus 上跑 activation 与 weight 双侧 per-group 量化的 GEMM</h1>
+    <h1>TritonShared - Device-Fused UScale GEMM</h1>
     <p class="lede">Zeus 的 PE 只有<b>一条</b> scale 通路，且固定挂在 weight 侧。这意味着 activation 的 per-group 量化 scale 在硬件上<b>没有地方可放</b>。本次编译团队打通的能力，是让 kernel 在<b>设备侧</b>把 activation scale 乘进 weight 的 UScale，再交给 PE —— 不需要 host 预处理，不需要额外的反量化 pass，<code>tl.dot</code> 本身也不改。</p>
     <p class="lede">现在有<b>两种放置方案</b>可选，数值语义完全一致，区别只在 fused UScale 存在哪里、以及 weight slab 是否需要可写。两个参考 kernel 都已合入 master，可以直接拿去改。</p>
   </header>

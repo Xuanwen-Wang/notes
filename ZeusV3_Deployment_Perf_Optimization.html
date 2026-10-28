@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zeus V3 模型部署性能优化 · 三个层次</title>
+<title>TritonShared - 模型部署性能优化的三个层次</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -147,7 +147,7 @@
 
   <header>
     <div class="kicker">Zeus V3 NPU · Deployment Performance</div>
-    <h1>模型部署性能优化的<b>三个层次</b></h1>
+    <h1>TritonShared - 模型部署性能优化的<b>三个层次</b></h1>
     <p class="sub">一个算子从全模型到单 core 跑到最快，穿过三层、各归一个系统：<b>A 分布式部署</b>（推理框架）定「算多大」、<b>B dispatch</b>（torch zeus）搜「怎么切块 + 哪种 weight layout」、<b>C 编译优化</b>（Compiler）定「单 core 怎么算到最快」。C 的灵魂是 <b style="color:var(--amber)">overlap</b>——让 PE 永不空泡，访存藏进计算。</p>
     <div class="legend">
       <span><i class="dot g"></i>已落地</span>
