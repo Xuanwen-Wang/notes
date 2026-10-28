@@ -2,6 +2,14 @@
   "updated": "2026-10-28",
   "articles": [
     {
+      "file": "models/deepseek-v4-flash/index.html",
+      "category": "compiler",
+      "title": "TritonShared - DeepSeek V4 Flash：MoE 优化与验证",
+      "description": "从四 kernel 数据流、量化与 Graph ABI，到逐 EP 性能和 Viewer 观察，持续记录 DeepSeek V4 Flash 的模型优化。",
+      "date": "2026-10-28",
+      "tags": ["DeepSeek V4", "MoE", "CycleSim", "交互图表"]
+    },
+    {
       "file": "ldg-bandwidth-explained-2026-10-15.html",
       "category": "hardware",
       "title": "Zeus518硬件 - LDG 带宽：从 RTL 到 2.14 TB/s",

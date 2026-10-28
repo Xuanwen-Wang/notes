@@ -30,25 +30,29 @@ main{min-width:0}.eyebrow{font:11px var(--mono);letter-spacing:1.6px;color:var(-
 <aside class="sidebar" aria-label="笔记分类"><div class="sidebar-inner">
   <p class="rail-label">THE NOTEBOOK</p>
   <nav class="nav-items" aria-label="按分类筛选">
-    <button class="nav-item" data-filter="all" aria-pressed="true"><span class="nav-icon" aria-hidden="true">▦</span>全部笔记<span class="nav-count">8</span></button>
-    <button class="nav-item" data-filter="compiler" aria-pressed="false"><span class="nav-icon" aria-hidden="true">⌘</span>TritonShared<span class="nav-count">6</span></button>
+    <button class="nav-item" data-filter="all" aria-pressed="true"><span class="nav-icon" aria-hidden="true">▦</span>全部笔记<span class="nav-count">9</span></button>
+    <button class="nav-item" data-filter="compiler" aria-pressed="false"><span class="nav-icon" aria-hidden="true">⌘</span>TritonShared<span class="nav-count">7</span></button>
     <button class="nav-item" data-filter="hardware" aria-pressed="false"><span class="nav-icon" aria-hidden="true">⊞</span>Zeus518硬件<span class="nav-count">1</span></button>
     <button class="nav-item" data-filter="tools" aria-pressed="false"><span class="nav-icon" aria-hidden="true">↗</span>工具<span class="nav-count">1</span></button>
   </nav>
   <div class="rail-note"><strong>沿着数据流，理解细节。</strong><p>编译管线、硬件架构，<br>以及解决实际问题的工具。<br>图解、源码与实践记录。</p></div>
-  <div class="rail-bottom">8 NOTES / 3 TOPICS<br>持续整理，随时查阅。</div>
+  <div class="rail-bottom">9 NOTES / 3 TOPICS<br>持续整理，随时查阅。</div>
 </div></aside>
 <main id="main">
-  <div class="intro"><div><div class="eyebrow">ENGINEERING NOTES</div><h1>技术笔记</h1><p>编译、硬件与工具。把实现细节，整理成可读的笔记。</p></div><div class="intro-number"><b>8</b><span>篇笔记 · 3 个主题</span></div></div>
+  <div class="intro"><div><div class="eyebrow">ENGINEERING NOTES</div><h1>技术笔记</h1><p>编译、硬件与工具。把实现细节，整理成可读的笔记。</p></div><div class="intro-number"><b>9</b><span>篇笔记 · 3 个主题</span></div></div>
   <a class="featured" href="./ldg-bandwidth-explained-2026-10-15.html">
     <div class="feature-copy"><div class="feature-label"><span>深入阅读</span><span>硬件架构图解</span></div><h2><small>Zeus518硬件</small>LDG 带宽：<br>从 RTL 到 2.14 TB/s</h2><p>沿着一次权重读取，理解并行 MC、credit 与稳态供数带宽。</p><span class="read-link">阅读图解<span aria-hidden="true">↗</span></span></div>
     <div class="feature-visual" aria-hidden="true"><div class="visual-label">WEIGHT DATA PATH</div><div class="bandwidth">2.14<span>TB/s</span></div><div class="visual-caption">设计稳态估算 · 每核 · 400 MHz</div><div class="visual-flow"><b>DRAM</b><span>→</span><b>WL1</b><span>→</span><b>PE</b></div><div class="visual-foot">256 MC · 15 credits · 23 cycles</div></div>
   </a>
-  <div class="toolbar"><div class="results-title">文章目录<span id="result-count" role="status" aria-live="polite">8 篇</span></div><label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><span class="sr-only">搜索笔记</span><input id="search" type="search" placeholder="搜索标题、关键词…" autocomplete="off"></label></div>
+  <div class="toolbar"><div class="results-title">文章目录<span id="result-count" role="status" aria-live="polite">9 篇</span></div><label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><span class="sr-only">搜索笔记</span><input id="search" type="search" placeholder="搜索标题、关键词…" autocomplete="off"></label></div>
   <noscript><p>全部文章可直接阅读；分类筛选与搜索需要启用 JavaScript。</p></noscript>
   <div id="articles"><section class="category" data-category="compiler" aria-labelledby="heading-compiler">
-  <div class="section-heading"><div><span class="section-index">01</span><h2 id="heading-compiler">编译与算子</h2><span class="section-count">06</span></div><p>从 IR 变换到 kernel 实现，沿着编译管线理解优化。</p></div>
-  <div class="note-list"><article class="note" data-search="TritonShared - Gather C1 优化与 C2 性能回退分析 从父路径等待复用到 LD 时序对照，解释 C1 的收益，以及 C2 重叠更多却变慢的原因。 Gather InjectSync VCS">
+  <div class="section-heading"><div><span class="section-index">01</span><h2 id="heading-compiler">编译与算子</h2><span class="section-count">07</span></div><p>从 IR 变换到 kernel 实现，沿着编译管线理解优化。</p></div>
+  <div class="note-list"><article class="note" data-search="TritonShared - DeepSeek V4 Flash：MoE 优化与验证 从四 kernel 数据流、量化与 Graph ABI，到逐 EP 性能和 Viewer 观察，持续记录 DeepSeek V4 Flash 的模型优化。 DeepSeek V4 MoE CycleSim 交互图表">
+  <div class="note-main"><h3><a href="./models/deepseek-v4-flash/index.html">TritonShared - DeepSeek V4 Flash：MoE 优化与验证</a></h3>
+  <p>从四 kernel 数据流、量化与 Graph ABI，到逐 EP 性能和 Viewer 观察，持续记录 DeepSeek V4 Flash 的模型优化。</p><div class="tags"><span>DeepSeek V4</span><span>MoE</span><span>CycleSim</span><span>交互图表</span></div></div>
+  <div class="note-meta"><time datetime="2026-10-28">2026-10-28</time><span aria-hidden="true" class="arrow">↗</span></div>
+</article><article class="note" data-search="TritonShared - Gather C1 优化与 C2 性能回退分析 从父路径等待复用到 LD 时序对照，解释 C1 的收益，以及 C2 重叠更多却变慢的原因。 Gather InjectSync VCS">
   <div class="note-main"><h3><a href="./2026-09-14-gather-parent-acquire-first.html">TritonShared - Gather C1 优化与 C2 性能回退分析</a></h3>
   <p>从父路径等待复用到 LD 时序对照，解释 C1 的收益，以及 C2 重叠更多却变慢的原因。</p><div class="tags"><span>Gather</span><span>InjectSync</span><span>VCS</span></div></div>
   <div class="note-meta"><time datetime="2026-10-15">2026-10-15</time><span aria-hidden="true" class="arrow">↗</span></div>

@@ -1,0 +1,5144 @@
+{
+  "schema": "dsv4-moe-public-measurements-v1",
+  "date": "2026-10-28",
+  "clock_mhz": 400,
+  "metric": "max_EP(sum_stage(max_core(core_end-core_start)))",
+  "scope": "Learned synthetic, 3 seeds x 3 profiles x 3 T x 4 EP; local MoE compute only",
+  "performance": {
+    "torch_baseline": "b49f46f1d5a23a78261e0c97599d145e7ce3e079",
+    "torch_candidate": "c8c54d3b692b7fa66d0867ec71ce31546ffdc2ac",
+    "fused_source_sha256": "056c6276a0bccdbcd49894ac2dd5e4771fc151103ef7b692ed60bdce7b6c8b72",
+    "compiler": "59fa273f7517652fe2c5cca8944579a75f4bf258",
+    "triton": "7df590e44739a6da641d3402ed9d33892746a53d",
+    "cyclesim": "382c4f151fb8a6b59227f7a168ab231484b0864c",
+    "gate_layout": "row_local_n256"
+  },
+  "evidence": {
+    "current_audit_sha256": "975839a3b73ca188e965449526f0df63134271d036d30bf15f3a9f0671edb69c",
+    "master_audit_sha256": "079ffe960985c6088897edd690fdafa673089b9c85192d99245f3372923dff42",
+    "tier": "historical_device_golden_sha",
+    "original_master_analytic_pass": false,
+    "master_implementation_reference_pass": true,
+    "new_108_staged_reference": false,
+    "full_model_pass": false
+  },
+  "summary": [
+    {
+      "T": 16,
+      "ds_mean_ms": 0.15773638888888888,
+      "ds_worst_ms": 0.164315,
+      "master_mean_ms": 1.4835202777777778,
+      "master_worst_ms": 1.5260925,
+      "glm_mean_ms": 0.11104194444444446,
+      "glm_worst_ms": 0.120965,
+      "previous_pr_mean_ms": 0.16592222222222222,
+      "previous_pr_worst_ms": 0.177405,
+      "ratio": 1.4205117685759383,
+      "max_paired_ratio": 1.6740359635270745
+    },
+    {
+      "T": 24,
+      "ds_mean_ms": 0.21199222222222222,
+      "ds_worst_ms": 0.2293775,
+      "master_mean_ms": 2.210373888888889,
+      "master_worst_ms": 2.2735325,
+      "glm_mean_ms": 0.1627413888888889,
+      "glm_worst_ms": 0.2180075,
+      "previous_pr_mean_ms": 0.2322391666666667,
+      "previous_pr_worst_ms": 0.254245,
+      "ratio": 1.3026324997567715,
+      "max_paired_ratio": 1.6539674744536577
+    },
+    {
+      "T": 32,
+      "ds_mean_ms": 0.2545541666666667,
+      "ds_worst_ms": 0.2840825,
+      "master_mean_ms": 2.9195188888888888,
+      "master_worst_ms": 3.0088,
+      "glm_mean_ms": 0.1965136111111111,
+      "glm_worst_ms": 0.2604075,
+      "previous_pr_mean_ms": 0.28238722222222223,
+      "previous_pr_worst_ms": 0.327455,
+      "ratio": 1.2953513256786005,
+      "max_paired_ratio": 1.612193018294067
+    }
+  ],
+  "batches": [
+    {
+      "T": 16,
+      "case": "s528588_independent",
+      "slow_eps": [
+        1
+      ],
+      "ds_cycles": 61411,
+      "master_cycles": 582854,
+      "glm_cycles": 44581,
+      "previous_pr_cycles": 65349,
+      "per_ep": [
+        {
+          "ep": 0,
+          "cycles": 54352,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13295,
+              "core_cycles": {
+                "0": 13027,
+                "1": 13295
+              }
+            },
+            "routed": {
+              "cycles": 26161,
+              "core_cycles": {
+                "0": 26161,
+                "1": 23657
+              }
+            },
+            "reduce": {
+              "cycles": 7238,
+              "core_cycles": {
+                "0": 6134,
+                "1": 7238
+              }
+            }
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 61411,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13295,
+              "core_cycles": {
+                "0": 13027,
+                "1": 13295
+              }
+            },
+            "routed": {
+              "cycles": 32737,
+              "core_cycles": {
+                "0": 31597,
+                "1": 32737
+              }
+            },
+            "reduce": {
+              "cycles": 7721,
+              "core_cycles": {
+                "0": 7607,
+                "1": 7721
+              }
+            }
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 60178,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13295,
+              "core_cycles": {
+                "0": 13027,
+                "1": 13295
+              }
+            },
+            "routed": {
+              "cycles": 31951,
+              "core_cycles": {
+                "0": 31951,
+                "1": 25211
+              }
+            },
+            "reduce": {
+              "cycles": 7274,
+              "core_cycles": {
+                "0": 7274,
+                "1": 7191
+              }
+            }
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 60156,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13295,
+              "core_cycles": {
+                "0": 13027,
+                "1": 13295
+              }
+            },
+            "routed": {
+              "cycles": 31515,
+              "core_cycles": {
+                "0": 31515,
+                "1": 24691
+              }
+            },
+            "reduce": {
+              "cycles": 7688,
+              "core_cycles": {
+                "0": 6634,
+                "1": 7688
+              }
+            }
+          }
+        }
+      ],
+      "glm_per_ep": [
+        {
+          "ep": 0,
+          "cycles": 44581,
+          "stages": {
+            "router": 8775,
+            "shared": 9414,
+            "routed": 18176,
+            "reduce": 8216
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 40870,
+          "stages": {
+            "router": 8775,
+            "routed": 21713,
+            "reduce": 10382
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 36719,
+          "stages": {
+            "router": 8775,
+            "routed": 18530,
+            "reduce": 9414
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 43952,
+          "stages": {
+            "router": 8775,
+            "routed": 24640,
+            "reduce": 10537
+          }
+        }
+      ]
+    },
+    {
+      "T": 16,
+      "case": "s528588_clustered",
+      "slow_eps": [
+        1
+      ],
+      "ds_cycles": 58557,
+      "master_cycles": 591546,
+      "glm_cycles": 48386,
+      "previous_pr_cycles": 60380,
+      "per_ep": [
+        {
+          "ep": 0,
+          "cycles": 57363,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13295,
+              "core_cycles": {
+                "0": 13027,
+                "1": 13295
+              }
+            },
+            "routed": {
+              "cycles": 27877,
+              "core_cycles": {
+                "0": 21949,
+                "1": 27877
+              }
+            },
+            "reduce": {
+              "cycles": 8533,
+              "core_cycles": {
+                "0": 8116,
+                "1": 8533
+              }
+            }
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 58557,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13295,
+              "core_cycles": {
+                "0": 13027,
+                "1": 13295
+              }
+            },
+            "routed": {
+              "cycles": 29935,
+              "core_cycles": {
+                "0": 11582,
+                "1": 29935
+              }
+            },
+            "reduce": {
+              "cycles": 7669,
+              "core_cycles": {
+                "0": 7252,
+                "1": 7669
+              }
+            }
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 43110,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13295,
+              "core_cycles": {
+                "0": 13027,
+                "1": 13295
+              }
+            },
+            "routed": {
+              "cycles": 15868,
+              "core_cycles": {
+                "0": 11634,
+                "1": 15868
+              }
+            },
+            "reduce": {
+              "cycles": 6289,
+              "core_cycles": {
+                "0": 5788,
+                "1": 6289
+              }
+            }
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 49782,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13295,
+              "core_cycles": {
+                "0": 13027,
+                "1": 13295
+              }
+            },
+            "routed": {
+              "cycles": 21914,
+              "core_cycles": {
+                "0": 21914,
+                "1": 12290
+              }
+            },
+            "reduce": {
+              "cycles": 6915,
+              "core_cycles": {
+                "0": 6420,
+                "1": 6915
+              }
+            }
+          }
+        }
+      ],
+      "glm_per_ep": [
+        {
+          "ep": 0,
+          "cycles": 48386,
+          "stages": {
+            "router": 8775,
+            "shared": 9414,
+            "routed": 20501,
+            "reduce": 9696
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 34615,
+          "stages": {
+            "router": 8775,
+            "routed": 17023,
+            "reduce": 8817
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 30801,
+          "stages": {
+            "router": 8775,
+            "routed": 13045,
+            "reduce": 8981
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 31880,
+          "stages": {
+            "router": 8775,
+            "routed": 13416,
+            "reduce": 9689
+          }
+        }
+      ]
+    },
+    {
+      "T": 16,
+      "case": "s528588_hotspot",
+      "slow_eps": [
+        0
+      ],
+      "ds_cycles": 64974,
+      "master_cycles": 610437,
+      "glm_cycles": 47651,
+      "previous_pr_cycles": 68212,
+      "per_ep": [
+        {
+          "ep": 0,
+          "cycles": 64974,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13286,
+              "core_cycles": {
+                "0": 13018,
+                "1": 13286
+              }
+            },
+            "routed": {
+              "cycles": 35704,
+              "core_cycles": {
+                "0": 10120,
+                "1": 35704
+              }
+            },
+            "reduce": {
+              "cycles": 8326,
+              "core_cycles": {
+                "0": 7645,
+                "1": 8326
+              }
+            }
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 64303,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13286,
+              "core_cycles": {
+                "0": 13018,
+                "1": 13286
+              }
+            },
+            "routed": {
+              "cycles": 35540,
+              "core_cycles": {
+                "0": 4317,
+                "1": 35540
+              }
+            },
+            "reduce": {
+              "cycles": 7819,
+              "core_cycles": {
+                "0": 7645,
+                "1": 7819
+              }
+            }
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 49645,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13286,
+              "core_cycles": {
+                "0": 13018,
+                "1": 13286
+              }
+            },
+            "routed": {
+              "cycles": 22221,
+              "core_cycles": {
+                "0": 4317,
+                "1": 22221
+              }
+            },
+            "reduce": {
+              "cycles": 6480,
+              "core_cycles": {
+                "0": 5979,
+                "1": 6480
+              }
+            }
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 48726,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13286,
+              "core_cycles": {
+                "0": 13018,
+                "1": 13286
+              }
+            },
+            "routed": {
+              "cycles": 21302,
+              "core_cycles": {
+                "0": 21302,
+                "1": 4896
+              }
+            },
+            "reduce": {
+              "cycles": 6480,
+              "core_cycles": {
+                "0": 5979,
+                "1": 6480
+              }
+            }
+          }
+        }
+      ],
+      "glm_per_ep": [
+        {
+          "ep": 0,
+          "cycles": 47651,
+          "stages": {
+            "router": 8775,
+            "shared": 9414,
+            "routed": 19774,
+            "reduce": 9688
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 37984,
+          "stages": {
+            "router": 8775,
+            "routed": 19746,
+            "reduce": 9463
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 30004,
+          "stages": {
+            "router": 8775,
+            "routed": 12847,
+            "reduce": 8382
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 31232,
+          "stages": {
+            "router": 8775,
+            "routed": 12875,
+            "reduce": 9582
+          }
+        }
+      ]
+    },
+    {
+      "T": 16,
+      "case": "s528589_independent",
+      "slow_eps": [
+        1
+      ],
+      "ds_cycles": 63032,
+      "master_cycles": 579120,
+      "glm_cycles": 43935,
+      "previous_pr_cycles": 68343,
+      "per_ep": [
+        {
+          "ep": 0,
+          "cycles": 54716,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13295,
+              "core_cycles": {
+                "0": 13027,
+                "1": 13295
+              }
+            },
+            "routed": {
+              "cycles": 25944,
+              "core_cycles": {
+                "0": 25944,
+                "1": 24837
+              }
+            },
+            "reduce": {
+              "cycles": 7819,
+              "core_cycles": {
+                "0": 5879,
+                "1": 7819
+              }
+            }
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 63032,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13295,
+              "core_cycles": {
+                "0": 13027,
+                "1": 13295
+              }
+            },
+            "routed": {
+              "cycles": 34278,
+              "core_cycles": {
+                "0": 34278,
+                "1": 27539
+              }
+            },
+            "reduce": {
+              "cycles": 7801,
+              "core_cycles": {
+                "0": 7569,
+                "1": 7801
+              }
+            }
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 62741,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13295,
+              "core_cycles": {
+                "0": 13027,
+                "1": 13295
+              }
+            },
+            "routed": {
+              "cycles": 34502,
+              "core_cycles": {
+                "0": 34502,
+                "1": 21819
+              }
+            },
+            "reduce": {
+              "cycles": 7286,
+              "core_cycles": {
+                "0": 7286,
+                "1": 7009
+              }
+            }
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 55159,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13295,
+              "core_cycles": {
+                "0": 13027,
+                "1": 13295
+              }
+            },
+            "routed": {
+              "cycles": 27060,
+              "core_cycles": {
+                "0": 26007,
+                "1": 27060
+              }
+            },
+            "reduce": {
+              "cycles": 7146,
+              "core_cycles": {
+                "0": 7146,
+                "1": 6888
+              }
+            }
+          }
+        }
+      ],
+      "glm_per_ep": [
+        {
+          "ep": 0,
+          "cycles": 43781,
+          "stages": {
+            "router": 8775,
+            "shared": 9414,
+            "routed": 17005,
+            "reduce": 8587
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 43935,
+          "stages": {
+            "router": 8775,
+            "routed": 24903,
+            "reduce": 10257
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 39241,
+          "stages": {
+            "router": 8775,
+            "routed": 20497,
+            "reduce": 9969
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 37932,
+          "stages": {
+            "router": 8775,
+            "routed": 19572,
+            "reduce": 9585
+          }
+        }
+      ]
+    },
+    {
+      "T": 16,
+      "case": "s528589_clustered",
+      "slow_eps": [
+        2
+      ],
+      "ds_cycles": 58514,
+      "master_cycles": 590469,
+      "glm_cycles": 43385,
+      "previous_pr_cycles": 60178,
+      "per_ep": [
+        {
+          "ep": 0,
+          "cycles": 55809,
+          "stages": {
+            "router": {
+              "cycles": 8701,
+              "core_cycles": {
+                "0": 8429,
+                "1": 8701
+              }
+            },
+            "shared": {
+              "cycles": 13295,
+              "core_cycles": {
+                "0": 13027,
+                "1": 13295
+              }
+            },
+            "routed": {
+              "cycles": 26554,
+              "core_cycles": {
+                "0": 26554,
+                "1": 15516
+              }
+            },
+            "reduce": {
+              "cycles": 7259,
+              "core_cycles": {
+                "0": 6586,
+                "1": 7259
+              }
+            }
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 52196,
+          "stages": {
+            "router": {
+              "cycles": 8701,
+              "core_cycles": {
+                "0": 8429,
+                "1": 8701
+              }
+            },
+            "shared": {
+              "cycles": 13295,
+              "core_cycles": {
+                "0": 13027,
+                "1": 13295
+              }
+            },
+            "routed": {
+              "cycles": 22758,
+              "core_cycles": {
+                "0": 19573,
+                "1": 22758
+              }
+            },
+            "reduce": {
+              "cycles": 7442,
+              "core_cycles": {
+                "0": 6908,
+                "1": 7442
+              }
+            }
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 58514,
+          "stages": {
+            "router": {
+              "cycles": 8701,
+              "core_cycles": {
+                "0": 8429,
+                "1": 8701
+              }
+            },
+            "shared": {
+              "cycles": 13295,
+              "core_cycles": {
+                "0": 13027,
+                "1": 13295
+              }
+            },
+            "routed": {
+              "cycles": 27843,
+              "core_cycles": {
+                "0": 21985,
+                "1": 27843
+              }
+            },
+            "reduce": {
+              "cycles": 8675,
+              "core_cycles": {
+                "0": 8246,
+                "1": 8675
+              }
+            }
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 50745,
+          "stages": {
+            "router": {
+              "cycles": 8701,
+              "core_cycles": {
+                "0": 8429,
+                "1": 8701
+              }
+            },
+            "shared": {
+              "cycles": 13295,
+              "core_cycles": {
+                "0": 13027,
+                "1": 13295
+              }
+            },
+            "routed": {
+              "cycles": 22342,
+              "core_cycles": {
+                "0": 11617,
+                "1": 22342
+              }
+            },
+            "reduce": {
+              "cycles": 6407,
+              "core_cycles": {
+                "0": 6256,
+                "1": 6407
+              }
+            }
+          }
+        }
+      ],
+      "glm_per_ep": [
+        {
+          "ep": 0,
+          "cycles": 43385,
+          "stages": {
+            "router": 8775,
+            "shared": 9414,
+            "routed": 16848,
+            "reduce": 8348
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 33562,
+          "stages": {
+            "router": 8775,
+            "routed": 15433,
+            "reduce": 9354
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 31569,
+          "stages": {
+            "router": 8775,
+            "routed": 13475,
+            "reduce": 9319
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 38107,
+          "stages": {
+            "router": 8775,
+            "routed": 19030,
+            "reduce": 10302
+          }
+        }
+      ]
+    },
+    {
+      "T": 16,
+      "case": "s528589_hotspot",
+      "slow_eps": [
+        0
+      ],
+      "ds_cycles": 64901,
+      "master_cycles": 591340,
+      "glm_cycles": 47269,
+      "previous_pr_cycles": 67927,
+      "per_ep": [
+        {
+          "ep": 0,
+          "cycles": 64901,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13287,
+              "core_cycles": {
+                "0": 13019,
+                "1": 13287
+              }
+            },
+            "routed": {
+              "cycles": 34676,
+              "core_cycles": {
+                "0": 34676,
+                "1": 15332
+              }
+            },
+            "reduce": {
+              "cycles": 9280,
+              "core_cycles": {
+                "0": 8459,
+                "1": 9280
+              }
+            }
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 49644,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13287,
+              "core_cycles": {
+                "0": 13019,
+                "1": 13287
+              }
+            },
+            "routed": {
+              "cycles": 22219,
+              "core_cycles": {
+                "0": 4317,
+                "1": 22219
+              }
+            },
+            "reduce": {
+              "cycles": 6480,
+              "core_cycles": {
+                "0": 5979,
+                "1": 6480
+              }
+            }
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 48725,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13287,
+              "core_cycles": {
+                "0": 13019,
+                "1": 13287
+              }
+            },
+            "routed": {
+              "cycles": 21300,
+              "core_cycles": {
+                "0": 21300,
+                "1": 4896
+              }
+            },
+            "reduce": {
+              "cycles": 6480,
+              "core_cycles": {
+                "0": 5979,
+                "1": 6480
+              }
+            }
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 49492,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13287,
+              "core_cycles": {
+                "0": 13019,
+                "1": 13287
+              }
+            },
+            "routed": {
+              "cycles": 21299,
+              "core_cycles": {
+                "0": 21299,
+                "1": 19994
+              }
+            },
+            "reduce": {
+              "cycles": 7248,
+              "core_cycles": {
+                "0": 7013,
+                "1": 7248
+              }
+            }
+          }
+        }
+      ],
+      "glm_per_ep": [
+        {
+          "ep": 0,
+          "cycles": 47269,
+          "stages": {
+            "router": 8775,
+            "shared": 9414,
+            "routed": 19392,
+            "reduce": 9688
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 30032,
+          "stages": {
+            "router": 8775,
+            "routed": 12875,
+            "reduce": 8382
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 37603,
+          "stages": {
+            "router": 8775,
+            "routed": 19365,
+            "reduce": 9463
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 31113,
+          "stages": {
+            "router": 8775,
+            "routed": 12875,
+            "reduce": 9463
+          }
+        }
+      ]
+    },
+    {
+      "T": 16,
+      "case": "s528590_independent",
+      "slow_eps": [
+        1
+      ],
+      "ds_cycles": 65638,
+      "master_cycles": 586861,
+      "glm_cycles": 45990,
+      "previous_pr_cycles": 70962,
+      "per_ep": [
+        {
+          "ep": 0,
+          "cycles": 55530,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13295,
+              "core_cycles": {
+                "0": 13027,
+                "1": 13295
+              }
+            },
+            "routed": {
+              "cycles": 27453,
+              "core_cycles": {
+                "0": 23702,
+                "1": 27453
+              }
+            },
+            "reduce": {
+              "cycles": 7124,
+              "core_cycles": {
+                "0": 6574,
+                "1": 7124
+              }
+            }
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 65638,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13295,
+              "core_cycles": {
+                "0": 13027,
+                "1": 13295
+              }
+            },
+            "routed": {
+              "cycles": 37063,
+              "core_cycles": {
+                "0": 26057,
+                "1": 37063
+              }
+            },
+            "reduce": {
+              "cycles": 7622,
+              "core_cycles": {
+                "0": 7460,
+                "1": 7622
+              }
+            }
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 64782,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13295,
+              "core_cycles": {
+                "0": 13027,
+                "1": 13295
+              }
+            },
+            "routed": {
+              "cycles": 36126,
+              "core_cycles": {
+                "0": 36126,
+                "1": 23709
+              }
+            },
+            "reduce": {
+              "cycles": 7703,
+              "core_cycles": {
+                "0": 7000,
+                "1": 7703
+              }
+            }
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 52671,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13295,
+              "core_cycles": {
+                "0": 13027,
+                "1": 13295
+              }
+            },
+            "routed": {
+              "cycles": 24827,
+              "core_cycles": {
+                "0": 21099,
+                "1": 24827
+              }
+            },
+            "reduce": {
+              "cycles": 6891,
+              "core_cycles": {
+                "0": 6181,
+                "1": 6891
+              }
+            }
+          }
+        }
+      ],
+      "glm_per_ep": [
+        {
+          "ep": 0,
+          "cycles": 45780,
+          "stages": {
+            "router": 8775,
+            "shared": 9414,
+            "routed": 19372,
+            "reduce": 8219
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 45990,
+          "stages": {
+            "router": 8775,
+            "routed": 26589,
+            "reduce": 10626
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 36542,
+          "stages": {
+            "router": 8775,
+            "routed": 18516,
+            "reduce": 9251
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 36485,
+          "stages": {
+            "router": 8775,
+            "routed": 18697,
+            "reduce": 9013
+          }
+        }
+      ]
+    },
+    {
+      "T": 16,
+      "case": "s528590_clustered",
+      "slow_eps": [
+        3
+      ],
+      "ds_cycles": 65098,
+      "master_cycles": 605614,
+      "glm_cycles": 39292,
+      "previous_pr_cycles": 67149,
+      "per_ep": [
+        {
+          "ep": 0,
+          "cycles": 38494,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13295,
+              "core_cycles": {
+                "0": 13027,
+                "1": 13295
+              }
+            },
+            "routed": {
+              "cycles": 11634,
+              "core_cycles": {
+                "0": 11634,
+                "1": 4896
+              }
+            },
+            "reduce": {
+              "cycles": 5907,
+              "core_cycles": {
+                "0": 5406,
+                "1": 5907
+              }
+            }
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 51258,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13295,
+              "core_cycles": {
+                "0": 13027,
+                "1": 13295
+              }
+            },
+            "routed": {
+              "cycles": 22871,
+              "core_cycles": {
+                "0": 20159,
+                "1": 22871
+              }
+            },
+            "reduce": {
+              "cycles": 7434,
+              "core_cycles": {
+                "0": 7252,
+                "1": 7434
+              }
+            }
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 50766,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13295,
+              "core_cycles": {
+                "0": 13027,
+                "1": 13295
+              }
+            },
+            "routed": {
+              "cycles": 21967,
+              "core_cycles": {
+                "0": 21967,
+                "1": 20428
+              }
+            },
+            "reduce": {
+              "cycles": 7846,
+              "core_cycles": {
+                "0": 7081,
+                "1": 7846
+              }
+            }
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 65098,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13295,
+              "core_cycles": {
+                "0": 13027,
+                "1": 13295
+              }
+            },
+            "routed": {
+              "cycles": 34855,
+              "core_cycles": {
+                "0": 20077,
+                "1": 34855
+              }
+            },
+            "reduce": {
+              "cycles": 9290,
+              "core_cycles": {
+                "0": 8795,
+                "1": 9290
+              }
+            }
+          }
+        }
+      ],
+      "glm_per_ep": [
+        {
+          "ep": 0,
+          "cycles": 35958,
+          "stages": {
+            "router": 8775,
+            "shared": 9414,
+            "routed": 10958,
+            "reduce": 6811
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 35186,
+          "stages": {
+            "router": 8775,
+            "routed": 16586,
+            "reduce": 9825
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 36170,
+          "stages": {
+            "router": 8775,
+            "routed": 17019,
+            "reduce": 10376
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 39292,
+          "stages": {
+            "router": 8775,
+            "routed": 20505,
+            "reduce": 10012
+          }
+        }
+      ]
+    },
+    {
+      "T": 16,
+      "case": "s528590_hotspot",
+      "slow_eps": [
+        2
+      ],
+      "ds_cycles": 65726,
+      "master_cycles": 602432,
+      "glm_cycles": 39262,
+      "previous_pr_cycles": 68820,
+      "per_ep": [
+        {
+          "ep": 0,
+          "cycles": 31318,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13286,
+              "core_cycles": {
+                "0": 13018,
+                "1": 13286
+              }
+            },
+            "routed": {
+              "cycles": 4896,
+              "core_cycles": {
+                "0": 4316,
+                "1": 4896
+              }
+            },
+            "reduce": {
+              "cycles": 5478,
+              "core_cycles": {
+                "0": 5056,
+                "1": 5478
+              }
+            }
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 51216,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13286,
+              "core_cycles": {
+                "0": 13018,
+                "1": 13286
+              }
+            },
+            "routed": {
+              "cycles": 22216,
+              "core_cycles": {
+                "0": 21304,
+                "1": 22216
+              }
+            },
+            "reduce": {
+              "cycles": 8056,
+              "core_cycles": {
+                "0": 7645,
+                "1": 8056
+              }
+            }
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 65726,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13286,
+              "core_cycles": {
+                "0": 13018,
+                "1": 13286
+              }
+            },
+            "routed": {
+              "cycles": 34674,
+              "core_cycles": {
+                "0": 34674,
+                "1": 22219
+              }
+            },
+            "reduce": {
+              "cycles": 10108,
+              "core_cycles": {
+                "0": 9663,
+                "1": 10108
+              }
+            }
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 49643,
+          "stages": {
+            "router": {
+              "cycles": 7658,
+              "core_cycles": {
+                "0": 7442,
+                "1": 7658
+              }
+            },
+            "shared": {
+              "cycles": 13286,
+              "core_cycles": {
+                "0": 13018,
+                "1": 13286
+              }
+            },
+            "routed": {
+              "cycles": 22219,
+              "core_cycles": {
+                "0": 4317,
+                "1": 22219
+              }
+            },
+            "reduce": {
+              "cycles": 6480,
+              "core_cycles": {
+                "0": 5979,
+                "1": 6480
+              }
+            }
+          }
+        }
+      ],
+      "glm_per_ep": [
+        {
+          "ep": 0,
+          "cycles": 27244,
+          "stages": {
+            "router": 8775,
+            "shared": 9414,
+            "routed": 3612,
+            "reduce": 5443
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 38891,
+          "stages": {
+            "router": 8775,
+            "routed": 19387,
+            "reduce": 10729
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 31156,
+          "stages": {
+            "router": 8775,
+            "routed": 12847,
+            "reduce": 9534
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 39262,
+          "stages": {
+            "router": 8775,
+            "routed": 19774,
+            "reduce": 10713
+          }
+        }
+      ]
+    },
+    {
+      "T": 24,
+      "case": "s528588_independent",
+      "slow_eps": [
+        3
+      ],
+      "ds_cycles": 79845,
+      "master_cycles": 871549,
+      "glm_cycles": 60909,
+      "previous_pr_cycles": 85861,
+      "per_ep": [
+        {
+          "ep": 0,
+          "cycles": 74018,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 35125,
+              "core_cycles": {
+                "0": 35125,
+                "1": 33447
+              }
+            },
+            "reduce": {
+              "cycles": 10797,
+              "core_cycles": {
+                "0": 8854,
+                "1": 10797
+              }
+            }
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 78926,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 40224,
+              "core_cycles": {
+                "0": 39386,
+                "1": 40224
+              }
+            },
+            "reduce": {
+              "cycles": 10606,
+              "core_cycles": {
+                "0": 10451,
+                "1": 10606
+              }
+            }
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 76696,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 37661,
+              "core_cycles": {
+                "0": 35018,
+                "1": 37661
+              }
+            },
+            "reduce": {
+              "cycles": 10939,
+              "core_cycles": {
+                "0": 9520,
+                "1": 10939
+              }
+            }
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 79845,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 40390,
+              "core_cycles": {
+                "0": 39054,
+                "1": 40390
+              }
+            },
+            "reduce": {
+              "cycles": 11359,
+              "core_cycles": {
+                "0": 11359,
+                "1": 10241
+              }
+            }
+          }
+        }
+      ],
+      "glm_per_ep": [
+        {
+          "ep": 0,
+          "cycles": 60909,
+          "stages": {
+            "router": 11132,
+            "shared": 12808,
+            "routed": 24856,
+            "reduce": 12113
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 51815,
+          "stages": {
+            "router": 11132,
+            "routed": 26849,
+            "reduce": 13834
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 47754,
+          "stages": {
+            "router": 11132,
+            "routed": 23275,
+            "reduce": 13347
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 60319,
+          "stages": {
+            "router": 11132,
+            "routed": 34352,
+            "reduce": 14835
+          }
+        }
+      ]
+    },
+    {
+      "T": 24,
+      "case": "s528588_clustered",
+      "slow_eps": [
+        3
+      ],
+      "ds_cycles": 83197,
+      "master_cycles": 883707,
+      "glm_cycles": 65207,
+      "previous_pr_cycles": 89246,
+      "per_ep": [
+        {
+          "ep": 0,
+          "cycles": 74032,
+          "stages": {
+            "router": {
+              "cycles": 11401,
+              "core_cycles": {
+                "0": 11129,
+                "1": 11401
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 33352,
+              "core_cycles": {
+                "0": 31407,
+                "1": 33352
+              }
+            },
+            "reduce": {
+              "cycles": 11323,
+              "core_cycles": {
+                "0": 10858,
+                "1": 11323
+              }
+            }
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 64857,
+          "stages": {
+            "router": {
+              "cycles": 11401,
+              "core_cycles": {
+                "0": 11129,
+                "1": 11401
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 27378,
+              "core_cycles": {
+                "0": 4694,
+                "1": 27378
+              }
+            },
+            "reduce": {
+              "cycles": 8122,
+              "core_cycles": {
+                "0": 7452,
+                "1": 8122
+              }
+            }
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 72791,
+          "stages": {
+            "router": {
+              "cycles": 11401,
+              "core_cycles": {
+                "0": 11129,
+                "1": 11401
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 33074,
+              "core_cycles": {
+                "0": 26405,
+                "1": 33074
+              }
+            },
+            "reduce": {
+              "cycles": 10360,
+              "core_cycles": {
+                "0": 10053,
+                "1": 10360
+              }
+            }
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 83197,
+          "stages": {
+            "router": {
+              "cycles": 11401,
+              "core_cycles": {
+                "0": 11129,
+                "1": 11401
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 41445,
+              "core_cycles": {
+                "0": 38780,
+                "1": 41445
+              }
+            },
+            "reduce": {
+              "cycles": 12395,
+              "core_cycles": {
+                "0": 11922,
+                "1": 12395
+              }
+            }
+          }
+        }
+      ],
+      "glm_per_ep": [
+        {
+          "ep": 0,
+          "cycles": 65207,
+          "stages": {
+            "router": 11132,
+            "shared": 12808,
+            "routed": 27706,
+            "reduce": 13561
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 43285,
+          "stages": {
+            "router": 11132,
+            "routed": 19394,
+            "reduce": 12759
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 50852,
+          "stages": {
+            "router": 11132,
+            "routed": 24370,
+            "reduce": 15350
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 44833,
+          "stages": {
+            "router": 11132,
+            "routed": 19394,
+            "reduce": 14307
+          }
+        }
+      ]
+    },
+    {
+      "T": 24,
+      "case": "s528588_hotspot",
+      "slow_eps": [
+        2
+      ],
+      "ds_cycles": 89473,
+      "master_cycles": 909413,
+      "glm_cycles": 87203,
+      "previous_pr_cycles": 99126,
+      "per_ep": [
+        {
+          "ep": 0,
+          "cycles": 87566,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 47828,
+              "core_cycles": {
+                "0": 4693,
+                "1": 47828
+              }
+            },
+            "reduce": {
+              "cycles": 11642,
+              "core_cycles": {
+                "0": 11141,
+                "1": 11642
+              }
+            }
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 66008,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 28767,
+              "core_cycles": {
+                "0": 4694,
+                "1": 28767
+              }
+            },
+            "reduce": {
+              "cycles": 9145,
+              "core_cycles": {
+                "0": 8676,
+                "1": 9145
+              }
+            }
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 89473,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 46500,
+              "core_cycles": {
+                "0": 46500,
+                "1": 28765
+              }
+            },
+            "reduce": {
+              "cycles": 14877,
+              "core_cycles": {
+                "0": 14376,
+                "1": 14877
+              }
+            }
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 40967,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 5202,
+              "core_cycles": {
+                "0": 4694,
+                "1": 5202
+              }
+            },
+            "reduce": {
+              "cycles": 7669,
+              "core_cycles": {
+                "0": 7102,
+                "1": 7669
+              }
+            }
+          }
+        }
+      ],
+      "glm_per_ep": [
+        {
+          "ep": 0,
+          "cycles": 87203,
+          "stages": {
+            "router": 11132,
+            "shared": 12808,
+            "routed": 46453,
+            "reduce": 16810
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 26204,
+          "stages": {
+            "router": 11132,
+            "routed": 4338,
+            "reduce": 10734
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 64973,
+          "stages": {
+            "router": 11132,
+            "routed": 36079,
+            "reduce": 17762
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 26204,
+          "stages": {
+            "router": 11132,
+            "routed": 4338,
+            "reduce": 10734
+          }
+        }
+      ]
+    },
+    {
+      "T": 24,
+      "case": "s528589_independent",
+      "slow_eps": [
+        1
+      ],
+      "ds_cycles": 78816,
+      "master_cycles": 868123,
+      "glm_cycles": 64962,
+      "previous_pr_cycles": 84968,
+      "per_ep": [
+        {
+          "ep": 0,
+          "cycles": 78472,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 39329,
+              "core_cycles": {
+                "0": 39329,
+                "1": 37621
+              }
+            },
+            "reduce": {
+              "cycles": 11047,
+              "core_cycles": {
+                "0": 9877,
+                "1": 11047
+              }
+            }
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 78816,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 39366,
+              "core_cycles": {
+                "0": 39366,
+                "1": 37757
+              }
+            },
+            "reduce": {
+              "cycles": 11354,
+              "core_cycles": {
+                "0": 10705,
+                "1": 11354
+              }
+            }
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 77788,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 39110,
+              "core_cycles": {
+                "0": 39110,
+                "1": 37759
+              }
+            },
+            "reduce": {
+              "cycles": 10582,
+              "core_cycles": {
+                "0": 10016,
+                "1": 10582
+              }
+            }
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 75974,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 37749,
+              "core_cycles": {
+                "0": 32776,
+                "1": 37749
+              }
+            },
+            "reduce": {
+              "cycles": 10129,
+              "core_cycles": {
+                "0": 9915,
+                "1": 10129
+              }
+            }
+          }
+        }
+      ],
+      "glm_per_ep": [
+        {
+          "ep": 0,
+          "cycles": 64962,
+          "stages": {
+            "router": 11132,
+            "shared": 12808,
+            "routed": 27803,
+            "reduce": 13219
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 53561,
+          "stages": {
+            "router": 11132,
+            "routed": 28398,
+            "reduce": 14031
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 53388,
+          "stages": {
+            "router": 11132,
+            "routed": 28763,
+            "reduce": 13493
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 54245,
+          "stages": {
+            "router": 11132,
+            "routed": 28763,
+            "reduce": 14350
+          }
+        }
+      ]
+    },
+    {
+      "T": 24,
+      "case": "s528589_clustered",
+      "slow_eps": [
+        3
+      ],
+      "ds_cycles": 79610,
+      "master_cycles": 872344,
+      "glm_cycles": 60386,
+      "previous_pr_cycles": 85932,
+      "per_ep": [
+        {
+          "ep": 0,
+          "cycles": 72738,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 33536,
+              "core_cycles": {
+                "0": 27342,
+                "1": 33536
+              }
+            },
+            "reduce": {
+              "cycles": 11106,
+              "core_cycles": {
+                "0": 10601,
+                "1": 11106
+              }
+            }
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 71540,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 33536,
+              "core_cycles": {
+                "0": 18583,
+                "1": 33536
+              }
+            },
+            "reduce": {
+              "cycles": 9908,
+              "core_cycles": {
+                "0": 9745,
+                "1": 9908
+              }
+            }
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 69828,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 31858,
+              "core_cycles": {
+                "0": 19545,
+                "1": 31858
+              }
+            },
+            "reduce": {
+              "cycles": 9874,
+              "core_cycles": {
+                "0": 9019,
+                "1": 9874
+              }
+            }
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 79610,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 40232,
+              "core_cycles": {
+                "0": 27031,
+                "1": 40232
+              }
+            },
+            "reduce": {
+              "cycles": 11282,
+              "core_cycles": {
+                "0": 10987,
+                "1": 11282
+              }
+            }
+          }
+        }
+      ],
+      "glm_per_ep": [
+        {
+          "ep": 0,
+          "cycles": 60386,
+          "stages": {
+            "router": 11132,
+            "shared": 12808,
+            "routed": 24369,
+            "reduce": 12077
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 48328,
+          "stages": {
+            "router": 11132,
+            "routed": 22875,
+            "reduce": 14321
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 46550,
+          "stages": {
+            "router": 11132,
+            "routed": 21792,
+            "reduce": 13626
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 49381,
+          "stages": {
+            "router": 11132,
+            "routed": 23920,
+            "reduce": 14329
+          }
+        }
+      ]
+    },
+    {
+      "T": 24,
+      "case": "s528589_hotspot",
+      "slow_eps": [
+        0
+      ],
+      "ds_cycles": 88043,
+      "master_cycles": 894459,
+      "glm_cycles": 62421,
+      "previous_pr_cycles": 97501,
+      "per_ep": [
+        {
+          "ep": 0,
+          "cycles": 88043,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 47825,
+              "core_cycles": {
+                "0": 4693,
+                "1": 47825
+              }
+            },
+            "reduce": {
+              "cycles": 12122,
+              "core_cycles": {
+                "0": 11653,
+                "1": 12122
+              }
+            }
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 66006,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 28765,
+              "core_cycles": {
+                "0": 4694,
+                "1": 28765
+              }
+            },
+            "reduce": {
+              "cycles": 9145,
+              "core_cycles": {
+                "0": 8676,
+                "1": 9145
+              }
+            }
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 65591,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 28091,
+              "core_cycles": {
+                "0": 28091,
+                "1": 13787
+              }
+            },
+            "reduce": {
+              "cycles": 9404,
+              "core_cycles": {
+                "0": 8950,
+                "1": 9404
+              }
+            }
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 86622,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 46180,
+              "core_cycles": {
+                "0": 46180,
+                "1": 5202
+              }
+            },
+            "reduce": {
+              "cycles": 12346,
+              "core_cycles": {
+                "0": 11553,
+                "1": 12346
+              }
+            }
+          }
+        }
+      ],
+      "glm_per_ep": [
+        {
+          "ep": 0,
+          "cycles": 62421,
+          "stages": {
+            "router": 11132,
+            "shared": 12808,
+            "routed": 26467,
+            "reduce": 12014
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 43720,
+          "stages": {
+            "router": 11132,
+            "routed": 20011,
+            "reduce": 12577
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 51910,
+          "stages": {
+            "router": 11132,
+            "routed": 26086,
+            "reduce": 14692
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 50735,
+          "stages": {
+            "router": 11132,
+            "routed": 26086,
+            "reduce": 13517
+          }
+        }
+      ]
+    },
+    {
+      "T": 24,
+      "case": "s528590_independent",
+      "slow_eps": [
+        1
+      ],
+      "ds_cycles": 84871,
+      "master_cycles": 867022,
+      "glm_cycles": 73411,
+      "previous_pr_cycles": 94708,
+      "per_ep": [
+        {
+          "ep": 0,
+          "cycles": 83194,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 43455,
+              "core_cycles": {
+                "0": 43455,
+                "1": 34843
+              }
+            },
+            "reduce": {
+              "cycles": 11643,
+              "core_cycles": {
+                "0": 11643,
+                "1": 9881
+              }
+            }
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 84871,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 45029,
+              "core_cycles": {
+                "0": 45029,
+                "1": 40092
+              }
+            },
+            "reduce": {
+              "cycles": 11746,
+              "core_cycles": {
+                "0": 10459,
+                "1": 11746
+              }
+            }
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 79923,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 40564,
+              "core_cycles": {
+                "0": 35310,
+                "1": 40564
+              }
+            },
+            "reduce": {
+              "cycles": 11263,
+              "core_cycles": {
+                "0": 9518,
+                "1": 11263
+              }
+            }
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 71058,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 33499,
+              "core_cycles": {
+                "0": 25017,
+                "1": 33499
+              }
+            },
+            "reduce": {
+              "cycles": 9463,
+              "core_cycles": {
+                "0": 8938,
+                "1": 9463
+              }
+            }
+          }
+        }
+      ],
+      "glm_per_ep": [
+        {
+          "ep": 0,
+          "cycles": 73411,
+          "stages": {
+            "router": 11132,
+            "shared": 12808,
+            "routed": 35837,
+            "reduce": 13634
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 52794,
+          "stages": {
+            "router": 11132,
+            "routed": 26508,
+            "reduce": 15154
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 52086,
+          "stages": {
+            "router": 11132,
+            "routed": 27068,
+            "reduce": 13886
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 44955,
+          "stages": {
+            "router": 11132,
+            "routed": 21011,
+            "reduce": 12812
+          }
+        }
+      ]
+    },
+    {
+      "T": 24,
+      "case": "s528590_clustered",
+      "slow_eps": [
+        3
+      ],
+      "ds_cycles": 91751,
+      "master_cycles": 884127,
+      "glm_cycles": 58427,
+      "previous_pr_cycles": 101698,
+      "per_ep": [
+        {
+          "ep": 0,
+          "cycles": 66882,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 28411,
+              "core_cycles": {
+                "0": 27342,
+                "1": 28411
+              }
+            },
+            "reduce": {
+              "cycles": 10375,
+              "core_cycles": {
+                "0": 9810,
+                "1": 10375
+              }
+            }
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 70045,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 31471,
+              "core_cycles": {
+                "0": 31471,
+                "1": 20501
+              }
+            },
+            "reduce": {
+              "cycles": 10478,
+              "core_cycles": {
+                "0": 9563,
+                "1": 10478
+              }
+            }
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 63925,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 26713,
+              "core_cycles": {
+                "0": 26713,
+                "1": 15353
+              }
+            },
+            "reduce": {
+              "cycles": 9116,
+              "core_cycles": {
+                "0": 8326,
+                "1": 9116
+              }
+            }
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 91751,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 51181,
+              "core_cycles": {
+                "0": 51181,
+                "1": 28095
+              }
+            },
+            "reduce": {
+              "cycles": 12474,
+              "core_cycles": {
+                "0": 12474,
+                "1": 11945
+              }
+            }
+          }
+        }
+      ],
+      "glm_per_ep": [
+        {
+          "ep": 0,
+          "cycles": 54643,
+          "stages": {
+            "router": 11132,
+            "shared": 12808,
+            "routed": 19633,
+            "reduce": 11070
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 48110,
+          "stages": {
+            "router": 11132,
+            "routed": 23668,
+            "reduce": 13310
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 46793,
+          "stages": {
+            "router": 11132,
+            "routed": 22151,
+            "reduce": 13510
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 58427,
+          "stages": {
+            "router": 11132,
+            "routed": 31566,
+            "reduce": 15729
+          }
+        }
+      ]
+    },
+    {
+      "T": 24,
+      "case": "s528590_hotspot",
+      "slow_eps": [
+        3
+      ],
+      "ds_cycles": 87566,
+      "master_cycles": 906602,
+      "glm_cycles": 52943,
+      "previous_pr_cycles": 97021,
+      "per_ep": [
+        {
+          "ep": 0,
+          "cycles": 66008,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 28767,
+              "core_cycles": {
+                "0": 4693,
+                "1": 28767
+              }
+            },
+            "reduce": {
+              "cycles": 9145,
+              "core_cycles": {
+                "0": 8676,
+                "1": 9145
+              }
+            }
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 65332,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 28091,
+              "core_cycles": {
+                "0": 28091,
+                "1": 5202
+              }
+            },
+            "reduce": {
+              "cycles": 9145,
+              "core_cycles": {
+                "0": 8676,
+                "1": 9145
+              }
+            }
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 85962,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 46224,
+              "core_cycles": {
+                "0": 46224,
+                "1": 5202
+              }
+            },
+            "reduce": {
+              "cycles": 11642,
+              "core_cycles": {
+                "0": 10935,
+                "1": 11642
+              }
+            }
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 87566,
+          "stages": {
+            "router": {
+              "cycles": 10140,
+              "core_cycles": {
+                "0": 9924,
+                "1": 10140
+              }
+            },
+            "shared": {
+              "cycles": 17956,
+              "core_cycles": {
+                "0": 17711,
+                "1": 17956
+              }
+            },
+            "routed": {
+              "cycles": 47828,
+              "core_cycles": {
+                "0": 10913,
+                "1": 47828
+              }
+            },
+            "reduce": {
+              "cycles": 11642,
+              "core_cycles": {
+                "0": 11347,
+                "1": 11642
+              }
+            }
+          }
+        }
+      ],
+      "glm_per_ep": [
+        {
+          "ep": 0,
+          "cycles": 50378,
+          "stages": {
+            "router": 11132,
+            "shared": 12808,
+            "routed": 16474,
+            "reduce": 9964
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 50744,
+          "stages": {
+            "router": 11132,
+            "routed": 26086,
+            "reduce": 13526
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 52943,
+          "stages": {
+            "router": 11132,
+            "routed": 26465,
+            "reduce": 15346
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 41116,
+          "stages": {
+            "router": 11132,
+            "routed": 16474,
+            "reduce": 13510
+          }
+        }
+      ]
+    },
+    {
+      "T": 32,
+      "case": "s528588_independent",
+      "slow_eps": [
+        1
+      ],
+      "ds_cycles": 98421,
+      "master_cycles": 1157505,
+      "glm_cycles": 82165,
+      "previous_pr_cycles": 109303,
+      "per_ep": [
+        {
+          "ep": 0,
+          "cycles": 95214,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21124,
+              "core_cycles": {
+                "0": 20761,
+                "1": 21124
+              }
+            },
+            "routed": {
+              "cycles": 46974,
+              "core_cycles": {
+                "0": 46974,
+                "1": 40728
+              }
+            },
+            "reduce": {
+              "cycles": 13289,
+              "core_cycles": {
+                "0": 13289,
+                "1": 12640
+              }
+            }
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 98421,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21124,
+              "core_cycles": {
+                "0": 20761,
+                "1": 21124
+              }
+            },
+            "routed": {
+              "cycles": 49920,
+              "core_cycles": {
+                "0": 49920,
+                "1": 46514
+              }
+            },
+            "reduce": {
+              "cycles": 13550,
+              "core_cycles": {
+                "0": 13020,
+                "1": 13550
+              }
+            }
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 96386,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21124,
+              "core_cycles": {
+                "0": 20761,
+                "1": 21124
+              }
+            },
+            "routed": {
+              "cycles": 47678,
+              "core_cycles": {
+                "0": 46619,
+                "1": 47678
+              }
+            },
+            "reduce": {
+              "cycles": 13757,
+              "core_cycles": {
+                "0": 13608,
+                "1": 13757
+              }
+            }
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 94019,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21124,
+              "core_cycles": {
+                "0": 20761,
+                "1": 21124
+              }
+            },
+            "routed": {
+              "cycles": 45605,
+              "core_cycles": {
+                "0": 40107,
+                "1": 45605
+              }
+            },
+            "reduce": {
+              "cycles": 13463,
+              "core_cycles": {
+                "0": 11563,
+                "1": 13463
+              }
+            }
+          }
+        }
+      ],
+      "glm_per_ep": [
+        {
+          "ep": 0,
+          "cycles": 82165,
+          "stages": {
+            "router": 16075,
+            "shared": 16011,
+            "routed": 34093,
+            "reduce": 15986
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 71925,
+          "stages": {
+            "router": 16075,
+            "routed": 36248,
+            "reduce": 19602
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 70486,
+          "stages": {
+            "router": 16075,
+            "routed": 35595,
+            "reduce": 18816
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 66718,
+          "stages": {
+            "router": 16075,
+            "routed": 32264,
+            "reduce": 18379
+          }
+        }
+      ]
+    },
+    {
+      "T": 32,
+      "case": "s528588_clustered",
+      "slow_eps": [
+        2
+      ],
+      "ds_cycles": 106545,
+      "master_cycles": 1174525,
+      "glm_cycles": 66087,
+      "previous_pr_cycles": 115442,
+      "per_ep": [
+        {
+          "ep": 0,
+          "cycles": 77725,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21144,
+              "core_cycles": {
+                "0": 20761,
+                "1": 21144
+              }
+            },
+            "routed": {
+              "cycles": 30291,
+              "core_cycles": {
+                "0": 27774,
+                "1": 30291
+              }
+            },
+            "reduce": {
+              "cycles": 12463,
+              "core_cycles": {
+                "0": 11637,
+                "1": 12463
+              }
+            }
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 84586,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21144,
+              "core_cycles": {
+                "0": 20761,
+                "1": 21144
+              }
+            },
+            "routed": {
+              "cycles": 35658,
+              "core_cycles": {
+                "0": 32686,
+                "1": 35658
+              }
+            },
+            "reduce": {
+              "cycles": 13957,
+              "core_cycles": {
+                "0": 13376,
+                "1": 13957
+              }
+            }
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 106545,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21144,
+              "core_cycles": {
+                "0": 20761,
+                "1": 21144
+              }
+            },
+            "routed": {
+              "cycles": 56201,
+              "core_cycles": {
+                "0": 21009,
+                "1": 56201
+              }
+            },
+            "reduce": {
+              "cycles": 15373,
+              "core_cycles": {
+                "0": 14792,
+                "1": 15373
+              }
+            }
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 68579,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21144,
+              "core_cycles": {
+                "0": 20761,
+                "1": 21144
+              }
+            },
+            "routed": {
+              "cycles": 22062,
+              "core_cycles": {
+                "0": 21009,
+                "1": 22062
+              }
+            },
+            "reduce": {
+              "cycles": 11546,
+              "core_cycles": {
+                "0": 10965,
+                "1": 11546
+              }
+            }
+          }
+        }
+      ],
+      "glm_per_ep": [
+        {
+          "ep": 0,
+          "cycles": 66087,
+          "stages": {
+            "router": 16075,
+            "shared": 16011,
+            "routed": 19809,
+            "reduce": 14192
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 63188,
+          "stages": {
+            "router": 16075,
+            "routed": 27424,
+            "reduce": 19689
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 65737,
+          "stages": {
+            "router": 16075,
+            "routed": 31242,
+            "reduce": 18420
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 53643,
+          "stages": {
+            "router": 16075,
+            "routed": 20761,
+            "reduce": 16807
+          }
+        }
+      ]
+    },
+    {
+      "T": 32,
+      "case": "s528588_hotspot",
+      "slow_eps": [
+        0
+      ],
+      "ds_cycles": 84206,
+      "master_cycles": 1160392,
+      "glm_cycles": 69688,
+      "previous_pr_cycles": 91707,
+      "per_ep": [
+        {
+          "ep": 0,
+          "cycles": 84206,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21024,
+              "core_cycles": {
+                "0": 20641,
+                "1": 21024
+              }
+            },
+            "routed": {
+              "cycles": 34046,
+              "core_cycles": {
+                "0": 33383,
+                "1": 34046
+              }
+            },
+            "reduce": {
+              "cycles": 15309,
+              "core_cycles": {
+                "0": 14712,
+                "1": 15309
+              }
+            }
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 79784,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21024,
+              "core_cycles": {
+                "0": 20641,
+                "1": 21024
+              }
+            },
+            "routed": {
+              "cycles": 33387,
+              "core_cycles": {
+                "0": 33387,
+                "1": 5405
+              }
+            },
+            "reduce": {
+              "cycles": 11546,
+              "core_cycles": {
+                "0": 10965,
+                "1": 11546
+              }
+            }
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 84205,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21024,
+              "core_cycles": {
+                "0": 20641,
+                "1": 21024
+              }
+            },
+            "routed": {
+              "cycles": 34045,
+              "core_cycles": {
+                "0": 33387,
+                "1": 34045
+              }
+            },
+            "reduce": {
+              "cycles": 15309,
+              "core_cycles": {
+                "0": 14728,
+                "1": 15309
+              }
+            }
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 79781,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21024,
+              "core_cycles": {
+                "0": 20641,
+                "1": 21024
+              }
+            },
+            "routed": {
+              "cycles": 33384,
+              "core_cycles": {
+                "0": 33384,
+                "1": 5405
+              }
+            },
+            "reduce": {
+              "cycles": 11546,
+              "core_cycles": {
+                "0": 10965,
+                "1": 11546
+              }
+            }
+          }
+        }
+      ],
+      "glm_per_ep": [
+        {
+          "ep": 0,
+          "cycles": 67860,
+          "stages": {
+            "router": 16075,
+            "shared": 16011,
+            "routed": 20684,
+            "reduce": 15090
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 69688,
+          "stages": {
+            "router": 16075,
+            "routed": 33684,
+            "reduce": 19929
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 52045,
+          "stages": {
+            "router": 16075,
+            "routed": 20360,
+            "reduce": 15610
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 54383,
+          "stages": {
+            "router": 16075,
+            "routed": 20682,
+            "reduce": 17626
+          }
+        }
+      ]
+    },
+    {
+      "T": 32,
+      "case": "s528589_independent",
+      "slow_eps": [
+        1
+      ],
+      "ds_cycles": 104668,
+      "master_cycles": 1152600,
+      "glm_cycles": 77033,
+      "previous_pr_cycles": 116504,
+      "per_ep": [
+        {
+          "ep": 0,
+          "cycles": 93033,
+          "stages": {
+            "router": {
+              "cycles": 14659,
+              "core_cycles": {
+                "0": 13176,
+                "1": 14659
+              }
+            },
+            "shared": {
+              "cycles": 21144,
+              "core_cycles": {
+                "0": 20751,
+                "1": 21144
+              }
+            },
+            "routed": {
+              "cycles": 45227,
+              "core_cycles": {
+                "0": 32964,
+                "1": 45227
+              }
+            },
+            "reduce": {
+              "cycles": 12003,
+              "core_cycles": {
+                "0": 12003,
+                "1": 11953
+              }
+            }
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 104668,
+          "stages": {
+            "router": {
+              "cycles": 14659,
+              "core_cycles": {
+                "0": 13176,
+                "1": 14659
+              }
+            },
+            "shared": {
+              "cycles": 21144,
+              "core_cycles": {
+                "0": 20751,
+                "1": 21144
+              }
+            },
+            "routed": {
+              "cycles": 54604,
+              "core_cycles": {
+                "0": 54604,
+                "1": 45245
+              }
+            },
+            "reduce": {
+              "cycles": 14261,
+              "core_cycles": {
+                "0": 14261,
+                "1": 13228
+              }
+            }
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 104349,
+          "stages": {
+            "router": {
+              "cycles": 14659,
+              "core_cycles": {
+                "0": 13176,
+                "1": 14659
+              }
+            },
+            "shared": {
+              "cycles": 21144,
+              "core_cycles": {
+                "0": 20751,
+                "1": 21144
+              }
+            },
+            "routed": {
+              "cycles": 54009,
+              "core_cycles": {
+                "0": 54009,
+                "1": 45222
+              }
+            },
+            "reduce": {
+              "cycles": 14537,
+              "core_cycles": {
+                "0": 12331,
+                "1": 14537
+              }
+            }
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 97165,
+          "stages": {
+            "router": {
+              "cycles": 14659,
+              "core_cycles": {
+                "0": 13176,
+                "1": 14659
+              }
+            },
+            "shared": {
+              "cycles": 21144,
+              "core_cycles": {
+                "0": 20751,
+                "1": 21144
+              }
+            },
+            "routed": {
+              "cycles": 47976,
+              "core_cycles": {
+                "0": 39655,
+                "1": 47976
+              }
+            },
+            "reduce": {
+              "cycles": 13386,
+              "core_cycles": {
+                "0": 12538,
+                "1": 13386
+              }
+            }
+          }
+        }
+      ],
+      "glm_per_ep": [
+        {
+          "ep": 0,
+          "cycles": 77033,
+          "stages": {
+            "router": 16075,
+            "shared": 16011,
+            "routed": 30149,
+            "reduce": 14798
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 73911,
+          "stages": {
+            "router": 16075,
+            "routed": 38808,
+            "reduce": 19028
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 70736,
+          "stages": {
+            "router": 16075,
+            "routed": 35868,
+            "reduce": 18793
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 68575,
+          "stages": {
+            "router": 16075,
+            "routed": 34601,
+            "reduce": 17899
+          }
+        }
+      ]
+    },
+    {
+      "T": 32,
+      "case": "s528589_clustered",
+      "slow_eps": [
+        0
+      ],
+      "ds_cycles": 94616,
+      "master_cycles": 1157141,
+      "glm_cycles": 81367,
+      "previous_pr_cycles": 104141,
+      "per_ep": [
+        {
+          "ep": 0,
+          "cycles": 94616,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21134,
+              "core_cycles": {
+                "0": 20751,
+                "1": 21134
+              }
+            },
+            "routed": {
+              "cycles": 45495,
+              "core_cycles": {
+                "0": 45495,
+                "1": 28548
+              }
+            },
+            "reduce": {
+              "cycles": 14160,
+              "core_cycles": {
+                "0": 12809,
+                "1": 14160
+              }
+            }
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 74692,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21134,
+              "core_cycles": {
+                "0": 20751,
+                "1": 21134
+              }
+            },
+            "routed": {
+              "cycles": 28578,
+              "core_cycles": {
+                "0": 28578,
+                "1": 15909
+              }
+            },
+            "reduce": {
+              "cycles": 11153,
+              "core_cycles": {
+                "0": 10965,
+                "1": 11153
+              }
+            }
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 94210,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21134,
+              "core_cycles": {
+                "0": 20751,
+                "1": 21134
+              }
+            },
+            "routed": {
+              "cycles": 44363,
+              "core_cycles": {
+                "0": 29126,
+                "1": 44363
+              }
+            },
+            "reduce": {
+              "cycles": 14886,
+              "core_cycles": {
+                "0": 14212,
+                "1": 14886
+              }
+            }
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 91066,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21134,
+              "core_cycles": {
+                "0": 20751,
+                "1": 21134
+              }
+            },
+            "routed": {
+              "cycles": 42278,
+              "core_cycles": {
+                "0": 42278,
+                "1": 15909
+              }
+            },
+            "reduce": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13385,
+                "1": 13827
+              }
+            }
+          }
+        }
+      ],
+      "glm_per_ep": [
+        {
+          "ep": 0,
+          "cycles": 81367,
+          "stages": {
+            "router": 16075,
+            "shared": 16011,
+            "routed": 30754,
+            "reduce": 18527
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 47920,
+          "stages": {
+            "router": 16075,
+            "routed": 15961,
+            "reduce": 15884
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 58278,
+          "stages": {
+            "router": 16075,
+            "routed": 24092,
+            "reduce": 18111
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 54396,
+          "stages": {
+            "router": 16075,
+            "routed": 21225,
+            "reduce": 17096
+          }
+        }
+      ]
+    },
+    {
+      "T": 32,
+      "case": "s528589_hotspot",
+      "slow_eps": [
+        0
+      ],
+      "ds_cycles": 112636,
+      "master_cycles": 1180143,
+      "glm_cycles": 104163,
+      "previous_pr_cycles": 126273,
+      "per_ep": [
+        {
+          "ep": 0,
+          "cycles": 112636,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21024,
+              "core_cycles": {
+                "0": 20641,
+                "1": 21024
+              }
+            },
+            "routed": {
+              "cycles": 59539,
+              "core_cycles": {
+                "0": 59539,
+                "1": 34048
+              }
+            },
+            "reduce": {
+              "cycles": 18246,
+              "core_cycles": {
+                "0": 17633,
+                "1": 18246
+              }
+            }
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 79784,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21024,
+              "core_cycles": {
+                "0": 20641,
+                "1": 21024
+              }
+            },
+            "routed": {
+              "cycles": 33387,
+              "core_cycles": {
+                "0": 33387,
+                "1": 5405
+              }
+            },
+            "reduce": {
+              "cycles": 11546,
+              "core_cycles": {
+                "0": 10965,
+                "1": 11546
+              }
+            }
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 84590,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21024,
+              "core_cycles": {
+                "0": 20641,
+                "1": 21024
+              }
+            },
+            "routed": {
+              "cycles": 34046,
+              "core_cycles": {
+                "0": 33385,
+                "1": 34046
+              }
+            },
+            "reduce": {
+              "cycles": 15693,
+              "core_cycles": {
+                "0": 15080,
+                "1": 15693
+              }
+            }
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 50008,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21024,
+              "core_cycles": {
+                "0": 20641,
+                "1": 21024
+              }
+            },
+            "routed": {
+              "cycles": 5405,
+              "core_cycles": {
+                "0": 4912,
+                "1": 5405
+              }
+            },
+            "reduce": {
+              "cycles": 9752,
+              "core_cycles": {
+                "0": 9073,
+                "1": 9752
+              }
+            }
+          }
+        }
+      ],
+      "glm_per_ep": [
+        {
+          "ep": 0,
+          "cycles": 104163,
+          "stages": {
+            "router": 16075,
+            "shared": 16011,
+            "routed": 47008,
+            "reduce": 25069
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 35556,
+          "stages": {
+            "router": 16075,
+            "routed": 5546,
+            "reduce": 13935
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 54385,
+          "stages": {
+            "router": 16075,
+            "routed": 20684,
+            "reduce": 17626
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 52369,
+          "stages": {
+            "router": 16075,
+            "routed": 20684,
+            "reduce": 15610
+          }
+        }
+      ]
+    },
+    {
+      "T": 32,
+      "case": "s528590_independent",
+      "slow_eps": [
+        2
+      ],
+      "ds_cycles": 113633,
+      "master_cycles": 1168615,
+      "glm_cycles": 82073,
+      "previous_pr_cycles": 130982,
+      "per_ep": [
+        {
+          "ep": 0,
+          "cycles": 96688,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21144,
+              "core_cycles": {
+                "0": 20761,
+                "1": 21144
+              }
+            },
+            "routed": {
+              "cycles": 47442,
+              "core_cycles": {
+                "0": 44668,
+                "1": 47442
+              }
+            },
+            "reduce": {
+              "cycles": 14275,
+              "core_cycles": {
+                "0": 11719,
+                "1": 14275
+              }
+            }
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 94410,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21144,
+              "core_cycles": {
+                "0": 20761,
+                "1": 21144
+              }
+            },
+            "routed": {
+              "cycles": 46260,
+              "core_cycles": {
+                "0": 37356,
+                "1": 46260
+              }
+            },
+            "reduce": {
+              "cycles": 13179,
+              "core_cycles": {
+                "0": 12106,
+                "1": 13179
+              }
+            }
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 113633,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21144,
+              "core_cycles": {
+                "0": 20761,
+                "1": 21144
+              }
+            },
+            "routed": {
+              "cycles": 64677,
+              "core_cycles": {
+                "0": 36908,
+                "1": 64677
+              }
+            },
+            "reduce": {
+              "cycles": 13985,
+              "core_cycles": {
+                "0": 13568,
+                "1": 13985
+              }
+            }
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 92025,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21144,
+              "core_cycles": {
+                "0": 20761,
+                "1": 21144
+              }
+            },
+            "routed": {
+              "cycles": 43786,
+              "core_cycles": {
+                "0": 43786,
+                "1": 40970
+              }
+            },
+            "reduce": {
+              "cycles": 13268,
+              "core_cycles": {
+                "0": 13268,
+                "1": 12686
+              }
+            }
+          }
+        }
+      ],
+      "glm_per_ep": [
+        {
+          "ep": 0,
+          "cycles": 82073,
+          "stages": {
+            "router": 16075,
+            "shared": 16011,
+            "routed": 34037,
+            "reduce": 15950
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 70723,
+          "stages": {
+            "router": 16075,
+            "routed": 36949,
+            "reduce": 17699
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 72421,
+          "stages": {
+            "router": 16075,
+            "routed": 38456,
+            "reduce": 17890
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 71047,
+          "stages": {
+            "router": 16075,
+            "routed": 36461,
+            "reduce": 18511
+          }
+        }
+      ]
+    },
+    {
+      "T": 32,
+      "case": "s528590_clustered",
+      "slow_eps": [
+        3
+      ],
+      "ds_cycles": 91821,
+      "master_cycles": 1155827,
+      "glm_cycles": 71995,
+      "previous_pr_cycles": 98362,
+      "per_ep": [
+        {
+          "ep": 0,
+          "cycles": 78433,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21144,
+              "core_cycles": {
+                "0": 20761,
+                "1": 21144
+              }
+            },
+            "routed": {
+              "cycles": 30132,
+              "core_cycles": {
+                "0": 29125,
+                "1": 30132
+              }
+            },
+            "reduce": {
+              "cycles": 13330,
+              "core_cycles": {
+                "0": 13061,
+                "1": 13330
+              }
+            }
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 80312,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21144,
+              "core_cycles": {
+                "0": 20761,
+                "1": 21144
+              }
+            },
+            "routed": {
+              "cycles": 33253,
+              "core_cycles": {
+                "0": 33253,
+                "1": 20292
+              }
+            },
+            "reduce": {
+              "cycles": 12088,
+              "core_cycles": {
+                "0": 10635,
+                "1": 12088
+              }
+            }
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 83808,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21144,
+              "core_cycles": {
+                "0": 20761,
+                "1": 21144
+              }
+            },
+            "routed": {
+              "cycles": 35246,
+              "core_cycles": {
+                "0": 28344,
+                "1": 35246
+              }
+            },
+            "reduce": {
+              "cycles": 13591,
+              "core_cycles": {
+                "0": 13507,
+                "1": 13591
+              }
+            }
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 91821,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21144,
+              "core_cycles": {
+                "0": 20761,
+                "1": 21144
+              }
+            },
+            "routed": {
+              "cycles": 42099,
+              "core_cycles": {
+                "0": 42099,
+                "1": 30291
+              }
+            },
+            "reduce": {
+              "cycles": 14751,
+              "core_cycles": {
+                "0": 13953,
+                "1": 14751
+              }
+            }
+          }
+        }
+      ],
+      "glm_per_ep": [
+        {
+          "ep": 0,
+          "cycles": 71995,
+          "stages": {
+            "router": 16075,
+            "shared": 16011,
+            "routed": 24092,
+            "reduce": 15817
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 59525,
+          "stages": {
+            "router": 16075,
+            "routed": 25869,
+            "reduce": 17581
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 63442,
+          "stages": {
+            "router": 16075,
+            "routed": 29232,
+            "reduce": 18135
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 53696,
+          "stages": {
+            "router": 16075,
+            "routed": 20761,
+            "reduce": 16860
+          }
+        }
+      ]
+    },
+    {
+      "T": 32,
+      "case": "s528590_hotspot",
+      "slow_eps": [
+        3
+      ],
+      "ds_cycles": 109849,
+      "master_cycles": 1203520,
+      "glm_cycles": 72878,
+      "previous_pr_cycles": 123880,
+      "per_ep": [
+        {
+          "ep": 0,
+          "cycles": 80445,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21024,
+              "core_cycles": {
+                "0": 20641,
+                "1": 21024
+              }
+            },
+            "routed": {
+              "cycles": 34048,
+              "core_cycles": {
+                "0": 4911,
+                "1": 34048
+              }
+            },
+            "reduce": {
+              "cycles": 11546,
+              "core_cycles": {
+                "0": 10965,
+                "1": 11546
+              }
+            }
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 79784,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21024,
+              "core_cycles": {
+                "0": 20641,
+                "1": 21024
+              }
+            },
+            "routed": {
+              "cycles": 33387,
+              "core_cycles": {
+                "0": 33387,
+                "1": 5405
+              }
+            },
+            "reduce": {
+              "cycles": 11546,
+              "core_cycles": {
+                "0": 10965,
+                "1": 11546
+              }
+            }
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 83470,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21024,
+              "core_cycles": {
+                "0": 20641,
+                "1": 21024
+              }
+            },
+            "routed": {
+              "cycles": 34046,
+              "core_cycles": {
+                "0": 33385,
+                "1": 34046
+              }
+            },
+            "reduce": {
+              "cycles": 14573,
+              "core_cycles": {
+                "0": 13960,
+                "1": 14573
+              }
+            }
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 109849,
+          "stages": {
+            "router": {
+              "cycles": 13827,
+              "core_cycles": {
+                "0": 13443,
+                "1": 13827
+              }
+            },
+            "shared": {
+              "cycles": 21024,
+              "core_cycles": {
+                "0": 20641,
+                "1": 21024
+              }
+            },
+            "routed": {
+              "cycles": 60425,
+              "core_cycles": {
+                "0": 4912,
+                "1": 60425
+              }
+            },
+            "reduce": {
+              "cycles": 14573,
+              "core_cycles": {
+                "0": 13960,
+                "1": 14573
+              }
+            }
+          }
+        }
+      ],
+      "glm_per_ep": [
+        {
+          "ep": 0,
+          "cycles": 72878,
+          "stages": {
+            "router": 16075,
+            "shared": 16011,
+            "routed": 25306,
+            "reduce": 15486
+          }
+        },
+        {
+          "ep": 1,
+          "cycles": 69557,
+          "stages": {
+            "router": 16075,
+            "routed": 33684,
+            "reduce": 19798
+          }
+        },
+        {
+          "ep": 2,
+          "cycles": 67638,
+          "stages": {
+            "router": 16075,
+            "routed": 34008,
+            "reduce": 17555
+          }
+        },
+        {
+          "ep": 3,
+          "cycles": 52373,
+          "stages": {
+            "router": 16075,
+            "routed": 20684,
+            "reduce": 15614
+          }
+        }
+      ]
+    }
+  ]
+}

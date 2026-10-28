@@ -6,7 +6,7 @@ import json
 import re
 import sys
 from datetime import date
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from urllib.parse import quote
 
 CATEGORIES = {
@@ -24,7 +24,13 @@ def load_catalog(repo):
     seen = set()
     for article in articles:
         name = article["file"]
-        if Path(name).name != name or not name.endswith(".html") or name == "index.html":
+        path = PurePosixPath(name)
+        # Model notes have stable subdirectories; catalog paths must stay portable
+        # and inside this repository, including when a symlink is present.
+        if (path.is_absolute() or path.as_posix() != name or ".." in path.parts
+                or "\\" in name or not name.endswith(".html") or name == "index.html"
+                or (len(path.parts) > 1 and path.parts[0] != "models")
+                or not (repo / name).resolve().is_relative_to(repo.resolve())):
             raise ValueError(f"Invalid article filename: {name}")
         if name in seen:
             raise ValueError(f"Duplicate article: {name}")
@@ -40,6 +46,7 @@ def load_catalog(repo):
         if not article["description"] or not article["tags"]:
             raise ValueError(f"Description and tags are required: {name}")
     published = {path.name for path in repo.glob("*.html") if path.name != "index.html"}
+    published.update(path.relative_to(repo).as_posix() for path in (repo / "models").rglob("*.html"))
     if seen != published:
         raise ValueError(f"Update catalog.json; unlisted={published - seen}, missing={seen - published}")
     return catalog

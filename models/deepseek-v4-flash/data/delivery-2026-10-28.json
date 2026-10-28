@@ -1,0 +1,67 @@
+{
+  "status": "local_validation_passed",
+  "date": "2026-10-28",
+  "revisions": {
+    "torch_zeus": "c8c54d3b692b7fa66d0867ec71ce31546ffdc2ac",
+    "PS1-sglang": "ff92cc87a11cda9917e2f6566e5bddde9dc9115b",
+    "PS1-DevExample": "52a098e05d9128f71bcff3bb5547d318afb55091",
+    "triton_shared": "d3aa0f46b72334b123fa4f28a80f31b5305e5d52",
+    "triton": "5321c2ebe470d2527078491642b136a13ab72c49",
+    "CycleSim": "382c4f151fb8a6b59227f7a168ab231484b0864c"
+  },
+  "totals": {
+    "graph_replays": 21,
+    "actual_launches": 508,
+    "core_completions": 1016,
+    "raw_artifacts": 243
+  },
+  "caller_manifest_sha256": "1cea204546ae04a7fe81119c0ce8cbc9fe20d91816f023e7453c510befd37afd",
+  "compiler_toolchain_sha256": "8af7e3cb79eb466a25ef920b0be9612a221ada700a89b3874d978af83d04c2bc",
+  "audit_sha256": {
+    "optimized-learned": "bf1505c27611bd89b785a3bbe411a546971b67ac6b5d2eb04319ce56e00231c1",
+    "compact-learned": "55e67ad34f890ffab568837a75abec9e4617a7b8a6bb439c096ac1d38b810d0a",
+    "compact-hash-t4": "d9f095b9ea832be6591afd08e625e1f2480255e89797f65d8fe81be23ab8b4d4"
+  },
+  "paragraphs": [
+    "使用最新配套 FULL 编译器，从三个 PR 已提交源码的干净快照执行实际 SGLang route/q.forward 和 native Graph。T16/T24/T32 在 row_local_n256 与 compact 两种布局下分别完成正常、异常输入和恢复重放；另补 compact T4 Hash 原生 INT64 路径。最终三项仿真作业均真实 exit 0 并回收。",
+    "共 21 次四 kernel Graph replay，含 warmup、eager 和独立参考共 508 次实际 launch / 1016 个 core 完成，243 份 raw 产物核对。Graph/eager/staged 最终输出逐字节一致；Shared 与本地 Routed slot 对照、route IDs、缓存失效/恢复、地址稳定和 relocation 拒绝检查通过，route weights 使用原有容差。此次交付检查不更新上面的性能分母或 108 EP 计时矩阵。",
+    "PR587 首次 CI 在 checkout 因 Git HTTP/2/TLS 传输失败退出，尚未执行构建与测试；同一 runner 的旧 master 存在相同故障。已请求第二次 attempt。远端 CI 结果须按当前提交实时查询，以上本地通过不替代 CI 通过。"
+  ],
+  "rows": [
+    [
+      "最新配套 FULL 构建",
+      "通过",
+      "triton_shared d3aa0f46 + Triton 5321c2eb"
+    ],
+    [
+      "CPU 编译器门禁",
+      "1513 MLIR、89 Zecc pytest + 7 lit 全部通过",
+      "另含 floor golden 5 项、parser 25 项与正反向 IR"
+    ],
+    [
+      "Learned / row_local_n256",
+      "9 次 Graph，219 次 launch",
+      "T16/T24/T32，正常/异常/恢复"
+    ],
+    [
+      "Learned / compact",
+      "9 次 Graph，219 次 launch",
+      "T16/T24/T32，正常/异常/恢复"
+    ],
+    [
+      "Hash / compact",
+      "3 次 Graph，70 次 launch",
+      "T4，含 INT64 无效高位/负数检查"
+    ],
+    [
+      "PS1-sglang host",
+      "54 项通过",
+      "另 7 项未纳入 host 选择"
+    ],
+    [
+      "PS1-DevExample host",
+      "526 项通过，CPU 权重量化另 1 项通过",
+      "两项历史全模型报告测试缺输入"
+    ]
+  ]
+}
