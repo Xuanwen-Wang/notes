@@ -1,6 +1,14 @@
 {
-  "updated": "2026-10-28",
+  "updated": "2026-10-30",
   "articles": [
+    {
+      "file": "2026-10-30-sigmoid-silu-fitting.html",
+      "category": "compiler",
+      "title": "TritonShared - Sigmoid 与 SiLU：拟合算法、Lowering 与真实指令",
+      "description": "对照 fast、balanced、accurate、cascade_add 与直接 SiLU 拟合，沿着系数、VP 配方和 12 组真实机器码，核对精度与代价。",
+      "date": "2026-10-30",
+      "tags": ["Sigmoid", "SiLU", "LUT", "VP", "数值精度"]
+    },
     {
       "file": "models/deepseek-v4-flash/index.html",
       "category": "compiler",
