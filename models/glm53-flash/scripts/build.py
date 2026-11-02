@@ -100,21 +100,39 @@ def build():
     full_table = table(['总 BS', '每卡 BS', '平均 ms', 'tokens/s/card', 'P10', 'P90'],
         [[r['batch_size'], f"{r['batch_per_card']:g}", f"{r['mean_ms']:.4f}", f"{r['tokens_s_card']:.1f}",
           f"{r['p10']:.1f}", f"{r['p90']:.1f}"] for r in h], 'H200 56 组统计；P10/P90 是输入间分布，不是置信区间')
+    zeus56 = '<p class="pending">尚未完成 56 组扩展。本节仅在全部 564,480 个 case 通过原门禁后生成统计曲线。</p>'
+    if d.get('zeus56', {}).get('complete'):
+        f = d['zeus56']
+        frows = f['rows']
+        zeus56 = chart('full56-comparison', [
+            ('h200', 'H200 EP4 · 56 组', xs, [r['tokens_s_card'] for r in h]),
+            ('zeus', 'Zeus EP4×TP4 · 相同 56 组', xs, [r['tokens_s_card'] for r in frows])],
+            'tokens/s/card', '同一套 56 组成对输入 · 完整 42 层统计', labels=True)
+        zeus56 += table(['总 BS', 'Zeus 平均 cycles', 'Zeus 平均 ms', 'Zeus tokens/s/card', 'Zeus P10', 'Zeus P90', 'H200 tokens/s/card'],
+            [[r['batch_size'], f"{r['cycles']:,.1f}", f"{r['milliseconds']:.4f}", f"{r['tokens_s_card']:.1f}",
+              f"{r['p10']:.1f}", f"{r['p90']:.1f}", f"{h[i]['tokens_s_card']:.1f}"] for i, r in enumerate(frows)],
+            '两侧均为总 token / 总时间 / 4；输入间 P10/P90 不是置信区间')
+        zeus56 += (f"<p>Zeus 完成 {f['cases']:,} case，原实现参考、Graph 与完成门禁全部通过。train 选择总 BS{f['selected_batch_size']}；"
+                   f"validation {f['holdout']['validation']:.2f}、test {f['holdout']['test']:.2f} tokens/s/card。"
+                   f"解析数学预算另记 {f['analytic_exceptions']:,} 个超限 case。</p>"
+                   '<p><a href="data/zeus-56-paired.csv" download>下载全部 840 个配对输入的 Zeus 汇总 CSV</a></p>')
     kernel = '<p class="pending">等待每档完整 42 层结果。预热与部分层结果不用于吞吐曲线。</p>'
     analysis = '本轮尚未形成完整 15 档曲线；暂不判断 Zeus 的最佳 batch 或 Routed 增长趋势。'
-    if z and z[0]['batch_size'] == 16:
-        kx = [r['batch_size'] for r in z]
-        stage_lines = [(s, s.title(), kx, [r['stages'][s] / z[0]['stages'][s] for r in z]) for s in ('router', 'routed', 'shared', 'reduce')]
+    kz = d['zeus56']['rows'] if d.get('zeus56', {}).get('complete') else z
+    kernel_scope = '56 组输入的平均周期' if d.get('zeus56', {}).get('complete') else 'train00 / step001 单组输入'
+    if kz and kz[0]['batch_size'] == 16:
+        kx = [r['batch_size'] for r in kz]
+        stage_lines = [(s, s.title(), kx, [r['stages'][s] / kz[0]['stages'][s] for r in kz]) for s in ('router', 'routed', 'shared', 'reduce')]
         growth = chart('kernel-growth', stage_lines, '相对 BS16 的 cycles 倍数', 'Zeus · 各阶段增长与线性参考', linear=True)
-        absolute = chart('kernel-time', [(s, s.title(), kx, [r['stages'][s] / 42 / 400 for r in z]) for s in ('router', 'routed', 'shared', 'reduce')],
+        absolute = chart('kernel-time', [(s, s.title(), kx, [r['stages'][s] / 42 / 400 for r in kz]) for s in ('router', 'routed', 'shared', 'reduce')],
                          '每层平均 μs', 'Zeus · 各阶段耗时（逐层独立最大 rank）')
-        normalized = chart('kernel-per-token', [(s, s.title(), kx, [r['stages'][s] / z[0]['stages'][s] / (r['batch_size'] / 16) for r in z]) for s in ('router', 'routed', 'shared', 'reduce')],
+        normalized = chart('kernel-per-token', [(s, s.title(), kx, [r['stages'][s] / kz[0]['stages'][s] / (r['batch_size'] / 16) for r in kz]) for s in ('router', 'routed', 'shared', 'reduce')],
                            'cycles/token 相对 BS16', 'Zeus · 单 token 成本（低于 1 表示相对 BS16 次线性）')
         kt = table(['总 BS', 'Router μs', 'Routed μs', 'Shared μs', 'Reduce μs', 'Routed / BS16', '线性参考'],
             [[r['batch_size']] + [f"{r['stages'][s] / 42 / 400:.3f}" for s in ('router', 'routed', 'shared', 'reduce')]
-             + [f"{r['stages']['routed']/z[0]['stages']['routed']:.3f}×", f"{r['batch_size']/16:.2f}×"] for r in z],
+             + [f"{r['stages']['routed']/kz[0]['stages']['routed']:.3f}×", f"{r['batch_size']/16:.2f}×"] for r in kz],
             '各阶段逐层取最大 rank，累加后除以 42；Shared 仅 EP0。各阶段最大值不可相加充当完整 MoE 时间。')
-        kernel = growth + absolute + normalized + kt
+        kernel = '<p class="note">当前 kernel 曲线采样范围：' + kernel_scope + '。</p>' + growth + absolute + normalized + kt
         superlinear = [str(r['batch_size']) for r in z if r['stages']['routed']/z[0]['stages']['routed'] > r['batch_size']/16 + 1e-9]
         best = max(z, key=lambda r: r['tokens_s_card'])
         analysis = (f"当前完整档位中的最高观测吞吐为 BS{best['batch_size']}：{best['tokens_s_card']:.1f} tokens/s/card。"
@@ -134,13 +152,17 @@ def build():
                  for s in stages] for bs in (16, 24, 32, 40, 48)]
         + [['48 / 16'] + [f"{float(next(r for r in old_k if int(r['batch_size']) == 48 and r['kernel'] == s)['ratio_vs_bs16']):.3f}×" for s in stages]],
         '历史逐阶段平均层耗时：独立最大 rank；不能相加作为完整 MoE 时间')
+    historical += table(['总 BS', 'Routed 解析预算超限 / 672', 'Shared 解析预算超限 / 168'],
+        [[r['batch_size'], r['routed_analytic_failed_cases'], r['shared_analytic_failed_cases']]
+         for r in history['analytic_exceptions']],
+        '历史局部数学预算：优化前后逐项一致，与原实现参考/Graph 门禁分开')
     status = f"{d['zeus']['cases']:,} / {d['zeus']['total']:,} case · {'完成' if d['zeus']['complete'] else '测量中'}"
     source = d['zeus']['source_commit'] or '待导入'
     replacements = dict(STYLE=(ROOT / 'assets/style.css').read_text(), PAIRED_CHART=paired_chart,
         FULL_CHART=full_chart, PAIRED_TABLE=paired_table, FULL_TABLE=full_table, KERNEL=kernel,
         STATUS=status, ANALYSIS=analysis, EXCEPTIONS=str(exceptions), SOURCE=source,
         SOURCE_SHORT=source[:12], DATA=json.dumps(d, ensure_ascii=False).replace('<', '\\u003c'),
-        HISTORY_TABLES=historical,
+        HISTORY_TABLES=historical, ZEUS56=zeus56,
         TOOLCHAIN=table(['组件', '冻结版本'], [[k, '<code>' + v + '</code>'] for k, v in d['toolchain'].items()], '本轮工具链与 kernel 身份'))
     page = (ROOT / 'page.template').read_text()
     for key, value in replacements.items():

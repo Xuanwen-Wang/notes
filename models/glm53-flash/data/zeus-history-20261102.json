@@ -379,5 +379,32 @@
       "cycles_per_token_ratio": "0.8796786580808583",
       "superlinear_vs_bs16": "False"
     }
+  ],
+  "analytic_exceptions": [
+    {
+      "batch_size": 16,
+      "routed_analytic_failed_cases": 173,
+      "shared_analytic_failed_cases": 0
+    },
+    {
+      "batch_size": 24,
+      "routed_analytic_failed_cases": 229,
+      "shared_analytic_failed_cases": 1
+    },
+    {
+      "batch_size": 32,
+      "routed_analytic_failed_cases": 273,
+      "shared_analytic_failed_cases": 2
+    },
+    {
+      "batch_size": 40,
+      "routed_analytic_failed_cases": 346,
+      "shared_analytic_failed_cases": 0
+    },
+    {
+      "batch_size": 48,
+      "routed_analytic_failed_cases": 362,
+      "shared_analytic_failed_cases": 1
+    }
   ]
 }
