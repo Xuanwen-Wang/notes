@@ -1,6 +1,14 @@
 {
-  "updated": "2026-10-30",
+  "updated": "2026-11-02",
   "articles": [
+    {
+      "file": "models/glm53-flash/index.html",
+      "category": "compiler",
+      "title": "TritonShared - GLM-5.3-Flash：MoE 性能与验证",
+      "description": "四卡 H200 EP4 与 Zeus 的配对输入吞吐、BS16–128 扫描、逐 kernel 增长和正确性记录。",
+      "date": "2026-11-02",
+      "tags": ["GLM-5.3-Flash", "MoE", "H200", "CycleSim", "Benchmark"]
+    },
     {
       "file": "2026-10-30-sigmoid-silu-fitting.html",
       "category": "compiler",

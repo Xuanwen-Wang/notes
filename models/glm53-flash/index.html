@@ -1,0 +1,1313 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="GLM-5.3-Flash MoE 的长期性能记录：四卡 H200 EP4、Zeus CycleSim，配对输入吞吐与 kernel 增长曲线。"><title>TritonShared - GLM-5.3-Flash：MoE 性能与验证</title><style>:root{--ink:#152c49;--muted:#58708b;--line:#e0e7ef;--blue:#2364d2;--bg:#f3f6fa}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:75px}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.8 system-ui,-apple-system,"Noto Sans CJK SC",sans-serif}a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid #dc9e28;outline-offset:4px}.nav{background:#fffffff2;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10;backdrop-filter:blur(12px)}.nav-inner{max-width:1280px;margin:auto;padding:12px 32px;display:flex;align-items:center;gap:24px;font-size:14px}.brand{font-weight:750;margin-right:auto}.nav-inner>a{white-space:nowrap}main{max-width:1280px;margin:auto;padding:48px 32px 64px}.eyebrow{font-size:12px;letter-spacing:.15em;font-weight:750;color:var(--blue);text-transform:uppercase}h1{font-size:clamp(30px,4vw,48px);letter-spacing:-.045em;line-height:1.2;margin:14px 0 20px}h2{font-size:25px;letter-spacing:-.025em;margin:0 0 12px}h3{font-size:18px;margin:26px 0 10px}p{margin:12px 0}.lead{max-width:900px;color:var(--muted);font-size:18px}.pills{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0}.pill{background:#e7eefb;border:1px solid #d6e3f8;border-radius:20px;padding:4px 13px;font-size:12px;color:#234d85}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:28px 0 36px}.metric{background:white;border:1px solid var(--line);border-radius:14px;padding:21px 23px}.metric small{color:var(--muted);display:block;font-size:12px}.metric strong{display:block;font-size:25px;line-height:1.5;letter-spacing:-.035em}.metric span{font-size:12px;color:var(--muted)}section{background:#fff;border:1px solid var(--line);border-radius:18px;padding:30px;margin:22px 0;box-shadow:0 3px 16px #18345304}.section-head{display:flex;align-items:baseline;gap:16px;justify-content:space-between}.section-num{font-size:12px;color:#6f839b;font-weight:650;letter-spacing:.09em}.note{background:#f1f6fc;border-left:3px solid #7da5dd;padding:13px 17px;border-radius:0 8px 8px 0;font-size:14px;color:#405b79}.pending{background:#fff6de;padding:14px;border-radius:8px;color:#806116}.chart-scroll{overflow-x:auto;margin:26px -5px 14px}.chart-scroll svg{width:100%;min-width:780px;height:auto;display:block}.table-scroll{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:10px}table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}caption{text-align:left;padding:12px 15px;color:var(--muted);font-size:12px;background:#f7f9fc;caption-side:bottom}th,td{padding:11px 14px;text-align:right;border-bottom:1px solid #e9eef5;white-space:nowrap}th{background:#edf3fa;color:#385574;font-size:12px;font-weight:650}th:first-child,td:first-child{text-align:left}tbody tr:nth-child(even){background:#f8fafd}tbody tr:hover{background:#eff5ff}tbody tr:last-child td{border-bottom:0}code{font-family:ui-monospace,monospace;font-size:.85em;overflow-wrap:anywhere}.prose{max-width:1000px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}.mini{background:#f6f9fc;border-radius:12px;padding:18px 21px}.mini p{font-size:14px;color:var(--muted)}.links{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0}.links a{border:1px solid #d7e2f0;background:#f6f9fd;border-radius:8px;padding:6px 12px;font-size:13px}details{border:1px solid var(--line);border-radius:10px;padding:15px 18px;margin:18px 0}summary{cursor:pointer;font-weight:650}li{margin:7px 0}.footer{color:var(--muted);font-size:12px;padding:12px 2px}.mono{font-variant-numeric:tabular-nums}.quality{font-size:14px;color:var(--muted)}@media(max-width:760px){main{padding:30px 16px}.nav-inner{padding:10px 16px;gap:15px;overflow:auto}.brand{margin-right:10px}.metrics{grid-template-columns:1fr;gap:10px}.metric{padding:15px 18px}.metric strong{font-size:22px}.grid2{grid-template-columns:1fr}section{padding:21px 17px;border-radius:13px}.section-head{display:block}.lead{font-size:16px}h2{font-size:22px}.chart-scroll{margin-right:-4px}.table-scroll{max-width:100%}}@media print{body{background:white;font-size:11px}.nav,.links{display:none}main{padding:0;max-width:none}section{box-shadow:none;break-inside:avoid;padding:15px}.chart-scroll{overflow:visible}.chart-scroll svg{min-width:0}.table-scroll{overflow:visible}th,td{padding:5px}.metrics{grid-template-columns:repeat(3,1fr)}details{display:block}}
+</style></head>
+<body><nav class="nav" aria-label="页面导航"><div class="nav-inner"><a class="brand" href="../../">NOTES / 模型优化</a><a href="#paired">配对吞吐</a><a href="#h200">H200 统计</a><a href="#kernels">Kernel 增长</a><a href="#protocol">测量口径</a><a href="#history">版本记录</a></div></nav>
+<main><header><div class="eyebrow">Model performance notebook · 2026-11-02</div><h1>GLM-5.3-Flash<br>MoE 性能与验证</h1><p class="lead">把吞吐、kernel 增长和正确性放在同一份可复核的记录里。固定页面持续更新；每轮数据保留独立版本、输入范围与工具链身份。</p><div class="pills"><span class="pill">4 card · 总 BS16–128</span><span class="pill">42 层 MoE 组件回放</span><span class="pill">Zeus 16 rank / 32 core</span><span class="pill">CycleSim 400 MHz</span><span class="pill">统一 kernel 入口</span></div></header>
+<div class="metrics"><div class="metric"><small>H200 · 完整 56 组</small><strong>1,745.6 <span>tokens/s/card</span></strong><span>总 BS128 · 当前扫描边界最高，尚未饱和</span></div><div class="metric"><small>Zeus · 第一阶段同组完整层扫描</small><strong style="font-size:19px">323 / 10,080 case · 测量中</strong><span>15 档 × 42 层 × 16 rank；随后扩展 56 组</span></div><div class="metric"><small>固定的比较单位</small><strong>tokens/s/card</strong><span>四卡总 token 数 ÷ MoE 组件秒数 ÷ 4</span></div></div>
+<section id="paired"><div class="section-head"><h2>同组输入，比较吞吐曲线</h2><span class="section-num">01 / MATCHED INPUT</span></div><p class="quality">固定选择 train00 / step001。每一档均取同一 BS128 父 hidden 的嵌套前缀；完整层结果通过输入 hash 对齐后才进入曲线。</p><div class="chart-scroll" tabindex="0"><svg role="img" aria-label="同组输入 · 完整 42 层 MoE 组件吞吐" xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="388.8pt" viewBox="0 0 892.8 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.9, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="paired-throughput-figure_1">
+  <g id="paired-throughput-patch_1">
+   <path d="M 0 388.8 
+L 892.8 388.8 
+L 892.8 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="paired-throughput-axes_1">
+   <g id="paired-throughput-patch_2">
+    <path d="M 49.69524 344.24976 
+L 889.79976 344.24976 
+L 889.79976 54.171803 
+L 49.69524 54.171803 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="paired-throughput-axes_2">
+    <g id="paired-throughput-patch_3">
+     <path d="M 49.69524 54.171803 
+L 889.79976 54.171803 
+L 889.79976 54.171802 
+L 49.69524 54.171802 
+z
+" style="fill: #ffffff"/>
+    </g>
+    <g id="paired-throughput-matplotlib.axis_1">
+     <g id="paired-throughput-xtick_1">
+      <g id="paired-throughput-line2d_1">
+       <defs>
+        <path id="paired-throughput-mecb2e9e9a6" d="M 0 0 
+L 0 -3.5 
+" style="stroke: #49617c; stroke-width: 0.8"/>
+       </defs>
+       <g>
+        <use xlink:href="#paired-throughput-mecb2e9e9a6" x="71.053829" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="paired-throughput-text_1">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="71.053829" y="44.652115" transform="rotate(-0 71.053829 44.652115)">4</text>
+      </g>
+     </g>
+     <g id="paired-throughput-xtick_2">
+      <g id="paired-throughput-line2d_2">
+       <g>
+        <use xlink:href="#paired-throughput-mecb2e9e9a6" x="128.010068" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="paired-throughput-text_2">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="128.010068" y="44.652115" transform="rotate(-0 128.010068 44.652115)">6</text>
+      </g>
+     </g>
+     <g id="paired-throughput-xtick_3">
+      <g id="paired-throughput-line2d_3">
+       <g>
+        <use xlink:href="#paired-throughput-mecb2e9e9a6" x="184.966307" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="paired-throughput-text_3">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="184.966307" y="44.652115" transform="rotate(-0 184.966307 44.652115)">8</text>
+      </g>
+     </g>
+     <g id="paired-throughput-xtick_4">
+      <g id="paired-throughput-line2d_4">
+       <g>
+        <use xlink:href="#paired-throughput-mecb2e9e9a6" x="241.922545" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="paired-throughput-text_4">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="241.922545" y="44.652115" transform="rotate(-0 241.922545 44.652115)">10</text>
+      </g>
+     </g>
+     <g id="paired-throughput-xtick_5">
+      <g id="paired-throughput-line2d_5">
+       <g>
+        <use xlink:href="#paired-throughput-mecb2e9e9a6" x="298.878784" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="paired-throughput-text_5">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="298.878784" y="44.652115" transform="rotate(-0 298.878784 44.652115)">12</text>
+      </g>
+     </g>
+     <g id="paired-throughput-xtick_6">
+      <g id="paired-throughput-line2d_6">
+       <g>
+        <use xlink:href="#paired-throughput-mecb2e9e9a6" x="355.835023" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="paired-throughput-text_6">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="355.835023" y="44.652115" transform="rotate(-0 355.835023 44.652115)">14</text>
+      </g>
+     </g>
+     <g id="paired-throughput-xtick_7">
+      <g id="paired-throughput-line2d_7">
+       <g>
+        <use xlink:href="#paired-throughput-mecb2e9e9a6" x="412.791261" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="paired-throughput-text_7">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="412.791261" y="44.652115" transform="rotate(-0 412.791261 44.652115)">16</text>
+      </g>
+     </g>
+     <g id="paired-throughput-xtick_8">
+      <g id="paired-throughput-line2d_8">
+       <g>
+        <use xlink:href="#paired-throughput-mecb2e9e9a6" x="469.7475" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="paired-throughput-text_8">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="44.652115" transform="rotate(-0 469.7475 44.652115)">18</text>
+      </g>
+     </g>
+     <g id="paired-throughput-xtick_9">
+      <g id="paired-throughput-line2d_9">
+       <g>
+        <use xlink:href="#paired-throughput-mecb2e9e9a6" x="526.703739" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="paired-throughput-text_9">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="526.703739" y="44.652115" transform="rotate(-0 526.703739 44.652115)">20</text>
+      </g>
+     </g>
+     <g id="paired-throughput-xtick_10">
+      <g id="paired-throughput-line2d_10">
+       <g>
+        <use xlink:href="#paired-throughput-mecb2e9e9a6" x="583.659977" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="paired-throughput-text_10">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="583.659977" y="44.652115" transform="rotate(-0 583.659977 44.652115)">22</text>
+      </g>
+     </g>
+     <g id="paired-throughput-xtick_11">
+      <g id="paired-throughput-line2d_11">
+       <g>
+        <use xlink:href="#paired-throughput-mecb2e9e9a6" x="640.616216" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="paired-throughput-text_11">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="640.616216" y="44.652115" transform="rotate(-0 640.616216 44.652115)">24</text>
+      </g>
+     </g>
+     <g id="paired-throughput-xtick_12">
+      <g id="paired-throughput-line2d_12">
+       <g>
+        <use xlink:href="#paired-throughput-mecb2e9e9a6" x="697.572455" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="paired-throughput-text_12">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="697.572455" y="44.652115" transform="rotate(-0 697.572455 44.652115)">26</text>
+      </g>
+     </g>
+     <g id="paired-throughput-xtick_13">
+      <g id="paired-throughput-line2d_13">
+       <g>
+        <use xlink:href="#paired-throughput-mecb2e9e9a6" x="754.528693" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="paired-throughput-text_13">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="754.528693" y="44.652115" transform="rotate(-0 754.528693 44.652115)">28</text>
+      </g>
+     </g>
+     <g id="paired-throughput-xtick_14">
+      <g id="paired-throughput-line2d_14">
+       <g>
+        <use xlink:href="#paired-throughput-mecb2e9e9a6" x="811.484932" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="paired-throughput-text_14">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="811.484932" y="44.652115" transform="rotate(-0 811.484932 44.652115)">30</text>
+      </g>
+     </g>
+     <g id="paired-throughput-xtick_15">
+      <g id="paired-throughput-line2d_15">
+       <g>
+        <use xlink:href="#paired-throughput-mecb2e9e9a6" x="868.441171" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="paired-throughput-text_15">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="868.441171" y="44.652115" transform="rotate(-0 868.441171 44.652115)">32</text>
+      </g>
+     </g>
+     <g id="paired-throughput-text_16">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="27.896802" transform="rotate(-0 469.7475 27.896802)">归一化每卡 batch = 总 batch / 4</text>
+     </g>
+    </g>
+    <g id="paired-throughput-matplotlib.axis_2"/>
+   </g>
+   <g id="paired-throughput-matplotlib.axis_3">
+    <g id="paired-throughput-xtick_16">
+     <g id="paired-throughput-line2d_16">
+      <defs>
+       <path id="paired-throughput-mc6863bb9b3" d="M 0 0 
+L 0 3.5 
+" style="stroke: #49617c; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="71.053829" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="paired-throughput-text_17">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="71.053829" y="360.005073" transform="rotate(-0 71.053829 360.005073)">16</text>
+     </g>
+    </g>
+    <g id="paired-throughput-xtick_17">
+     <g id="paired-throughput-line2d_17">
+      <g>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="128.010068" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="paired-throughput-text_18">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="128.010068" y="360.005073" transform="rotate(-0 128.010068 360.005073)">24</text>
+     </g>
+    </g>
+    <g id="paired-throughput-xtick_18">
+     <g id="paired-throughput-line2d_18">
+      <g>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="184.966307" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="paired-throughput-text_19">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="184.966307" y="360.005073" transform="rotate(-0 184.966307 360.005073)">32</text>
+     </g>
+    </g>
+    <g id="paired-throughput-xtick_19">
+     <g id="paired-throughput-line2d_19">
+      <g>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="241.922545" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="paired-throughput-text_20">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="241.922545" y="360.005073" transform="rotate(-0 241.922545 360.005073)">40</text>
+     </g>
+    </g>
+    <g id="paired-throughput-xtick_20">
+     <g id="paired-throughput-line2d_20">
+      <g>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="298.878784" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="paired-throughput-text_21">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="298.878784" y="360.005073" transform="rotate(-0 298.878784 360.005073)">48</text>
+     </g>
+    </g>
+    <g id="paired-throughput-xtick_21">
+     <g id="paired-throughput-line2d_21">
+      <g>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="355.835023" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="paired-throughput-text_22">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="355.835023" y="360.005073" transform="rotate(-0 355.835023 360.005073)">56</text>
+     </g>
+    </g>
+    <g id="paired-throughput-xtick_22">
+     <g id="paired-throughput-line2d_22">
+      <g>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="412.791261" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="paired-throughput-text_23">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="412.791261" y="360.005073" transform="rotate(-0 412.791261 360.005073)">64</text>
+     </g>
+    </g>
+    <g id="paired-throughput-xtick_23">
+     <g id="paired-throughput-line2d_23">
+      <g>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="469.7475" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="paired-throughput-text_24">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="360.005073" transform="rotate(-0 469.7475 360.005073)">72</text>
+     </g>
+    </g>
+    <g id="paired-throughput-xtick_24">
+     <g id="paired-throughput-line2d_24">
+      <g>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="526.703739" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="paired-throughput-text_25">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="526.703739" y="360.005073" transform="rotate(-0 526.703739 360.005073)">80</text>
+     </g>
+    </g>
+    <g id="paired-throughput-xtick_25">
+     <g id="paired-throughput-line2d_25">
+      <g>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="583.659977" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="paired-throughput-text_26">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="583.659977" y="360.005073" transform="rotate(-0 583.659977 360.005073)">88</text>
+     </g>
+    </g>
+    <g id="paired-throughput-xtick_26">
+     <g id="paired-throughput-line2d_26">
+      <g>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="640.616216" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="paired-throughput-text_27">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="640.616216" y="360.005073" transform="rotate(-0 640.616216 360.005073)">96</text>
+     </g>
+    </g>
+    <g id="paired-throughput-xtick_27">
+     <g id="paired-throughput-line2d_27">
+      <g>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="697.572455" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="paired-throughput-text_28">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="697.572455" y="360.005073" transform="rotate(-0 697.572455 360.005073)">104</text>
+     </g>
+    </g>
+    <g id="paired-throughput-xtick_28">
+     <g id="paired-throughput-line2d_28">
+      <g>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="754.528693" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="paired-throughput-text_29">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="754.528693" y="360.005073" transform="rotate(-0 754.528693 360.005073)">112</text>
+     </g>
+    </g>
+    <g id="paired-throughput-xtick_29">
+     <g id="paired-throughput-line2d_29">
+      <g>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="811.484932" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="paired-throughput-text_30">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="811.484932" y="360.005073" transform="rotate(-0 811.484932 360.005073)">120</text>
+     </g>
+    </g>
+    <g id="paired-throughput-xtick_30">
+     <g id="paired-throughput-line2d_30">
+      <g>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="868.441171" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="paired-throughput-text_31">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="868.441171" y="360.005073" transform="rotate(-0 868.441171 360.005073)">128</text>
+     </g>
+    </g>
+    <g id="paired-throughput-text_32">
+     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="383.280073" transform="rotate(-0 469.7475 383.280073)">总 batch size（4 card）</text>
+    </g>
+   </g>
+   <g id="paired-throughput-matplotlib.axis_4">
+    <g id="paired-throughput-ytick_1">
+     <g id="paired-throughput-line2d_31">
+      <path d="M 49.69524 344.24976 
+L 889.79976 344.24976 
+" clip-path="url(#paired-throughput-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="paired-throughput-line2d_32">
+      <defs>
+       <path id="paired-throughput-mb630600054" d="M 0 0 
+L -3.5 0 
+" style="stroke: #49617c; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#paired-throughput-mb630600054" x="49.69524" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="paired-throughput-text_33">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="348.627416" transform="rotate(-0 42.69524 348.627416)">0</text>
+     </g>
+    </g>
+    <g id="paired-throughput-ytick_2">
+     <g id="paired-throughput-line2d_33">
+      <path d="M 49.69524 302.181031 
+L 889.79976 302.181031 
+" clip-path="url(#paired-throughput-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="paired-throughput-line2d_34">
+      <g>
+       <use xlink:href="#paired-throughput-mb630600054" x="49.69524" y="302.181031" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="paired-throughput-text_34">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="306.558688" transform="rotate(-0 42.69524 306.558688)">500</text>
+     </g>
+    </g>
+    <g id="paired-throughput-ytick_3">
+     <g id="paired-throughput-line2d_35">
+      <path d="M 49.69524 260.112303 
+L 889.79976 260.112303 
+" clip-path="url(#paired-throughput-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="paired-throughput-line2d_36">
+      <g>
+       <use xlink:href="#paired-throughput-mb630600054" x="49.69524" y="260.112303" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="paired-throughput-text_35">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="264.489959" transform="rotate(-0 42.69524 264.489959)">1000</text>
+     </g>
+    </g>
+    <g id="paired-throughput-ytick_4">
+     <g id="paired-throughput-line2d_37">
+      <path d="M 49.69524 218.043574 
+L 889.79976 218.043574 
+" clip-path="url(#paired-throughput-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="paired-throughput-line2d_38">
+      <g>
+       <use xlink:href="#paired-throughput-mb630600054" x="49.69524" y="218.043574" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="paired-throughput-text_36">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="222.42123" transform="rotate(-0 42.69524 222.42123)">1500</text>
+     </g>
+    </g>
+    <g id="paired-throughput-ytick_5">
+     <g id="paired-throughput-line2d_39">
+      <path d="M 49.69524 175.974845 
+L 889.79976 175.974845 
+" clip-path="url(#paired-throughput-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="paired-throughput-line2d_40">
+      <g>
+       <use xlink:href="#paired-throughput-mb630600054" x="49.69524" y="175.974845" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="paired-throughput-text_37">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="180.352501" transform="rotate(-0 42.69524 180.352501)">2000</text>
+     </g>
+    </g>
+    <g id="paired-throughput-ytick_6">
+     <g id="paired-throughput-line2d_41">
+      <path d="M 49.69524 133.906116 
+L 889.79976 133.906116 
+" clip-path="url(#paired-throughput-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="paired-throughput-line2d_42">
+      <g>
+       <use xlink:href="#paired-throughput-mb630600054" x="49.69524" y="133.906116" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="paired-throughput-text_38">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="138.283773" transform="rotate(-0 42.69524 138.283773)">2500</text>
+     </g>
+    </g>
+    <g id="paired-throughput-ytick_7">
+     <g id="paired-throughput-line2d_43">
+      <path d="M 49.69524 91.837388 
+L 889.79976 91.837388 
+" clip-path="url(#paired-throughput-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="paired-throughput-line2d_44">
+      <g>
+       <use xlink:href="#paired-throughput-mb630600054" x="49.69524" y="91.837388" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="paired-throughput-text_39">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="96.215044" transform="rotate(-0 42.69524 96.215044)">3000</text>
+     </g>
+    </g>
+    <g id="paired-throughput-text_40">
+     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="11.755553" y="199.210781" transform="rotate(-90 11.755553 199.210781)">tokens/s/card</text>
+    </g>
+   </g>
+   <g id="paired-throughput-line2d_45">
+    <path d="M 71.053829 283.952538 
+L 128.010068 269.729696 
+L 184.966307 246.921013 
+L 241.922545 223.759442 
+L 298.878784 201.83143 
+L 355.835023 181.322821 
+L 412.791261 169.91569 
+L 469.7475 166.672423 
+L 526.703739 155.403155 
+L 583.659977 138.810268 
+L 640.616216 125.417365 
+L 697.572455 110.622993 
+L 754.528693 94.473032 
+L 811.484932 79.319392 
+L 868.441171 65.113742 
+" clip-path="url(#paired-throughput-pe8c5ae8e79)" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
+    <defs>
+     <path id="paired-throughput-m98abdd7638" d="M 0 2.5 
+C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767 
+C 2.236584 1.29895 2.5 0.663008 2.5 0 
+C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767 
+C 1.29895 -2.236584 0.663008 -2.5 0 -2.5 
+C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767 
+C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0 
+C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767 
+C -1.29895 2.236584 -0.663008 2.5 0 2.5 
+z
+" style="stroke: #0d8d7b; stroke-width: 2"/>
+    </defs>
+    <g clip-path="url(#paired-throughput-pe8c5ae8e79)">
+     <use xlink:href="#paired-throughput-m98abdd7638" x="71.053829" y="283.952538" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="128.010068" y="269.729696" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="184.966307" y="246.921013" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="241.922545" y="223.759442" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="298.878784" y="201.83143" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="355.835023" y="181.322821" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="412.791261" y="169.91569" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="469.7475" y="166.672423" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="526.703739" y="155.403155" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="583.659977" y="138.810268" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="640.616216" y="125.417365" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="697.572455" y="110.622993" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="754.528693" y="94.473032" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="811.484932" y="79.319392" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="868.441171" y="65.113742" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+    </g>
+   </g>
+   <g id="paired-throughput-patch_4">
+    <path d="M 49.69524 344.24976 
+L 49.69524 54.171803 
+" style="fill: none; stroke: #b9c7d7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="paired-throughput-patch_5">
+    <path d="M 49.69524 344.24976 
+L 889.79976 344.24976 
+" style="fill: none; stroke: #b9c7d7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="paired-throughput-text_41">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="71.053829" y="273.952538" transform="rotate(-0 71.053829 273.952538)">717</text>
+   </g>
+   <g id="paired-throughput-text_42">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="128.010068" y="259.729696" transform="rotate(-0 128.010068 259.729696)">886</text>
+   </g>
+   <g id="paired-throughput-text_43">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="184.966307" y="236.921013" transform="rotate(-0 184.966307 236.921013)">1,157</text>
+   </g>
+   <g id="paired-throughput-text_44">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="241.922545" y="213.759442" transform="rotate(-0 241.922545 213.759442)">1,432</text>
+   </g>
+   <g id="paired-throughput-text_45">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="298.878784" y="191.83143" transform="rotate(-0 298.878784 191.83143)">1,693</text>
+   </g>
+   <g id="paired-throughput-text_46">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="355.835023" y="171.322821" transform="rotate(-0 355.835023 171.322821)">1,936</text>
+   </g>
+   <g id="paired-throughput-text_47">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="412.791261" y="159.91569" transform="rotate(-0 412.791261 159.91569)">2,072</text>
+   </g>
+   <g id="paired-throughput-text_48">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="469.7475" y="156.672423" transform="rotate(-0 469.7475 156.672423)">2,111</text>
+   </g>
+   <g id="paired-throughput-text_49">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="526.703739" y="145.403155" transform="rotate(-0 526.703739 145.403155)">2,245</text>
+   </g>
+   <g id="paired-throughput-text_50">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="583.659977" y="128.810268" transform="rotate(-0 583.659977 128.810268)">2,442</text>
+   </g>
+   <g id="paired-throughput-text_51">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="640.616216" y="115.417365" transform="rotate(-0 640.616216 115.417365)">2,601</text>
+   </g>
+   <g id="paired-throughput-text_52">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="697.572455" y="100.622993" transform="rotate(-0 697.572455 100.622993)">2,777</text>
+   </g>
+   <g id="paired-throughput-text_53">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="754.528693" y="84.473032" transform="rotate(-0 754.528693 84.473032)">2,969</text>
+   </g>
+   <g id="paired-throughput-text_54">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="811.484932" y="69.319392" transform="rotate(-0 811.484932 69.319392)">3,149</text>
+   </g>
+   <g id="paired-throughput-text_55">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="868.441171" y="55.113742" transform="rotate(-0 868.441171 55.113742)">3,318</text>
+   </g>
+   <g id="paired-throughput-text_56">
+    <text style="font-weight: 700; font-size: 14px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="49.69524" y="14.171802" transform="rotate(-0 49.69524 14.171802)">同组输入 · 完整 42 层 MoE 组件吞吐</text>
+   </g>
+   <g id="paired-throughput-legend_1">
+    <g id="paired-throughput-patch_6">
+     <path d="M 55.99524 75.096803 
+L 204.048052 75.096803 
+Q 205.848052 75.096803 205.848052 73.296803 
+L 205.848052 60.471803 
+Q 205.848052 58.671803 204.048052 58.671803 
+L 55.99524 58.671803 
+Q 54.19524 58.671803 54.19524 60.471803 
+L 54.19524 73.296803 
+Q 54.19524 75.096803 55.99524 75.096803 
+z
+" style="fill: #ffffff; opacity: 0.8; stroke: #e3eaf2; stroke-linejoin: miter"/>
+    </g>
+    <g id="paired-throughput-line2d_46">
+     <path d="M 57.79524 66.28524 
+L 66.79524 66.28524 
+L 75.79524 66.28524 
+" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
+     <g>
+      <use xlink:href="#paired-throughput-m98abdd7638" x="66.79524" y="66.28524" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     </g>
+    </g>
+    <g id="paired-throughput-text_57">
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="82.99524" y="69.43524" transform="rotate(-0 82.99524 69.43524)">H200 EP4 · train00 / step001</text>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="paired-throughput-pe8c5ae8e79">
+   <rect x="49.69524" y="54.171803" width="840.10452" height="290.077958"/>
+  </clipPath>
+ </defs>
+</svg>
+</div><div class="note">Zeus 是仿真周期换算，H200 是 CUDA event 测时；两者量化和 Shared 放置不同。这里比较同一输入上的各自实现，不是等价量化算法的硬件加速比，也不是整模型推理吞吐。</div><div class="table-scroll" tabindex="0"><table><caption>同一 train00 / step001；每个 batch 均要求完整 42 层</caption><thead><tr><th scope="col">总 BS</th><th scope="col">每卡 BS</th><th scope="col">H200 ms</th><th scope="col">H200 tokens/s/card</th><th scope="col">Zeus cycles</th><th scope="col">Zeus ms</th><th scope="col">Zeus tokens/s/card</th></tr></thead><tbody><tr><td>16</td><td>4</td><td>5.5815</td><td>716.7</td><td>待完成</td><td>—</td><td>—</td></tr><tr><td>24</td><td>6</td><td>6.7743</td><td>885.7</td><td>待完成</td><td>—</td><td>—</td></tr><tr><td>32</td><td>8</td><td>6.9157</td><td>1156.8</td><td>待完成</td><td>—</td><td>—</td></tr><tr><td>40</td><td>10</td><td>6.9829</td><td>1432.1</td><td>待完成</td><td>—</td><td>—</td></tr><tr><td>48</td><td>12</td><td>7.0893</td><td>1692.7</td><td>待完成</td><td>—</td><td>—</td></tr><tr><td>56</td><td>14</td><td>7.2298</td><td>1936.4</td><td>待完成</td><td>—</td><td>—</td></tr><tr><td>64</td><td>16</td><td>7.7220</td><td>2072.0</td><td>待完成</td><td>—</td><td>—</td></tr><tr><td>72</td><td>18</td><td>8.5285</td><td>2110.6</td><td>待完成</td><td>—</td><td>—</td></tr><tr><td>80</td><td>20</td><td>8.9107</td><td>2244.5</td><td>待完成</td><td>—</td><td>—</td></tr><tr><td>88</td><td>22</td><td>9.0101</td><td>2441.7</td><td>待完成</td><td>—</td><td>—</td></tr><tr><td>96</td><td>24</td><td>9.2276</td><td>2600.9</td><td>待完成</td><td>—</td><td>—</td></tr><tr><td>104</td><td>26</td><td>9.3635</td><td>2776.7</td><td>待完成</td><td>—</td><td>—</td></tr><tr><td>112</td><td>28</td><td>9.4318</td><td>2968.7</td><td>待完成</td><td>—</td><td>—</td></tr><tr><td>120</td><td>30</td><td>9.5275</td><td>3148.8</td><td>待完成</td><td>—</td><td>—</td></tr><tr><td>128</td><td>32</td><td>9.6455</td><td>3317.6</td><td>待完成</td><td>—</td><td>—</td></tr></tbody></table></div><p>本轮尚未形成完整 15 档曲线；暂不判断 Zeus 的最佳 batch 或 Routed 增长趋势。</p><div class="links"><a href="data/throughput.csv" download>下载吞吐 CSV</a><a href="assets/paired-throughput.png" download>下载高清图</a><a href="assets/paired-throughput.svg" download>下载 SVG</a></div></section>
+<section id="h200"><div class="section-head"><h2>H200：扩大到 56 组成对输入</h2><span class="section-num">02 / WORKLOAD DISTRIBUTION</span></div><p class="quality">896 条不同请求，7 组 × 8 个固定 decode step；15 档均覆盖全部 42 层。阴影表示输入间 P10–P90 波动，不是测量置信区间。</p><div class="chart-scroll" tabindex="0"><svg role="img" aria-label="H200 · 56 组成对输入" xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="388.8pt" viewBox="0 0 892.8 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.9, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="h200-56-throughput-figure_1">
+  <g id="h200-56-throughput-patch_1">
+   <path d="M 0 388.8 
+L 892.8 388.8 
+L 892.8 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="h200-56-throughput-axes_1">
+   <g id="h200-56-throughput-patch_2">
+    <path d="M 49.69524 344.24976 
+L 889.79976 344.24976 
+L 889.79976 54.171803 
+L 49.69524 54.171803 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="h200-56-throughput-axes_2">
+    <g id="h200-56-throughput-patch_3">
+     <path d="M 49.69524 54.171803 
+L 889.79976 54.171803 
+L 889.79976 54.171802 
+L 49.69524 54.171802 
+z
+" style="fill: #ffffff"/>
+    </g>
+    <g id="h200-56-throughput-matplotlib.axis_1">
+     <g id="h200-56-throughput-xtick_1">
+      <g id="h200-56-throughput-line2d_1">
+       <defs>
+        <path id="h200-56-throughput-mecb2e9e9a6" d="M 0 0 
+L 0 -3.5 
+" style="stroke: #49617c; stroke-width: 0.8"/>
+       </defs>
+       <g>
+        <use xlink:href="#h200-56-throughput-mecb2e9e9a6" x="71.053829" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-56-throughput-text_1">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="71.053829" y="44.652115" transform="rotate(-0 71.053829 44.652115)">4</text>
+      </g>
+     </g>
+     <g id="h200-56-throughput-xtick_2">
+      <g id="h200-56-throughput-line2d_2">
+       <g>
+        <use xlink:href="#h200-56-throughput-mecb2e9e9a6" x="128.010068" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-56-throughput-text_2">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="128.010068" y="44.652115" transform="rotate(-0 128.010068 44.652115)">6</text>
+      </g>
+     </g>
+     <g id="h200-56-throughput-xtick_3">
+      <g id="h200-56-throughput-line2d_3">
+       <g>
+        <use xlink:href="#h200-56-throughput-mecb2e9e9a6" x="184.966307" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-56-throughput-text_3">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="184.966307" y="44.652115" transform="rotate(-0 184.966307 44.652115)">8</text>
+      </g>
+     </g>
+     <g id="h200-56-throughput-xtick_4">
+      <g id="h200-56-throughput-line2d_4">
+       <g>
+        <use xlink:href="#h200-56-throughput-mecb2e9e9a6" x="241.922545" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-56-throughput-text_4">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="241.922545" y="44.652115" transform="rotate(-0 241.922545 44.652115)">10</text>
+      </g>
+     </g>
+     <g id="h200-56-throughput-xtick_5">
+      <g id="h200-56-throughput-line2d_5">
+       <g>
+        <use xlink:href="#h200-56-throughput-mecb2e9e9a6" x="298.878784" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-56-throughput-text_5">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="298.878784" y="44.652115" transform="rotate(-0 298.878784 44.652115)">12</text>
+      </g>
+     </g>
+     <g id="h200-56-throughput-xtick_6">
+      <g id="h200-56-throughput-line2d_6">
+       <g>
+        <use xlink:href="#h200-56-throughput-mecb2e9e9a6" x="355.835023" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-56-throughput-text_6">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="355.835023" y="44.652115" transform="rotate(-0 355.835023 44.652115)">14</text>
+      </g>
+     </g>
+     <g id="h200-56-throughput-xtick_7">
+      <g id="h200-56-throughput-line2d_7">
+       <g>
+        <use xlink:href="#h200-56-throughput-mecb2e9e9a6" x="412.791261" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-56-throughput-text_7">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="412.791261" y="44.652115" transform="rotate(-0 412.791261 44.652115)">16</text>
+      </g>
+     </g>
+     <g id="h200-56-throughput-xtick_8">
+      <g id="h200-56-throughput-line2d_8">
+       <g>
+        <use xlink:href="#h200-56-throughput-mecb2e9e9a6" x="469.7475" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-56-throughput-text_8">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="44.652115" transform="rotate(-0 469.7475 44.652115)">18</text>
+      </g>
+     </g>
+     <g id="h200-56-throughput-xtick_9">
+      <g id="h200-56-throughput-line2d_9">
+       <g>
+        <use xlink:href="#h200-56-throughput-mecb2e9e9a6" x="526.703739" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-56-throughput-text_9">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="526.703739" y="44.652115" transform="rotate(-0 526.703739 44.652115)">20</text>
+      </g>
+     </g>
+     <g id="h200-56-throughput-xtick_10">
+      <g id="h200-56-throughput-line2d_10">
+       <g>
+        <use xlink:href="#h200-56-throughput-mecb2e9e9a6" x="583.659977" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-56-throughput-text_10">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="583.659977" y="44.652115" transform="rotate(-0 583.659977 44.652115)">22</text>
+      </g>
+     </g>
+     <g id="h200-56-throughput-xtick_11">
+      <g id="h200-56-throughput-line2d_11">
+       <g>
+        <use xlink:href="#h200-56-throughput-mecb2e9e9a6" x="640.616216" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-56-throughput-text_11">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="640.616216" y="44.652115" transform="rotate(-0 640.616216 44.652115)">24</text>
+      </g>
+     </g>
+     <g id="h200-56-throughput-xtick_12">
+      <g id="h200-56-throughput-line2d_12">
+       <g>
+        <use xlink:href="#h200-56-throughput-mecb2e9e9a6" x="697.572455" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-56-throughput-text_12">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="697.572455" y="44.652115" transform="rotate(-0 697.572455 44.652115)">26</text>
+      </g>
+     </g>
+     <g id="h200-56-throughput-xtick_13">
+      <g id="h200-56-throughput-line2d_13">
+       <g>
+        <use xlink:href="#h200-56-throughput-mecb2e9e9a6" x="754.528693" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-56-throughput-text_13">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="754.528693" y="44.652115" transform="rotate(-0 754.528693 44.652115)">28</text>
+      </g>
+     </g>
+     <g id="h200-56-throughput-xtick_14">
+      <g id="h200-56-throughput-line2d_14">
+       <g>
+        <use xlink:href="#h200-56-throughput-mecb2e9e9a6" x="811.484932" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-56-throughput-text_14">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="811.484932" y="44.652115" transform="rotate(-0 811.484932 44.652115)">30</text>
+      </g>
+     </g>
+     <g id="h200-56-throughput-xtick_15">
+      <g id="h200-56-throughput-line2d_15">
+       <g>
+        <use xlink:href="#h200-56-throughput-mecb2e9e9a6" x="868.441171" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-56-throughput-text_15">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="868.441171" y="44.652115" transform="rotate(-0 868.441171 44.652115)">32</text>
+      </g>
+     </g>
+     <g id="h200-56-throughput-text_16">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="27.896802" transform="rotate(-0 469.7475 27.896802)">归一化每卡 batch = 总 batch / 4</text>
+     </g>
+    </g>
+    <g id="h200-56-throughput-matplotlib.axis_2"/>
+   </g>
+   <g id="h200-56-throughput-matplotlib.axis_3">
+    <g id="h200-56-throughput-xtick_16">
+     <g id="h200-56-throughput-line2d_16">
+      <defs>
+       <path id="h200-56-throughput-mc6863bb9b3" d="M 0 0 
+L 0 3.5 
+" style="stroke: #49617c; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#h200-56-throughput-mc6863bb9b3" x="71.053829" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-56-throughput-text_17">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="71.053829" y="360.005073" transform="rotate(-0 71.053829 360.005073)">16</text>
+     </g>
+    </g>
+    <g id="h200-56-throughput-xtick_17">
+     <g id="h200-56-throughput-line2d_17">
+      <g>
+       <use xlink:href="#h200-56-throughput-mc6863bb9b3" x="128.010068" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-56-throughput-text_18">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="128.010068" y="360.005073" transform="rotate(-0 128.010068 360.005073)">24</text>
+     </g>
+    </g>
+    <g id="h200-56-throughput-xtick_18">
+     <g id="h200-56-throughput-line2d_18">
+      <g>
+       <use xlink:href="#h200-56-throughput-mc6863bb9b3" x="184.966307" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-56-throughput-text_19">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="184.966307" y="360.005073" transform="rotate(-0 184.966307 360.005073)">32</text>
+     </g>
+    </g>
+    <g id="h200-56-throughput-xtick_19">
+     <g id="h200-56-throughput-line2d_19">
+      <g>
+       <use xlink:href="#h200-56-throughput-mc6863bb9b3" x="241.922545" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-56-throughput-text_20">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="241.922545" y="360.005073" transform="rotate(-0 241.922545 360.005073)">40</text>
+     </g>
+    </g>
+    <g id="h200-56-throughput-xtick_20">
+     <g id="h200-56-throughput-line2d_20">
+      <g>
+       <use xlink:href="#h200-56-throughput-mc6863bb9b3" x="298.878784" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-56-throughput-text_21">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="298.878784" y="360.005073" transform="rotate(-0 298.878784 360.005073)">48</text>
+     </g>
+    </g>
+    <g id="h200-56-throughput-xtick_21">
+     <g id="h200-56-throughput-line2d_21">
+      <g>
+       <use xlink:href="#h200-56-throughput-mc6863bb9b3" x="355.835023" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-56-throughput-text_22">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="355.835023" y="360.005073" transform="rotate(-0 355.835023 360.005073)">56</text>
+     </g>
+    </g>
+    <g id="h200-56-throughput-xtick_22">
+     <g id="h200-56-throughput-line2d_22">
+      <g>
+       <use xlink:href="#h200-56-throughput-mc6863bb9b3" x="412.791261" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-56-throughput-text_23">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="412.791261" y="360.005073" transform="rotate(-0 412.791261 360.005073)">64</text>
+     </g>
+    </g>
+    <g id="h200-56-throughput-xtick_23">
+     <g id="h200-56-throughput-line2d_23">
+      <g>
+       <use xlink:href="#h200-56-throughput-mc6863bb9b3" x="469.7475" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-56-throughput-text_24">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="360.005073" transform="rotate(-0 469.7475 360.005073)">72</text>
+     </g>
+    </g>
+    <g id="h200-56-throughput-xtick_24">
+     <g id="h200-56-throughput-line2d_24">
+      <g>
+       <use xlink:href="#h200-56-throughput-mc6863bb9b3" x="526.703739" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-56-throughput-text_25">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="526.703739" y="360.005073" transform="rotate(-0 526.703739 360.005073)">80</text>
+     </g>
+    </g>
+    <g id="h200-56-throughput-xtick_25">
+     <g id="h200-56-throughput-line2d_25">
+      <g>
+       <use xlink:href="#h200-56-throughput-mc6863bb9b3" x="583.659977" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-56-throughput-text_26">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="583.659977" y="360.005073" transform="rotate(-0 583.659977 360.005073)">88</text>
+     </g>
+    </g>
+    <g id="h200-56-throughput-xtick_26">
+     <g id="h200-56-throughput-line2d_26">
+      <g>
+       <use xlink:href="#h200-56-throughput-mc6863bb9b3" x="640.616216" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-56-throughput-text_27">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="640.616216" y="360.005073" transform="rotate(-0 640.616216 360.005073)">96</text>
+     </g>
+    </g>
+    <g id="h200-56-throughput-xtick_27">
+     <g id="h200-56-throughput-line2d_27">
+      <g>
+       <use xlink:href="#h200-56-throughput-mc6863bb9b3" x="697.572455" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-56-throughput-text_28">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="697.572455" y="360.005073" transform="rotate(-0 697.572455 360.005073)">104</text>
+     </g>
+    </g>
+    <g id="h200-56-throughput-xtick_28">
+     <g id="h200-56-throughput-line2d_28">
+      <g>
+       <use xlink:href="#h200-56-throughput-mc6863bb9b3" x="754.528693" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-56-throughput-text_29">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="754.528693" y="360.005073" transform="rotate(-0 754.528693 360.005073)">112</text>
+     </g>
+    </g>
+    <g id="h200-56-throughput-xtick_29">
+     <g id="h200-56-throughput-line2d_29">
+      <g>
+       <use xlink:href="#h200-56-throughput-mc6863bb9b3" x="811.484932" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-56-throughput-text_30">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="811.484932" y="360.005073" transform="rotate(-0 811.484932 360.005073)">120</text>
+     </g>
+    </g>
+    <g id="h200-56-throughput-xtick_30">
+     <g id="h200-56-throughput-line2d_30">
+      <g>
+       <use xlink:href="#h200-56-throughput-mc6863bb9b3" x="868.441171" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-56-throughput-text_31">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="868.441171" y="360.005073" transform="rotate(-0 868.441171 360.005073)">128</text>
+     </g>
+    </g>
+    <g id="h200-56-throughput-text_32">
+     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="383.280073" transform="rotate(-0 469.7475 383.280073)">总 batch size（4 card）</text>
+    </g>
+   </g>
+   <g id="h200-56-throughput-matplotlib.axis_4">
+    <g id="h200-56-throughput-ytick_1">
+     <g id="h200-56-throughput-line2d_31">
+      <path d="M 49.69524 344.24976 
+L 889.79976 344.24976 
+" clip-path="url(#h200-56-throughput-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="h200-56-throughput-line2d_32">
+      <defs>
+       <path id="h200-56-throughput-mb630600054" d="M 0 0 
+L -3.5 0 
+" style="stroke: #49617c; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#h200-56-throughput-mb630600054" x="49.69524" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-56-throughput-text_33">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="348.627416" transform="rotate(-0 42.69524 348.627416)">0</text>
+     </g>
+    </g>
+    <g id="h200-56-throughput-ytick_2">
+     <g id="h200-56-throughput-line2d_33">
+      <path d="M 49.69524 300.387499 
+L 889.79976 300.387499 
+" clip-path="url(#h200-56-throughput-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="h200-56-throughput-line2d_34">
+      <g>
+       <use xlink:href="#h200-56-throughput-mb630600054" x="49.69524" y="300.387499" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-56-throughput-text_34">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="304.765155" transform="rotate(-0 42.69524 304.765155)">500</text>
+     </g>
+    </g>
+    <g id="h200-56-throughput-ytick_3">
+     <g id="h200-56-throughput-line2d_35">
+      <path d="M 49.69524 256.525237 
+L 889.79976 256.525237 
+" clip-path="url(#h200-56-throughput-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="h200-56-throughput-line2d_36">
+      <g>
+       <use xlink:href="#h200-56-throughput-mb630600054" x="49.69524" y="256.525237" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-56-throughput-text_35">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="260.902893" transform="rotate(-0 42.69524 260.902893)">1000</text>
+     </g>
+    </g>
+    <g id="h200-56-throughput-ytick_4">
+     <g id="h200-56-throughput-line2d_37">
+      <path d="M 49.69524 212.662976 
+L 889.79976 212.662976 
+" clip-path="url(#h200-56-throughput-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="h200-56-throughput-line2d_38">
+      <g>
+       <use xlink:href="#h200-56-throughput-mb630600054" x="49.69524" y="212.662976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-56-throughput-text_36">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="217.040632" transform="rotate(-0 42.69524 217.040632)">1500</text>
+     </g>
+    </g>
+    <g id="h200-56-throughput-ytick_5">
+     <g id="h200-56-throughput-line2d_39">
+      <path d="M 49.69524 168.800714 
+L 889.79976 168.800714 
+" clip-path="url(#h200-56-throughput-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="h200-56-throughput-line2d_40">
+      <g>
+       <use xlink:href="#h200-56-throughput-mb630600054" x="49.69524" y="168.800714" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-56-throughput-text_37">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="173.17837" transform="rotate(-0 42.69524 173.17837)">2000</text>
+     </g>
+    </g>
+    <g id="h200-56-throughput-ytick_6">
+     <g id="h200-56-throughput-line2d_41">
+      <path d="M 49.69524 124.938453 
+L 889.79976 124.938453 
+" clip-path="url(#h200-56-throughput-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="h200-56-throughput-line2d_42">
+      <g>
+       <use xlink:href="#h200-56-throughput-mb630600054" x="49.69524" y="124.938453" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-56-throughput-text_38">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="129.316109" transform="rotate(-0 42.69524 129.316109)">2500</text>
+     </g>
+    </g>
+    <g id="h200-56-throughput-ytick_7">
+     <g id="h200-56-throughput-line2d_43">
+      <path d="M 49.69524 81.076191 
+L 889.79976 81.076191 
+" clip-path="url(#h200-56-throughput-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="h200-56-throughput-line2d_44">
+      <g>
+       <use xlink:href="#h200-56-throughput-mb630600054" x="49.69524" y="81.076191" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-56-throughput-text_39">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="85.453847" transform="rotate(-0 42.69524 85.453847)">3000</text>
+     </g>
+    </g>
+    <g id="h200-56-throughput-text_40">
+     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="11.755553" y="199.210781" transform="rotate(-90 11.755553 199.210781)">tokens/s/card</text>
+    </g>
+   </g>
+   <g id="h200-56-throughput-FillBetweenPolyCollection_1">
+    <defs>
+     <path id="h200-56-throughput-m5ecb9ef248" d="M 71.053829 -97.069025 
+L 71.053829 -77.353927 
+L 128.010068 -86.330286 
+L 184.966307 -94.626636 
+L 241.922545 -102.946748 
+L 298.878784 -110.868873 
+L 355.835023 -118.250137 
+L 412.791261 -125.580919 
+L 469.7475 -131.735853 
+L 526.703739 -138.821997 
+L 583.659977 -146.159668 
+L 640.616216 -152.935674 
+L 697.572455 -160.109811 
+L 754.528693 -167.057785 
+L 811.484932 -173.715677 
+L 868.441171 -180.399771 
+L 868.441171 -322.377042 
+L 868.441171 -322.377042 
+L 811.484932 -313.133421 
+L 754.528693 -298.091396 
+L 697.572455 -283.317346 
+L 640.616216 -268.026063 
+L 583.659977 -250.854165 
+L 526.703739 -237.464171 
+L 469.7475 -221.552688 
+L 412.791261 -209.849028 
+L 355.835023 -190.841461 
+L 298.878784 -174.561895 
+L 241.922545 -156.265735 
+L 184.966307 -137.057901 
+L 128.010068 -116.603252 
+L 71.053829 -97.069025 
+z
+"/>
+    </defs>
+    <g clip-path="url(#h200-56-throughput-pe8c5ae8e79)">
+     <use xlink:href="#h200-56-throughput-m5ecb9ef248" x="0" y="388.8" style="fill: #0d8d7b; fill-opacity: 0.1"/>
+    </g>
+   </g>
+   <g id="h200-56-throughput-line2d_45">
+    <path d="M 71.053829 308.121005 
+L 128.010068 297.987629 
+L 184.966307 288.182356 
+L 241.922545 278.622001 
+L 298.878784 269.60168 
+L 355.835023 261.009144 
+L 412.791261 252.70345 
+L 469.7475 245.756931 
+L 526.703739 237.718732 
+L 583.659977 229.591169 
+L 640.616216 221.439539 
+L 697.572455 213.675359 
+L 754.528693 205.884247 
+L 811.484932 198.537273 
+L 868.441171 191.114261 
+" clip-path="url(#h200-56-throughput-pe8c5ae8e79)" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
+    <defs>
+     <path id="h200-56-throughput-m98abdd7638" d="M 0 2.5 
+C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767 
+C 2.236584 1.29895 2.5 0.663008 2.5 0 
+C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767 
+C 1.29895 -2.236584 0.663008 -2.5 0 -2.5 
+C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767 
+C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0 
+C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767 
+C -1.29895 2.236584 -0.663008 2.5 0 2.5 
+z
+" style="stroke: #0d8d7b; stroke-width: 2"/>
+    </defs>
+    <g clip-path="url(#h200-56-throughput-pe8c5ae8e79)">
+     <use xlink:href="#h200-56-throughput-m98abdd7638" x="71.053829" y="308.121005" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-56-throughput-m98abdd7638" x="128.010068" y="297.987629" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-56-throughput-m98abdd7638" x="184.966307" y="288.182356" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-56-throughput-m98abdd7638" x="241.922545" y="278.622001" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-56-throughput-m98abdd7638" x="298.878784" y="269.60168" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-56-throughput-m98abdd7638" x="355.835023" y="261.009144" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-56-throughput-m98abdd7638" x="412.791261" y="252.70345" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-56-throughput-m98abdd7638" x="469.7475" y="245.756931" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-56-throughput-m98abdd7638" x="526.703739" y="237.718732" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-56-throughput-m98abdd7638" x="583.659977" y="229.591169" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-56-throughput-m98abdd7638" x="640.616216" y="221.439539" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-56-throughput-m98abdd7638" x="697.572455" y="213.675359" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-56-throughput-m98abdd7638" x="754.528693" y="205.884247" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-56-throughput-m98abdd7638" x="811.484932" y="198.537273" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-56-throughput-m98abdd7638" x="868.441171" y="191.114261" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+    </g>
+   </g>
+   <g id="h200-56-throughput-patch_4">
+    <path d="M 49.69524 344.24976 
+L 49.69524 54.171803 
+" style="fill: none; stroke: #b9c7d7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="h200-56-throughput-patch_5">
+    <path d="M 49.69524 344.24976 
+L 889.79976 344.24976 
+" style="fill: none; stroke: #b9c7d7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="h200-56-throughput-text_41">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="71.053829" y="298.121005" transform="rotate(-0 71.053829 298.121005)">412</text>
+   </g>
+   <g id="h200-56-throughput-text_42">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="128.010068" y="287.987629" transform="rotate(-0 128.010068 287.987629)">527</text>
+   </g>
+   <g id="h200-56-throughput-text_43">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="184.966307" y="278.182356" transform="rotate(-0 184.966307 278.182356)">639</text>
+   </g>
+   <g id="h200-56-throughput-text_44">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="241.922545" y="268.622001" transform="rotate(-0 241.922545 268.622001)">748</text>
+   </g>
+   <g id="h200-56-throughput-text_45">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="298.878784" y="259.60168" transform="rotate(-0 298.878784 259.60168)">851</text>
+   </g>
+   <g id="h200-56-throughput-text_46">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="355.835023" y="251.009144" transform="rotate(-0 355.835023 251.009144)">949</text>
+   </g>
+   <g id="h200-56-throughput-text_47">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="412.791261" y="242.70345" transform="rotate(-0 412.791261 242.70345)">1,044</text>
+   </g>
+   <g id="h200-56-throughput-text_48">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="469.7475" y="235.756931" transform="rotate(-0 469.7475 235.756931)">1,123</text>
+   </g>
+   <g id="h200-56-throughput-text_49">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="526.703739" y="227.718732" transform="rotate(-0 526.703739 227.718732)">1,214</text>
+   </g>
+   <g id="h200-56-throughput-text_50">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="583.659977" y="219.591169" transform="rotate(-0 583.659977 219.591169)">1,307</text>
+   </g>
+   <g id="h200-56-throughput-text_51">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="640.616216" y="211.439539" transform="rotate(-0 640.616216 211.439539)">1,400</text>
+   </g>
+   <g id="h200-56-throughput-text_52">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="697.572455" y="203.675359" transform="rotate(-0 697.572455 203.675359)">1,488</text>
+   </g>
+   <g id="h200-56-throughput-text_53">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="754.528693" y="195.884247" transform="rotate(-0 754.528693 195.884247)">1,577</text>
+   </g>
+   <g id="h200-56-throughput-text_54">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="811.484932" y="188.537273" transform="rotate(-0 811.484932 188.537273)">1,661</text>
+   </g>
+   <g id="h200-56-throughput-text_55">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="868.441171" y="181.114261" transform="rotate(-0 868.441171 181.114261)">1,746</text>
+   </g>
+   <g id="h200-56-throughput-text_56">
+    <text style="font-weight: 700; font-size: 14px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="49.69524" y="14.171802" transform="rotate(-0 49.69524 14.171802)">H200 · 56 组成对输入</text>
+   </g>
+   <g id="h200-56-throughput-legend_1">
+    <g id="h200-56-throughput-patch_6">
+     <path d="M 55.99524 88.821802 
+L 172.411646 88.821802 
+Q 174.211646 88.821802 174.211646 87.021802 
+L 174.211646 60.471802 
+Q 174.211646 58.671802 172.411646 58.671802 
+L 55.99524 58.671802 
+Q 54.19524 58.671802 54.19524 60.471802 
+L 54.19524 87.021802 
+Q 54.19524 88.821802 55.99524 88.821802 
+z
+" style="fill: #ffffff; opacity: 0.8; stroke: #e3eaf2; stroke-linejoin: miter"/>
+    </g>
+    <g id="h200-56-throughput-line2d_46">
+     <path d="M 57.79524 66.28524 
+L 66.79524 66.28524 
+L 75.79524 66.28524 
+" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
+     <g>
+      <use xlink:href="#h200-56-throughput-m98abdd7638" x="66.79524" y="66.28524" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     </g>
+    </g>
+    <g id="h200-56-throughput-text_57">
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="82.99524" y="69.43524" transform="rotate(-0 82.99524 69.43524)">H200 EP4 · 56 组统计</text>
+    </g>
+    <g id="h200-56-throughput-patch_7">
+     <path d="M 57.79524 83.16024 
+L 75.79524 83.16024 
+L 75.79524 76.86024 
+L 57.79524 76.86024 
+z
+" style="fill: #0d8d7b; fill-opacity: 0.1"/>
+    </g>
+    <g id="h200-56-throughput-text_58">
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="82.99524" y="83.16024" transform="rotate(-0 82.99524 83.16024)">输入间 P10–P90</text>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="h200-56-throughput-pe8c5ae8e79">
+   <rect x="49.69524" y="54.171803" width="840.10452" height="290.077958"/>
+  </clipPath>
+ </defs>
+</svg>
+</div><p>用 train 划分选择总 BS128；该档 validation 为 <b>1,752.31</b>、test 为 <b>1,741.39 tokens/s/card</b>。全量结果相比 BS120 仍增长 <b>5.09%</b>，目前只确定扫描范围内的最高点，尚未找到饱和点。</p><div class="table-scroll" tabindex="0"><table><caption>H200 56 组统计；P10/P90 是输入间分布，不是置信区间</caption><thead><tr><th scope="col">总 BS</th><th scope="col">每卡 BS</th><th scope="col">平均 ms</th><th scope="col">tokens/s/card</th><th scope="col">P10</th><th scope="col">P90</th></tr></thead><tbody><tr><td>16</td><td>4</td><td>9.7124</td><td>411.8</td><td>373.9</td><td>598.7</td></tr><tr><td>24</td><td>6</td><td>11.3775</td><td>527.4</td><td>476.3</td><td>821.4</td></tr><tr><td>32</td><td>8</td><td>12.5170</td><td>639.1</td><td>570.8</td><td>1054.5</td></tr><tr><td>40</td><td>10</td><td>13.3670</td><td>748.1</td><td>665.7</td><td>1273.5</td></tr><tr><td>48</td><td>12</td><td>14.1021</td><td>850.9</td><td>756.0</td><td>1482.0</td></tr><tr><td>56</td><td>14</td><td>14.7541</td><td>948.9</td><td>840.1</td><td>1667.6</td></tr><tr><td>64</td><td>16</td><td>15.3320</td><td>1043.6</td><td>923.7</td><td>1884.3</td></tr><tr><td>72</td><td>18</td><td>16.0320</td><td>1122.8</td><td>993.9</td><td>2017.7</td></tr><tr><td>80</td><td>20</td><td>16.4693</td><td>1214.4</td><td>1074.6</td><td>2199.1</td></tr><tr><td>88</td><td>22</td><td>16.8321</td><td>1307.0</td><td>1158.3</td><td>2351.7</td></tr><tr><td>96</td><td>24</td><td>17.1434</td><td>1400.0</td><td>1235.5</td><td>2547.5</td></tr><tr><td>104</td><td>26</td><td>17.4677</td><td>1488.5</td><td>1317.3</td><td>2721.8</td></tr><tr><td>112</td><td>28</td><td>17.7522</td><td>1577.3</td><td>1396.5</td><td>2890.2</td></tr><tr><td>120</td><td>30</td><td>18.0612</td><td>1661.0</td><td>1472.4</td><td>3061.7</td></tr><tr><td>128</td><td>32</td><td>18.3314</td><td>1745.6</td><td>1548.6</td><td>3167.0</td></tr></tbody></table></div><div class="note">统计吞吐采用总 token 数除以总时间，不能直接平均每组 tokens/s。第一阶段 Zeus 仅一组输入，不能拿它与 H200 的 56 组平均值宣称配对加速比。</div></section>
+<section id="kernels"><div class="section-head"><h2>哪些 kernel 增长超线性？</h2><span class="section-num">03 / SCALING</span></div><p class="quality">第一张图比较相对 BS16 的增长倍数；第二张图给出每层平均耗时；第三张图把增长除以 batch 倍数。Routed 使用 M1/M2/M4 合并，窗口大小与实际 M 合并大小不同。</p><p class="pending">等待每档完整 42 层结果。预热与部分层结果不用于吞吐曲线。</p><div class="note">统一入口不代表所有 batch 生成相同二进制。T 为 constexpr，kernel 内可按 T 特化窗口和尾部；本轮继续保留 Router、Routed、Shared、Reduce 各一个默认 JIT 入口。</div></section>
+<section id="protocol"><div class="section-head"><h2>测量口径与正确性边界</h2><span class="section-num">04 / EVIDENCE</span></div><div class="grid2"><div class="mini"><h3>Zeus · TP4 × EP4</h3><p>4 card / 16 rank / 32 core。Routed 使用 per-tensor FP8；Shared 为 BF16，仅 EP0 执行。每个 launch 取最慢 core，rank 内累加所有阶段，逐层取最慢 rank，最后累加 42 层。</p><code>tokens/s/card = 总 BS × 400,000,000 / cycles / 4</code></div><div class="mini"><h3>H200 · MoE TP1 × EP4</h3><p>4 张 H200 NVL，每卡 72 个完整 Routed 专家；独立 FP8 Shared 跨四卡 TP4，每卡 I512。各层使用 rank 内测时样本中位数，取最慢 EP，再累加 42 层。</p><code>tokens/s/card = 总 BS × 1,000 / ms / 4</code></div></div><p>两侧都包含 MoE 计算与本地处理；排除通信、Attention、host 调度、JIT、数据与权重加载。激活采集拓扑为 TP4/EP1，执行拓扑分别记录，不能把采集拓扑当作测量拓扑。小 batch 是父激活前缀的组件回放，未重新运行对应 batch 的完整模型。</p><details open><summary>原有正确性门禁保持不变</summary><p>Zeus 每个完成 case 均要求 Router/Shared 实现参考、Routed LUT 参考、Reduce exact、两次 Graph replay 与 changed-input Graph 检查通过，并核对 native 完成状态。解析数学参考另行记录：当前已完成完整档位有 <b>0</b> 个 case 超出原解析预算；这不等于原实现参考或 Graph 失败，预算没有放宽。</p><p>解析误差涉及量化、近似激活及归并边界，端到端影响由算法团队持续进行真实推理评估。用户已向算法团队确认，目前真实推理任务未观察到相应问题；该反馈不替代本页的组件精度记录，也不证明所有任务无影响。</p><p>H200 完整 3,360 个 rank case / 141,120 个层卡点完成，78 项 CPU 检查、输入与路由一致性、Graph/eager、EP 归属及无 NCCL profile 验证通过。最新 PR CI 以 <a href="https://github.com/DarronTam/torch_zeus/pull/643/checks">GitHub checks</a> 为准。本轮无 VCS/RTL 或整模型性能结论。</p></details><div class="table-scroll" tabindex="0"><table><caption>本轮工具链与 kernel 身份</caption><thead><tr><th scope="col">组件</th><th scope="col">冻结版本</th></tr></thead><tbody><tr><td>triton_shared</td><td><code>4ec41039673c0c6afea9537f789b94d3e6137d6a</code></td></tr><tr><td>triton</td><td><code>5321c2ebe470d2527078491642b136a13ab72c49</code></td></tr><tr><td>cyclesim</td><td><code>6248b44d30bced522c8958029bce717d50640d43</code></td></tr><tr><td>routed_sha256</td><td><code>dc2c684c0961dbf8f2903e5d9d5879f1de68c94c89380722294dea0f62f1b2d9</code></td></tr></tbody></table></div><p class="quality">Zeus benchmark 源码：<a href="https://github.com/DarronTam/torch_zeus/commit/e93a57a73c573409bb18aa2a428fa34bd09b80c4"><code>e93a57a73c57</code></a>。工具链固定用于本轮可比性；后续更新编译器时应建立新版本记录。</p><div class="links"><a href="data/benchmark.json" download>数据与来源 JSON</a><a href="https://github.com/Xuanwen-Wang/notes/tree/master/models/glm53-flash">页面源码与生成脚本</a><a href="https://github.com/DarronTam/torch_zeus/pull/643">Draft PR #643</a></div></section>
+<section id="history"><div class="section-head"><h2>版本记录与持续更新</h2><span class="section-num">05 / CHANGELOG</span></div>
+<p><b>2026-11-02 · 新版成对输入与 BS128 Routed</b><br>接入 bounded multi-window 和大 batch 静态展开；先固定一组输入完成 15 档 × 42 层，再扩展 56 组。旧 H200 TP4/EP1 曲线撤出当前比较，现用 EP4 基线。</p>
+<details><summary>历史五档：保留优化证据，不参与新曲线拟合</summary><p>旧版 Zeus 测量覆盖 BS16/24/32/40/48，共 3,360 case。各档用了不同 decode step，不能用它们选最佳 batch。旧 exact-tail 优化后的 Routed BS40/16 为 3.057×，BS48/16 为 2.878×；这些数值属于旧版本、旧输入，不代表本轮 BS128 kernel。</p>
+<div class="table-scroll" tabindex="0"><table><caption>历史 exact-tail A/B：同 batch 前后输入相同，不同 batch 的 decode step 不同</caption><thead><tr><th scope="col">总 BS</th><th scope="col">优化前 cycles</th><th scope="col">优化后 cycles</th><th scope="col">时间降低</th><th scope="col">优化后 ms</th><th scope="col">tokens/s/card</th></tr></thead><tbody><tr><td>16</td><td>1,993,815</td><td>1,993,815</td><td>0.00%</td><td>4.9845</td><td>802.5</td></tr><tr><td>24</td><td>2,610,111</td><td>2,610,111</td><td>0.00%</td><td>6.5253</td><td>919.5</td></tr><tr><td>32</td><td>3,268,861</td><td>3,268,861</td><td>0.00%</td><td>8.1722</td><td>978.9</td></tr><tr><td>40</td><td>5,774,106</td><td>5,226,322</td><td>9.49%</td><td>13.0658</td><td>765.4</td></tr><tr><td>48</td><td>6,595,107</td><td>5,417,135</td><td>17.86%</td><td>13.5428</td><td>886.1</td></tr></tbody></table></div><div class="table-scroll" tabindex="0"><table><caption>历史逐阶段平均层耗时：独立最大 rank；不能相加作为完整 MoE 时间</caption><thead><tr><th scope="col">总 BS</th><th scope="col">Router μs</th><th scope="col">Routed μs</th><th scope="col">Shared μs</th><th scope="col">Reduce μs</th></tr></thead><tbody><tr><td>16</td><td>20.810</td><td>63.004</td><td>23.532</td><td>26.946</td></tr><tr><td>24</td><td>26.523</td><td>78.824</td><td>32.017</td><td>39.302</td></tr><tr><td>32</td><td>37.055</td><td>95.851</td><td>40.025</td><td>50.819</td></tr><tr><td>40</td><td>48.428</td><td>192.608</td><td>48.667</td><td>58.826</td></tr><tr><td>48</td><td>50.030</td><td>181.296</td><td>57.310</td><td>71.110</td></tr><tr><td>48 / 16</td><td>2.404×</td><td>2.878×</td><td>2.435×</td><td>2.639×</td></tr></tbody></table></div>
+<p><a href="https://github.com/DarronTam/torch_zeus/blob/936fcc45cc4d24327702f0611ebee9212d7610e5/dev_docs/evaluations/glm53_zeus_exact_tail_20261102/README.md">冻结的五档完整报告</a> · <a href="https://github.com/DarronTam/torch_zeus/blob/463b823aeed7590f83c7bc062884de5819a2880c/dev_docs/evaluations/glm53_h200_ep4_20261102/README.md">H200 EP4 完整实验记录</a></p></details>
+<p class="quality">复用流程：导入完成的测量 → 校验完整性、源码 SHA 与跨平台输入 hash → 重算汇总和图表 → 更新版本说明 → 构建并验证 Pages。只发布汇总数据与来源指纹，原始输入和运行日志仍由实验归档管理。</p></section>
+<footer class="footer">GLM-5.3-Flash performance notebook · 静态 HTML，可离线阅读与打印。横轴为四卡总 batch，上方副轴为总 batch / 4；每卡 batch 是归一化请求数，不是专家实际收到的 token 数。</footer></main><script type="application/json" id="benchmark-data">{"schema_version": 1, "updated": "2026-11-02", "protocol": {"cards": 4, "layers": 42, "frequency_mhz": 400, "batches": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "pair": {"group": "train00", "step": 1}, "zeus_ranks": 16, "zeus_cores": 32, "aggregation": "sum_layer(max_rank(sum_stage(sum_launch(max_core(cycles)))))"}, "h200": {"complete": true, "pairs": 56, "rows": [{"batch_size": 16, "batch_per_card": 4.0, "mean_ms": 9.712432382628322, "tokens_s_card": 411.84327904865614, "p10": 373.93975636707944, "p90": 598.6784945257778, "paired_ms": 5.581514646609623, "paired_tokens_s_card": 716.6513488287123}, {"batch_size": 24, "batch_per_card": 6.0, "mean_ms": 11.37749447677994, "tokens_s_card": 527.3568809235862, "p10": 476.26416240716276, "p90": 821.355420314331, "paired_ms": 6.774346669514972, "paired_tokens_s_card": 885.6942658397472}, {"batch_size": 32, "batch_per_card": 8.0, "mean_ms": 12.517008761387496, "tokens_s_card": 639.1303347712293, "p10": 570.8369187158714, "p90": 1054.524526573632, "paired_ms": 6.915733327468235, "paired_tokens_s_card": 1156.7826029707107}, {"batch_size": 40, "batch_per_card": 10.0, "mean_ms": 13.366984383336135, "tokens_s_card": 748.1118936943201, "p10": 665.6805457512398, "p90": 1273.4807875260108, "paired_ms": 6.9829226682583485, "paired_tokens_s_card": 1432.0651215938724}, {"batch_size": 48, "batch_per_card": 12.0, "mean_ms": 14.102094479171292, "tokens_s_card": 850.9374276086382, "p10": 755.9873907251053, "p90": 1482.0445929528955, "paired_ms": 7.08932264149189, "paired_tokens_s_card": 1692.6863971132084}, {"batch_size": 56, "batch_per_card": 14.0, "mean_ms": 14.754135429060884, "tokens_s_card": 948.8865048930294, "p10": 840.128790142361, "p90": 1667.620595212793, "paired_ms": 7.22977068523566, "paired_tokens_s_card": 1936.4376284562143}, {"batch_size": 64, "batch_per_card": 16.0, "mean_ms": 15.332047427073121, "tokens_s_card": 1043.565777897831, "p10": 923.6947271677242, "p90": 1884.2939533687327, "paired_ms": 7.721952011187873, "paired_tokens_s_card": 2072.014948657873}, {"batch_size": 72, "batch_per_card": 18.0, "mean_ms": 16.032044386845968, "tokens_s_card": 1122.7513825229119, "p10": 993.8567913371758, "p90": 2017.7077306668425, "paired_ms": 8.528533299763996, "paired_tokens_s_card": 2110.562199539996}, {"batch_size": 80, "batch_per_card": 20.0, "mean_ms": 16.46929067328927, "tokens_s_card": 1214.3813839194067, "p10": 1074.6340270367568, "p90": 2199.0878314145957, "paired_ms": 8.910666674375534, "paired_tokens_s_card": 2244.5009706753076}, {"batch_size": 88, "batch_per_card": 22.0, "mean_ms": 16.832053146192006, "tokens_s_card": 1307.0300936506467, "p10": 1158.27849006123, "p90": 2351.724669904558, "paired_ms": 9.01006932556629, "paired_tokens_s_card": 2441.712622296309}, {"batch_size": 96, "batch_per_card": 24.0, "mean_ms": 17.143431050880324, "tokens_s_card": 1399.953132413805, "p10": 1235.5203581850658, "p90": 2547.472650508881, "paired_ms": 9.227605337897938, "paired_tokens_s_card": 2600.891468714161}, {"batch_size": 104, "batch_per_card": 26.0, "mean_ms": 17.4677239973985, "tokens_s_card": 1488.4595156113198, "p10": 1317.3006437374224, "p90": 2721.7828930064156, "paired_ms": 9.363541344801584, "paired_tokens_s_card": 2776.7272063613605}, {"batch_size": 112, "batch_per_card": 28.0, "mean_ms": 17.752159418715607, "tokens_s_card": 1577.2729018240102, "p10": 1396.5028311532283, "p90": 2890.1970369673836, "paired_ms": 9.43181865910689, "paired_tokens_s_card": 2968.6745485680653}, {"batch_size": 120, "batch_per_card": 30.0, "mean_ms": 18.061154095367307, "tokens_s_card": 1661.0234230654737, "p10": 1472.3982871171047, "p90": 3061.6659086947648, "paired_ms": 9.527498647570608, "paired_tokens_s_card": 3148.7802947785904}, {"batch_size": 128, "batch_per_card": 32.0, "mean_ms": 18.331378091570166, "tokens_s_card": 1745.6407172527556, "p10": 1548.5924205039073, "p90": 3167.0369069089475, "paired_ms": 9.645471980174385, "paired_tokens_s_card": 3317.6188853976078}], "selection": {"selected_batch_size": 128, "selection_split": "train", "tested_range": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "search_boundary_best": true, "scope": "best observed fixed-implementation batch within the tested workload/range", "holdout": {"validation": {"selected_batch_throughput": 7009.2411388471, "fraction_of_observed_best": 1.0}, "test": {"selected_batch_throughput": 6965.5418601430965, "fraction_of_observed_best": 1.0}}}, "plan_sha256": "49dd4d22873ede4db25601ba6c0779b7ad1cf1becf971c6dac54bef15e39c9c3", "summary_sha256": "92685dd56b521ff9618882aaccf81cdbf5c303dd0a8247b8e3299aeaed376d03"}, "zeus": {"complete": false, "cases": 323, "total": 10080, "failed_cases": [], "source_commit": "e93a57a73c573409bb18aa2a428fa34bd09b80c4", "rows": [], "analytic_budget_exceptions": [], "full56_status": "pending", "matched_input_hashes": null}, "toolchain": {"triton_shared": "4ec41039673c0c6afea9537f789b94d3e6137d6a", "triton": "5321c2ebe470d2527078491642b136a13ab72c49", "cyclesim": "6248b44d30bced522c8958029bce717d50640d43", "routed_sha256": "dc2c684c0961dbf8f2903e5d9d5879f1de68c94c89380722294dea0f62f1b2d9"}}</script></body></html>
