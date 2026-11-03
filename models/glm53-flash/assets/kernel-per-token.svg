@@ -26,8 +26,8 @@ z
   </g>
   <g id="kernel-per-token-axes_1">
    <g id="kernel-per-token-patch_2">
-    <path d="M 41.049928 344.24976
-L 889.79976 344.24976
+    <path d="M 41.049928 317.517165
+L 889.79976 317.517165
 L 889.79976 54.171803
 L 41.049928 54.171803
 z
@@ -213,163 +213,163 @@ L 0 3.5
 " style="stroke: #49617c; stroke-width: 0.8"/>
       </defs>
       <g>
-       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="62.628313" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="62.628313" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-per-token-text_17">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="62.628313" y="360.005073" transform="rotate(-0 62.628313 360.005073)">16</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="62.628313" y="333.272478" transform="rotate(-0 62.628313 333.272478)">16</text>
      </g>
     </g>
     <g id="kernel-per-token-xtick_17">
      <g id="kernel-per-token-line2d_17">
       <g>
-       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="120.170675" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="120.170675" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-per-token-text_18">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="120.170675" y="360.005073" transform="rotate(-0 120.170675 360.005073)">24</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="120.170675" y="333.272478" transform="rotate(-0 120.170675 333.272478)">24</text>
      </g>
     </g>
     <g id="kernel-per-token-xtick_18">
      <g id="kernel-per-token-line2d_18">
       <g>
-       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="177.713036" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="177.713036" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-per-token-text_19">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="177.713036" y="360.005073" transform="rotate(-0 177.713036 360.005073)">32</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="177.713036" y="333.272478" transform="rotate(-0 177.713036 333.272478)">32</text>
      </g>
     </g>
     <g id="kernel-per-token-xtick_19">
      <g id="kernel-per-token-line2d_19">
       <g>
-       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="235.255398" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="235.255398" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-per-token-text_20">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="235.255398" y="360.005073" transform="rotate(-0 235.255398 360.005073)">40</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="235.255398" y="333.272478" transform="rotate(-0 235.255398 333.272478)">40</text>
      </g>
     </g>
     <g id="kernel-per-token-xtick_20">
      <g id="kernel-per-token-line2d_20">
       <g>
-       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="292.797759" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="292.797759" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-per-token-text_21">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="292.797759" y="360.005073" transform="rotate(-0 292.797759 360.005073)">48</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="292.797759" y="333.272478" transform="rotate(-0 292.797759 333.272478)">48</text>
      </g>
     </g>
     <g id="kernel-per-token-xtick_21">
      <g id="kernel-per-token-line2d_21">
       <g>
-       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="350.340121" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="350.340121" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-per-token-text_22">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="350.340121" y="360.005073" transform="rotate(-0 350.340121 360.005073)">56</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="350.340121" y="333.272478" transform="rotate(-0 350.340121 333.272478)">56</text>
      </g>
     </g>
     <g id="kernel-per-token-xtick_22">
      <g id="kernel-per-token-line2d_22">
       <g>
-       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="407.882482" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="407.882482" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-per-token-text_23">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="407.882482" y="360.005073" transform="rotate(-0 407.882482 360.005073)">64</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="407.882482" y="333.272478" transform="rotate(-0 407.882482 333.272478)">64</text>
      </g>
     </g>
     <g id="kernel-per-token-xtick_23">
      <g id="kernel-per-token-line2d_23">
       <g>
-       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="465.424844" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="465.424844" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-per-token-text_24">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="465.424844" y="360.005073" transform="rotate(-0 465.424844 360.005073)">72</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="465.424844" y="333.272478" transform="rotate(-0 465.424844 333.272478)">72</text>
      </g>
     </g>
     <g id="kernel-per-token-xtick_24">
      <g id="kernel-per-token-line2d_24">
       <g>
-       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="522.967205" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="522.967205" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-per-token-text_25">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="522.967205" y="360.005073" transform="rotate(-0 522.967205 360.005073)">80</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="522.967205" y="333.272478" transform="rotate(-0 522.967205 333.272478)">80</text>
      </g>
     </g>
     <g id="kernel-per-token-xtick_25">
      <g id="kernel-per-token-line2d_25">
       <g>
-       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="580.509567" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="580.509567" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-per-token-text_26">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="580.509567" y="360.005073" transform="rotate(-0 580.509567 360.005073)">88</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="580.509567" y="333.272478" transform="rotate(-0 580.509567 333.272478)">88</text>
      </g>
     </g>
     <g id="kernel-per-token-xtick_26">
      <g id="kernel-per-token-line2d_26">
       <g>
-       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="638.051928" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="638.051928" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-per-token-text_27">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="638.051928" y="360.005073" transform="rotate(-0 638.051928 360.005073)">96</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="638.051928" y="333.272478" transform="rotate(-0 638.051928 333.272478)">96</text>
      </g>
     </g>
     <g id="kernel-per-token-xtick_27">
      <g id="kernel-per-token-line2d_27">
       <g>
-       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="695.59429" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="695.59429" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-per-token-text_28">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="695.59429" y="360.005073" transform="rotate(-0 695.59429 360.005073)">104</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="695.59429" y="333.272478" transform="rotate(-0 695.59429 333.272478)">104</text>
      </g>
     </g>
     <g id="kernel-per-token-xtick_28">
      <g id="kernel-per-token-line2d_28">
       <g>
-       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="753.136651" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="753.136651" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-per-token-text_29">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="753.136651" y="360.005073" transform="rotate(-0 753.136651 360.005073)">112</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="753.136651" y="333.272478" transform="rotate(-0 753.136651 333.272478)">112</text>
      </g>
     </g>
     <g id="kernel-per-token-xtick_29">
      <g id="kernel-per-token-line2d_29">
       <g>
-       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="810.679013" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="810.679013" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-per-token-text_30">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="810.679013" y="360.005073" transform="rotate(-0 810.679013 360.005073)">120</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="810.679013" y="333.272478" transform="rotate(-0 810.679013 333.272478)">120</text>
      </g>
     </g>
     <g id="kernel-per-token-xtick_30">
      <g id="kernel-per-token-line2d_30">
       <g>
-       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="868.221374" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-per-token-mc6863bb9b3" x="868.221374" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-per-token-text_31">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="868.221374" y="360.005073" transform="rotate(-0 868.221374 360.005073)">128</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="868.221374" y="333.272478" transform="rotate(-0 868.221374 333.272478)">128</text>
      </g>
     </g>
     <g id="kernel-per-token-text_32">
-     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="465.424844" y="383.280073" transform="rotate(-0 465.424844 383.280073)">总 batch size（4 card）</text>
+     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="465.424844" y="356.547478" transform="rotate(-0 465.424844 356.547478)">总 batch size（4 card）</text>
     </g>
    </g>
    <g id="kernel-per-token-matplotlib.axis_4">
     <g id="kernel-per-token-ytick_1">
      <g id="kernel-per-token-line2d_31">
-      <path d="M 41.049928 344.24976
-L 889.79976 344.24976
-" clip-path="url(#kernel-per-token-p96b0776b0a)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 41.049928 317.517165
+L 889.79976 317.517165
+" clip-path="url(#kernel-per-token-p777a35a7e3)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-per-token-line2d_32">
       <defs>
@@ -378,109 +378,109 @@ L -3.5 0
 " style="stroke: #49617c; stroke-width: 0.8"/>
       </defs>
       <g>
-       <use xlink:href="#kernel-per-token-mb630600054" x="41.049928" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-per-token-mb630600054" x="41.049928" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-per-token-text_33">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="34.049928" y="348.627416" transform="rotate(-0 34.049928 348.627416)">0.0</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="34.049928" y="321.894822" transform="rotate(-0 34.049928 321.894822)">0.0</text>
      </g>
     </g>
     <g id="kernel-per-token-ytick_2">
      <g id="kernel-per-token-line2d_33">
-      <path d="M 41.049928 286.953363
-L 889.79976 286.953363
-" clip-path="url(#kernel-per-token-p96b0776b0a)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 41.049928 265.501009
+L 889.79976 265.501009
+" clip-path="url(#kernel-per-token-p777a35a7e3)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-per-token-line2d_34">
       <g>
-       <use xlink:href="#kernel-per-token-mb630600054" x="41.049928" y="286.953363" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-per-token-mb630600054" x="41.049928" y="265.501009" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-per-token-text_34">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="34.049928" y="291.331019" transform="rotate(-0 34.049928 291.331019)">0.2</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="34.049928" y="269.878665" transform="rotate(-0 34.049928 269.878665)">0.2</text>
      </g>
     </g>
     <g id="kernel-per-token-ytick_3">
      <g id="kernel-per-token-line2d_35">
-      <path d="M 41.049928 229.656966
-L 889.79976 229.656966
-" clip-path="url(#kernel-per-token-p96b0776b0a)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 41.049928 213.484853
+L 889.79976 213.484853
+" clip-path="url(#kernel-per-token-p777a35a7e3)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-per-token-line2d_36">
       <g>
-       <use xlink:href="#kernel-per-token-mb630600054" x="41.049928" y="229.656966" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-per-token-mb630600054" x="41.049928" y="213.484853" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-per-token-text_35">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="34.049928" y="234.034623" transform="rotate(-0 34.049928 234.034623)">0.4</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="34.049928" y="217.862509" transform="rotate(-0 34.049928 217.862509)">0.4</text>
      </g>
     </g>
     <g id="kernel-per-token-ytick_4">
      <g id="kernel-per-token-line2d_37">
-      <path d="M 41.049928 172.36057
-L 889.79976 172.36057
-" clip-path="url(#kernel-per-token-p96b0776b0a)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 41.049928 161.468696
+L 889.79976 161.468696
+" clip-path="url(#kernel-per-token-p777a35a7e3)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-per-token-line2d_38">
       <g>
-       <use xlink:href="#kernel-per-token-mb630600054" x="41.049928" y="172.36057" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-per-token-mb630600054" x="41.049928" y="161.468696" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-per-token-text_36">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="34.049928" y="176.738226" transform="rotate(-0 34.049928 176.738226)">0.6</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="34.049928" y="165.846353" transform="rotate(-0 34.049928 165.846353)">0.6</text>
      </g>
     </g>
     <g id="kernel-per-token-ytick_5">
      <g id="kernel-per-token-line2d_39">
-      <path d="M 41.049928 115.064173
-L 889.79976 115.064173
-" clip-path="url(#kernel-per-token-p96b0776b0a)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 41.049928 109.45254
+L 889.79976 109.45254
+" clip-path="url(#kernel-per-token-p777a35a7e3)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-per-token-line2d_40">
       <g>
-       <use xlink:href="#kernel-per-token-mb630600054" x="41.049928" y="115.064173" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-per-token-mb630600054" x="41.049928" y="109.45254" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-per-token-text_37">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="34.049928" y="119.441829" transform="rotate(-0 34.049928 119.441829)">0.8</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="34.049928" y="113.830196" transform="rotate(-0 34.049928 113.830196)">0.8</text>
      </g>
     </g>
     <g id="kernel-per-token-ytick_6">
      <g id="kernel-per-token-line2d_41">
-      <path d="M 41.049928 57.767776
-L 889.79976 57.767776
-" clip-path="url(#kernel-per-token-p96b0776b0a)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 41.049928 57.436383
+L 889.79976 57.436383
+" clip-path="url(#kernel-per-token-p777a35a7e3)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-per-token-line2d_42">
       <g>
-       <use xlink:href="#kernel-per-token-mb630600054" x="41.049928" y="57.767776" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-per-token-mb630600054" x="41.049928" y="57.436383" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-per-token-text_38">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="34.049928" y="62.145432" transform="rotate(-0 34.049928 62.145432)">1.0</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="34.049928" y="61.81404" transform="rotate(-0 34.049928 61.81404)">1.0</text>
      </g>
     </g>
     <g id="kernel-per-token-text_39">
-     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="12.207584" y="199.210781" transform="rotate(-90 12.207584 199.210781)">cycles/token 相对 BS16</text>
+     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="12.207584" y="185.844484" transform="rotate(-90 12.207584 185.844484)">cycles/token 相对 BS16</text>
     </g>
    </g>
    <g id="kernel-per-token-line2d_43">
-    <path d="M 62.628313 57.767776
-L 120.170675 100.834145
-L 177.713036 89.189935
-L 235.255398 77.577847
-L 292.797759 114.669532
-L 350.340121 103.049905
-L 407.882482 93.42315
-L 465.424844 121.063331
-L 522.967205 112.57931
-L 580.509567 104.711724
-L 638.051928 124.214342
-L 695.59429 117.66817
-L 753.136651 111.123005
-L 810.679013 125.880095
-L 868.221374 120.620698
-" clip-path="url(#kernel-per-token-p96b0776b0a)" style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
+    <path d="M 62.628313 57.436383
+L 120.170675 96.533903
+L 177.713036 85.962784
+L 235.255398 75.420826
+L 292.797759 109.094267
+L 350.340121 98.545466
+L 407.882482 89.80588
+L 465.424844 114.898836
+L 522.967205 107.196673
+L 580.509567 100.054138
+L 638.051928 117.759461
+L 695.59429 111.816561
+L 753.136651 105.874577
+L 810.679013 119.271704
+L 868.221374 114.496995
+" clip-path="url(#kernel-per-token-p777a35a7e3)" style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="kernel-per-token-m94619aaaa5" d="M 0 2.5
 C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
@@ -494,41 +494,41 @@ C -1.29895 2.236584 -0.663008 2.5 0 2.5
 z
 " style="stroke: #2364d2; stroke-width: 2"/>
     </defs>
-    <g clip-path="url(#kernel-per-token-p96b0776b0a)">
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="62.628313" y="57.767776" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="120.170675" y="100.834145" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="177.713036" y="89.189935" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="235.255398" y="77.577847" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="292.797759" y="114.669532" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="350.340121" y="103.049905" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="407.882482" y="93.42315" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="465.424844" y="121.063331" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="522.967205" y="112.57931" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="580.509567" y="104.711724" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="638.051928" y="124.214342" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="695.59429" y="117.66817" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="753.136651" y="111.123005" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="810.679013" y="125.880095" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="868.221374" y="120.620698" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+    <g clip-path="url(#kernel-per-token-p777a35a7e3)">
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="62.628313" y="57.436383" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="120.170675" y="96.533903" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="177.713036" y="85.962784" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="235.255398" y="75.420826" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="292.797759" y="109.094267" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="350.340121" y="98.545466" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="407.882482" y="89.80588" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="465.424844" y="114.898836" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="522.967205" y="107.196673" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="580.509567" y="100.054138" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="638.051928" y="117.759461" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="695.59429" y="111.816561" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="753.136651" y="105.874577" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="810.679013" y="119.271704" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="868.221374" y="114.496995" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
     </g>
    </g>
    <g id="kernel-per-token-line2d_44">
-    <path d="M 62.628313 57.767776
-L 120.170675 112.175807
-L 177.713036 129.687249
-L 235.255398 81.434855
-L 292.797759 99.665158
-L 350.340121 72.347226
-L 407.882482 91.350264
-L 465.424844 75.624611
-L 522.967205 80.947036
-L 580.509567 87.144972
-L 638.051928 94.830753
-L 695.59429 83.642121
-L 753.136651 87.061284
-L 810.679013 91.031556
-L 868.221374 96.657771
-" clip-path="url(#kernel-per-token-p96b0776b0a)" style="fill: none; stroke: #d85b43; stroke-width: 2.5; stroke-linecap: square"/>
+    <path d="M 62.628313 57.436383
+L 120.170675 106.830356
+L 177.713036 122.728003
+L 235.255398 78.922386
+L 292.797759 95.472646
+L 350.340121 70.672241
+L 407.882482 87.924024
+L 465.424844 73.647593
+L 522.967205 78.479522
+L 580.509567 84.106277
+L 638.051928 91.083763
+L 695.59429 80.926237
+L 753.136651 84.030301
+L 810.679013 87.634687
+L 868.221374 92.742409
+" clip-path="url(#kernel-per-token-p777a35a7e3)" style="fill: none; stroke: #d85b43; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="kernel-per-token-mc06e842d91" d="M 0 2.5
 C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
@@ -542,41 +542,41 @@ C -1.29895 2.236584 -0.663008 2.5 0 2.5
 z
 " style="stroke: #d85b43; stroke-width: 2"/>
     </defs>
-    <g clip-path="url(#kernel-per-token-p96b0776b0a)">
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="62.628313" y="57.767776" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="120.170675" y="112.175807" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="177.713036" y="129.687249" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="235.255398" y="81.434855" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="292.797759" y="99.665158" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="350.340121" y="72.347226" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="407.882482" y="91.350264" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="465.424844" y="75.624611" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="522.967205" y="80.947036" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="580.509567" y="87.144972" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="638.051928" y="94.830753" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="695.59429" y="83.642121" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="753.136651" y="87.061284" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="810.679013" y="91.031556" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="868.221374" y="96.657771" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+    <g clip-path="url(#kernel-per-token-p777a35a7e3)">
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="62.628313" y="57.436383" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="120.170675" y="106.830356" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="177.713036" y="122.728003" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="235.255398" y="78.922386" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="292.797759" y="95.472646" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="350.340121" y="70.672241" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="407.882482" y="87.924024" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="465.424844" y="73.647593" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="522.967205" y="78.479522" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="580.509567" y="84.106277" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="638.051928" y="91.083763" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="695.59429" y="80.926237" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="753.136651" y="84.030301" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="810.679013" y="87.634687" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="868.221374" y="92.742409" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
     </g>
    </g>
    <g id="kernel-per-token-line2d_45">
-    <path d="M 62.628313 57.767776
-L 120.170675 84.398153
-L 177.713036 100.619857
-L 235.255398 107.260712
-L 292.797759 111.687948
-L 350.340121 114.85026
-L 407.882482 117.221994
-L 465.424844 119.066676
-L 522.967205 120.542422
-L 580.509567 121.74985
-L 638.051928 122.75604
-L 695.59429 123.607432
-L 753.136651 124.337196
-L 810.679013 124.969659
-L 868.221374 125.523063
-" clip-path="url(#kernel-per-token-p96b0776b0a)" style="fill: none; stroke: #7856ad; stroke-width: 2.5; stroke-linecap: square"/>
+    <path d="M 62.628313 57.436383
+L 120.170675 81.612596
+L 177.713036 96.339362
+L 235.255398 102.368219
+L 292.797759 106.387457
+L 350.340121 109.258341
+L 407.882482 111.411504
+L 465.424844 113.086186
+L 522.967205 114.425932
+L 580.509567 115.522088
+L 638.051928 116.435551
+L 695.59429 117.208481
+L 753.136651 117.870993
+L 810.679013 118.44517
+L 868.221374 118.947574
+" clip-path="url(#kernel-per-token-p777a35a7e3)" style="fill: none; stroke: #7856ad; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="kernel-per-token-m4a924cdd6e" d="M 0 2.5
 C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
@@ -590,41 +590,41 @@ C -1.29895 2.236584 -0.663008 2.5 0 2.5
 z
 " style="stroke: #7856ad; stroke-width: 2"/>
     </defs>
-    <g clip-path="url(#kernel-per-token-p96b0776b0a)">
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="62.628313" y="57.767776" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="120.170675" y="84.398153" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="177.713036" y="100.619857" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="235.255398" y="107.260712" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="292.797759" y="111.687948" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="350.340121" y="114.85026" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="407.882482" y="117.221994" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="465.424844" y="119.066676" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="522.967205" y="120.542422" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="580.509567" y="121.74985" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="638.051928" y="122.75604" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="695.59429" y="123.607432" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="753.136651" y="124.337196" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="810.679013" y="124.969659" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="868.221374" y="125.523063" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+    <g clip-path="url(#kernel-per-token-p777a35a7e3)">
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="62.628313" y="57.436383" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="120.170675" y="81.612596" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="177.713036" y="96.339362" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="235.255398" y="102.368219" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="292.797759" y="106.387457" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="350.340121" y="109.258341" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="407.882482" y="111.411504" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="465.424844" y="113.086186" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="522.967205" y="114.425932" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="580.509567" y="115.522088" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="638.051928" y="116.435551" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="695.59429" y="117.208481" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="753.136651" y="117.870993" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="810.679013" y="118.44517" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="868.221374" y="118.947574" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
     </g>
    </g>
    <g id="kernel-per-token-line2d_46">
-    <path d="M 62.628313 57.767776
-L 120.170675 72.815319
-L 177.713036 80.810719
-L 235.255398 94.52203
-L 292.797759 98.29682
-L 350.340121 97.268585
-L 407.882482 103.965398
-L 465.424844 100.026182
-L 522.967205 107.162676
-L 580.509567 101.57908
-L 638.051928 109.399143
-L 695.59429 102.541568
-L 753.136651 110.991338
-L 810.679013 103.176285
-L 868.221374 112.242697
-" clip-path="url(#kernel-per-token-p96b0776b0a)" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
+    <path d="M 62.628313 57.436383
+L 120.170675 71.097196
+L 177.713036 78.355768
+L 235.255398 90.803491
+L 292.797759 94.230409
+L 350.340121 93.296932
+L 407.882482 99.37659
+L 465.424844 95.800399
+L 522.967205 102.279218
+L 580.509567 97.210187
+L 638.051928 104.30958
+L 695.59429 98.083975
+L 753.136651 105.755043
+L 810.679013 98.660199
+L 868.221374 106.891082
+" clip-path="url(#kernel-per-token-p777a35a7e3)" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="kernel-per-token-m98abdd7638" d="M 0 2.5
 C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
@@ -638,105 +638,92 @@ C -1.29895 2.236584 -0.663008 2.5 0 2.5
 z
 " style="stroke: #0d8d7b; stroke-width: 2"/>
     </defs>
-    <g clip-path="url(#kernel-per-token-p96b0776b0a)">
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="62.628313" y="57.767776" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="120.170675" y="72.815319" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="177.713036" y="80.810719" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="235.255398" y="94.52203" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="292.797759" y="98.29682" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="350.340121" y="97.268585" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="407.882482" y="103.965398" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="465.424844" y="100.026182" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="522.967205" y="107.162676" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="580.509567" y="101.57908" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="638.051928" y="109.399143" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="695.59429" y="102.541568" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="753.136651" y="110.991338" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="810.679013" y="103.176285" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="868.221374" y="112.242697" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+    <g clip-path="url(#kernel-per-token-p777a35a7e3)">
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="62.628313" y="57.436383" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="120.170675" y="71.097196" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="177.713036" y="78.355768" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="235.255398" y="90.803491" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="292.797759" y="94.230409" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="350.340121" y="93.296932" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="407.882482" y="99.37659" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="465.424844" y="95.800399" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="522.967205" y="102.279218" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="580.509567" y="97.210187" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="638.051928" y="104.30958" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="695.59429" y="98.083975" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="753.136651" y="105.755043" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="810.679013" y="98.660199" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="868.221374" y="106.891082" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
     </g>
    </g>
    <g id="kernel-per-token-patch_4">
-    <path d="M 41.049928 344.24976
+    <path d="M 41.049928 317.517165
 L 41.049928 54.171803
 " style="fill: none; stroke: #b9c7d7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="kernel-per-token-patch_5">
-    <path d="M 41.049928 344.24976
-L 889.79976 344.24976
+    <path d="M 41.049928 317.517165
+L 889.79976 317.517165
 " style="fill: none; stroke: #b9c7d7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="kernel-per-token-text_40">
-    <text style="font-weight: 700; font-size: 14px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="41.049928" y="14.171802" transform="rotate(-0 41.049928 14.171802)">Zeus · 单 token 成本（低于 1 表示相对 BS16 次线性）</text>
+    <text style="font-weight: 700; font-size: 14px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="41.049928" y="14.171803" transform="rotate(-0 41.049928 14.171803)">Zeus · 单 token 成本（低于 1 表示相对 BS16 次线性）</text>
    </g>
    <g id="kernel-per-token-legend_1">
-    <g id="kernel-per-token-patch_6">
-     <path d="M 47.349927 339.74976
-L 107.471334 339.74976
-Q 109.271334 339.74976 109.271334 337.94976
-L 109.271334 283.94976
-Q 109.271334 282.14976 107.471334 282.14976
-L 47.349927 282.14976
-Q 45.549928 282.14976 45.549928 283.94976
-L 45.549928 337.94976
-Q 45.549928 339.74976 47.349927 339.74976
-z
-" style="fill: #ffffff; opacity: 0.8; stroke: #e3eaf2; stroke-linejoin: miter"/>
-    </g>
     <g id="kernel-per-token-line2d_47">
-     <path d="M 49.149928 289.763198
-L 58.149928 289.763198
-L 67.149928 289.763198
+     <path d="M 49.149928 377.032768
+L 58.149928 377.032768
+L 67.149928 377.032768
 " style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
      <g>
-      <use xlink:href="#kernel-per-token-m94619aaaa5" x="58.149928" y="289.763198" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+      <use xlink:href="#kernel-per-token-m94619aaaa5" x="58.149928" y="377.032768" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
      </g>
     </g>
     <g id="kernel-per-token-text_41">
-     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="74.349928" y="292.913198" transform="rotate(-0 74.349928 292.913198)">Router</text>
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="74.349928" y="380.182768" transform="rotate(-0 74.349928 380.182768)">Router</text>
     </g>
     <g id="kernel-per-token-line2d_48">
-     <path d="M 49.149928 303.488198
-L 58.149928 303.488198
-L 67.149928 303.488198
+     <path d="M 120.861646 377.032768
+L 129.861646 377.032768
+L 138.861646 377.032768
 " style="fill: none; stroke: #d85b43; stroke-width: 2.5; stroke-linecap: square"/>
      <g>
-      <use xlink:href="#kernel-per-token-mc06e842d91" x="58.149928" y="303.488198" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+      <use xlink:href="#kernel-per-token-mc06e842d91" x="129.861646" y="377.032768" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
      </g>
     </g>
     <g id="kernel-per-token-text_42">
-     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="74.349928" y="306.638198" transform="rotate(-0 74.349928 306.638198)">Routed</text>
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="146.061646" y="380.182768" transform="rotate(-0 146.061646 380.182768)">Routed</text>
     </g>
     <g id="kernel-per-token-line2d_49">
-     <path d="M 49.149928 317.213198
-L 58.149928 317.213198
-L 67.149928 317.213198
+     <path d="M 194.661646 377.032768
+L 203.661646 377.032768
+L 212.661646 377.032768
 " style="fill: none; stroke: #7856ad; stroke-width: 2.5; stroke-linecap: square"/>
      <g>
-      <use xlink:href="#kernel-per-token-m4a924cdd6e" x="58.149928" y="317.213198" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+      <use xlink:href="#kernel-per-token-m4a924cdd6e" x="203.661646" y="377.032768" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
      </g>
     </g>
     <g id="kernel-per-token-text_43">
-     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="74.349928" y="320.363198" transform="rotate(-0 74.349928 320.363198)">Shared</text>
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="219.861646" y="380.182768" transform="rotate(-0 219.861646 380.182768)">Shared</text>
     </g>
     <g id="kernel-per-token-line2d_50">
-     <path d="M 49.149928 330.938198
-L 58.149928 330.938198
-L 67.149928 330.938198
+     <path d="M 267.833053 377.032768
+L 276.833053 377.032768
+L 285.833053 377.032768
 " style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
      <g>
-      <use xlink:href="#kernel-per-token-m98abdd7638" x="58.149928" y="330.938198" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+      <use xlink:href="#kernel-per-token-m98abdd7638" x="276.833053" y="377.032768" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
      </g>
     </g>
     <g id="kernel-per-token-text_44">
-     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="74.349928" y="334.088198" transform="rotate(-0 74.349928 334.088198)">Reduce</text>
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="293.033052" y="380.182768" transform="rotate(-0 293.033052 380.182768)">Reduce</text>
     </g>
    </g>
   </g>
  </g>
  <defs>
-  <clipPath id="kernel-per-token-p96b0776b0a">
-   <rect x="41.049928" y="54.171803" width="848.749832" height="290.077958"/>
+  <clipPath id="kernel-per-token-p777a35a7e3">
+   <rect x="41.049928" y="54.171803" width="848.749832" height="263.345363"/>
   </clipPath>
  </defs>
 </svg>

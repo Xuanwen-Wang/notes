@@ -26,8 +26,8 @@ z
   </g>
   <g id="full56-comparison-axes_1">
    <g id="full56-comparison-patch_2">
-    <path d="M 49.69524 344.24976
-L 889.79976 344.24976
+    <path d="M 49.69524 317.517165
+L 889.79976 317.517165
 L 889.79976 54.171803
 L 49.69524 54.171803
 z
@@ -213,163 +213,163 @@ L 0 3.5
 " style="stroke: #49617c; stroke-width: 0.8"/>
       </defs>
       <g>
-       <use xlink:href="#full56-comparison-mc6863bb9b3" x="71.053829" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#full56-comparison-mc6863bb9b3" x="71.053829" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="full56-comparison-text_17">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="71.053829" y="360.005073" transform="rotate(-0 71.053829 360.005073)">16</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="71.053829" y="333.272478" transform="rotate(-0 71.053829 333.272478)">16</text>
      </g>
     </g>
     <g id="full56-comparison-xtick_17">
      <g id="full56-comparison-line2d_17">
       <g>
-       <use xlink:href="#full56-comparison-mc6863bb9b3" x="128.010068" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#full56-comparison-mc6863bb9b3" x="128.010068" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="full56-comparison-text_18">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="128.010068" y="360.005073" transform="rotate(-0 128.010068 360.005073)">24</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="128.010068" y="333.272478" transform="rotate(-0 128.010068 333.272478)">24</text>
      </g>
     </g>
     <g id="full56-comparison-xtick_18">
      <g id="full56-comparison-line2d_18">
       <g>
-       <use xlink:href="#full56-comparison-mc6863bb9b3" x="184.966307" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#full56-comparison-mc6863bb9b3" x="184.966307" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="full56-comparison-text_19">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="184.966307" y="360.005073" transform="rotate(-0 184.966307 360.005073)">32</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="184.966307" y="333.272478" transform="rotate(-0 184.966307 333.272478)">32</text>
      </g>
     </g>
     <g id="full56-comparison-xtick_19">
      <g id="full56-comparison-line2d_19">
       <g>
-       <use xlink:href="#full56-comparison-mc6863bb9b3" x="241.922545" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#full56-comparison-mc6863bb9b3" x="241.922545" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="full56-comparison-text_20">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="241.922545" y="360.005073" transform="rotate(-0 241.922545 360.005073)">40</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="241.922545" y="333.272478" transform="rotate(-0 241.922545 333.272478)">40</text>
      </g>
     </g>
     <g id="full56-comparison-xtick_20">
      <g id="full56-comparison-line2d_20">
       <g>
-       <use xlink:href="#full56-comparison-mc6863bb9b3" x="298.878784" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#full56-comparison-mc6863bb9b3" x="298.878784" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="full56-comparison-text_21">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="298.878784" y="360.005073" transform="rotate(-0 298.878784 360.005073)">48</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="298.878784" y="333.272478" transform="rotate(-0 298.878784 333.272478)">48</text>
      </g>
     </g>
     <g id="full56-comparison-xtick_21">
      <g id="full56-comparison-line2d_21">
       <g>
-       <use xlink:href="#full56-comparison-mc6863bb9b3" x="355.835023" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#full56-comparison-mc6863bb9b3" x="355.835023" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="full56-comparison-text_22">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="355.835023" y="360.005073" transform="rotate(-0 355.835023 360.005073)">56</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="355.835023" y="333.272478" transform="rotate(-0 355.835023 333.272478)">56</text>
      </g>
     </g>
     <g id="full56-comparison-xtick_22">
      <g id="full56-comparison-line2d_22">
       <g>
-       <use xlink:href="#full56-comparison-mc6863bb9b3" x="412.791261" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#full56-comparison-mc6863bb9b3" x="412.791261" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="full56-comparison-text_23">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="412.791261" y="360.005073" transform="rotate(-0 412.791261 360.005073)">64</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="412.791261" y="333.272478" transform="rotate(-0 412.791261 333.272478)">64</text>
      </g>
     </g>
     <g id="full56-comparison-xtick_23">
      <g id="full56-comparison-line2d_23">
       <g>
-       <use xlink:href="#full56-comparison-mc6863bb9b3" x="469.7475" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#full56-comparison-mc6863bb9b3" x="469.7475" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="full56-comparison-text_24">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="360.005073" transform="rotate(-0 469.7475 360.005073)">72</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="333.272478" transform="rotate(-0 469.7475 333.272478)">72</text>
      </g>
     </g>
     <g id="full56-comparison-xtick_24">
      <g id="full56-comparison-line2d_24">
       <g>
-       <use xlink:href="#full56-comparison-mc6863bb9b3" x="526.703739" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#full56-comparison-mc6863bb9b3" x="526.703739" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="full56-comparison-text_25">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="526.703739" y="360.005073" transform="rotate(-0 526.703739 360.005073)">80</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="526.703739" y="333.272478" transform="rotate(-0 526.703739 333.272478)">80</text>
      </g>
     </g>
     <g id="full56-comparison-xtick_25">
      <g id="full56-comparison-line2d_25">
       <g>
-       <use xlink:href="#full56-comparison-mc6863bb9b3" x="583.659977" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#full56-comparison-mc6863bb9b3" x="583.659977" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="full56-comparison-text_26">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="583.659977" y="360.005073" transform="rotate(-0 583.659977 360.005073)">88</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="583.659977" y="333.272478" transform="rotate(-0 583.659977 333.272478)">88</text>
      </g>
     </g>
     <g id="full56-comparison-xtick_26">
      <g id="full56-comparison-line2d_26">
       <g>
-       <use xlink:href="#full56-comparison-mc6863bb9b3" x="640.616216" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#full56-comparison-mc6863bb9b3" x="640.616216" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="full56-comparison-text_27">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="640.616216" y="360.005073" transform="rotate(-0 640.616216 360.005073)">96</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="640.616216" y="333.272478" transform="rotate(-0 640.616216 333.272478)">96</text>
      </g>
     </g>
     <g id="full56-comparison-xtick_27">
      <g id="full56-comparison-line2d_27">
       <g>
-       <use xlink:href="#full56-comparison-mc6863bb9b3" x="697.572455" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#full56-comparison-mc6863bb9b3" x="697.572455" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="full56-comparison-text_28">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="697.572455" y="360.005073" transform="rotate(-0 697.572455 360.005073)">104</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="697.572455" y="333.272478" transform="rotate(-0 697.572455 333.272478)">104</text>
      </g>
     </g>
     <g id="full56-comparison-xtick_28">
      <g id="full56-comparison-line2d_28">
       <g>
-       <use xlink:href="#full56-comparison-mc6863bb9b3" x="754.528693" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#full56-comparison-mc6863bb9b3" x="754.528693" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="full56-comparison-text_29">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="754.528693" y="360.005073" transform="rotate(-0 754.528693 360.005073)">112</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="754.528693" y="333.272478" transform="rotate(-0 754.528693 333.272478)">112</text>
      </g>
     </g>
     <g id="full56-comparison-xtick_29">
      <g id="full56-comparison-line2d_29">
       <g>
-       <use xlink:href="#full56-comparison-mc6863bb9b3" x="811.484932" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#full56-comparison-mc6863bb9b3" x="811.484932" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="full56-comparison-text_30">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="811.484932" y="360.005073" transform="rotate(-0 811.484932 360.005073)">120</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="811.484932" y="333.272478" transform="rotate(-0 811.484932 333.272478)">120</text>
      </g>
     </g>
     <g id="full56-comparison-xtick_30">
      <g id="full56-comparison-line2d_30">
       <g>
-       <use xlink:href="#full56-comparison-mc6863bb9b3" x="868.441171" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#full56-comparison-mc6863bb9b3" x="868.441171" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="full56-comparison-text_31">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="868.441171" y="360.005073" transform="rotate(-0 868.441171 360.005073)">128</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="868.441171" y="333.272478" transform="rotate(-0 868.441171 333.272478)">128</text>
      </g>
     </g>
     <g id="full56-comparison-text_32">
-     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="383.280073" transform="rotate(-0 469.7475 383.280073)">总 batch size（4 card）</text>
+     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="356.547478" transform="rotate(-0 469.7475 356.547478)">总 batch size（4 card）</text>
     </g>
    </g>
    <g id="full56-comparison-matplotlib.axis_4">
     <g id="full56-comparison-ytick_1">
      <g id="full56-comparison-line2d_31">
-      <path d="M 49.69524 344.24976
-L 889.79976 344.24976
-" clip-path="url(#full56-comparison-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 317.517165
+L 889.79976 317.517165
+" clip-path="url(#full56-comparison-p4785d5ebff)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="full56-comparison-line2d_32">
       <defs>
@@ -378,139 +378,139 @@ L -3.5 0
 " style="stroke: #49617c; stroke-width: 0.8"/>
       </defs>
       <g>
-       <use xlink:href="#full56-comparison-mb630600054" x="49.69524" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#full56-comparison-mb630600054" x="49.69524" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="full56-comparison-text_33">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="348.627416" transform="rotate(-0 42.69524 348.627416)">0</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="321.894822" transform="rotate(-0 42.69524 321.894822)">0</text>
      </g>
     </g>
     <g id="full56-comparison-ytick_2">
      <g id="full56-comparison-line2d_33">
-      <path d="M 49.69524 304.235267
-L 889.79976 304.235267
-" clip-path="url(#full56-comparison-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 281.190272
+L 889.79976 281.190272
+" clip-path="url(#full56-comparison-p4785d5ebff)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="full56-comparison-line2d_34">
       <g>
-       <use xlink:href="#full56-comparison-mb630600054" x="49.69524" y="304.235267" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#full56-comparison-mb630600054" x="49.69524" y="281.190272" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="full56-comparison-text_34">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="308.612923" transform="rotate(-0 42.69524 308.612923)">250</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="285.567928" transform="rotate(-0 42.69524 285.567928)">250</text>
      </g>
     </g>
     <g id="full56-comparison-ytick_3">
      <g id="full56-comparison-line2d_35">
-      <path d="M 49.69524 264.220774
-L 889.79976 264.220774
-" clip-path="url(#full56-comparison-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 244.863378
+L 889.79976 244.863378
+" clip-path="url(#full56-comparison-p4785d5ebff)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="full56-comparison-line2d_36">
       <g>
-       <use xlink:href="#full56-comparison-mb630600054" x="49.69524" y="264.220774" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#full56-comparison-mb630600054" x="49.69524" y="244.863378" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="full56-comparison-text_35">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="268.598431" transform="rotate(-0 42.69524 268.598431)">500</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="249.241034" transform="rotate(-0 42.69524 249.241034)">500</text>
      </g>
     </g>
     <g id="full56-comparison-ytick_4">
      <g id="full56-comparison-line2d_37">
-      <path d="M 49.69524 224.206281
-L 889.79976 224.206281
-" clip-path="url(#full56-comparison-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 208.536484
+L 889.79976 208.536484
+" clip-path="url(#full56-comparison-p4785d5ebff)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="full56-comparison-line2d_38">
       <g>
-       <use xlink:href="#full56-comparison-mb630600054" x="49.69524" y="224.206281" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#full56-comparison-mb630600054" x="49.69524" y="208.536484" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="full56-comparison-text_36">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="228.583938" transform="rotate(-0 42.69524 228.583938)">750</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="212.91414" transform="rotate(-0 42.69524 212.91414)">750</text>
      </g>
     </g>
     <g id="full56-comparison-ytick_5">
      <g id="full56-comparison-line2d_39">
-      <path d="M 49.69524 184.191789
-L 889.79976 184.191789
-" clip-path="url(#full56-comparison-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 172.20959
+L 889.79976 172.20959
+" clip-path="url(#full56-comparison-p4785d5ebff)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="full56-comparison-line2d_40">
       <g>
-       <use xlink:href="#full56-comparison-mb630600054" x="49.69524" y="184.191789" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#full56-comparison-mb630600054" x="49.69524" y="172.20959" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="full56-comparison-text_37">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="188.569445" transform="rotate(-0 42.69524 188.569445)">1000</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="176.587247" transform="rotate(-0 42.69524 176.587247)">1000</text>
      </g>
     </g>
     <g id="full56-comparison-ytick_6">
      <g id="full56-comparison-line2d_41">
-      <path d="M 49.69524 144.177296
-L 889.79976 144.177296
-" clip-path="url(#full56-comparison-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 135.882697
+L 889.79976 135.882697
+" clip-path="url(#full56-comparison-p4785d5ebff)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="full56-comparison-line2d_42">
       <g>
-       <use xlink:href="#full56-comparison-mb630600054" x="49.69524" y="144.177296" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#full56-comparison-mb630600054" x="49.69524" y="135.882697" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="full56-comparison-text_38">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="148.554952" transform="rotate(-0 42.69524 148.554952)">1250</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="140.260353" transform="rotate(-0 42.69524 140.260353)">1250</text>
      </g>
     </g>
     <g id="full56-comparison-ytick_7">
      <g id="full56-comparison-line2d_43">
-      <path d="M 49.69524 104.162803
-L 889.79976 104.162803
-" clip-path="url(#full56-comparison-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 99.555803
+L 889.79976 99.555803
+" clip-path="url(#full56-comparison-p4785d5ebff)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="full56-comparison-line2d_44">
       <g>
-       <use xlink:href="#full56-comparison-mb630600054" x="49.69524" y="104.162803" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#full56-comparison-mb630600054" x="49.69524" y="99.555803" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="full56-comparison-text_39">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="108.540459" transform="rotate(-0 42.69524 108.540459)">1500</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="103.933459" transform="rotate(-0 42.69524 103.933459)">1500</text>
      </g>
     </g>
     <g id="full56-comparison-ytick_8">
      <g id="full56-comparison-line2d_45">
-      <path d="M 49.69524 64.14831
-L 889.79976 64.14831
-" clip-path="url(#full56-comparison-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 63.228909
+L 889.79976 63.228909
+" clip-path="url(#full56-comparison-p4785d5ebff)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="full56-comparison-line2d_46">
       <g>
-       <use xlink:href="#full56-comparison-mb630600054" x="49.69524" y="64.14831" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#full56-comparison-mb630600054" x="49.69524" y="63.228909" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="full56-comparison-text_40">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="68.525966" transform="rotate(-0 42.69524 68.525966)">1750</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="67.606566" transform="rotate(-0 42.69524 67.606566)">1750</text>
      </g>
     </g>
     <g id="full56-comparison-text_41">
-     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="11.755553" y="199.210781" transform="rotate(-90 11.755553 199.210781)">tokens/s/card</text>
+     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="11.755553" y="185.844484" transform="rotate(-90 11.755553 185.844484)">tokens/s/card</text>
     </g>
    </g>
    <g id="full56-comparison-line2d_47">
-    <path d="M 71.053829 278.33096
-L 128.010068 259.842087
-L 184.966307 241.951855
-L 241.922545 224.508488
-L 298.878784 208.050442
-L 355.835023 192.372911
-L 412.791261 177.218739
-L 469.7475 164.544451
-L 526.703739 149.878339
-L 583.659977 135.049175
-L 640.616216 120.176102
-L 697.572455 106.00995
-L 754.528693 91.794659
-L 811.484932 78.389721
-L 868.441171 64.846048
-" clip-path="url(#full56-comparison-pe8c5ae8e79)" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
+    <path d="M 71.053829 257.673217
+L 128.010068 240.888216
+L 184.966307 224.646686
+L 241.922545 208.81084
+L 298.878784 193.869511
+L 355.835023 179.636769
+L 412.791261 165.879153
+L 469.7475 154.372885
+L 526.703739 141.058351
+L 583.659977 127.595792
+L 640.616216 114.093371
+L 697.572455 101.232723
+L 754.528693 88.327465
+L 811.484932 76.15788
+L 868.441171 63.862346
+" clip-path="url(#full56-comparison-p4785d5ebff)" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="full56-comparison-m98abdd7638" d="M 0 2.5
 C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
@@ -524,41 +524,41 @@ C -1.29895 2.236584 -0.663008 2.5 0 2.5
 z
 " style="stroke: #0d8d7b; stroke-width: 2"/>
     </defs>
-    <g clip-path="url(#full56-comparison-pe8c5ae8e79)">
-     <use xlink:href="#full56-comparison-m98abdd7638" x="71.053829" y="278.33096" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m98abdd7638" x="128.010068" y="259.842087" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m98abdd7638" x="184.966307" y="241.951855" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m98abdd7638" x="241.922545" y="224.508488" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m98abdd7638" x="298.878784" y="208.050442" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m98abdd7638" x="355.835023" y="192.372911" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m98abdd7638" x="412.791261" y="177.218739" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m98abdd7638" x="469.7475" y="164.544451" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m98abdd7638" x="526.703739" y="149.878339" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m98abdd7638" x="583.659977" y="135.049175" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m98abdd7638" x="640.616216" y="120.176102" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m98abdd7638" x="697.572455" y="106.00995" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m98abdd7638" x="754.528693" y="91.794659" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m98abdd7638" x="811.484932" y="78.389721" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m98abdd7638" x="868.441171" y="64.846048" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+    <g clip-path="url(#full56-comparison-p4785d5ebff)">
+     <use xlink:href="#full56-comparison-m98abdd7638" x="71.053829" y="257.673217" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m98abdd7638" x="128.010068" y="240.888216" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m98abdd7638" x="184.966307" y="224.646686" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m98abdd7638" x="241.922545" y="208.81084" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m98abdd7638" x="298.878784" y="193.869511" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m98abdd7638" x="355.835023" y="179.636769" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m98abdd7638" x="412.791261" y="165.879153" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m98abdd7638" x="469.7475" y="154.372885" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m98abdd7638" x="526.703739" y="141.058351" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m98abdd7638" x="583.659977" y="127.595792" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m98abdd7638" x="640.616216" y="114.093371" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m98abdd7638" x="697.572455" y="101.232723" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m98abdd7638" x="754.528693" y="88.327465" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m98abdd7638" x="811.484932" y="76.15788" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m98abdd7638" x="868.441171" y="63.862346" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
     </g>
    </g>
    <g id="full56-comparison-line2d_48">
-    <path d="M 71.053829 217.120233
-L 128.010068 196.915729
-L 184.966307 189.81907
-L 241.922545 206.146028
-L 298.878784 195.825241
-L 355.835023 205.567943
-L 412.791261 199.434133
-L 469.7475 202.332932
-L 526.703739 200.036517
-L 583.659977 200.680049
-L 640.616216 194.462498
-L 697.572455 200.256445
-L 754.528693 197.98037
-L 811.484932 197.348674
-L 868.441171 193.951936
-" clip-path="url(#full56-comparison-pe8c5ae8e79)" style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
+    <path d="M 71.053829 202.103462
+L 128.010068 183.760936
+L 184.966307 177.318281
+L 241.922545 192.140603
+L 298.878784 182.770944
+L 355.835023 191.615791
+L 412.791261 186.047252
+L 469.7475 188.678908
+L 526.703739 186.594123
+L 583.659977 187.178349
+L 640.616216 181.533787
+L 697.572455 186.793783
+L 754.528693 184.727464
+L 811.484932 184.153982
+L 868.441171 181.070276
+" clip-path="url(#full56-comparison-p4785d5ebff)" style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="full56-comparison-m94619aaaa5" d="M 0 2.5
 C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
@@ -572,171 +572,158 @@ C -1.29895 2.236584 -0.663008 2.5 0 2.5
 z
 " style="stroke: #2364d2; stroke-width: 2"/>
     </defs>
-    <g clip-path="url(#full56-comparison-pe8c5ae8e79)">
-     <use xlink:href="#full56-comparison-m94619aaaa5" x="71.053829" y="217.120233" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m94619aaaa5" x="128.010068" y="196.915729" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m94619aaaa5" x="184.966307" y="189.81907" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m94619aaaa5" x="241.922545" y="206.146028" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m94619aaaa5" x="298.878784" y="195.825241" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m94619aaaa5" x="355.835023" y="205.567943" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m94619aaaa5" x="412.791261" y="199.434133" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m94619aaaa5" x="469.7475" y="202.332932" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m94619aaaa5" x="526.703739" y="200.036517" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m94619aaaa5" x="583.659977" y="200.680049" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m94619aaaa5" x="640.616216" y="194.462498" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m94619aaaa5" x="697.572455" y="200.256445" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m94619aaaa5" x="754.528693" y="197.98037" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m94619aaaa5" x="811.484932" y="197.348674" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#full56-comparison-m94619aaaa5" x="868.441171" y="193.951936" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+    <g clip-path="url(#full56-comparison-p4785d5ebff)">
+     <use xlink:href="#full56-comparison-m94619aaaa5" x="71.053829" y="202.103462" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m94619aaaa5" x="128.010068" y="183.760936" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m94619aaaa5" x="184.966307" y="177.318281" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m94619aaaa5" x="241.922545" y="192.140603" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m94619aaaa5" x="298.878784" y="182.770944" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m94619aaaa5" x="355.835023" y="191.615791" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m94619aaaa5" x="412.791261" y="186.047252" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m94619aaaa5" x="469.7475" y="188.678908" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m94619aaaa5" x="526.703739" y="186.594123" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m94619aaaa5" x="583.659977" y="187.178349" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m94619aaaa5" x="640.616216" y="181.533787" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m94619aaaa5" x="697.572455" y="186.793783" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m94619aaaa5" x="754.528693" y="184.727464" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m94619aaaa5" x="811.484932" y="184.153982" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#full56-comparison-m94619aaaa5" x="868.441171" y="181.070276" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
     </g>
    </g>
    <g id="full56-comparison-patch_4">
-    <path d="M 49.69524 344.24976
+    <path d="M 49.69524 317.517165
 L 49.69524 54.171803
 " style="fill: none; stroke: #b9c7d7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="full56-comparison-patch_5">
-    <path d="M 49.69524 344.24976
-L 889.79976 344.24976
+    <path d="M 49.69524 317.517165
+L 889.79976 317.517165
 " style="fill: none; stroke: #b9c7d7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="full56-comparison-text_42">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="71.053829" y="268.33096" transform="rotate(-0 71.053829 268.33096)">412</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="71.053829" y="247.673217" transform="rotate(-0 71.053829 247.673217)">412</text>
    </g>
    <g id="full56-comparison-text_43">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="128.010068" y="249.842087" transform="rotate(-0 128.010068 249.842087)">527</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="128.010068" y="230.888216" transform="rotate(-0 128.010068 230.888216)">527</text>
    </g>
    <g id="full56-comparison-text_44">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="184.966307" y="231.951855" transform="rotate(-0 184.966307 231.951855)">639</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="184.966307" y="214.646686" transform="rotate(-0 184.966307 214.646686)">639</text>
    </g>
    <g id="full56-comparison-text_45">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="241.922545" y="214.508488" transform="rotate(-0 241.922545 214.508488)">748</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="241.922545" y="198.81084" transform="rotate(-0 241.922545 198.81084)">748</text>
    </g>
    <g id="full56-comparison-text_46">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="298.878784" y="198.050442" transform="rotate(-0 298.878784 198.050442)">851</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="298.878784" y="183.869511" transform="rotate(-0 298.878784 183.869511)">851</text>
    </g>
    <g id="full56-comparison-text_47">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="355.835023" y="182.372911" transform="rotate(-0 355.835023 182.372911)">949</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="355.835023" y="169.636769" transform="rotate(-0 355.835023 169.636769)">949</text>
    </g>
    <g id="full56-comparison-text_48">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="412.791261" y="167.218739" transform="rotate(-0 412.791261 167.218739)">1,044</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="412.791261" y="155.879153" transform="rotate(-0 412.791261 155.879153)">1,044</text>
    </g>
    <g id="full56-comparison-text_49">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="469.7475" y="154.544451" transform="rotate(-0 469.7475 154.544451)">1,123</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="469.7475" y="144.372885" transform="rotate(-0 469.7475 144.372885)">1,123</text>
    </g>
    <g id="full56-comparison-text_50">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="526.703739" y="139.878339" transform="rotate(-0 526.703739 139.878339)">1,214</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="526.703739" y="131.058351" transform="rotate(-0 526.703739 131.058351)">1,214</text>
    </g>
    <g id="full56-comparison-text_51">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="583.659977" y="125.049175" transform="rotate(-0 583.659977 125.049175)">1,307</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="583.659977" y="117.595792" transform="rotate(-0 583.659977 117.595792)">1,307</text>
    </g>
    <g id="full56-comparison-text_52">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="640.616216" y="110.176102" transform="rotate(-0 640.616216 110.176102)">1,400</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="640.616216" y="104.093371" transform="rotate(-0 640.616216 104.093371)">1,400</text>
    </g>
    <g id="full56-comparison-text_53">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="697.572455" y="96.00995" transform="rotate(-0 697.572455 96.00995)">1,488</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="697.572455" y="91.232723" transform="rotate(-0 697.572455 91.232723)">1,488</text>
    </g>
    <g id="full56-comparison-text_54">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="754.528693" y="81.794659" transform="rotate(-0 754.528693 81.794659)">1,577</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="754.528693" y="78.327465" transform="rotate(-0 754.528693 78.327465)">1,577</text>
    </g>
    <g id="full56-comparison-text_55">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="811.484932" y="68.389721" transform="rotate(-0 811.484932 68.389721)">1,661</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="811.484932" y="66.15788" transform="rotate(-0 811.484932 66.15788)">1,661</text>
    </g>
    <g id="full56-comparison-text_56">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="868.441171" y="54.846048" transform="rotate(-0 868.441171 54.846048)">1,746</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="868.441171" y="53.862346" transform="rotate(-0 868.441171 53.862346)">1,746</text>
    </g>
    <g id="full56-comparison-text_57">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="71.053829" y="235.120233" transform="rotate(-0 71.053829 235.120233)">794</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="71.053829" y="220.103462" transform="rotate(-0 71.053829 220.103462)">794</text>
    </g>
    <g id="full56-comparison-text_58">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="128.010068" y="214.915729" transform="rotate(-0 128.010068 214.915729)">921</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="128.010068" y="201.760936" transform="rotate(-0 128.010068 201.760936)">921</text>
    </g>
    <g id="full56-comparison-text_59">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="184.966307" y="207.81907" transform="rotate(-0 184.966307 207.81907)">965</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="184.966307" y="195.318281" transform="rotate(-0 184.966307 195.318281)">965</text>
    </g>
    <g id="full56-comparison-text_60">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="241.922545" y="224.146028" transform="rotate(-0 241.922545 224.146028)">863</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="241.922545" y="210.140603" transform="rotate(-0 241.922545 210.140603)">863</text>
    </g>
    <g id="full56-comparison-text_61">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="298.878784" y="213.825241" transform="rotate(-0 298.878784 213.825241)">927</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="298.878784" y="200.770944" transform="rotate(-0 298.878784 200.770944)">927</text>
    </g>
    <g id="full56-comparison-text_62">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="355.835023" y="223.567943" transform="rotate(-0 355.835023 223.567943)">866</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="355.835023" y="209.615791" transform="rotate(-0 355.835023 209.615791)">866</text>
    </g>
    <g id="full56-comparison-text_63">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="412.791261" y="217.434133" transform="rotate(-0 412.791261 217.434133)">905</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="412.791261" y="204.047252" transform="rotate(-0 412.791261 204.047252)">905</text>
    </g>
    <g id="full56-comparison-text_64">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="469.7475" y="220.332932" transform="rotate(-0 469.7475 220.332932)">887</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="469.7475" y="206.678908" transform="rotate(-0 469.7475 206.678908)">887</text>
    </g>
    <g id="full56-comparison-text_65">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="526.703739" y="218.036517" transform="rotate(-0 526.703739 218.036517)">901</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="526.703739" y="204.594123" transform="rotate(-0 526.703739 204.594123)">901</text>
    </g>
    <g id="full56-comparison-text_66">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="583.659977" y="218.680049" transform="rotate(-0 583.659977 218.680049)">897</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="583.659977" y="205.178349" transform="rotate(-0 583.659977 205.178349)">897</text>
    </g>
    <g id="full56-comparison-text_67">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="640.616216" y="212.462498" transform="rotate(-0 640.616216 212.462498)">936</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="640.616216" y="199.533787" transform="rotate(-0 640.616216 199.533787)">936</text>
    </g>
    <g id="full56-comparison-text_68">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="697.572455" y="218.256445" transform="rotate(-0 697.572455 218.256445)">900</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="697.572455" y="204.793783" transform="rotate(-0 697.572455 204.793783)">900</text>
    </g>
    <g id="full56-comparison-text_69">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="754.528693" y="215.98037" transform="rotate(-0 754.528693 215.98037)">914</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="754.528693" y="202.727464" transform="rotate(-0 754.528693 202.727464)">914</text>
    </g>
    <g id="full56-comparison-text_70">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="811.484932" y="215.348674" transform="rotate(-0 811.484932 215.348674)">918</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="811.484932" y="202.153982" transform="rotate(-0 811.484932 202.153982)">918</text>
    </g>
    <g id="full56-comparison-text_71">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="868.441171" y="211.951936" transform="rotate(-0 868.441171 211.951936)">939</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="868.441171" y="199.070276" transform="rotate(-0 868.441171 199.070276)">939</text>
    </g>
    <g id="full56-comparison-text_72">
-    <text style="font-weight: 700; font-size: 14px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="49.69524" y="14.171802" transform="rotate(-0 49.69524 14.171802)">同一套 56 组成对输入 · 完整 42 层统计</text>
+    <text style="font-weight: 700; font-size: 14px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="49.69524" y="14.171803" transform="rotate(-0 49.69524 14.171803)">同一套 56 组成对输入 · 完整 42 层统计</text>
    </g>
    <g id="full56-comparison-legend_1">
-    <g id="full56-comparison-patch_6">
-     <path d="M 55.99524 88.821802
-L 198.054615 88.821802
-Q 199.854615 88.821802 199.854615 87.021802
-L 199.854615 60.471802
-Q 199.854615 58.671802 198.054615 58.671802
-L 55.99524 58.671802
-Q 54.19524 58.671802 54.19524 60.471802
-L 54.19524 87.021802
-Q 54.19524 88.821802 55.99524 88.821802
-z
-" style="fill: #ffffff; opacity: 0.8; stroke: #e3eaf2; stroke-linejoin: miter"/>
-    </g>
     <g id="full56-comparison-line2d_49">
-     <path d="M 57.79524 66.28524
-L 66.79524 66.28524
-L 75.79524 66.28524
+     <path d="M 57.79524 377.032768
+L 66.79524 377.032768
+L 75.79524 377.032768
 " style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
      <g>
-      <use xlink:href="#full56-comparison-m98abdd7638" x="66.79524" y="66.28524" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+      <use xlink:href="#full56-comparison-m98abdd7638" x="66.79524" y="377.032768" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
      </g>
     </g>
     <g id="full56-comparison-text_73">
-     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="82.99524" y="69.43524" transform="rotate(-0 82.99524 69.43524)">H200 EP4 · 56 组</text>
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="82.99524" y="380.182768" transform="rotate(-0 82.99524 380.182768)">H200 EP4 · 56 组</text>
     </g>
     <g id="full56-comparison-line2d_50">
-     <path d="M 57.79524 80.01024
-L 66.79524 80.01024
-L 75.79524 80.01024
+     <path d="M 170.611646 377.032768
+L 179.611646 377.032768
+L 188.611646 377.032768
 " style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
      <g>
-      <use xlink:href="#full56-comparison-m94619aaaa5" x="66.79524" y="80.01024" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+      <use xlink:href="#full56-comparison-m94619aaaa5" x="179.611646" y="377.032768" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
      </g>
     </g>
     <g id="full56-comparison-text_74">
-     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="82.99524" y="83.16024" transform="rotate(-0 82.99524 83.16024)">Zeus EP4×TP4 · 相同 56 组</text>
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="195.811646" y="380.182768" transform="rotate(-0 195.811646 380.182768)">Zeus EP4×TP4 · 相同 56 组</text>
     </g>
    </g>
   </g>
  </g>
  <defs>
-  <clipPath id="full56-comparison-pe8c5ae8e79">
-   <rect x="49.69524" y="54.171803" width="840.10452" height="290.077958"/>
+  <clipPath id="full56-comparison-p4785d5ebff">
+   <rect x="49.69524" y="54.171803" width="840.10452" height="263.345363"/>
   </clipPath>
  </defs>
 </svg>

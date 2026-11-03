@@ -26,8 +26,8 @@ z
   </g>
   <g id="paired-throughput-axes_1">
    <g id="paired-throughput-patch_2">
-    <path d="M 49.69524 344.24976
-L 889.79976 344.24976
+    <path d="M 49.69524 317.517165
+L 889.79976 317.517165
 L 889.79976 54.171803
 L 49.69524 54.171803
 z
@@ -213,163 +213,163 @@ L 0 3.5
 " style="stroke: #49617c; stroke-width: 0.8"/>
       </defs>
       <g>
-       <use xlink:href="#paired-throughput-mc6863bb9b3" x="71.053829" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="71.053829" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="paired-throughput-text_17">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="71.053829" y="360.005073" transform="rotate(-0 71.053829 360.005073)">16</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="71.053829" y="333.272478" transform="rotate(-0 71.053829 333.272478)">16</text>
      </g>
     </g>
     <g id="paired-throughput-xtick_17">
      <g id="paired-throughput-line2d_17">
       <g>
-       <use xlink:href="#paired-throughput-mc6863bb9b3" x="128.010068" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="128.010068" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="paired-throughput-text_18">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="128.010068" y="360.005073" transform="rotate(-0 128.010068 360.005073)">24</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="128.010068" y="333.272478" transform="rotate(-0 128.010068 333.272478)">24</text>
      </g>
     </g>
     <g id="paired-throughput-xtick_18">
      <g id="paired-throughput-line2d_18">
       <g>
-       <use xlink:href="#paired-throughput-mc6863bb9b3" x="184.966307" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="184.966307" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="paired-throughput-text_19">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="184.966307" y="360.005073" transform="rotate(-0 184.966307 360.005073)">32</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="184.966307" y="333.272478" transform="rotate(-0 184.966307 333.272478)">32</text>
      </g>
     </g>
     <g id="paired-throughput-xtick_19">
      <g id="paired-throughput-line2d_19">
       <g>
-       <use xlink:href="#paired-throughput-mc6863bb9b3" x="241.922545" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="241.922545" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="paired-throughput-text_20">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="241.922545" y="360.005073" transform="rotate(-0 241.922545 360.005073)">40</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="241.922545" y="333.272478" transform="rotate(-0 241.922545 333.272478)">40</text>
      </g>
     </g>
     <g id="paired-throughput-xtick_20">
      <g id="paired-throughput-line2d_20">
       <g>
-       <use xlink:href="#paired-throughput-mc6863bb9b3" x="298.878784" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="298.878784" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="paired-throughput-text_21">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="298.878784" y="360.005073" transform="rotate(-0 298.878784 360.005073)">48</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="298.878784" y="333.272478" transform="rotate(-0 298.878784 333.272478)">48</text>
      </g>
     </g>
     <g id="paired-throughput-xtick_21">
      <g id="paired-throughput-line2d_21">
       <g>
-       <use xlink:href="#paired-throughput-mc6863bb9b3" x="355.835023" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="355.835023" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="paired-throughput-text_22">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="355.835023" y="360.005073" transform="rotate(-0 355.835023 360.005073)">56</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="355.835023" y="333.272478" transform="rotate(-0 355.835023 333.272478)">56</text>
      </g>
     </g>
     <g id="paired-throughput-xtick_22">
      <g id="paired-throughput-line2d_22">
       <g>
-       <use xlink:href="#paired-throughput-mc6863bb9b3" x="412.791261" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="412.791261" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="paired-throughput-text_23">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="412.791261" y="360.005073" transform="rotate(-0 412.791261 360.005073)">64</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="412.791261" y="333.272478" transform="rotate(-0 412.791261 333.272478)">64</text>
      </g>
     </g>
     <g id="paired-throughput-xtick_23">
      <g id="paired-throughput-line2d_23">
       <g>
-       <use xlink:href="#paired-throughput-mc6863bb9b3" x="469.7475" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="469.7475" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="paired-throughput-text_24">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="360.005073" transform="rotate(-0 469.7475 360.005073)">72</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="333.272478" transform="rotate(-0 469.7475 333.272478)">72</text>
      </g>
     </g>
     <g id="paired-throughput-xtick_24">
      <g id="paired-throughput-line2d_24">
       <g>
-       <use xlink:href="#paired-throughput-mc6863bb9b3" x="526.703739" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="526.703739" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="paired-throughput-text_25">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="526.703739" y="360.005073" transform="rotate(-0 526.703739 360.005073)">80</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="526.703739" y="333.272478" transform="rotate(-0 526.703739 333.272478)">80</text>
      </g>
     </g>
     <g id="paired-throughput-xtick_25">
      <g id="paired-throughput-line2d_25">
       <g>
-       <use xlink:href="#paired-throughput-mc6863bb9b3" x="583.659977" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="583.659977" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="paired-throughput-text_26">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="583.659977" y="360.005073" transform="rotate(-0 583.659977 360.005073)">88</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="583.659977" y="333.272478" transform="rotate(-0 583.659977 333.272478)">88</text>
      </g>
     </g>
     <g id="paired-throughput-xtick_26">
      <g id="paired-throughput-line2d_26">
       <g>
-       <use xlink:href="#paired-throughput-mc6863bb9b3" x="640.616216" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="640.616216" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="paired-throughput-text_27">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="640.616216" y="360.005073" transform="rotate(-0 640.616216 360.005073)">96</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="640.616216" y="333.272478" transform="rotate(-0 640.616216 333.272478)">96</text>
      </g>
     </g>
     <g id="paired-throughput-xtick_27">
      <g id="paired-throughput-line2d_27">
       <g>
-       <use xlink:href="#paired-throughput-mc6863bb9b3" x="697.572455" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="697.572455" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="paired-throughput-text_28">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="697.572455" y="360.005073" transform="rotate(-0 697.572455 360.005073)">104</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="697.572455" y="333.272478" transform="rotate(-0 697.572455 333.272478)">104</text>
      </g>
     </g>
     <g id="paired-throughput-xtick_28">
      <g id="paired-throughput-line2d_28">
       <g>
-       <use xlink:href="#paired-throughput-mc6863bb9b3" x="754.528693" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="754.528693" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="paired-throughput-text_29">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="754.528693" y="360.005073" transform="rotate(-0 754.528693 360.005073)">112</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="754.528693" y="333.272478" transform="rotate(-0 754.528693 333.272478)">112</text>
      </g>
     </g>
     <g id="paired-throughput-xtick_29">
      <g id="paired-throughput-line2d_29">
       <g>
-       <use xlink:href="#paired-throughput-mc6863bb9b3" x="811.484932" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="811.484932" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="paired-throughput-text_30">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="811.484932" y="360.005073" transform="rotate(-0 811.484932 360.005073)">120</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="811.484932" y="333.272478" transform="rotate(-0 811.484932 333.272478)">120</text>
      </g>
     </g>
     <g id="paired-throughput-xtick_30">
      <g id="paired-throughput-line2d_30">
       <g>
-       <use xlink:href="#paired-throughput-mc6863bb9b3" x="868.441171" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#paired-throughput-mc6863bb9b3" x="868.441171" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="paired-throughput-text_31">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="868.441171" y="360.005073" transform="rotate(-0 868.441171 360.005073)">128</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="868.441171" y="333.272478" transform="rotate(-0 868.441171 333.272478)">128</text>
      </g>
     </g>
     <g id="paired-throughput-text_32">
-     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="383.280073" transform="rotate(-0 469.7475 383.280073)">总 batch size（4 card）</text>
+     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="356.547478" transform="rotate(-0 469.7475 356.547478)">总 batch size（4 card）</text>
     </g>
    </g>
    <g id="paired-throughput-matplotlib.axis_4">
     <g id="paired-throughput-ytick_1">
      <g id="paired-throughput-line2d_31">
-      <path d="M 49.69524 344.24976
-L 889.79976 344.24976
-" clip-path="url(#paired-throughput-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 317.517165
+L 889.79976 317.517165
+" clip-path="url(#paired-throughput-p4785d5ebff)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="paired-throughput-line2d_32">
       <defs>
@@ -378,124 +378,124 @@ L -3.5 0
 " style="stroke: #49617c; stroke-width: 0.8"/>
       </defs>
       <g>
-       <use xlink:href="#paired-throughput-mb630600054" x="49.69524" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#paired-throughput-mb630600054" x="49.69524" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="paired-throughput-text_33">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="348.627416" transform="rotate(-0 42.69524 348.627416)">0</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="321.894822" transform="rotate(-0 42.69524 321.894822)">0</text>
      </g>
     </g>
     <g id="paired-throughput-ytick_2">
      <g id="paired-throughput-line2d_33">
-      <path d="M 49.69524 302.181031
-L 889.79976 302.181031
-" clip-path="url(#paired-throughput-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 279.325347
+L 889.79976 279.325347
+" clip-path="url(#paired-throughput-p4785d5ebff)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="paired-throughput-line2d_34">
       <g>
-       <use xlink:href="#paired-throughput-mb630600054" x="49.69524" y="302.181031" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#paired-throughput-mb630600054" x="49.69524" y="279.325347" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="paired-throughput-text_34">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="306.558688" transform="rotate(-0 42.69524 306.558688)">500</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="283.703003" transform="rotate(-0 42.69524 283.703003)">500</text>
      </g>
     </g>
     <g id="paired-throughput-ytick_3">
      <g id="paired-throughput-line2d_35">
-      <path d="M 49.69524 260.112303
-L 889.79976 260.112303
-" clip-path="url(#paired-throughput-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 241.133529
+L 889.79976 241.133529
+" clip-path="url(#paired-throughput-p4785d5ebff)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="paired-throughput-line2d_36">
       <g>
-       <use xlink:href="#paired-throughput-mb630600054" x="49.69524" y="260.112303" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#paired-throughput-mb630600054" x="49.69524" y="241.133529" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="paired-throughput-text_35">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="264.489959" transform="rotate(-0 42.69524 264.489959)">1000</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="245.511185" transform="rotate(-0 42.69524 245.511185)">1000</text>
      </g>
     </g>
     <g id="paired-throughput-ytick_4">
      <g id="paired-throughput-line2d_37">
-      <path d="M 49.69524 218.043574
-L 889.79976 218.043574
-" clip-path="url(#paired-throughput-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 202.941711
+L 889.79976 202.941711
+" clip-path="url(#paired-throughput-p4785d5ebff)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="paired-throughput-line2d_38">
       <g>
-       <use xlink:href="#paired-throughput-mb630600054" x="49.69524" y="218.043574" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#paired-throughput-mb630600054" x="49.69524" y="202.941711" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="paired-throughput-text_36">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="222.42123" transform="rotate(-0 42.69524 222.42123)">1500</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="207.319367" transform="rotate(-0 42.69524 207.319367)">1500</text>
      </g>
     </g>
     <g id="paired-throughput-ytick_5">
      <g id="paired-throughput-line2d_39">
-      <path d="M 49.69524 175.974845
-L 889.79976 175.974845
-" clip-path="url(#paired-throughput-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 164.749892
+L 889.79976 164.749892
+" clip-path="url(#paired-throughput-p4785d5ebff)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="paired-throughput-line2d_40">
       <g>
-       <use xlink:href="#paired-throughput-mb630600054" x="49.69524" y="175.974845" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#paired-throughput-mb630600054" x="49.69524" y="164.749892" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="paired-throughput-text_37">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="180.352501" transform="rotate(-0 42.69524 180.352501)">2000</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="169.127549" transform="rotate(-0 42.69524 169.127549)">2000</text>
      </g>
     </g>
     <g id="paired-throughput-ytick_6">
      <g id="paired-throughput-line2d_41">
-      <path d="M 49.69524 133.906116
-L 889.79976 133.906116
-" clip-path="url(#paired-throughput-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 126.558074
+L 889.79976 126.558074
+" clip-path="url(#paired-throughput-p4785d5ebff)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="paired-throughput-line2d_42">
       <g>
-       <use xlink:href="#paired-throughput-mb630600054" x="49.69524" y="133.906116" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#paired-throughput-mb630600054" x="49.69524" y="126.558074" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="paired-throughput-text_38">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="138.283773" transform="rotate(-0 42.69524 138.283773)">2500</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="130.93573" transform="rotate(-0 42.69524 130.93573)">2500</text>
      </g>
     </g>
     <g id="paired-throughput-ytick_7">
      <g id="paired-throughput-line2d_43">
-      <path d="M 49.69524 91.837388
-L 889.79976 91.837388
-" clip-path="url(#paired-throughput-pe8c5ae8e79)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 88.366256
+L 889.79976 88.366256
+" clip-path="url(#paired-throughput-p4785d5ebff)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="paired-throughput-line2d_44">
       <g>
-       <use xlink:href="#paired-throughput-mb630600054" x="49.69524" y="91.837388" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#paired-throughput-mb630600054" x="49.69524" y="88.366256" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="paired-throughput-text_39">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="96.215044" transform="rotate(-0 42.69524 96.215044)">3000</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="92.743912" transform="rotate(-0 42.69524 92.743912)">3000</text>
      </g>
     </g>
     <g id="paired-throughput-text_40">
-     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="11.755553" y="199.210781" transform="rotate(-90 11.755553 199.210781)">tokens/s/card</text>
+     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="11.755553" y="185.844484" transform="rotate(-90 11.755553 185.844484)">tokens/s/card</text>
     </g>
    </g>
    <g id="paired-throughput-line2d_45">
-    <path d="M 71.053829 283.952538
-L 128.010068 269.729696
-L 184.966307 246.921013
-L 241.922545 223.759442
-L 298.878784 201.83143
-L 355.835023 181.322821
-L 412.791261 169.91569
-L 469.7475 166.672423
-L 526.703739 155.403155
-L 583.659977 138.810268
-L 640.616216 125.417365
-L 697.572455 110.622993
-L 754.528693 94.473032
-L 811.484932 79.319392
-L 868.441171 65.113742
-" clip-path="url(#paired-throughput-pe8c5ae8e79)" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
+    <path d="M 71.053829 262.776729
+L 128.010068 249.864617
+L 184.966307 229.157904
+L 241.922545 208.130824
+L 298.878784 188.223623
+L 355.835023 169.605018
+L 412.791261 159.249129
+L 469.7475 156.30475
+L 526.703739 146.074019
+L 583.659977 131.010276
+L 640.616216 118.851617
+L 697.572455 105.420644
+L 754.528693 90.759008
+L 811.484932 77.001876
+L 868.441171 64.10537
+" clip-path="url(#paired-throughput-p4785d5ebff)" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="paired-throughput-m98abdd7638" d="M 0 2.5
 C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
@@ -509,41 +509,41 @@ C -1.29895 2.236584 -0.663008 2.5 0 2.5
 z
 " style="stroke: #0d8d7b; stroke-width: 2"/>
     </defs>
-    <g clip-path="url(#paired-throughput-pe8c5ae8e79)">
-     <use xlink:href="#paired-throughput-m98abdd7638" x="71.053829" y="283.952538" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m98abdd7638" x="128.010068" y="269.729696" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m98abdd7638" x="184.966307" y="246.921013" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m98abdd7638" x="241.922545" y="223.759442" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m98abdd7638" x="298.878784" y="201.83143" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m98abdd7638" x="355.835023" y="181.322821" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m98abdd7638" x="412.791261" y="169.91569" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m98abdd7638" x="469.7475" y="166.672423" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m98abdd7638" x="526.703739" y="155.403155" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m98abdd7638" x="583.659977" y="138.810268" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m98abdd7638" x="640.616216" y="125.417365" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m98abdd7638" x="697.572455" y="110.622993" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m98abdd7638" x="754.528693" y="94.473032" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m98abdd7638" x="811.484932" y="79.319392" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m98abdd7638" x="868.441171" y="65.113742" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+    <g clip-path="url(#paired-throughput-p4785d5ebff)">
+     <use xlink:href="#paired-throughput-m98abdd7638" x="71.053829" y="262.776729" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="128.010068" y="249.864617" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="184.966307" y="229.157904" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="241.922545" y="208.130824" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="298.878784" y="188.223623" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="355.835023" y="169.605018" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="412.791261" y="159.249129" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="469.7475" y="156.30475" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="526.703739" y="146.074019" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="583.659977" y="131.010276" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="640.616216" y="118.851617" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="697.572455" y="105.420644" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="754.528693" y="90.759008" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="811.484932" y="77.001876" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m98abdd7638" x="868.441171" y="64.10537" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
     </g>
    </g>
    <g id="paired-throughput-line2d_46">
-    <path d="M 71.053829 277.331134
-L 128.010068 269.279175
-L 184.966307 266.005513
-L 241.922545 274.151087
-L 298.878784 271.082075
-L 355.835023 275.124942
-L 412.791261 271.234362
-L 469.7475 272.50587
-L 526.703739 270.876659
-L 583.659977 271.266371
-L 640.616216 268.6863
-L 697.572455 271.063207
-L 754.528693 270.180003
-L 811.484932 269.597153
-L 868.441171 268.503508
-" clip-path="url(#paired-throughput-pe8c5ae8e79)" style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
+    <path d="M 71.053829 256.765532
+L 128.010068 249.455613
+L 184.966307 246.483641
+L 241.922545 253.878547
+L 298.878784 251.092364
+L 355.835023 254.762654
+L 412.791261 251.230617
+L 469.7475 252.384948
+L 526.703739 250.905879
+L 583.659977 251.259676
+L 640.616216 248.917376
+L 697.572455 251.075235
+L 754.528693 250.273424
+L 811.484932 249.744288
+L 868.441171 248.751429
+" clip-path="url(#paired-throughput-p4785d5ebff)" style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="paired-throughput-m94619aaaa5" d="M 0 2.5
 C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
@@ -557,171 +557,158 @@ C -1.29895 2.236584 -0.663008 2.5 0 2.5
 z
 " style="stroke: #2364d2; stroke-width: 2"/>
     </defs>
-    <g clip-path="url(#paired-throughput-pe8c5ae8e79)">
-     <use xlink:href="#paired-throughput-m94619aaaa5" x="71.053829" y="277.331134" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m94619aaaa5" x="128.010068" y="269.279175" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m94619aaaa5" x="184.966307" y="266.005513" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m94619aaaa5" x="241.922545" y="274.151087" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m94619aaaa5" x="298.878784" y="271.082075" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m94619aaaa5" x="355.835023" y="275.124942" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m94619aaaa5" x="412.791261" y="271.234362" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m94619aaaa5" x="469.7475" y="272.50587" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m94619aaaa5" x="526.703739" y="270.876659" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m94619aaaa5" x="583.659977" y="271.266371" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m94619aaaa5" x="640.616216" y="268.6863" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m94619aaaa5" x="697.572455" y="271.063207" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m94619aaaa5" x="754.528693" y="270.180003" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m94619aaaa5" x="811.484932" y="269.597153" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#paired-throughput-m94619aaaa5" x="868.441171" y="268.503508" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+    <g clip-path="url(#paired-throughput-p4785d5ebff)">
+     <use xlink:href="#paired-throughput-m94619aaaa5" x="71.053829" y="256.765532" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m94619aaaa5" x="128.010068" y="249.455613" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m94619aaaa5" x="184.966307" y="246.483641" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m94619aaaa5" x="241.922545" y="253.878547" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m94619aaaa5" x="298.878784" y="251.092364" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m94619aaaa5" x="355.835023" y="254.762654" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m94619aaaa5" x="412.791261" y="251.230617" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m94619aaaa5" x="469.7475" y="252.384948" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m94619aaaa5" x="526.703739" y="250.905879" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m94619aaaa5" x="583.659977" y="251.259676" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m94619aaaa5" x="640.616216" y="248.917376" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m94619aaaa5" x="697.572455" y="251.075235" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m94619aaaa5" x="754.528693" y="250.273424" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m94619aaaa5" x="811.484932" y="249.744288" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#paired-throughput-m94619aaaa5" x="868.441171" y="248.751429" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
     </g>
    </g>
    <g id="paired-throughput-patch_4">
-    <path d="M 49.69524 344.24976
+    <path d="M 49.69524 317.517165
 L 49.69524 54.171803
 " style="fill: none; stroke: #b9c7d7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="paired-throughput-patch_5">
-    <path d="M 49.69524 344.24976
-L 889.79976 344.24976
+    <path d="M 49.69524 317.517165
+L 889.79976 317.517165
 " style="fill: none; stroke: #b9c7d7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="paired-throughput-text_41">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="71.053829" y="273.952538" transform="rotate(-0 71.053829 273.952538)">717</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="71.053829" y="252.776729" transform="rotate(-0 71.053829 252.776729)">717</text>
    </g>
    <g id="paired-throughput-text_42">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="128.010068" y="259.729696" transform="rotate(-0 128.010068 259.729696)">886</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="128.010068" y="239.864617" transform="rotate(-0 128.010068 239.864617)">886</text>
    </g>
    <g id="paired-throughput-text_43">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="184.966307" y="236.921013" transform="rotate(-0 184.966307 236.921013)">1,157</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="184.966307" y="219.157904" transform="rotate(-0 184.966307 219.157904)">1,157</text>
    </g>
    <g id="paired-throughput-text_44">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="241.922545" y="213.759442" transform="rotate(-0 241.922545 213.759442)">1,432</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="241.922545" y="198.130824" transform="rotate(-0 241.922545 198.130824)">1,432</text>
    </g>
    <g id="paired-throughput-text_45">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="298.878784" y="191.83143" transform="rotate(-0 298.878784 191.83143)">1,693</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="298.878784" y="178.223623" transform="rotate(-0 298.878784 178.223623)">1,693</text>
    </g>
    <g id="paired-throughput-text_46">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="355.835023" y="171.322821" transform="rotate(-0 355.835023 171.322821)">1,936</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="355.835023" y="159.605018" transform="rotate(-0 355.835023 159.605018)">1,936</text>
    </g>
    <g id="paired-throughput-text_47">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="412.791261" y="159.91569" transform="rotate(-0 412.791261 159.91569)">2,072</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="412.791261" y="149.249129" transform="rotate(-0 412.791261 149.249129)">2,072</text>
    </g>
    <g id="paired-throughput-text_48">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="469.7475" y="156.672423" transform="rotate(-0 469.7475 156.672423)">2,111</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="469.7475" y="146.30475" transform="rotate(-0 469.7475 146.30475)">2,111</text>
    </g>
    <g id="paired-throughput-text_49">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="526.703739" y="145.403155" transform="rotate(-0 526.703739 145.403155)">2,245</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="526.703739" y="136.074019" transform="rotate(-0 526.703739 136.074019)">2,245</text>
    </g>
    <g id="paired-throughput-text_50">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="583.659977" y="128.810268" transform="rotate(-0 583.659977 128.810268)">2,442</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="583.659977" y="121.010276" transform="rotate(-0 583.659977 121.010276)">2,442</text>
    </g>
    <g id="paired-throughput-text_51">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="640.616216" y="115.417365" transform="rotate(-0 640.616216 115.417365)">2,601</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="640.616216" y="108.851617" transform="rotate(-0 640.616216 108.851617)">2,601</text>
    </g>
    <g id="paired-throughput-text_52">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="697.572455" y="100.622993" transform="rotate(-0 697.572455 100.622993)">2,777</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="697.572455" y="95.420644" transform="rotate(-0 697.572455 95.420644)">2,777</text>
    </g>
    <g id="paired-throughput-text_53">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="754.528693" y="84.473032" transform="rotate(-0 754.528693 84.473032)">2,969</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="754.528693" y="80.759008" transform="rotate(-0 754.528693 80.759008)">2,969</text>
    </g>
    <g id="paired-throughput-text_54">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="811.484932" y="69.319392" transform="rotate(-0 811.484932 69.319392)">3,149</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="811.484932" y="67.001876" transform="rotate(-0 811.484932 67.001876)">3,149</text>
    </g>
    <g id="paired-throughput-text_55">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="868.441171" y="55.113742" transform="rotate(-0 868.441171 55.113742)">3,318</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="868.441171" y="54.10537" transform="rotate(-0 868.441171 54.10537)">3,318</text>
    </g>
    <g id="paired-throughput-text_56">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="71.053829" y="295.331134" transform="rotate(-0 71.053829 295.331134)">795</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="71.053829" y="274.765532" transform="rotate(-0 71.053829 274.765532)">795</text>
    </g>
    <g id="paired-throughput-text_57">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="128.010068" y="287.279175" transform="rotate(-0 128.010068 287.279175)">891</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="128.010068" y="267.455613" transform="rotate(-0 128.010068 267.455613)">891</text>
    </g>
    <g id="paired-throughput-text_58">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="184.966307" y="284.005513" transform="rotate(-0 184.966307 284.005513)">930</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="184.966307" y="264.483641" transform="rotate(-0 184.966307 264.483641)">930</text>
    </g>
    <g id="paired-throughput-text_59">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="241.922545" y="292.151087" transform="rotate(-0 241.922545 292.151087)">833</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="241.922545" y="271.878547" transform="rotate(-0 241.922545 271.878547)">833</text>
    </g>
    <g id="paired-throughput-text_60">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="298.878784" y="289.082075" transform="rotate(-0 298.878784 289.082075)">870</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="298.878784" y="269.092364" transform="rotate(-0 298.878784 269.092364)">870</text>
    </g>
    <g id="paired-throughput-text_61">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="355.835023" y="293.124942" transform="rotate(-0 355.835023 293.124942)">822</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="355.835023" y="272.762654" transform="rotate(-0 355.835023 272.762654)">822</text>
    </g>
    <g id="paired-throughput-text_62">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="412.791261" y="289.234362" transform="rotate(-0 412.791261 289.234362)">868</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="412.791261" y="269.230617" transform="rotate(-0 412.791261 269.230617)">868</text>
    </g>
    <g id="paired-throughput-text_63">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="469.7475" y="290.50587" transform="rotate(-0 469.7475 290.50587)">853</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="469.7475" y="270.384948" transform="rotate(-0 469.7475 270.384948)">853</text>
    </g>
    <g id="paired-throughput-text_64">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="526.703739" y="288.876659" transform="rotate(-0 526.703739 288.876659)">872</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="526.703739" y="268.905879" transform="rotate(-0 526.703739 268.905879)">872</text>
    </g>
    <g id="paired-throughput-text_65">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="583.659977" y="289.266371" transform="rotate(-0 583.659977 289.266371)">867</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="583.659977" y="269.259676" transform="rotate(-0 583.659977 269.259676)">867</text>
    </g>
    <g id="paired-throughput-text_66">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="640.616216" y="286.6863" transform="rotate(-0 640.616216 286.6863)">898</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="640.616216" y="266.917376" transform="rotate(-0 640.616216 266.917376)">898</text>
    </g>
    <g id="paired-throughput-text_67">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="697.572455" y="289.063207" transform="rotate(-0 697.572455 289.063207)">870</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="697.572455" y="269.075235" transform="rotate(-0 697.572455 269.075235)">870</text>
    </g>
    <g id="paired-throughput-text_68">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="754.528693" y="288.180003" transform="rotate(-0 754.528693 288.180003)">880</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="754.528693" y="268.273424" transform="rotate(-0 754.528693 268.273424)">880</text>
    </g>
    <g id="paired-throughput-text_69">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="811.484932" y="287.597153" transform="rotate(-0 811.484932 287.597153)">887</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="811.484932" y="267.744288" transform="rotate(-0 811.484932 267.744288)">887</text>
    </g>
    <g id="paired-throughput-text_70">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="868.441171" y="286.503508" transform="rotate(-0 868.441171 286.503508)">900</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="868.441171" y="266.751429" transform="rotate(-0 868.441171 266.751429)">900</text>
    </g>
    <g id="paired-throughput-text_71">
-    <text style="font-weight: 700; font-size: 14px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="49.69524" y="14.171802" transform="rotate(-0 49.69524 14.171802)">同组输入 · 完整 42 层 MoE 组件吞吐</text>
+    <text style="font-weight: 700; font-size: 14px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="49.69524" y="14.171803" transform="rotate(-0 49.69524 14.171803)">同组输入 · 完整 42 层 MoE 组件吞吐</text>
    </g>
    <g id="paired-throughput-legend_1">
-    <g id="paired-throughput-patch_6">
-     <path d="M 55.99524 88.821802
-L 204.048052 88.821802
-Q 205.848052 88.821802 205.848052 87.021802
-L 205.848052 60.471802
-Q 205.848052 58.671802 204.048052 58.671802
-L 55.99524 58.671802
-Q 54.19524 58.671802 54.19524 60.471802
-L 54.19524 87.021802
-Q 54.19524 88.821802 55.99524 88.821802
-z
-" style="fill: #ffffff; opacity: 0.8; stroke: #e3eaf2; stroke-linejoin: miter"/>
-    </g>
     <g id="paired-throughput-line2d_47">
-     <path d="M 57.79524 66.28524
-L 66.79524 66.28524
-L 75.79524 66.28524
+     <path d="M 57.79524 377.032768
+L 66.79524 377.032768
+L 75.79524 377.032768
 " style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
      <g>
-      <use xlink:href="#paired-throughput-m98abdd7638" x="66.79524" y="66.28524" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+      <use xlink:href="#paired-throughput-m98abdd7638" x="66.79524" y="377.032768" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
      </g>
     </g>
     <g id="paired-throughput-text_72">
-     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="82.99524" y="69.43524" transform="rotate(-0 82.99524 69.43524)">H200 EP4 · train00 / step001</text>
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="82.99524" y="380.182768" transform="rotate(-0 82.99524 380.182768)">H200 EP4 · train00 / step001</text>
     </g>
     <g id="paired-throughput-line2d_48">
-     <path d="M 57.79524 80.01024
-L 66.79524 80.01024
-L 75.79524 80.01024
+     <path d="M 220.248053 377.032768
+L 229.248053 377.032768
+L 238.248053 377.032768
 " style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
      <g>
-      <use xlink:href="#paired-throughput-m94619aaaa5" x="66.79524" y="80.01024" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+      <use xlink:href="#paired-throughput-m94619aaaa5" x="229.248053" y="377.032768" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
      </g>
     </g>
     <g id="paired-throughput-text_73">
-     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="82.99524" y="83.16024" transform="rotate(-0 82.99524 83.16024)">Zeus EP4×TP4 · 同组输入</text>
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="245.448052" y="380.182768" transform="rotate(-0 245.448052 380.182768)">Zeus EP4×TP4 · 同组输入</text>
     </g>
    </g>
   </g>
  </g>
  <defs>
-  <clipPath id="paired-throughput-pe8c5ae8e79">
-   <rect x="49.69524" y="54.171803" width="840.10452" height="290.077958"/>
+  <clipPath id="paired-throughput-p4785d5ebff">
+   <rect x="49.69524" y="54.171803" width="840.10452" height="263.345363"/>
   </clipPath>
  </defs>
 </svg>

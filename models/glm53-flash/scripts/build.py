@@ -56,7 +56,8 @@ def chart(name, lines, ylabel, title, band=None, linear=False, labels=False):
     top.set_xticks(list(range(4, 33, 2)))
     top.set_xlabel('归一化每卡 batch = 总 batch / 4', labelpad=8, fontsize=10)
     top.spines['top'].set_visible(False)
-    ax.legend(loc='best', frameon=True, facecolor='white', edgecolor='#e3eaf2', fontsize=9)
+    ax.legend(loc='upper left', bbox_to_anchor=(0, -.18), ncol=min(len(lines) + int(linear) + int(bool(band)), 5),
+              frameon=False, fontsize=9)
     assets = ROOT / 'assets'
     assets.mkdir(exist_ok=True)
     fig.savefig(assets / f'{name}.png', dpi=180, metadata={'Software': 'GLM53 benchmark builder'})
@@ -73,7 +74,22 @@ def chart(name, lines, ylabel, title, band=None, linear=False, labels=False):
     svg = '\n'.join(line.rstrip() for line in svg.splitlines()) + '\n'
     (assets / f'{name}.svg').write_text(svg)
     plt.close(fig)
-    return '<div class="chart-scroll" tabindex="0">' + svg + '</div>'
+    series = [dict(key=k, label=label, x=list(xs), y=list(ys), color=COLORS[k])
+              for k, label, xs, ys in lines]
+    if linear:
+        series.append(dict(key='linear', label='线性参考 BS / 16', x=list(lines[0][2]),
+                           y=[x / 16 for x in lines[0][2]], color='#8492a6', dashed=True))
+    config = dict(title=title, unit=ylabel, series=series, band=band)
+    payload = json.dumps(config, ensure_ascii=False).replace('<', '\\u003c')
+    return (f'<figure class="interactive-chart" id="chart-{name}"><figcaption><div>'
+            f'<span class="chart-kicker">4 CARD · BATCH SIZE 16–128</span><h3>{html.escape(title)}</h3></div>'
+            f'<span class="chart-unit">{html.escape(ylabel)}</span></figcaption>'
+            '<div class="chart-controls"></div><div class="chart-frame">' + svg + '</div>'
+            '<div class="chart-readout"></div><div class="chart-footer">'
+            '<span>横轴：四卡总 batch size · 每卡 batch = 总 BS / 4</span>'
+            f'<span><a href="assets/{name}.png" download>完整图 PNG</a>'
+            f'<a href="assets/{name}.svg" download>完整图 SVG</a></span></div>'
+            f'<script type="application/json" class="chart-config">{payload}</script></figure>')
 
 
 def build():
@@ -163,7 +179,7 @@ def build():
         '历史局部数学预算：优化前后逐项一致，与原实现参考/Graph 门禁分开')
     status = f"{d['zeus']['cases']:,} / {d['zeus']['total']:,} case · {'完成' if d['zeus']['complete'] else '测量中'}"
     source = d['zeus']['source_commit'] or '待导入'
-    replacements = dict(STYLE=(ROOT / 'assets/style.css').read_text(), PAIRED_CHART=paired_chart,
+    replacements = dict(STYLE=(ROOT / 'assets/style.css').read_text() + '\n' + (ROOT / 'assets/charts.css').read_text(), PAIRED_CHART=paired_chart,
         FULL_CHART=full_chart, PAIRED_TABLE=paired_table, FULL_TABLE=full_table, KERNEL=kernel,
         STATUS=status, ANALYSIS=analysis, EXCEPTIONS=str(exceptions), SOURCE=source,
         SOURCE_SHORT=source[:12], DATA=json.dumps(d, ensure_ascii=False).replace('<', '\\u003c'),
@@ -173,10 +189,15 @@ def build():
     # Scope historical numerical claims before adding timing-only measurements.
     page = page.replace('Zeus 每个完成 case 均要求', 'Zeus 第一阶段的 10,080 个完整模式 case 均要求')
     page = page.replace('Model performance notebook · 2026-11-02', 'Model performance notebook · ' + d['updated'])
+    if d.get('zeus56', {}).get('complete'):
+        page = page.replace('Zeus · 第一阶段同组完整层扫描', 'Zeus · 完整 56 组时序矩阵')
+        page = page.replace('15 档 × 42 层 × 16 rank；随后扩展 56 组', '15 档 × 56 组 × 42 层 × 16 rank；数值资格独立记录')
+        replacements['STATUS'] = f"{d['zeus56']['cases']:,} / {d['zeus56']['cases']:,} case · 完成"
     for key, value in replacements.items():
         assert '{{' + key + '}}' in page, key
         page = page.replace('{{' + key + '}}', value)
     assert '{{' not in page
+    page = page.replace('</body>', '<script>' + (ROOT / 'assets/charts.js').read_text() + '</script></body>')
     (ROOT / 'index.html').write_text(page)
     print(status)
 
