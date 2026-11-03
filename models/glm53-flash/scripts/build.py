@@ -70,6 +70,7 @@ def chart(name, lines, ylabel, title, band=None, linear=False, labels=False):
         svg = svg.replace(f'id="{value}"', f'id="{name}-{value}"')
         svg = svg.replace(f'#{value})', f'#{name}-{value})').replace(f'"#{value}"', f'"#{name}-{value}"')
     svg = svg.replace('<svg ', f'<svg role="img" aria-label="{html.escape(title)}" ', 1)
+    svg = '\n'.join(line.rstrip() for line in svg.splitlines()) + '\n'
     (assets / f'{name}.svg').write_text(svg)
     plt.close(fig)
     return '<div class="chart-scroll" tabindex="0">' + svg + '</div>'

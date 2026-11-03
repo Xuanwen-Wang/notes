@@ -1,0 +1,814 @@
+<svg role="img" aria-label="Zeus · 各阶段增长与线性参考" xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="388.8pt" viewBox="0 0 892.8 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.9, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="kernel-growth-figure_1">
+  <g id="kernel-growth-patch_1">
+   <path d="M 0 388.8
+L 892.8 388.8
+L 892.8 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="kernel-growth-axes_1">
+   <g id="kernel-growth-patch_2">
+    <path d="M 31.93024 344.24976
+L 889.79976 344.24976
+L 889.79976 54.171803
+L 31.93024 54.171803
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="kernel-growth-axes_2">
+    <g id="kernel-growth-patch_3">
+     <path d="M 31.93024 54.171803
+L 889.79976 54.171803
+L 889.79976 54.171802
+L 31.93024 54.171802
+z
+" style="fill: #ffffff"/>
+    </g>
+    <g id="kernel-growth-matplotlib.axis_1">
+     <g id="kernel-growth-xtick_1">
+      <g id="kernel-growth-line2d_1">
+       <defs>
+        <path id="kernel-growth-mecb2e9e9a6" d="M 0 0
+L 0 -3.5
+" style="stroke: #49617c; stroke-width: 0.8"/>
+       </defs>
+       <g>
+        <use xlink:href="#kernel-growth-mecb2e9e9a6" x="53.740482" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-growth-text_1">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="53.740482" y="44.652115" transform="rotate(-0 53.740482 44.652115)">4</text>
+      </g>
+     </g>
+     <g id="kernel-growth-xtick_2">
+      <g id="kernel-growth-line2d_2">
+       <g>
+        <use xlink:href="#kernel-growth-mecb2e9e9a6" x="111.901127" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-growth-text_2">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="111.901127" y="44.652115" transform="rotate(-0 111.901127 44.652115)">6</text>
+      </g>
+     </g>
+     <g id="kernel-growth-xtick_3">
+      <g id="kernel-growth-line2d_3">
+       <g>
+        <use xlink:href="#kernel-growth-mecb2e9e9a6" x="170.061773" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-growth-text_3">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="170.061773" y="44.652115" transform="rotate(-0 170.061773 44.652115)">8</text>
+      </g>
+     </g>
+     <g id="kernel-growth-xtick_4">
+      <g id="kernel-growth-line2d_4">
+       <g>
+        <use xlink:href="#kernel-growth-mecb2e9e9a6" x="228.222418" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-growth-text_4">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="228.222418" y="44.652115" transform="rotate(-0 228.222418 44.652115)">10</text>
+      </g>
+     </g>
+     <g id="kernel-growth-xtick_5">
+      <g id="kernel-growth-line2d_5">
+       <g>
+        <use xlink:href="#kernel-growth-mecb2e9e9a6" x="286.383064" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-growth-text_5">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="286.383064" y="44.652115" transform="rotate(-0 286.383064 44.652115)">12</text>
+      </g>
+     </g>
+     <g id="kernel-growth-xtick_6">
+      <g id="kernel-growth-line2d_6">
+       <g>
+        <use xlink:href="#kernel-growth-mecb2e9e9a6" x="344.543709" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-growth-text_6">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="344.543709" y="44.652115" transform="rotate(-0 344.543709 44.652115)">14</text>
+      </g>
+     </g>
+     <g id="kernel-growth-xtick_7">
+      <g id="kernel-growth-line2d_7">
+       <g>
+        <use xlink:href="#kernel-growth-mecb2e9e9a6" x="402.704355" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-growth-text_7">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="402.704355" y="44.652115" transform="rotate(-0 402.704355 44.652115)">16</text>
+      </g>
+     </g>
+     <g id="kernel-growth-xtick_8">
+      <g id="kernel-growth-line2d_8">
+       <g>
+        <use xlink:href="#kernel-growth-mecb2e9e9a6" x="460.865" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-growth-text_8">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="460.865" y="44.652115" transform="rotate(-0 460.865 44.652115)">18</text>
+      </g>
+     </g>
+     <g id="kernel-growth-xtick_9">
+      <g id="kernel-growth-line2d_9">
+       <g>
+        <use xlink:href="#kernel-growth-mecb2e9e9a6" x="519.025645" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-growth-text_9">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="519.025645" y="44.652115" transform="rotate(-0 519.025645 44.652115)">20</text>
+      </g>
+     </g>
+     <g id="kernel-growth-xtick_10">
+      <g id="kernel-growth-line2d_10">
+       <g>
+        <use xlink:href="#kernel-growth-mecb2e9e9a6" x="577.186291" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-growth-text_10">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="577.186291" y="44.652115" transform="rotate(-0 577.186291 44.652115)">22</text>
+      </g>
+     </g>
+     <g id="kernel-growth-xtick_11">
+      <g id="kernel-growth-line2d_11">
+       <g>
+        <use xlink:href="#kernel-growth-mecb2e9e9a6" x="635.346936" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-growth-text_11">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="635.346936" y="44.652115" transform="rotate(-0 635.346936 44.652115)">24</text>
+      </g>
+     </g>
+     <g id="kernel-growth-xtick_12">
+      <g id="kernel-growth-line2d_12">
+       <g>
+        <use xlink:href="#kernel-growth-mecb2e9e9a6" x="693.507582" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-growth-text_12">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="693.507582" y="44.652115" transform="rotate(-0 693.507582 44.652115)">26</text>
+      </g>
+     </g>
+     <g id="kernel-growth-xtick_13">
+      <g id="kernel-growth-line2d_13">
+       <g>
+        <use xlink:href="#kernel-growth-mecb2e9e9a6" x="751.668227" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-growth-text_13">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="751.668227" y="44.652115" transform="rotate(-0 751.668227 44.652115)">28</text>
+      </g>
+     </g>
+     <g id="kernel-growth-xtick_14">
+      <g id="kernel-growth-line2d_14">
+       <g>
+        <use xlink:href="#kernel-growth-mecb2e9e9a6" x="809.828873" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-growth-text_14">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="809.828873" y="44.652115" transform="rotate(-0 809.828873 44.652115)">30</text>
+      </g>
+     </g>
+     <g id="kernel-growth-xtick_15">
+      <g id="kernel-growth-line2d_15">
+       <g>
+        <use xlink:href="#kernel-growth-mecb2e9e9a6" x="867.989518" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-growth-text_15">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="867.989518" y="44.652115" transform="rotate(-0 867.989518 44.652115)">32</text>
+      </g>
+     </g>
+     <g id="kernel-growth-text_16">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="460.865" y="27.896802" transform="rotate(-0 460.865 27.896802)">归一化每卡 batch = 总 batch / 4</text>
+     </g>
+    </g>
+    <g id="kernel-growth-matplotlib.axis_2"/>
+   </g>
+   <g id="kernel-growth-matplotlib.axis_3">
+    <g id="kernel-growth-xtick_16">
+     <g id="kernel-growth-line2d_16">
+      <defs>
+       <path id="kernel-growth-mc6863bb9b3" d="M 0 0
+L 0 3.5
+" style="stroke: #49617c; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#kernel-growth-mc6863bb9b3" x="53.740482" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-growth-text_17">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="53.740482" y="360.005073" transform="rotate(-0 53.740482 360.005073)">16</text>
+     </g>
+    </g>
+    <g id="kernel-growth-xtick_17">
+     <g id="kernel-growth-line2d_17">
+      <g>
+       <use xlink:href="#kernel-growth-mc6863bb9b3" x="111.901127" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-growth-text_18">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="111.901127" y="360.005073" transform="rotate(-0 111.901127 360.005073)">24</text>
+     </g>
+    </g>
+    <g id="kernel-growth-xtick_18">
+     <g id="kernel-growth-line2d_18">
+      <g>
+       <use xlink:href="#kernel-growth-mc6863bb9b3" x="170.061773" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-growth-text_19">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="170.061773" y="360.005073" transform="rotate(-0 170.061773 360.005073)">32</text>
+     </g>
+    </g>
+    <g id="kernel-growth-xtick_19">
+     <g id="kernel-growth-line2d_19">
+      <g>
+       <use xlink:href="#kernel-growth-mc6863bb9b3" x="228.222418" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-growth-text_20">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="228.222418" y="360.005073" transform="rotate(-0 228.222418 360.005073)">40</text>
+     </g>
+    </g>
+    <g id="kernel-growth-xtick_20">
+     <g id="kernel-growth-line2d_20">
+      <g>
+       <use xlink:href="#kernel-growth-mc6863bb9b3" x="286.383064" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-growth-text_21">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="286.383064" y="360.005073" transform="rotate(-0 286.383064 360.005073)">48</text>
+     </g>
+    </g>
+    <g id="kernel-growth-xtick_21">
+     <g id="kernel-growth-line2d_21">
+      <g>
+       <use xlink:href="#kernel-growth-mc6863bb9b3" x="344.543709" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-growth-text_22">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="344.543709" y="360.005073" transform="rotate(-0 344.543709 360.005073)">56</text>
+     </g>
+    </g>
+    <g id="kernel-growth-xtick_22">
+     <g id="kernel-growth-line2d_22">
+      <g>
+       <use xlink:href="#kernel-growth-mc6863bb9b3" x="402.704355" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-growth-text_23">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="402.704355" y="360.005073" transform="rotate(-0 402.704355 360.005073)">64</text>
+     </g>
+    </g>
+    <g id="kernel-growth-xtick_23">
+     <g id="kernel-growth-line2d_23">
+      <g>
+       <use xlink:href="#kernel-growth-mc6863bb9b3" x="460.865" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-growth-text_24">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="460.865" y="360.005073" transform="rotate(-0 460.865 360.005073)">72</text>
+     </g>
+    </g>
+    <g id="kernel-growth-xtick_24">
+     <g id="kernel-growth-line2d_24">
+      <g>
+       <use xlink:href="#kernel-growth-mc6863bb9b3" x="519.025645" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-growth-text_25">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="519.025645" y="360.005073" transform="rotate(-0 519.025645 360.005073)">80</text>
+     </g>
+    </g>
+    <g id="kernel-growth-xtick_25">
+     <g id="kernel-growth-line2d_25">
+      <g>
+       <use xlink:href="#kernel-growth-mc6863bb9b3" x="577.186291" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-growth-text_26">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="577.186291" y="360.005073" transform="rotate(-0 577.186291 360.005073)">88</text>
+     </g>
+    </g>
+    <g id="kernel-growth-xtick_26">
+     <g id="kernel-growth-line2d_26">
+      <g>
+       <use xlink:href="#kernel-growth-mc6863bb9b3" x="635.346936" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-growth-text_27">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="635.346936" y="360.005073" transform="rotate(-0 635.346936 360.005073)">96</text>
+     </g>
+    </g>
+    <g id="kernel-growth-xtick_27">
+     <g id="kernel-growth-line2d_27">
+      <g>
+       <use xlink:href="#kernel-growth-mc6863bb9b3" x="693.507582" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-growth-text_28">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="693.507582" y="360.005073" transform="rotate(-0 693.507582 360.005073)">104</text>
+     </g>
+    </g>
+    <g id="kernel-growth-xtick_28">
+     <g id="kernel-growth-line2d_28">
+      <g>
+       <use xlink:href="#kernel-growth-mc6863bb9b3" x="751.668227" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-growth-text_29">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="751.668227" y="360.005073" transform="rotate(-0 751.668227 360.005073)">112</text>
+     </g>
+    </g>
+    <g id="kernel-growth-xtick_29">
+     <g id="kernel-growth-line2d_29">
+      <g>
+       <use xlink:href="#kernel-growth-mc6863bb9b3" x="809.828873" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-growth-text_30">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="809.828873" y="360.005073" transform="rotate(-0 809.828873 360.005073)">120</text>
+     </g>
+    </g>
+    <g id="kernel-growth-xtick_30">
+     <g id="kernel-growth-line2d_30">
+      <g>
+       <use xlink:href="#kernel-growth-mc6863bb9b3" x="867.989518" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-growth-text_31">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="867.989518" y="360.005073" transform="rotate(-0 867.989518 360.005073)">128</text>
+     </g>
+    </g>
+    <g id="kernel-growth-text_32">
+     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="460.865" y="383.280073" transform="rotate(-0 460.865 383.280073)">总 batch size（4 card）</text>
+    </g>
+   </g>
+   <g id="kernel-growth-matplotlib.axis_4">
+    <g id="kernel-growth-ytick_1">
+     <g id="kernel-growth-line2d_31">
+      <path d="M 31.93024 344.24976
+L 889.79976 344.24976
+" clip-path="url(#kernel-growth-p3ab3e897c5)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="kernel-growth-line2d_32">
+      <defs>
+       <path id="kernel-growth-mb630600054" d="M 0 0
+L -3.5 0
+" style="stroke: #49617c; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#kernel-growth-mb630600054" x="31.93024" y="344.24976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-growth-text_33">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="24.93024" y="348.627416" transform="rotate(-0 24.93024 348.627416)">0</text>
+     </g>
+    </g>
+    <g id="kernel-growth-ytick_2">
+     <g id="kernel-growth-line2d_33">
+      <path d="M 31.93024 309.509885
+L 889.79976 309.509885
+" clip-path="url(#kernel-growth-p3ab3e897c5)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="kernel-growth-line2d_34">
+      <g>
+       <use xlink:href="#kernel-growth-mb630600054" x="31.93024" y="309.509885" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-growth-text_34">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="24.93024" y="313.887541" transform="rotate(-0 24.93024 313.887541)">1</text>
+     </g>
+    </g>
+    <g id="kernel-growth-ytick_3">
+     <g id="kernel-growth-line2d_35">
+      <path d="M 31.93024 274.77001
+L 889.79976 274.77001
+" clip-path="url(#kernel-growth-p3ab3e897c5)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="kernel-growth-line2d_36">
+      <g>
+       <use xlink:href="#kernel-growth-mb630600054" x="31.93024" y="274.77001" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-growth-text_35">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="24.93024" y="279.147666" transform="rotate(-0 24.93024 279.147666)">2</text>
+     </g>
+    </g>
+    <g id="kernel-growth-ytick_4">
+     <g id="kernel-growth-line2d_37">
+      <path d="M 31.93024 240.030135
+L 889.79976 240.030135
+" clip-path="url(#kernel-growth-p3ab3e897c5)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="kernel-growth-line2d_38">
+      <g>
+       <use xlink:href="#kernel-growth-mb630600054" x="31.93024" y="240.030135" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-growth-text_36">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="24.93024" y="244.407791" transform="rotate(-0 24.93024 244.407791)">3</text>
+     </g>
+    </g>
+    <g id="kernel-growth-ytick_5">
+     <g id="kernel-growth-line2d_39">
+      <path d="M 31.93024 205.290259
+L 889.79976 205.290259
+" clip-path="url(#kernel-growth-p3ab3e897c5)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="kernel-growth-line2d_40">
+      <g>
+       <use xlink:href="#kernel-growth-mb630600054" x="31.93024" y="205.290259" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-growth-text_37">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="24.93024" y="209.667916" transform="rotate(-0 24.93024 209.667916)">4</text>
+     </g>
+    </g>
+    <g id="kernel-growth-ytick_6">
+     <g id="kernel-growth-line2d_41">
+      <path d="M 31.93024 170.550384
+L 889.79976 170.550384
+" clip-path="url(#kernel-growth-p3ab3e897c5)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="kernel-growth-line2d_42">
+      <g>
+       <use xlink:href="#kernel-growth-mb630600054" x="31.93024" y="170.550384" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-growth-text_38">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="24.93024" y="174.928041" transform="rotate(-0 24.93024 174.928041)">5</text>
+     </g>
+    </g>
+    <g id="kernel-growth-ytick_7">
+     <g id="kernel-growth-line2d_43">
+      <path d="M 31.93024 135.810509
+L 889.79976 135.810509
+" clip-path="url(#kernel-growth-p3ab3e897c5)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="kernel-growth-line2d_44">
+      <g>
+       <use xlink:href="#kernel-growth-mb630600054" x="31.93024" y="135.810509" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-growth-text_39">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="24.93024" y="140.188165" transform="rotate(-0 24.93024 140.188165)">6</text>
+     </g>
+    </g>
+    <g id="kernel-growth-ytick_8">
+     <g id="kernel-growth-line2d_45">
+      <path d="M 31.93024 101.070634
+L 889.79976 101.070634
+" clip-path="url(#kernel-growth-p3ab3e897c5)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="kernel-growth-line2d_46">
+      <g>
+       <use xlink:href="#kernel-growth-mb630600054" x="31.93024" y="101.070634" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-growth-text_40">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="24.93024" y="105.44829" transform="rotate(-0 24.93024 105.44829)">7</text>
+     </g>
+    </g>
+    <g id="kernel-growth-ytick_9">
+     <g id="kernel-growth-line2d_47">
+      <path d="M 31.93024 66.330759
+L 889.79976 66.330759
+" clip-path="url(#kernel-growth-p3ab3e897c5)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="kernel-growth-line2d_48">
+      <g>
+       <use xlink:href="#kernel-growth-mb630600054" x="31.93024" y="66.330759" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-growth-text_41">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="24.93024" y="70.708415" transform="rotate(-0 24.93024 70.708415)">8</text>
+     </g>
+    </g>
+    <g id="kernel-growth-text_42">
+     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="12.250553" y="199.210781" transform="rotate(-90 12.250553 199.210781)">相对 BS16 的 cycles 倍数</text>
+    </g>
+   </g>
+   <g id="kernel-growth-line2d_49">
+    <path d="M 53.740482 309.509885
+L 111.901127 299.97353
+L 170.061773 282.390746
+L 228.222418 263.40568
+L 286.383064 260.730493
+L 344.543709 241.878977
+L 402.704355 222.585075
+L 460.865 222.459871
+L 519.025645 203.783641
+L 577.186291 184.489738
+L 635.346936 184.155862
+L 693.507582 165.654917
+L 751.668227 146.361014
+L 809.828873 145.647353
+L 867.989518 127.304999
+" clip-path="url(#kernel-growth-p3ab3e897c5)" style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
+    <defs>
+     <path id="kernel-growth-m94619aaaa5" d="M 0 2.5
+C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
+C 2.236584 1.29895 2.5 0.663008 2.5 0
+C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767
+C 1.29895 -2.236584 0.663008 -2.5 0 -2.5
+C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767
+C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0
+C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767
+C -1.29895 2.236584 -0.663008 2.5 0 2.5
+z
+" style="stroke: #2364d2; stroke-width: 2"/>
+    </defs>
+    <g clip-path="url(#kernel-growth-p3ab3e897c5)">
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="53.740482" y="309.509885" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="111.901127" y="299.97353" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="170.061773" y="282.390746" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="228.222418" y="263.40568" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="286.383064" y="260.730493" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="344.543709" y="241.878977" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="402.704355" y="222.585075" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="460.865" y="222.459871" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="519.025645" y="203.783641" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="577.186291" y="184.489738" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="635.346936" y="184.155862" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="693.507582" y="165.654917" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="751.668227" y="146.361014" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="809.828873" y="145.647353" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="867.989518" y="127.304999" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+    </g>
+   </g>
+   <g id="kernel-growth-line2d_50">
+    <path d="M 53.740482 309.509885
+L 111.901127 298.521438
+L 170.061773 287.308654
+L 228.222418 257.280806
+L 286.383064 242.392934
+L 344.543709 215.382211
+L 402.704355 209.97606
+L 460.865 184.785898
+L 519.025645 172.927674
+L 577.186291 158.250633
+L 635.346936 145.305442
+L 693.507582 120.840286
+L 751.668227 106.831993
+L 809.828873 92.855534
+L 867.989518 80.058064
+" clip-path="url(#kernel-growth-p3ab3e897c5)" style="fill: none; stroke: #d85b43; stroke-width: 2.5; stroke-linecap: square"/>
+    <defs>
+     <path id="kernel-growth-mc06e842d91" d="M 0 2.5
+C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
+C 2.236584 1.29895 2.5 0.663008 2.5 0
+C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767
+C 1.29895 -2.236584 0.663008 -2.5 0 -2.5
+C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767
+C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0
+C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767
+C -1.29895 2.236584 -0.663008 2.5 0 2.5
+z
+" style="stroke: #d85b43; stroke-width: 2"/>
+    </defs>
+    <g clip-path="url(#kernel-growth-p3ab3e897c5)">
+     <use xlink:href="#kernel-growth-mc06e842d91" x="53.740482" y="309.509885" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="111.901127" y="298.521438" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="170.061773" y="287.308654" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="228.222418" y="257.280806" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="286.383064" y="242.392934" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="344.543709" y="215.382211" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="402.704355" y="209.97606" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="460.865" y="184.785898" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="519.025645" y="172.927674" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="577.186291" y="158.250633" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="635.346936" y="145.305442" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="693.507582" y="120.840286" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="751.668227" y="106.831993" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="809.828873" y="92.855534" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="867.989518" y="80.058064" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+    </g>
+   </g>
+   <g id="kernel-growth-line2d_51">
+    <path d="M 53.740482 309.509885
+L 111.901127 296.983896
+L 170.061773 285.162816
+L 228.222418 272.404318
+L 286.383064 259.645819
+L 344.543709 246.88732
+L 402.704355 234.128821
+L 460.865 221.370323
+L 519.025645 208.611824
+L 577.186291 195.853325
+L 635.346936 183.094827
+L 693.507582 170.336328
+L 751.668227 157.577829
+L 809.828873 144.81933
+L 867.989518 132.060832
+" clip-path="url(#kernel-growth-p3ab3e897c5)" style="fill: none; stroke: #7856ad; stroke-width: 2.5; stroke-linecap: square"/>
+    <defs>
+     <path id="kernel-growth-m4a924cdd6e" d="M 0 2.5
+C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
+C 2.236584 1.29895 2.5 0.663008 2.5 0
+C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767
+C 1.29895 -2.236584 0.663008 -2.5 0 -2.5
+C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767
+C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0
+C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767
+C -1.29895 2.236584 -0.663008 2.5 0 2.5
+z
+" style="stroke: #7856ad; stroke-width: 2"/>
+    </defs>
+    <g clip-path="url(#kernel-growth-p3ab3e897c5)">
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="53.740482" y="309.509885" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="111.901127" y="296.983896" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="170.061773" y="285.162816" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="228.222418" y="272.404318" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="286.383064" y="259.645819" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="344.543709" y="246.88732" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="402.704355" y="234.128821" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="460.865" y="221.370323" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="519.025645" y="208.611824" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="577.186291" y="195.853325" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="635.346936" y="183.094827" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="693.507582" y="170.336328" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="751.668227" y="157.577829" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="809.828873" y="144.81933" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="867.989518" y="132.060832" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+    </g>
+   </g>
+   <g id="kernel-growth-line2d_52">
+    <path d="M 53.740482 309.509885
+L 111.901127 295.005878
+L 170.061773 280.744282
+L 228.222418 266.622975
+L 286.383064 253.359594
+L 344.543709 236.54444
+L 402.704355 225.095516
+L 460.865 207.394818
+L 519.025645 197.128573
+L 577.186291 177.696273
+L 635.346936 169.091229
+L 693.507582 148.193474
+L 751.668227 140.39676
+L 809.828873 118.148272
+L 867.989518 112.162718
+" clip-path="url(#kernel-growth-p3ab3e897c5)" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
+    <defs>
+     <path id="kernel-growth-m98abdd7638" d="M 0 2.5
+C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
+C 2.236584 1.29895 2.5 0.663008 2.5 0
+C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767
+C 1.29895 -2.236584 0.663008 -2.5 0 -2.5
+C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767
+C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0
+C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767
+C -1.29895 2.236584 -0.663008 2.5 0 2.5
+z
+" style="stroke: #0d8d7b; stroke-width: 2"/>
+    </defs>
+    <g clip-path="url(#kernel-growth-p3ab3e897c5)">
+     <use xlink:href="#kernel-growth-m98abdd7638" x="53.740482" y="309.509885" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="111.901127" y="295.005878" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="170.061773" y="280.744282" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="228.222418" y="266.622975" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="286.383064" y="253.359594" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="344.543709" y="236.54444" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="402.704355" y="225.095516" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="460.865" y="207.394818" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="519.025645" y="197.128573" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="577.186291" y="177.696273" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="635.346936" y="169.091229" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="693.507582" y="148.193474" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="751.668227" y="140.39676" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="809.828873" y="118.148272" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="867.989518" y="112.162718" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+    </g>
+   </g>
+   <g id="kernel-growth-line2d_53">
+    <path d="M 53.740482 309.509885
+L 111.901127 292.139947
+L 170.061773 274.77001
+L 228.222418 257.400072
+L 286.383064 240.030135
+L 344.543709 222.660197
+L 402.704355 205.290259
+L 460.865 187.920322
+L 519.025645 170.550384
+L 577.186291 153.180447
+L 635.346936 135.810509
+L 693.507582 118.440572
+L 751.668227 101.070634
+L 809.828873 83.700696
+L 867.989518 66.330759
+" clip-path="url(#kernel-growth-p3ab3e897c5)" style="fill: none; stroke-dasharray: 5.55,2.4; stroke-dashoffset: 0; stroke: #8695a7; stroke-width: 1.5"/>
+   </g>
+   <g id="kernel-growth-patch_4">
+    <path d="M 31.93024 344.24976
+L 31.93024 54.171803
+" style="fill: none; stroke: #b9c7d7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="kernel-growth-patch_5">
+    <path d="M 31.93024 344.24976
+L 889.79976 344.24976
+" style="fill: none; stroke: #b9c7d7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="kernel-growth-text_43">
+    <text style="font-weight: 700; font-size: 14px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="31.93024" y="14.171802" transform="rotate(-0 31.93024 14.171802)">Zeus · 各阶段增长与线性参考</text>
+   </g>
+   <g id="kernel-growth-legend_1">
+    <g id="kernel-growth-patch_6">
+     <path d="M 38.23024 129.996803
+L 133.884771 129.996803
+Q 135.684771 129.996803 135.684771 128.196802
+L 135.684771 60.471803
+Q 135.684771 58.671803 133.884771 58.671803
+L 38.23024 58.671803
+Q 36.43024 58.671803 36.43024 60.471803
+L 36.43024 128.196802
+Q 36.43024 129.996803 38.23024 129.996803
+z
+" style="fill: #ffffff; opacity: 0.8; stroke: #e3eaf2; stroke-linejoin: miter"/>
+    </g>
+    <g id="kernel-growth-line2d_54">
+     <path d="M 40.03024 66.28524
+L 49.03024 66.28524
+L 58.03024 66.28524
+" style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
+     <g>
+      <use xlink:href="#kernel-growth-m94619aaaa5" x="49.03024" y="66.28524" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     </g>
+    </g>
+    <g id="kernel-growth-text_44">
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="65.23024" y="69.43524" transform="rotate(-0 65.23024 69.43524)">Router</text>
+    </g>
+    <g id="kernel-growth-line2d_55">
+     <path d="M 40.03024 80.01024
+L 49.03024 80.01024
+L 58.03024 80.01024
+" style="fill: none; stroke: #d85b43; stroke-width: 2.5; stroke-linecap: square"/>
+     <g>
+      <use xlink:href="#kernel-growth-mc06e842d91" x="49.03024" y="80.01024" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     </g>
+    </g>
+    <g id="kernel-growth-text_45">
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="65.23024" y="83.16024" transform="rotate(-0 65.23024 83.16024)">Routed</text>
+    </g>
+    <g id="kernel-growth-line2d_56">
+     <path d="M 40.03024 93.73524
+L 49.03024 93.73524
+L 58.03024 93.73524
+" style="fill: none; stroke: #7856ad; stroke-width: 2.5; stroke-linecap: square"/>
+     <g>
+      <use xlink:href="#kernel-growth-m4a924cdd6e" x="49.03024" y="93.73524" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     </g>
+    </g>
+    <g id="kernel-growth-text_46">
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="65.23024" y="96.88524" transform="rotate(-0 65.23024 96.88524)">Shared</text>
+    </g>
+    <g id="kernel-growth-line2d_57">
+     <path d="M 40.03024 107.46024
+L 49.03024 107.46024
+L 58.03024 107.46024
+" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
+     <g>
+      <use xlink:href="#kernel-growth-m98abdd7638" x="49.03024" y="107.46024" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     </g>
+    </g>
+    <g id="kernel-growth-text_47">
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="65.23024" y="110.61024" transform="rotate(-0 65.23024 110.61024)">Reduce</text>
+    </g>
+    <g id="kernel-growth-line2d_58">
+     <path d="M 40.03024 121.18524
+L 49.03024 121.18524
+L 58.03024 121.18524
+" style="fill: none; stroke-dasharray: 5.55,2.4; stroke-dashoffset: 0; stroke: #8695a7; stroke-width: 1.5"/>
+    </g>
+    <g id="kernel-growth-text_48">
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="65.23024" y="124.33524" transform="rotate(-0 65.23024 124.33524)">线性增长 BS / 16</text>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="kernel-growth-p3ab3e897c5">
+   <rect x="31.93024" y="54.171803" width="857.86952" height="290.077958"/>
+  </clipPath>
+ </defs>
+</svg>
