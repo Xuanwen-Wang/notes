@@ -2,6 +2,14 @@
   "updated": "2026-11-03",
   "articles": [
     {
+      "file": "2026-11-03-zccl-allreduce-pblink.html",
+      "category": "compiler",
+      "title": "TritonShared - ZCCL AllReduce 全链路：PyTorch、Triton 与 PBLink",
+      "description": "沿着实际源码，从通信组与 PS1 互联，到双核 Triton、16 路分块、PBLink FIFO 和三层同步，逐步理解 AllReduce。",
+      "date": "2026-11-03",
+      "tags": ["ZCCL", "AllReduce", "PBLink", "Triton", "集合通信"]
+    },
+    {
       "file": "models/glm53-flash/index.html",
       "category": "compiler",
       "title": "TritonShared - GLM-5.3-Flash：AF分离最大MOE FFN吞吐评估",

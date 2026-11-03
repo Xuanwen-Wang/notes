@@ -1,0 +1,691 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<meta name="description" content="沿着 ZCCL AllReduce 的源码，理解 PyTorch 通信组、PS1 互联、双核 Triton、PBLink 内存映射、FIFO 流控与三层同步。">
+<title>TritonShared - ZCCL AllReduce 全链路：PyTorch、Triton 与 PBLink</title>
+<style>
+:root{color-scheme:light;--background:#f5f7fa;--foreground:#1d2a35;--paper:#fff;--card:#fff;--card-foreground:#1d2a35;--primary:#263b50;--primary-foreground:#fff;--secondary:#eef2f7;--secondary-foreground:#31465b;--muted:#edf1f5;--muted-foreground:#5c6d7f;--accent:#e5edf9;--accent-foreground:#1c4a85;--border:#dbe3eb;--input:#dbe3eb;--ring:#2b68ae;--popover:#fff;--popover-foreground:#1d2a35;--blue:#256ab1;--orange:#a86116;--green:#277651;--red:#a34242;--purple:#7551a4;--yellow:#9c7b19;--viz-series-1:#2879c4;--viz-series-2:#bd7b38;--viz-series-3:#397d63;--font-size-base:14px;--code:#eef3f8;--shadow:0 12px 40px #1a345b09}
+:root[data-theme="dark"]{color-scheme:dark;--background:#111923;--foreground:#e0e7ef;--paper:#17222f;--card:#1b2a3b;--card-foreground:#e0e7ef;--primary:#d5e1ed;--primary-foreground:#142332;--secondary:#223244;--secondary-foreground:#d3dfec;--muted:#213143;--muted-foreground:#a7b8ca;--accent:#233d58;--accent-foreground:#b9dcff;--border:#344659;--input:#344659;--ring:#88b8ea;--popover:#223244;--popover-foreground:#e0e7ef;--blue:#90c1f4;--orange:#dfad76;--green:#8dc3a8;--red:#ecacac;--purple:#c4adea;--yellow:#e6ce8e;--viz-series-1:#7fb7ef;--viz-series-2:#d5a16d;--viz-series-3:#80b89d;--code:#1b2b3c;--shadow:none}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;background:var(--background);color:var(--foreground);font:16px/1.85 system-ui,-apple-system,"Segoe UI","Noto Sans CJK SC","Microsoft YaHei",sans-serif}a{color:var(--blue);text-decoration-thickness:1px;text-underline-offset:3px}a:hover{text-decoration:underline}button,select{font:inherit}button{cursor:pointer}button:disabled{cursor:default;opacity:.4}button:focus-visible,a:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--ring);outline-offset:3px}code{font: .88em/1.7 ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere}p{margin:0 0 1.1em}p:last-child{margin-bottom:0}strong{font-weight:650}h1,h2,h3,h4{line-height:1.35;letter-spacing:-.025em}h2{font-size:28px;margin:0 0 24px}h3{font-size:20px;margin:29px 0 13px}h4{font-size:16px;margin:24px 0 9px}ul,ol{padding-left:1.4em}li{margin:7px 0}sub,sup{line-height:0}hr{border:0;border-top:1px solid var(--border);margin:30px 0}.topbar{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--border)}.topbar-inner{max-width:1240px;margin:auto;padding:13px 30px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{color:var(--foreground);text-decoration:none;font:600 12px/1.5 ui-monospace,monospace;letter-spacing:.09em}.top-actions{display:flex;gap:8px}.top-actions button,.btn{border:1px solid var(--border);border-radius:7px;padding:6px 12px;background:var(--paper);color:var(--foreground)}.btn-primary,.btn[aria-pressed="true"]{background:var(--primary);color:var(--primary-foreground);border-color:var(--primary)}.top-actions button{font-size:12px}.hero{max-width:1180px;margin:auto;padding:65px 30px 48px}.eyebrow{font:600 12px/1.6 ui-monospace,monospace;letter-spacing:.12em;color:var(--muted-foreground);text-transform:uppercase}.hero h1{font-size:clamp(32px,4.8vw,54px);max-width:900px;margin:18px 0 23px;line-height:1.23}.hero h1 span{color:var(--blue)}.lead{max-width:840px;font-size:19px;color:var(--muted-foreground)}.metadata{display:flex;flex-wrap:wrap;gap:9px 20px;margin-top:24px;color:var(--muted-foreground);font-size:12px}.layout{max-width:1240px;margin:auto;display:grid;grid-template-columns:224px minmax(0,1fr);gap:36px;padding:0 30px 90px}.toc{position:sticky;top:86px;align-self:start;font-size:12px;max-height:calc(100vh - 110px);overflow:auto}.toc summary{font-weight:650;list-style:none;margin-bottom:14px}.toc a{display:block;color:var(--muted-foreground);text-decoration:none;padding:4px 0}.toc a:hover,.toc a.active{color:var(--blue)}.toc .toc-group{font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin:15px 0 4px;color:var(--muted-foreground)}main{min-width:0}.chapter{background:var(--paper);border:1px solid var(--border);border-radius:12px;padding:34px 38px;margin:0 0 24px;box-shadow:var(--shadow);scroll-margin-top:88px}.chapter-kicker{font:600 11px/1.6 ui-monospace,monospace;color:var(--muted-foreground);letter-spacing:.14em;margin-bottom:9px}.note,.contract{padding:16px 18px;background:var(--accent);color:var(--accent-foreground);border-left:3px solid var(--blue);margin:22px 0}.contract{background:var(--secondary);color:var(--secondary-foreground);border-left-color:var(--muted-foreground)}.small{font-size:13px;color:var(--muted-foreground)}.ref{font:600 11px/1.5 ui-monospace,monospace;white-space:nowrap;margin-left:5px;text-decoration:none;vertical-align:super}.table-wrap{max-width:100%;overflow:auto;margin:22px 0}table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.7}th,td{padding:11px 13px;vertical-align:top;text-align:left;border-bottom:1px solid var(--border)}th{font-weight:600;background:var(--secondary)}caption{caption-side:bottom;text-align:left;font-size:12px;color:var(--muted-foreground);padding-top:10px}.math{padding:20px 16px;text-align:center;background:var(--code);border-radius:8px;margin:22px 0;font-size:19px}.split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.split>div{min-width:0}.inset{background:var(--secondary);padding:18px 20px;border-radius:8px}.diagram-label{font:600 12px/1.5 ui-monospace,monospace;color:var(--muted-foreground);margin-bottom:14px}.callchain{list-style:none;padding:0;margin:24px 0}.callchain li{position:relative;padding:0 0 20px 24px;margin:0;border-left:2px solid var(--border)}.callchain li::before{position:absolute;left:-5px;top:9px;content:"";width:8px;height:8px;background:var(--blue);border-radius:50%}.callchain li:last-child{padding-bottom:0;border-left-color:transparent}.callchain code{font-size:14px;font-weight:600}.callchain p{margin:4px 0 0;font-size:14px;color:var(--muted-foreground)}pre{padding:18px 20px;margin:22px 0;background:var(--code);border:1px solid var(--border);border-radius:8px;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2;line-height:1.65}pre code{font-size:12px;overflow-wrap:anywhere}.hljs{background:transparent;color:inherit}.kw{color:var(--purple)}.fn{color:var(--blue)}.comment{color:var(--muted-foreground)}.memory-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:20px 0}.memory{border:1px solid var(--border);border-radius:8px;padding:20px;min-width:0}.memory h4{margin:0 0 14px}.memory p{font-size:14px}.memory .counter{font:600 17px/1.6 ui-monospace,monospace;margin-bottom:10px;color:var(--blue)}.connection{display:flex;align-items:center;justify-content:center;padding:12px;font:600 14px/1.7 ui-monospace,monospace;color:var(--blue);text-align:center}.source-card{border-top:1px solid var(--border);padding:15px 0;scroll-margin-top:90px}.source-card summary{cursor:pointer;font-size:14px;font-weight:600}.source-card .source-content{margin-top:14px;font-size:14px}.source-card code{font-size:12px}.source-card pre{margin:12px 0}.source-card .file{font:12px/1.7 ui-monospace,monospace;color:var(--muted-foreground);display:block;margin-top:7px}.source-card:target{background:var(--accent)}.evidence{font-size:11px;padding:2px 7px;border-radius:4px;background:var(--secondary);color:var(--secondary-foreground);white-space:nowrap}.question{margin:14px 0;padding:13px 16px;border:1px solid var(--border);border-radius:8px}.question summary{cursor:pointer;font-weight:600}.question p{margin:13px 0 0;font-size:14px}.source-dialog{border:1px solid var(--border);border-radius:12px;padding:26px;background:var(--paper);color:var(--foreground);width:min(850px,92vw);max-height:85vh;overflow:auto}.source-dialog::backdrop{background:#07121eb0}.dialog-head{display:flex;align-items:start;justify-content:space-between;gap:18px}.dialog-head h3{margin:0}.dialog-content{margin-top:18px}.dialog-content .file{display:block;font:12px/1.7 ui-monospace,monospace;color:var(--muted-foreground)}.footer{font-size:12px;color:var(--muted-foreground);text-align:center;margin-top:34px}.nav.nav-pills{display:flex;flex-wrap:wrap;gap:5px}.nav-link{background:transparent;color:var(--muted-foreground);border:0;border-radius:7px;padding:7px 11px;font-size:13px}.nav-link.active{background:var(--primary);color:var(--primary-foreground)}.form-label{font-size:13px}.form-select{color:var(--foreground);background:var(--paper);border:1px solid var(--border);border-radius:6px;padding:4px 12px}.text-small{font-size:12px}.text-muted{color:var(--muted-foreground)}.tabular-nums{font-variant-numeric:tabular-nums}.sr-only{position:absolute;clip-path:inset(50%);width:1px;height:1px;overflow:hidden;white-space:nowrap}#zccl-allreduce-flow{--font-size-base:14px;font-size:14px;line-height:1.65;margin-top:24px}#zccl-allreduce-flow h3{margin:0;font-size:19px}.phase-controls{display:flex;flex-wrap:wrap;gap:7px;margin-top:17px}.matrix td{font-family:ui-monospace,monospace;font-variant-numeric:tabular-nums}.matrix .owned{color:var(--blue);background:var(--accent);font-weight:650}.figure{margin:24px 0}.figure figcaption{font-size:12px;color:var(--muted-foreground);margin-top:10px}.board-ring{display:grid;grid-template-columns:1fr 40px 1fr;gap:10px;align-items:center;text-align:center;margin:22px 0}.board-ring .board{padding:16px 10px;background:var(--secondary);border-radius:7px;font-size:13px}.board-ring .board strong{display:block}.board-ring .edge{font-size:12px;color:var(--blue)}.board-ring .vertical{padding:0;font-size:12px}.board-ring .spacer{height:1px}.pipeline-bands{display:grid;grid-template-columns:100px 1fr;gap:9px 13px;margin:24px 0;font-size:13px}.pipeline-bands .lane{color:var(--muted-foreground);padding-top:9px}.pipeline-bands .band{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.pipeline-bands .step{padding:8px 10px;background:var(--secondary);border-radius:5px}.pipeline-bands .step.wait{background:var(--accent);color:var(--accent-foreground)}[hidden]{display:none!important}.print-only{display:none}
+.top-actions button{white-space:nowrap}.toc summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer}.toc summary::after{content:"展开";font-size:11px;font-weight:400;color:var(--muted-foreground)}.toc details[open] summary::after{content:"收起"}
+@media(max-width:1040px){.layout{grid-template-columns:180px minmax(0,1fr);gap:22px;padding-left:20px;padding-right:20px}.chapter{padding:28px}.hero{padding-left:24px;padding-right:24px}}
+@media(max-width:790px){.layout{display:block;padding:0 16px 50px}.toc{position:static;max-height:none;background:var(--paper);border:1px solid var(--border);border-radius:9px;margin-bottom:24px;padding:15px 19px}.toc details:not([open]) summary{margin:0}.toc .toc-list{columns:2;column-gap:20px}.toc a{break-inside:avoid}.hero{padding:40px 20px 30px}.hero h1{font-size:35px}.lead{font-size:17px}.chapter{padding:27px 22px}.topbar-inner{padding:12px 18px}.split{grid-template-columns:1fr}.metadata{gap:7px 14px}.chapter h2{font-size:25px}}
+@media(max-width:430px){body{font-size:15px}.chapter{padding:23px 17px}.hero h1{font-size:31px}.toc .toc-list{columns:1}.memory-grid{grid-template-columns:1fr}.topbar-inner{gap:8px}.top-actions button{padding:5px 8px}.brand{font-size:10px}.table-wrap{margin-left:-4px;margin-right:-4px}th,td{padding:9px 8px}.pipeline-bands{grid-template-columns:1fr}.pipeline-bands .lane{font-weight:600}.math{font-size:16px}.source-dialog{padding:19px}#zccl-allreduce-flow .nav-link{padding:6px 8px;font-size:12px}.chapter pre{padding:14px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-duration:0s!important;transition:none!important}}
+@page{size:A4;margin:16mm 14mm}
+@media print{:root,:root[data-theme="dark"]{color-scheme:light;--background:#fff;--foreground:#17212b;--paper:#fff;--card:#fff;--muted-foreground:#485766;--secondary:#f0f3f5;--code:#f2f4f6;--border:#cfd6dd;--accent:#edf3f8;--blue:#245484;--primary:#263b50;--primary-foreground:#fff;--viz-series-1:#2879c4;--viz-series-2:#a76a2c}body{font-size:10.5pt;line-height:1.7;background:white}.topbar,.toc,.top-actions,.phase-controls,.source-dialog,.nav.nav-pills,#zccl-allreduce-flow .control-row{display:none!important}.hero{padding:0 0 18px}.hero h1{font-size:26pt}.lead{font-size:12pt}.layout{display:block;padding:0;max-width:none}.chapter{border:0;box-shadow:none;border-radius:0;padding:15px 0;margin-bottom:12px}.chapter h2{font-size:18pt;break-after:avoid}.chapter h3{font-size:13pt;break-after:avoid}.note,.contract,.memory,.figure,table{break-inside:avoid}p{orphans:3;widows:3}.table-wrap{overflow:visible}table{font-size:9pt}th,td{padding:6px 8px}pre{font-size:8.5pt;break-inside:avoid}.metadata{font-size:8pt}.source-card .source-content{font-size:9pt}.source-card{break-inside:avoid}.source-card code{font-size:8pt}.print-only{display:block}.small{font-size:9pt}.ref{color:inherit}a{color:inherit}.chapter a[href^="#"]{text-decoration:none}#zccl-allreduce-flow{break-inside:avoid}.footer{font-size:8pt}}
+</style>
+</head>
+<body>
+<nav class="topbar" aria-label="文章工具"><div class="topbar-inner"><a class="brand" href="./">NOTES / TRITONSHARED</a><div class="top-actions"><button type="button" id="theme-toggle" aria-label="切换深浅主题">切换主题</button><button type="button" id="print-page">打印 / PDF</button></div></div></nav>
+<header class="hero">
+  <div class="eyebrow">Source-guided systems notebook · 2026-11-03</div>
+  <h1>AllReduce 的一生<br><span>从 PyTorch 到 PBLink</span></h1>
+  <p class="lead">跟着一个分块，从本地张量进入通信组，经过双核 Triton、远端内存映射和 FIFO 握手，最终变成每个 rank 都拿到的完整结果。先理解数据属于谁，再理解它沿着什么线、按什么顺序移动。</p>
+  <div class="metadata"><span>ZCCL <code>09bf6d75dcf7</code></span><span>torch_zeus <code>70bf7bbd034c</code></span><span>主线：FP32 / BF16 · SUM</span><span>源码分析 + 静态符号推演</span></div>
+</header>
+<div class="layout">
+<aside class="toc"><details open id="toc-details"><summary>阅读路线</summary><div class="toc-list">
+<div class="toc-group">先建立直觉</div><a href="#meaning">01 · AllReduce 到底算什么</a><a href="#vocabulary">02 · rank、device、core、board</a><a href="#fabric">03 · 当前 PS1 怎样互联</a><a href="#interactive">04 · 逐步看数据流</a>
+<div class="toc-group">沿着调用向下追</div><a href="#framework">05 · 从 PyTorch 进入 ZCCL</a><a href="#init">06 · 建组与 IPC 映射</a><a href="#dispatch">07 · 专用算法还是 Ring</a><a href="#compile">08 · Triton kernel 在何时编译</a>
+<div class="toc-group">算法怎样执行</div><a href="#board4">09 · 4 路专用 AllReduce</a><a href="#world16">10 · 16 路：追踪 C0</a><a href="#ring">11 · Ring 回退路径</a><a href="#fifo">12 · PBLink 与 FIFO 搬运</a><a href="#dma">13 · 深入一次 load / store</a>
+<div class="toc-group">同步与边界</div><a href="#sync">14 · 三层同步各管什么</a><a href="#steady">15 · 一次调用的时间顺序</a><a href="#performance">16 · 延迟、带宽和瓶颈</a><a href="#scope">17 · 支持范围与证据边界</a><a href="#quiz">18 · 用问题检查理解</a><a href="#sources">附录 · 源码阅读地图</a>
+</div></details></aside>
+<main>
+<section class="chapter" id="meaning"><div class="chapter-kicker">01 / DATA OWNERSHIP</div><h2>所有设备算出的部分结果，怎样合成同一份答案？</h2>
+<p>假设两个 rank 分别持有同样形状的张量：rank 0 是 <code>[1, 2]</code>，rank 1 是 <code>[10, 20]</code>。对它们做求和型 AllReduce，最后两个 rank 都得到 <code>[11, 22]</code>。参与者原来各有一份输入，结束时各有一份完整的归约结果。</p>
+<div class="math">每个 rank 的输出：Y = X<sub>0</sub> + X<sub>1</sub> + … + X<sub>P−1</sub></div>
+<p><strong>AllReduce 同时包含“合并”和“让所有参与者拿到结果”。</strong>在张量并行里，不同设备算出了一个矩阵乘的不同部分，可能需要把部分输出相加；在数据并行训练里，参与者可能需要汇总梯度。通信库负责协调这些张量的移动、归约和完成顺序。</p>
+<p>ZCCL 的全称是 <em>Zeus Collective Communications Library</em>。它面向 Zeus NPU，API 形状借鉴 NCCL。实现主要分为 C++ 的通信器、拓扑和调度，以及设备上的搬运、归约 kernel。本文从默认的 <code>SUM</code>、<code>FP32/BF16</code> 路径往下追。<a class="ref" data-ref href="#s1">S1</a></p>
+<div class="table-wrap"><table><thead><tr><th>操作</th><th>结束后的结果放在哪里</th><th>与 AllReduce 的关系</th></tr></thead><tbody><tr><td>Reduce</td><td>某一个指定参与者得到归约结果</td><td>只完成归约，未让所有参与者拿到结果</td></tr><tr><td>ReduceScatter</td><td>结果按块分散，每个 rank 拿一块</td><td>先把每块结果算完整，再把不同块交给不同 owner</td></tr><tr><td>AllGather</td><td>各 rank 的块被收集成完整张量，每个 rank 都有一份</td><td>把 ReduceScatter 的分散结果拼回去</td></tr><tr><td>AllReduce</td><td>每个 rank 都拿到完整归约张量</td><td>本版的两类算法都可以按 ReduceScatter → AllGather 理解</td></tr></tbody><caption>此表解释操作语义。它不表示本版 ZCCL 已经原生实现表中所有 API。</caption></table></div>
+<p>把一整个张量送给某张卡、由它包办求和再发回，在语义上可以完成 AllReduce。但这个中心会承担大量流量和串行工作。ZCCL 采用<strong>分块、分散归约和协同分发</strong>，让设备与链路一起工作。下面先看它们能够通过哪些链路合作。</p>
+</section>
+
+<section class="chapter" id="vocabulary"><div class="chapter-kicker">02 / NAMES BEFORE WIRES</div><h2>rank、device、core、board 是四个不同的概念</h2>
+<div class="table-wrap"><table><thead><tr><th>名称</th><th>在本文中的含义</th><th>需要记住的区别</th></tr></thead><tbody><tr><td><strong>rank</strong></td><td>一个通信组中的逻辑编号，范围为 0 到 P−1</td><td>换一个子通信组，编号可能重排</td></tr><tr><td><strong>device</strong></td><td>运行时可选择、可绑定的 Zeus 设备</td><td>设备 ID 与通信组 rank 之间有显式映射</td></tr><tr><td><strong>core</strong></td><td>同一 device 内执行 kernel 的计算核心</td><td>PS1 仿真配置中，每个 device 有 2 个 core</td></tr><tr><td><strong>board</strong></td><td>当前拓扑模型中连续 4 个 device 形成的分组</td><td>这里是源码中的 board 分组；真实板卡、封装、die 数量需要板级资料确认</td></tr></tbody></table></div>
+<p>当前框架的主线是一进程绑定一个 device，进程组里的 rank 通过通信器关联到实际 device。<strong>一个 device 有两个 core，并不会使通信组的 world size 自动翻倍。</strong>16 个 rank 各绑定一个双核 device，仍然是 world size 16，设备内部则一共有 32 个 core。<a class="ref" data-ref href="#s2">S2</a><a class="ref" data-ref href="#s5">S5</a></p>
+<p>下面的 16 路示例采用最直观的映射：rank <code>r</code> 绑定 device <code>D<sub>r</sub></code>。实际子组不必如此。例如，一个子组的 rank 0 可以绑定 D4。ZCCL 初始化时会收集这张映射表，再把物理邻接关系投影进通信组。<a class="ref" data-ref href="#s4">S4</a></p>
+<div class="note">通信组回答“谁参与这次运算”，物理拓扑回答“谁能直接访问谁”。两张表要对齐，才能得到可执行的通信计划。</div>
+</section>
+
+<section class="chapter" id="fabric"><div class="chapter-kicker">03 / THE PS1 FABRIC</div><h2>板内全互联，板间沿环连接</h2>
+<p>在当前 16-device PS1 模型中，D0–D3、D4–D7、D8–D11、D12–D15 分成四个 board。每个 device 有四个逻辑 PBLink 端口：三个连接本 board 的其他三个 device，一个连接相邻 board 上的特定 device。<a class="ref" data-ref href="#s5">S5</a></p>
+<figure class="figure"><div class="board-ring" role="img" aria-label="四个 board 构成环：board 0 到 board 1 为 D2-D4、D3-D5；board 1 到 board 2 为 D6-D8、D7-D9；board 2 到 board 3 为 D10-D12、D11-D13；board 3 到 board 0 为 D14-D0、D15-D1。每个 board 内四个 device 全互联。"><div class="board"><strong>Board 0</strong>D0 · D1 · D2 · D3</div><div class="edge">⇄<br>2 条</div><div class="board"><strong>Board 1</strong>D4 · D5 · D6 · D7</div><div class="edge vertical">⇅ 2 条</div><div class="spacer"></div><div class="edge vertical">⇅ 2 条</div><div class="board"><strong>Board 3</strong>D12 · D13 · D14 · D15</div><div class="edge">⇄<br>2 条</div><div class="board"><strong>Board 2</strong>D8 · D9 · D10 · D11</div></div><figcaption>这是 board 层面的逻辑连接示意。每条“2 条”表示两个 device 对之间的连接，不代表已核实的线缆数量、PHY lane 数或物理封装。</figcaption></figure>
+<p>具体到 D0，它的直连邻居是 <strong>D1、D2、D3、D14</strong>。D4 虽然也是同一台系统里的设备，但本版 transport 不为 D0→D4 建立直接连接。某个分块可以经由 <strong>D0→D2→D4</strong> 这样的路径流转，其中 D2 上的 kernel 负责接收和转发。</p>
+<p>这解释了一个容易混淆的地方：<strong>图上存在多跳路径，不等于一个 peer 指针能够自动访问任意远端 device。</strong>ZCCL 当前只为直连 PBLink 邻居建立连接；更远的流转由通信算法安排中间设备完成。拓扑代价计算也限定在 PBLink 图上，没有借 CPU、PCIe 或 NIC 节点偷偷补一条 tensor 数据路径。<a class="ref" data-ref href="#s12">S12</a><a class="ref" data-ref href="#s5">S5</a></p>
+<p>源码允许用 <code>ZCCL_TOPO_FILE</code> 提供 XML 拓扑。没有合适的 XML 时，会按 board/local 规则构造软件拓扑。本次把 ZCCL 的邻居集合与 torch_zeus 的 PS1 JSON 逐设备对照，16 个 device 的邻居集合一致；这个核对没有把每个端口编号或实板引脚当作已验证事实。</p>
+<div class="contract"><strong>证据口径：</strong>本节讲的是 ZCCL 和仿真运行时共同采用的软件互联模型。真实板级连线、封装方式、链路单双向速率和竞争行为，不从这些分组名称直接推断。</div>
+</section>
+
+<section class="chapter" id="interactive"><div class="chapter-kicker">04 / FOLLOW ONE CHUNK</div><h2>先亲眼看一遍：线、分块和握手</h2>
+<p>“PS1 互联”显示每个 device 的直接邻居；“16 路 AllReduce · C0”沿源码中的调度阶段追踪第 0 块；“FIFO 握手”展开一条 A→B 连接怎样发布数据与归还槽位。“份”表示已经汇合了多少个不同 rank 的贡献。</p>
+<div id="zccl-allreduce-flow">
+  <style>
+    #zccl-allreduce-flow { display: grid; gap: calc(var(--font-size-base) * .8); color: var(--foreground); }
+    #zccl-allreduce-flow .control-row { display: flex; align-items: center; gap: calc(var(--font-size-base) * .65); flex-wrap: wrap; }
+    #zccl-allreduce-flow .select-label { display: flex; align-items: center; gap: calc(var(--font-size-base) * .5); }
+    #zccl-allreduce-flow .graph-host { width: 100%; min-width: 0; }
+    #zccl-allreduce-flow .flow-graph { display: block; width: 100%; overflow: visible; }
+    #zccl-allreduce-flow .flow-graph text { fill: var(--foreground); font-family: inherit; }
+    #zccl-allreduce-flow .legend { display: flex; align-items: center; gap: calc(var(--font-size-base) * 1.2); flex-wrap: wrap; }
+    #zccl-allreduce-flow .legend-item { display: inline-flex; align-items: center; gap: calc(var(--font-size-base) * .4); }
+    #zccl-allreduce-flow .legend-line { width: calc(var(--font-size-base) * 1.4); height: 2px; background: var(--muted-foreground); }
+    #zccl-allreduce-flow .legend-line.external { background: var(--viz-series-2); }
+    #zccl-allreduce-flow .detail { min-height: calc(var(--font-size-base) * 1.4); }
+    #zccl-allreduce-flow [hidden] { display: none; }
+  </style>
+  <h3>PBLink 与 AllReduce 数据流</h3>
+  <div class="nav nav-pills" role="tablist" aria-label="数据流视角">
+    <button class="nav-link active" id="zccl-topology-tab" role="tab" aria-controls="zccl-topology-panel" aria-selected="true" type="button" data-panel="topology">PS1 互联</button>
+    <button class="nav-link" id="zccl-reduce-tab" role="tab" aria-controls="zccl-reduce-panel" aria-selected="false" type="button" data-panel="reduce">16 路 AllReduce · C0</button>
+    <button class="nav-link" id="zccl-fifo-tab" role="tab" aria-controls="zccl-fifo-panel" aria-selected="false" type="button" data-panel="fifo">FIFO 握手</button>
+  </div>
+  <div id="zccl-topology-panel" role="tabpanel" aria-labelledby="zccl-topology-tab">
+    <div class="control-row">
+      <label class="select-label form-label">查看邻居 <select class="form-select" id="zccl-device" aria-label="查看设备的 PBLink 邻居"></select></label>
+      <span class="text-small text-muted">源码 PS1 模型 · 每 device 2 core</span>
+    </div>
+  </div>
+  <div id="zccl-reduce-panel" role="tabpanel" aria-labelledby="zccl-reduce-tab" hidden>
+    <div class="control-row">
+      <button type="button" class="btn" id="zccl-ar-prev">上一步</button>
+      <button type="button" class="btn btn-primary" id="zccl-ar-next">下一步</button>
+      <span id="zccl-ar-stage" aria-live="polite"></span>
+    </div>
+  </div>
+  <div id="zccl-fifo-panel" role="tabpanel" aria-labelledby="zccl-fifo-tab" hidden>
+    <div class="control-row">
+      <button type="button" class="btn" id="zccl-fifo-prev">上一步</button>
+      <button type="button" class="btn btn-primary" id="zccl-fifo-next">下一步</button>
+      <span id="zccl-fifo-stage" aria-live="polite"></span>
+    </div>
+  </div>
+  <div class="legend" id="zccl-legend">
+    <span class="legend-item text-small"><span class="legend-line"></span>板内 PBLink</span>
+    <span class="legend-item text-small"><span class="legend-line external"></span>板间 PBLink</span>
+    <span class="text-small text-muted" id="zccl-legend-extra">逻辑连线示意</span>
+  </div>
+  <div class="graph-host" id="zccl-graph-host"></div>
+  <div id="zccl-detail" class="detail text-small" aria-live="polite"></div>
+  <script>
+    (() => {
+      const root = document.getElementById('zccl-allreduce-flow');
+      const host = root.querySelector('#zccl-graph-host');
+      const detail = root.querySelector('#zccl-detail');
+      const deviceSelect = root.querySelector('#zccl-device');
+      const namespace = 'http://www.w3.org/2000/svg';
+      const panels = ['topology', 'reduce', 'fifo'];
+      const state = { panel: 'topology', device: 0, stage: -1, fifo: 0 };
+      // Source: sends of chunk 0, grouped by alg_step in the n16 PS1 program.
+      const stages = [
+        [[8, 11, 1], [9, 11, 1], [10, 11, 1]],
+        [[5, 4, 1], [6, 4, 1], [7, 4, 1], [11, 13, 4]],
+        [[4, 2, 4], [12, 14, 1], [13, 14, 5], [15, 14, 1]],
+        [[1, 0, 1], [2, 0, 5], [3, 0, 1], [14, 0, 8]],
+        [[0, 1, 16], [0, 2, 16], [0, 3, 16], [0, 14, 16]],
+        [[2, 4, 16], [14, 12, 16], [14, 13, 16], [14, 15, 16]],
+        [[4, 5, 16], [4, 6, 16], [4, 7, 16], [13, 11, 16]],
+        [[11, 8, 16], [11, 9, 16], [11, 10, 16]]
+      ];
+      const crossEdges = [[0, 14], [1, 15], [2, 4], [3, 5], [6, 8], [7, 9], [10, 12], [11, 13]];
+      const edges = [];
+      for (let board = 0; board < 4; board++) {
+        for (let a = 0; a < 4; a++) {
+          for (let b = a + 1; b < 4; b++) edges.push([board * 4 + a, board * 4 + b, false]);
+        }
+      }
+      crossEdges.forEach(([a, b]) => edges.push([a, b, true]));
+      for (let i = 0; i < 16; i++) {
+        const option = document.createElement('option');
+        option.value = String(i);
+        option.textContent = `D${i}`;
+        deviceSelect.append(option);
+      }
+      function element(tag, attrs = {}, parent) {
+        const node = document.createElementNS(namespace, tag);
+        Object.entries(attrs).forEach(([key, value]) => node.setAttribute(key, String(value)));
+        if (parent) parent.append(node);
+        return node;
+      }
+      function label(svg, x, y, value, attrs = {}) {
+        const node = element('text', { x, y, 'text-anchor': 'middle', ...attrs }, svg);
+        node.textContent = value;
+        return node;
+      }
+      function makeSvg(width, height, description) {
+        const svg = element('svg', { viewBox: `0 0 ${width} ${height}`, width, height, class: 'flow-graph', role: 'img', 'aria-label': description });
+        const title = element('title', {}, svg);
+        title.textContent = description;
+        const defs = element('defs', {}, svg);
+        const marker = element('marker', { id: 'zccl-flow-arrow', viewBox: '0 0 10 10', refX: 9, refY: 5, markerWidth: 6, markerHeight: 6, orient: 'auto-start-reverse' }, defs);
+        element('path', { d: 'M 0 0 L 10 5 L 0 10 z', fill: 'var(--viz-series-1)' }, marker);
+        return svg;
+      }
+      function arrow(svg, a, b, color = 'var(--viz-series-1)', offset = 22) {
+        const pair = [a.id, b.id].sort((x, y) => x - y).join(':');
+        if (pair === '0:14' || pair === '1:15') {
+          const side = pair === '0:14' ? -1 : 1;
+          const lane = pair === '0:14' ? 10 : (a.lane ?? b.lane);
+          const pathD = `M ${a.x + side * offset} ${a.y} C ${lane} ${a.y}, ${lane} ${b.y}, ${b.x + side * offset} ${b.y}`;
+          element('path', { d: pathD, fill: 'none', stroke: color, 'stroke-width': 2.5, 'marker-end': 'url(#zccl-flow-arrow)' }, svg);
+          return { pathD };
+        }
+        const dx = b.x - a.x, dy = b.y - a.y;
+        const norm = Math.hypot(dx, dy) || 1;
+        const x1 = a.x + dx / norm * offset, y1 = a.y + dy / norm * offset;
+        const x2 = b.x - dx / norm * offset, y2 = b.y - dy / norm * offset;
+        element('line', { x1, y1, x2, y2, stroke: color, 'stroke-width': 2.5, 'marker-end': 'url(#zccl-flow-arrow)' }, svg);
+        return { x1, y1, x2, y2 };
+      }
+      function animateMove(svg, path) {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        if (path.pathD) {
+          const dot = element('circle', { r: 4, fill: 'var(--viz-series-1)', 'pointer-events': 'none' }, svg);
+          const motion = element('animateMotion', { path: path.pathD, dur: '.48s', fill: 'freeze' }, dot);
+          motion.addEventListener('endEvent', () => dot.remove(), { once: true });
+          return;
+        }
+        const dot = element('circle', { cx: path.x1, cy: path.y1, r: 4, fill: 'var(--viz-series-1)', 'pointer-events': 'none' }, svg);
+        if (typeof dot.animate !== 'function') { dot.remove(); return; }
+        const motion = dot.animate([
+          { transform: 'translate(0px, 0px)' },
+          { transform: `translate(${path.x2 - path.x1}px, ${path.y2 - path.y1}px)` }
+        ], { duration: 480, easing: 'ease-in-out', fill: 'forwards' });
+        motion.finished.then(() => dot.remove()).catch(() => dot.remove());
+      }
+      function boardGraph(width, moving) {
+        const narrow = width < 500;
+        const gap = narrow ? 22 : 38;
+        const boardWidth = (width - gap - 8) / 2;
+        const boardHeight = narrow ? 154 : 196;
+        const height = boardHeight * 2 + gap + 8;
+        const svg = makeSvg(width, height, state.panel === 'reduce' ? '16 个设备的 C0 分块归约与分发，箭头为当前 alg_step 中的实际发送' : 'PS1 软件拓扑：4 个 board，每 board 4 个 device；每 device 3 个板内邻居、1 个板间邻居');
+        const positions = [];
+        const grid = [[0, 0], [1, 0], [1, 1], [0, 1]];
+        grid.forEach(([column, row], board) => {
+          const x = 4 + column * (boardWidth + gap), y = 4 + row * (boardHeight + gap);
+          element('rect', { x, y, width: boardWidth, height: boardHeight, rx: 6, fill: 'none', stroke: 'var(--border)', 'stroke-width': 1 }, svg);
+          label(svg, x + boardWidth / 2, y + 22, `Board ${board}`, { class: 'text-small' });
+          for (let local = 0; local < 4; local++) {
+            positions[board * 4 + local] = { id: board * 4 + local, lane: 4 + boardWidth + gap / 2, x: x + boardWidth * (local % 2 ? .74 : .26), y: y + boardHeight * (local < 2 ? .39 : .78) };
+          }
+        });
+        const neighbors = new Set(edges.flatMap(([a, b]) => a === state.device ? [b] : b === state.device ? [a] : []));
+        edges.forEach(([a, b, external]) => {
+          const selected = state.panel === 'topology' && (a === state.device || b === state.device);
+          const pair = [a, b].sort((x, y) => x - y).join(':');
+          if (pair === '0:14' || pair === '1:15') {
+            const side = pair === '0:14' ? -1 : 1;
+            const lane = pair === '0:14' ? 10 : positions[a].lane;
+            element('path', {
+              d: `M ${positions[a].x} ${positions[a].y} C ${lane} ${positions[a].y}, ${lane} ${positions[b].y}, ${positions[b].x} ${positions[b].y}`,
+              fill: 'none', stroke: selected ? 'var(--viz-series-1)' : 'var(--viz-series-2)',
+              'stroke-width': selected ? 2.5 : 1, opacity: selected ? 1 : state.panel === 'reduce' ? .2 : .65
+            }, svg);
+            return;
+          }
+          element('line', {
+            x1: positions[a].x, y1: positions[a].y, x2: positions[b].x, y2: positions[b].y,
+            stroke: selected ? 'var(--viz-series-1)' : external ? 'var(--viz-series-2)' : 'var(--muted-foreground)',
+            'stroke-width': selected ? 2.5 : 1,
+            opacity: selected ? 1 : state.panel === 'reduce' ? .2 : external ? .65 : .32
+          }, svg);
+        });
+        const counts = Array(16).fill(1);
+        for (let i = 0; i <= state.stage; i++) stages[i].forEach(([, to, contributions]) => {
+          counts[to] = i < 4 ? counts[to] + contributions : contributions;
+        });
+        const moves = state.panel === 'reduce' && state.stage >= 0 ? stages[state.stage] : [];
+        const paths = moves.map(([from, to]) => arrow(svg, positions[from], positions[to], 'var(--viz-series-1)', narrow ? 22 : 25));
+        positions.forEach((point, id) => {
+          const selected = state.panel === 'topology' && id === state.device;
+          const related = state.panel === 'topology' ? neighbors.has(id) : counts[id] > 1;
+          element('circle', { cx: point.x, cy: point.y, r: narrow ? 19 : 23, fill: selected ? 'var(--primary)' : 'var(--card)', stroke: 'var(--border)', 'stroke-width': 1 }, svg);
+          if (related) element('circle', { cx: point.x, cy: point.y, r: narrow ? 19 : 23, fill: 'var(--viz-series-1)', opacity: state.panel === 'reduce' ? .08 + counts[id] / 16 * .3 : .17 }, svg);
+          label(svg, point.x, point.y + (state.panel === 'reduce' ? -2 : 5), `D${id}`, selected ? { style: 'fill:var(--primary-foreground)' } : {});
+          if (state.panel === 'reduce') label(svg, point.x, point.y + 12, `${counts[id]}份`, { class: 'text-small' });
+        });
+        if (moving) paths.forEach(path => animateMove(svg, path));
+        if (state.panel === 'topology') {
+          const ns = Array.from(neighbors).sort((a, b) => a - b);
+          detail.textContent = `D${state.device} 直连：${ns.map(n => `D${n}`).join('、')}；board 分组是软件拓扑模型。`;
+        } else {
+          detail.textContent = state.stage < 0 ? 'C0 初始分布在全部 16 个设备；“份”表示已汇合的不同 rank 贡献数。' : `C0 · ${moves.map(([from, to, n]) => `D${from} → D${to}（${n}份）`).join('；')}`;
+        }
+        return svg;
+      }
+      function fifoGraph(width, moving) {
+        const gap = width < 500 ? 20 : 100;
+        const boxWidth = (width - gap - 8) / 2;
+        const right = boxWidth + gap + 4;
+        const svg = makeSvg(width, 284, '一个 A 到 B 的 FIFO：A 写 B 的 payload 和 tail，B 消费后写回 A 的 head；示例消息是 11，B 的归约累加值从 21 变为 32');
+        const steps = ['空 FIFO', '写对端 payload', '发布 tail', '消费并归约', '回写 head'];
+        const head = state.fifo === 4 ? 1 : 0;
+        const tail = state.fifo >= 2 ? 1 : 0;
+        const boxAttrs = { y: 8, width: boxWidth, height: 264, rx: 6, fill: 'none', stroke: 'var(--border)', 'stroke-width': 1 };
+        element('rect', { x: 4, ...boxAttrs }, svg);
+        element('rect', { x: right, ...boxAttrs }, svg);
+        const centerA = 4 + boxWidth / 2, centerB = right + boxWidth / 2;
+        label(svg, centerA, 34, 'A · 发送方');
+        label(svg, centerB, 34, 'B · 接收方');
+        label(svg, centerA, 62, '本地 SendMem', { class: 'text-small' });
+        label(svg, centerB, 62, '本地 RecvMem', { class: 'text-small' });
+        label(svg, centerA, 92, `head = ${head}`);
+        label(svg, centerB, 92, `tail = ${tail}`);
+        label(svg, centerA, 146, '输入 = 11');
+        label(svg, centerB, 142, `payload[0] = ${state.fifo ? '11' : '空'}`);
+        const slotWidth = (boxWidth - 24) / 8;
+        for (let i = 0; i < 8; i++) {
+          element('rect', { x: right + 12 + i * slotWidth, y: 158, width: Math.max(2, slotWidth - 3), height: 19, fill: i === 0 && state.fifo > 0 && state.fifo < 4 ? 'var(--viz-series-1)' : 'var(--muted)', opacity: i === 0 && state.fifo > 0 && state.fifo < 4 ? .8 : 1 }, svg);
+        }
+        label(svg, centerB, 199, '8 槽 × 64 KiB', { class: 'text-small' });
+        label(svg, centerB, 231, `累加结果 = ${state.fifo >= 3 ? 32 : 21}`);
+        label(svg, centerA, 231, state.fifo === 4 ? '槽位可复用' : '等待消费确认', { class: 'text-small' });
+        let activePath;
+        if (state.fifo === 1) activePath = arrow(svg, { x: centerA + boxWidth * .25, y: 141 }, { x: centerB - boxWidth * .25, y: 141 }, undefined, 0);
+        if (state.fifo === 2) activePath = arrow(svg, { x: centerA + boxWidth * .25, y: 92 }, { x: centerB - boxWidth * .25, y: 92 }, undefined, 0);
+        if (state.fifo === 4) activePath = arrow(svg, { x: centerB - boxWidth * .25, y: 92 }, { x: centerA + boxWidth * .25, y: 92 }, undefined, 0);
+        if (moving && activePath) animateMove(svg, activePath);
+        const details = [
+          'head = tail：当前无已发布的消息。',
+          'A 通过 PBLink 映射写入 B 的 payload；tail 尚未推进。',
+          'A 把 B 的 tail 更新为 1；B 轮询到消息可用。',
+          'B 读取本地 payload，完成 21 + 11；head 尚未回写。',
+          'B 通过 PBLink 映射把 A 的 head 更新为 1；该槽位可以再次使用。'
+        ];
+        root.querySelector('#zccl-fifo-stage').textContent = `${state.fifo}/4 · ${steps[state.fifo]}`;
+        detail.textContent = details[state.fifo];
+        return svg;
+      }
+      function restore(saved) {
+        const m = saved?.modelContent || saved || {};
+        const p = saved?.privateContent || {};
+        if (panels.includes(m.panel)) state.panel = m.panel;
+        if (Number.isInteger(m.device) && m.device >= 0 && m.device < 16) state.device = m.device;
+        if (Number.isInteger(m.stage) && m.stage >= -1 && m.stage < 8) state.stage = m.stage;
+        if (Number.isInteger(p.fifo) && p.fifo >= 0 && p.fifo <= 4) state.fifo = p.fifo;
+      }
+      function persist() {
+        if (typeof window.openai?.setWidgetState !== 'function') return;
+        Promise.resolve(window.openai.setWidgetState({ modelContent: { panel: state.panel, device: state.device, stage: state.stage }, privateContent: { fifo: state.fifo } })).catch(() => {});
+      }
+      function render(moving = false) {
+        root.querySelectorAll('[data-panel]').forEach(tab => {
+          const active = tab.dataset.panel === state.panel;
+          tab.setAttribute('aria-selected', String(active));
+          tab.classList.toggle('active', active);
+          root.querySelector(`#${tab.getAttribute('aria-controls')}`).hidden = !active;
+        });
+        deviceSelect.value = String(state.device);
+        root.querySelector('#zccl-legend').hidden = state.panel === 'fifo';
+        root.querySelector('#zccl-legend-extra').textContent = state.panel === 'reduce' ? 'alg_step 为逻辑阶段；节点标贡献数' : '逻辑连线示意';
+        root.querySelector('#zccl-ar-stage').textContent = state.stage < 0 ? '初始 · 各 1 份 C0' : `${state.stage < 4 ? 'ReduceScatter' : 'AllGather'} · alg_step ${state.stage}`;
+        root.querySelector('#zccl-ar-prev').disabled = state.stage < 0;
+        root.querySelector('#zccl-ar-next').disabled = state.stage === 7;
+        root.querySelector('#zccl-fifo-prev').disabled = state.fifo === 0;
+        root.querySelector('#zccl-fifo-next').disabled = state.fifo === 4;
+        const width = Math.max(240, Math.floor(host.getBoundingClientRect().width));
+        host.replaceChildren(state.panel === 'fifo' ? fifoGraph(width, moving) : boardGraph(width, moving));
+      }
+      root.querySelectorAll('[data-panel]').forEach(tab => tab.addEventListener('click', () => { state.panel = tab.dataset.panel; render(); persist(); }));
+      deviceSelect.addEventListener('change', () => { state.device = Number(deviceSelect.value); render(); persist(); });
+      root.querySelector('#zccl-ar-prev').addEventListener('click', () => { state.stage = Math.max(-1, state.stage - 1); render(true); persist(); });
+      root.querySelector('#zccl-ar-next').addEventListener('click', () => { state.stage = Math.min(7, state.stage + 1); render(true); persist(); });
+      root.querySelector('#zccl-fifo-prev').addEventListener('click', () => { state.fifo = Math.max(0, state.fifo - 1); render(true); persist(); });
+      root.querySelector('#zccl-fifo-next').addEventListener('click', () => { state.fifo = Math.min(4, state.fifo + 1); render(true); persist(); });
+      window.addEventListener('openai:set_globals', event => { if (event.detail?.globals?.widgetState) { restore(event.detail.globals.widgetState); render(); } });
+      restore(window.openai?.widgetState);
+      new ResizeObserver(() => render()).observe(host);
+      render();
+    })();
+  </script>
+</div>
+
+<p class="small" style="margin-top:20px">16 路箭头来自 <code>Allreduce.n16-PS1-rs4-ag4.ze.json</code> 中 C0 的实际 send 操作。alg_step 是算法计划的逻辑阶段，不是硬件时钟、全局 barrier 或性能 trace。各设备在运行时仍靠数据依赖和握手推进。</p>
+<noscript><p class="note">交互图需要 JavaScript。后面的分阶段表、源码片段和协议说明仍可直接阅读。</p></noscript>
+</section>
+
+<section class="chapter" id="framework"><div class="chapter-kicker">05 / FROM PYTORCH TO THE C API</div><h2>一次 dist.all_reduce，实际经过哪些函数？</h2>
+<p>应用通常从类似下面的调用开始。参与同一通信组的进程应提交匹配的张量形状、dtype、操作和调用顺序；否则对端可能永远等不到对应消息。</p>
+<pre><code class="language-python"><span class="comment"># Each process owns a Zeus tensor x in the same process group.</span>
+dist.all_reduce(x, op=dist.ReduceOp.SUM, group=group)
+
+<span class="comment"># Asynchronous submission returns a Work handle.</span>
+work = dist.all_reduce(x, op=dist.ReduceOp.SUM,
+                       group=group, async_op=True)
+work.wait()</code></pre>
+<ol class="callchain"><li><code>ProcessGroupZCCL::allreduce()</code><p>检查单设备张量，把输入、输出、元素数、dtype、reduce op 和 stream 传入公共 collective 路径。</p></li><li><code>ProcessGroupZCCL::collective()</code><p>准备或复用通信器，选择执行 stream，保留必要的张量生命周期，提交实际操作并记录完成 event。</p></li><li><code>zcclAllReduce(sendbuff, recvbuff, count, dtype, op, comm, stream)</code><p>C API 把参数包装为 zcclInfo，交给统一调度入口。</p></li><li><code>zcclEnqueueCheck() → setupCollKernel()</code><p>检查参数与 stream，选择专用算法或 Ring，把工作项放入通信器队列。</p></li><li><code>launchKernel() → launchCustom() / launchRingElem()</code><p>整理 kernel 参数，选择已经编译好的 zbin，通过 zeusLaunchKernel 下发。</p></li><li><code>Triton kernel → load / store / reduce / poll</code><p>设备核访问本地和映射的对端缓冲区，完成 PBLink 搬运、归约与计数器握手。</p></li></ol>
+<p>PyTorch 的这个 AllReduce 使用 <strong>原地结果</strong>：<code>collective(tensors, tensors, …)</code>，因此最终答案覆盖原 tensor。ZCCL 的 C API 本身同时接收输入与输出指针，能够表示更一般的调用。<a class="ref" data-ref href="#s2">S2</a><a class="ref" data-ref href="#s3">S3</a><a class="ref" data-ref href="#s6">S6</a></p>
+<p>到这里 CPU 做的是检查、选择、排队和提交。张量里的每个数字如何跨设备移动，要继续看通信器建立出的 peer 地址，以及设备 kernel 的读写。</p>
+</section>
+
+<section class="chapter" id="init"><div class="chapter-kicker">06 / CONTROL PLANE AND MEMORY MAPPINGS</div><h2>第一次调用之前，先让参与者认识彼此</h2>
+<p>通信器可以理解为一个已经准备好的通信小组：谁是成员、每个成员绑定哪个设备、能访问哪些邻居、缓冲区在哪里、该使用什么算法。第一次调用需要准备这些状态；后续调用通常复用缓存的通信器。<a class="ref" data-ref href="#s4">S4</a></p>
+<ol><li><strong>生成和分发唯一 ID。</strong>通信组根 rank 生成 ZCCL unique ID，通过 PyTorch 的 Store 交给其他 rank。这是在帮助进程进入同一个小组。</li><li><strong>绑定 device，建立 bootstrap 通道。</strong><code>zcclCommInitRank</code> 绑定调用线程当前选择的设备。ZCCL 的 bootstrap 使用 Unix Domain Socket 做节点内进程间 rendezvous 和控制消息交换。</li><li><strong>收集 rank→device 映射。</strong>每个 rank 提供自己绑定的 device ID，所有 rank 得到同一份成员表，并核对看到的拓扑一致。</li><li><strong>建立拓扑、寻找 Ring。</strong>读取 XML 或构造 board fabric，计算 PBLink 路径代价，并生成逻辑 ring 的 prev / next。</li><li><strong>为全部直连邻居建立 FIFO。</strong>连接范围覆盖所有直连端口，使专用算法可以在不同阶段使用不同邻居。</li><li><strong>交换 IPC 内存句柄并映射。</strong>每个 rank 分配自己拥有的控制块和接收区，发送可导入的句柄，对端调用 <code>zeusIpcOpenMemHandle</code> 得到可访问的映射地址。</li><li><strong>准备兼容的专用算法。</strong>检查程序需要的每条链路是否真的存在，准备可复用的 kernel、scratch 与设备侧状态。</li></ol>
+<div class="split"><div class="inset"><div class="diagram-label">控制面 / CPU</div><p>unique ID、rank/device 列表、拓扑指纹、IPC handle、连接状态。</p><p class="small">通过 Store 与 bootstrap 交换。handle 是描述一段内存如何被导入的信息，不是把整个 tensor 装进控制消息。</p></div><div class="inset"><div class="diagram-label">数据面 / NPU + PBLink</div><p>tensor 分块、归约中间结果、FIFO payload，以及通知数据就绪或槽位空闲的计数器。</p><p class="small">由设备 kernel 访问映射的内存，并按协议推进。</p></div></div>
+<p style="margin-top:22px">peer 指针也不能凭空填一个“看起来像对端地址”的数字。本版 transport 要求真实 IPC 导入成功；映射失败就会使连接建立失败。仿真运行时还检查 owner device 与 importer device 的 peer 可达性。<a class="ref" data-ref href="#s12">S12</a><a class="ref" data-ref href="#s16">S16</a></p>
+<p>这套控制面只在初始化和必要的准备阶段交换元信息。稳定运行的 AllReduce 批量数据经由设备 kernel 和 PBLink 流动；当前 ZCCL 尚未实现跨节点 IB / RoCE / TCP 数据 transport。初始化里出现 socket，并不能据此推断 tensor 走了网络。</p>
+</section>
+
+<section class="chapter" id="dispatch"><div class="chapter-kicker">07 / ALGORITHM SELECTION</div><h2>同一个 AllReduce API，下面可能走两类 kernel</h2>
+<p><code>setupCollKernel()</code> 按顺序做选择。以下是本文求和型 AllReduce 的主要分支；直接 symmetric-window AllGather 是另一个操作的快速路径，不在本次 AllReduce 主线里。<a class="ref" data-ref href="#s6">S6</a></p>
+<div class="table-wrap"><table><thead><tr><th>顺序</th><th>条件</th><th>路径</th></tr></thead><tbody><tr><td>1</td><td>通信组只有一个 rank</td><td>局部处理，无需跨设备交换；框架层也有相应短路</td></tr><tr><td>2</td><td>已准备的专用算法匹配拓扑、dtype、op，且有对应专用 kernel</td><td><code>launchCustom</code>：优先使用完整 board 的 n4 或兼容 PS1 的 n16 调度</td></tr><tr><td>3</td><td>专用算法未覆盖，但 Ring kernel 覆盖此组合</td><td><code>launchRingElem</code>：按 prev / next 传递分块</td></tr><tr><td>4</td><td>两类 kernel 都不覆盖</td><td>返回 <code>zcclInvalidUsage</code>，不把不支持的组合当作成功</td></tr></tbody></table></div>
+<p>本版普通归约调用自动注册的专用程序包括 <code>Allreduce.n4-PS1Board-rs1-ag1-steps2</code> 和 <code>Allreduce.n16-PS1-rs4-ag4</code>。n4 必须对应完整、可匹配的 board。例如 D4–D7 也能作为一个完整 board 使用 n4；跨 board 的四设备子组则要看实际连线，不能只因 <code>nranks == 4</code> 就套上同一程序。<a class="ref" data-ref href="#s7">S7</a></p>
+<p>普通 AllReduce 自动选择专用路径时，还要求已经有该程序、dtype 和 rank 的<strong>专门编译版本</strong>。可解释执行任意 ZE 程序的 interpreter 主要服务显式 handle API；本版没有把它作为普通 AllReduce 的默认兜底。<a class="ref" data-ref href="#s7">S7</a></p>
+<p>因此，想确认某次调用真正跑了什么，要同时知道：通信组绑定的设备集合、dtype/op、选择到的 kernel、消息大小。仅从 API 名字无法区分 n4、n16 和 Ring。</p>
+</section>
+
+<section class="chapter" id="compile"><div class="chapter-kicker">08 / BUILD TIME VERSUS RUN TIME</div><h2>Triton 源码在构建时变成 zbin</h2>
+<p>当前这条 ZCCL 交付路径使用提前编译的设备 kernel。构建 ZCCL 时，<code>zecc</code> 把 Triton 源码编成包含 <code>.zbin</code> 数据符号的目标文件，随后链接进 <code>libzccl.so</code> / <code>libzccl_static.a</code>。运行 AllReduce 时，ZCCL 选取这些符号所指向的 kernel，再调用运行时发射。<a class="ref" data-ref href="#s8">S8</a></p>
+<div class="split"><div><h3>构建阶段</h3><ol class="callchain"><li><code>algorithms/ps1/*.ze.json</code><p>每个 device、每个 core 的 send / recv / reduce / sync 顺序。</p></li><li><code>generate_custom_specialized_triton.py</code><p>按 program、dtype、rank、大小块 variant 生成完全展开的 Triton 代码。</p></li><li><code>zecc → zeus-compiler → .zbin</code><p>编译设备代码，封装为带数据符号的目标文件。</p></li><li><code>libzccl.so</code><p>链接主机调度代码和设备 kernel 数据。</p></li></ol></div><div><h3>运行阶段</h3><ol class="callchain"><li><code>setupCollKernel()</code><p>从已经具备的程序中选择适合当前通信组的一个。</p></li><li><code>launchCustomRaw()</code><p>选本 rank 的 kernel，准备输入、输出、count、scratch 和 peer FIFO 参数。</p></li><li><code>zeusLaunchKernel(zbin, cores, args, stream)</code><p>在指定 stream 上提交，专用程序使用两个 core。</p></li><li><code>core = tl.program_id(0)</code><p>core0 与 core1 执行各自静态展开的操作序列。</p></li></ol></div></div>
+<p>两类源码很值得对照：Ring 的主体在 <code>src/zccl/device/triton/zccl_ring_collectives.py</code>；PS1 专用算法的主体则由 JSON 和生成器共同决定，生成的每个 rank 的 <code>.py</code> 位于构建目录。只盯着固定的 <code>zccl_allreduce_ring_f32.py</code>，会漏掉普通 n4/n16 调用优先选择的专用 kernel。</p>
+<p>主机传给 kernel 的是扁平参数表：输入、输出、count、scratch，以及各出入连接的 <code>head / tail / payload</code> 指针。专用 FIFO ABI 是 28 个参数，Ring ABI 是 14 个参数。当前源码把这些地址在主机端准备好，kernel 无需重新做拓扑发现。<a class="ref" data-ref href="#s7">S7</a></p>
+<p>专用 Triton kernel 还有一般块与小块版本。单个 chunk 不超过 16 KiB 时，可选择直线的小块版本；更大时进入分块循环。这个选择取决于 <strong>chunk 大小</strong>，不是只看整 tensor 大小。</p>
+</section>
+
+<section class="chapter" id="board4"><div class="chapter-kicker">09 / THE FOUR-DEVICE BOARD</div><h2>4 路专用算法：每个 rank 负责算完整的一块</h2>
+<p>把每个输入张量分成 <code>C0、C1、C2、C3</code> 四块。先让 D0 收齐四个输入中的 C0，D1 收齐四份 C1，依此类推；每个 owner 把自己的块求和。ReduceScatter 结束后，四个不同的完整结果分别属于四个 rank。接着做 AllGather，每个 owner 把完整结果分发给其他 rank。</p>
+<div class="phase-controls" role="group" aria-label="四路分块教学示例"><button type="button" class="btn btn-primary" data-matrix-phase="0" aria-pressed="true">输入</button><button type="button" class="btn" data-matrix-phase="1" aria-pressed="false">ReduceScatter 后</button><button type="button" class="btn" data-matrix-phase="2" aria-pressed="false">AllGather 后</button></div>
+<div class="table-wrap"><table class="matrix"><thead><tr><th>rank</th><th>C0</th><th>C1</th><th>C2</th><th>C3</th></tr></thead><tbody id="matrix-body"><tr><td>R0</td><td>11</td><td>12</td><td>13</td><td>14</td></tr><tr><td>R1</td><td>21</td><td>22</td><td>23</td><td>24</td></tr><tr><td>R2</td><td>31</td><td>32</td><td>33</td><td>34</td></tr><tr><td>R3</td><td>41</td><td>42</td><td>43</td><td>44</td></tr></tbody><caption id="matrix-caption" aria-live="polite">教学整数示例。后续阶段只显示完整归约结果的归属，不表示所有中间缓冲区的逐字节快照。</caption></table></div>
+<p>board 内四个 device 两两直连，因此 owner 可以从另外三个 device 直接取得对应 chunk。本版 n4 程序被命名为 <code>rs1-ag1-steps2</code>：一个逻辑 ReduceScatter 阶段，加一个逻辑 AllGather 阶段。每个阶段仍然包含多次 DMA、计数器访问和局部计算，不能把“一个阶段”读成“一个硬件周期”。<a class="ref" data-ref href="#s9">S9</a></p>
+<p>源码中 D0 的两核分工非常具体：</p>
+<div class="table-wrap"><table><thead><tr><th>D0 的执行者</th><th>ReduceScatter 阶段</th><th>两核会合后</th></tr></thead><tbody><tr><td>core0</td><td>准备自己的部分输入；发送 C2；从 D1、D2、D3 接收并累加 C0</td><td>把完整 C0 发送给 D1、D3，并接收完整 C2</td></tr><tr><td>core1</td><td>准备另外的部分输入；发送 C1 给 D1，发送 C3 给 D3</td><td>把完整 C0 发送给 D2，并接收完整 C1、C3</td></tr></tbody></table></div>
+<p><strong>C0 是 core0 算完的，但发给 D2 的任务在 core1 上。</strong>所以中间的 <code>tl.zeus.barrier()</code> 保证 core1 发出的是已经归约完成的结果。这是同一 device 内的两核交接，与两张设备之间的 FIFO 握手属于不同层。生成器还会转发或消除部分不必要的本地 copy，因此上表是在解释原始 ZE 程序的数据依赖，不要求生成代码逐条保留所有 copy。<a class="ref" data-ref href="#s15">S15</a></p>
+</section>
+
+<section class="chapter" id="world16"><div class="chapter-kicker">10 / A REAL CHUNK IN THE N16 PROGRAM</div><h2>16 路的 C0，怎样沿着板内和板间连线汇聚？</h2>
+<p>16 路程序把每个输入切成 16 块。C0 只是其中一块，其余 C1–C15 也在执行各自的路线。本文单独抽出 C0，才能看清每份输入的来源和中转，而不被所有并行传输淹没。</p>
+<p>下面的步骤直接来自 <code>Allreduce.n16-PS1-rs4-ag4.ze.json</code>。其中的 <code>alg_step</code> 是静态计划的阶段标记。不同设备之间没有一个为每步敲钟的全局控制器；接收方等到实际数据就绪才继续。<a class="ref" data-ref href="#s10">S10</a></p>
+<div class="table-wrap"><table><thead><tr><th>阶段</th><th>C0 的实际流转</th><th>贡献怎样合并</th></tr></thead><tbody><tr><td>RS · 0</td><td>D8、D9、D10 → D11</td><td>D11 加上自身贡献，持有 Board 2 的 4 份</td></tr><tr><td>RS · 1</td><td>D5、D6、D7 → D4；D11 → D13</td><td>D4 得到 Board 1 的 4 份；D13 汇入 D11 的 4 份，加上自身成为 5 份</td></tr><tr><td>RS · 2</td><td>D4 → D2；D12、D13、D15 → D14</td><td>D2 得到自身 + Board 1，共 5 份；D14 得到 Board 2 + Board 3，共 8 份</td></tr><tr><td>RS · 3</td><td>D1、D2、D3、D14 → D0</td><td>D0：自身 1 + D1 的 1 + D2 的 5 + D3 的 1 + D14 的 8 = 16 份</td></tr><tr><td>AG · 4</td><td>D0 → D1、D2、D3、D14</td><td>完整 C0 开始扩散，接收的是完整答案，不再继续归约</td></tr><tr><td>AG · 5</td><td>D2 → D4；D14 → D12、D13、D15</td><td>完整 C0 进入 Board 1，并扩散到 Board 3</td></tr><tr><td>AG · 6</td><td>D4 → D5、D6、D7；D13 → D11</td><td>Board 1 全部拿到答案，完整 C0 回到 Board 2</td></tr><tr><td>AG · 7</td><td>D11 → D8、D9、D10</td><td>全部 16 个 device 都持有完整 C0</td></tr></tbody></table></div>
+<p>这里可以同时看到三件事：<strong>板内先合并一部分贡献；板间只走真实的直接邻居；中间 device 在转发前可以加入自己的贡献。</strong>PBLink 搬运字节，归约加法由设备 kernel 执行。D14→D0 是模型中的直接板间连接，图上绕到左侧画出，是为了避免误看成经过 D12 或 D2 的多跳路径。</p>
+<p>本次还对整个 n16 JSON 做了<strong>静态符号推演</strong>：把 rank r 的输入标记为集合 <code>{r}</code>，按每个 core 的操作顺序执行 copy、FIFO send/recv、集合并和本地 barrier。检查了 16 rank × 16 个输出 chunk：每个输出都包含 0–15 的贡献各一次，消息地址匹配，符号调度能够完成。</p>
+<div class="contract">这个检查验证了原始算法计划的贡献覆盖与 FIFO 匹配。它没有执行浮点运算，没有经过 Triton lowering，也没有验证 DMA 时序、硬件可见性或实板带宽；不能替代 kernel 仿真与硬件测试。</div>
+<p><a href="#interactive" data-view="reduce">逐步查看这 8 个逻辑阶段 ↗</a></p>
+</section>
+
+<section class="chapter" id="ring"><div class="chapter-kicker">11 / THE RING FALLBACK</div><h2>没有合适的专用程序时，让部分和沿环流动</h2>
+<p>Ring 的逻辑是给每个 rank 指定一个前驱 <code>prev</code> 和一个后继 <code>next</code>。发送只去 next，接收只从 prev 来。环是通信算法在拓扑上选出的顺序；每条环边仍然需要实际可用的直接连接。<a class="ref" data-ref href="#s11">S11</a></p>
+<pre><code class="language-python"><span class="comment"># Logical Ring AllReduce structure, simplified from the source.</span>
+chunk = ceil_div(count, world)
+my_chunk = recv + rank * chunk
+
+counters = reduce_scatter_ring(
+    send, my_chunk, scratch, chunk, count, peer_fifos)
+all_gather_ring(
+    my_chunk, recv, chunk, count, peer_fifos,
+    counter_state=counters)</code></pre>
+<p><strong>ReduceScatter：</strong>某个 owner 的 chunk 作为一个“部分和 token”沿环前进。每个经过的 rank 接收前面的部分和，加上自己对同一 chunk 的贡献，再发给 next；最后在该 chunk 的 owner 上落地。所有 chunk 交错执行同样的逻辑。</p>
+<p><strong>AllGather：</strong>完整结果已经算好。现在每个 rank 把自己拿到的结果块发给 next，同时从 prev 接收另外一块。收到的完整块可以继续转发，经过 P−1 次邻居交换后，各 rank 取得所有块。</p>
+<p>源码特别把 ReduceScatter 的 FIFO 计数器状态继续传给 AllGather。两阶段衔接时没有把计数器随意清零；通信器上的协议状态保持连贯。大 chunk 会切成不超过一个 FIFO 槽位的 piece，避免所有 rank 把整块全部塞进有限队列后一起堵住。<a class="ref" data-ref href="#s11">S11</a></p>
+<p>本版 Ring 的 launch 使用一个 core；n4/n16 专用程序使用两个 core，并可在计划中切换不同端口。专用程序依赖特定拓扑，Ring 是覆盖其他兼容组合的基础路径。选择哪个更快，还取决于消息大小、端口竞争和实现代价，不能只按“阶段更少”计算加速倍数。</p>
+<p>当 <code>count</code> 不能整除 <code>world</code> 时，两条路径处理方式不同：Ring 按向上取整的 stride 计算每块实际长度并裁短尾块；专用 ZE 计划使用固定完整 chunk，因此先补零到 <code>world × chunk</code>，运行后只拷回有效元素。求和时补零不增加贡献。<a class="ref" data-ref href="#s20">S20</a></p>
+</section>
+
+<section class="chapter" id="fifo"><div class="chapter-kicker">12 / BYTES ACROSS PBLINK</div><h2>一条 A→B 的传输，数据和计数器分别在哪？</h2>
+<p>一个方向的连接包含一组有界 FIFO。它把数据区放在接收方，把消费确认放在发送方。A 和 B 各自持有本地地址，也通过 IPC 映射取得需要远程访问的那部分地址。<a class="ref" data-ref href="#s12">S12</a><a class="ref" data-ref href="#s13">S13</a></p>
+<div class="memory-grid"><div class="memory"><h4>A 的本地设备内存</h4><div class="counter">SendMem.head</div><p>表示 B 已经消费到哪里。</p><p><strong>B 更新</strong>这个计数器，A 读取它判断是否有空间继续发送。</p><p class="small">内存归 A 所有，但写这个计数器的参与者是 B。</p></div><div class="memory"><h4>B 的本地设备内存</h4><div class="counter">RecvMem.tail + payload</div><p>tail 表示 A 已经发布了多少消息，payload 保存实际数据。</p><p><strong>A 写入</strong>这两部分，B 读取 tail 并消费 payload。</p><p class="small">内存归 B 所有，数据由 A 经映射写入。</p></div></div>
+<div class="connection" role="img" aria-label="A 通过 PBLink 写 B 的 payload 和 tail；B 通过 PBLink 写回 A 的 head。">A ── payload / tail ──▶ B<br>A ◀──── head ───────── B</div>
+<div class="table-wrap"><table><thead><tr><th>参数</th><th>当前 ABI</th><th>意义</th></tr></thead><tbody><tr><td>槽位数</td><td>8</td><td>同一方向上可承载有限数量的在途消息</td></tr><tr><td>每槽容量</td><td>64 KiB</td><td>一个 piece 的 payload 上限</td></tr><tr><td>payload 总容量</td><td>512 KiB / 邻居 / 接收方向</td><td>有界工作缓冲，不需要为整个大 tensor 预留同样大的通信队列</td></tr><tr><td>计数器</td><td>自由递增的 uint32 head / tail</td><td>使用差值判断空满，使用 <code>counter &amp; 7</code> 选物理槽位</td></tr><tr><td>对齐</td><td>计数器位于各自 4 KiB 对齐块的首地址；payload 跨过接收头部</td><td>满足当前设备 kernel 指针参数的页地址 ABI</td></tr></tbody></table></div>
+<p>发送方遵守的协议是：<strong>先等到有空槽，再写 payload，最后发布 tail。</strong>接收方遵守的协议是：<strong>先等到 tail 表示消息就绪，再读取或归约 payload，消费结束后归还 head。</strong></p>
+<pre><code class="language-python"><span class="comment"># Protocol sketch. Actual kernels use tracked counters and tiled DMA.</span>
+<span class="comment"># Sender A:</span>
+wait_until(tail - head &lt; 8)
+slot = tail &amp; 7
+copy(local_chunk, peer_B.payload[slot])
+publish(peer_B.tail, tail + 1)
+
+<span class="comment"># Receiver B:</span>
+wait_until(tail - head &gt; 0)
+slot = head &amp; 7
+consume_or_reduce(local_payload[slot])
+publish(peer_A.head, head + 1)</code></pre>
+<p><code>tail</code> 解决“数据有没有到”的问题；<code>head</code> 解决“发送方可不可以覆盖旧数据”的问题。如果只通知新数据、没有消费确认，FIFO 绕一圈后就可能覆盖接收方还没读完的数据。这就是软件协议的 <strong>credit / 背压</strong>。</p>
+<p>这层 8-slot credit 是 ZCCL 的软件流控。PBLink 物理链路内部可能还有自己的缓冲、报文和硬件流控，不能把这里的 8 个槽位当成 PHY 层的全部能力。</p>
+<p><a href="#interactive" data-view="fifo">逐步查看 payload、tail、head 的先后关系 ↗</a></p>
+</section>
+
+<section class="chapter" id="dma"><div class="chapter-kicker">13 / INSIDE THE DEVICE KERNEL</div><h2>跨设备“发送”，落实为一次远端映射上的 store</h2>
+<p>发送方 kernel 已经拿到对端 FIFO payload 的映射指针。主路径里的 <code>zccl_move()</code> 用 block pointer 读取本地数据，再把数据写到映射的目标区。接收方随后读取自己本地的 payload；需要归约时，再读自己的累加值，执行加法并保存。<a class="ref" data-ref href="#s14">S14</a></p>
+<pre><code class="language-python"><span class="comment"># Simplified one-block form of zccl_move.</span>
+values = tl.load(src_block, boundary_check=(0,), padding_option="zero")
+if reduce:
+    old = tl.load(acc_block, boundary_check=(0,), padding_option="zero")
+    values = (values + old).to(values.dtype)
+tl.store(dst_block, values, boundary_check=(0,))</code></pre>
+<p>这里的 <code>src_block / dst_block</code> 是根据本次操作绑定的：发送时通常是“本地输入或部分和 → 对端 payload”；接收时通常是“本地 payload → 本地输出或 scratch”。<strong>具体访问哪块设备内存，取决于 host 准备的映射地址。</strong>同一套 Triton 读写语义因此能够承载本地计算和跨 PBLink 的访问。</p>
+<p>从执行模型看，数据会经过设备的搬运与片上工作存储，再由 Zeus 指令执行 load、store 和向量归约。CCL 代码描述的是这些动作的顺序；真正的远端地址窗口、链路报文与物理传输由运行时和设备互联实现承接。当前源码中的 real-runtime 分支委托给厂商 <code>zeusIpcOpenMemHandle</code>，仿真分支则检查拓扑并打开仿真的 IPC 映射。<a class="ref" data-ref href="#s16">S16</a></p>
+<div class="table-wrap"><table><thead><tr><th>粒度</th><th>用途</th><th>一个示例</th></tr></thead><tbody><tr><td>整个 tensor</td><td>应用交给 AllReduce 的输入</td><td>每 rank 16 MiB</td></tr><tr><td>chunk</td><td>按 owner 划分归约结果</td><td>16 路时每块 1 MiB</td></tr><tr><td>piece</td><td>适配 FIFO 槽位，逐段推进</td><td>1 MiB chunk 分成 16 段，每段 64 KiB</td></tr><tr><td>DMA block</td><td>zccl_move 内部的搬运粒度</td><td>16 KiB：4096 个 FP32 或 8192 个 BF16</td></tr></tbody><caption>示例只说明分块关系；没有给出或推算任何硬件运行时间。</caption></table></div>
+<p>一般块路径把两个 DMA block 成对组织，归约时还读取两个累加 block；尾部不足时按边界处理。小块版本可以直接执行一个 block。<strong>消息大于 64 KiB 并不意味着 AllReduce 不支持：</strong>kernel 会按 piece 循环复用 FIFO，而不是把整个 chunk 一次性塞进队列。</p>
+<p>专用生成器还会把自己拥有的计数器状态保存在寄存器中，减少反复加载；tail 仍要按协议发布，让对端知道新数据。head 则在其他 core、后续 launch 或 credit 等待方需要观察时发布。内存读取次数被减少了，数据就绪和槽位归还的协议仍然保留。</p>
+</section>
+
+<section class="chapter" id="sync"><div class="chapter-kicker">14 / THREE DISTINCT SYNCHRONIZATION SCOPES</div><h2>同步不只有一种，三层分别守住三种依赖</h2>
+<div class="table-wrap"><table><thead><tr><th>层次</th><th>要保证的事情</th><th>当前机制</th></tr></thead><tbody><tr><td>同一进程内，计算与通信之间</td><td>输入先算完，通信才能读；输出通信结束后，后续计算才能用</td><td>stream 顺序、event 记录与等待、Work 完成状态</td></tr><tr><td>同一 device 的两个 core 之间</td><td>一个 core 的中间结果准备好后，另一个 core 才能读取或发送</td><td>专用 kernel 的 <code>tl.zeus.barrier()</code>；interpreter 的 epoch 计数握手</td></tr><tr><td>两个 device 之间</td><td>payload 就绪后才消费，消费后才覆盖对应槽位</td><td>FIFO tail / head 与 volatile 轮询</td></tr></tbody></table></div>
+<h3>计算 stream 与通信 stream 的交接</h3>
+<p>本版框架中，普通同步调用使用调用者当前 stream；异步调用或合并提交可使用专用通信 stream。切到通信 stream 时，先在生产输入的 stream 上记录 event，再让通信 stream 等它，确保此前计算已经完成。通信结束 event 则用于把后续工作排在通信之后。<a class="ref" data-ref href="#s3">S3</a></p>
+<p><code>work.wait()</code> 首先建立当前 stream 对通信完成的依赖。默认语义不要求 CPU 一直忙等到硬件结束；显式超时、blocking-wait 等模式会进一步触发主机侧等待。API 已返回、kernel 已提交、设备已完成，是三个需要区分的时点。<a class="ref" data-ref href="#s16">S16</a></p>
+<h3>本地两核的交接</h3>
+<p>静态生成的专用程序可以在已知的位置插入 <code>tl.zeus.barrier()</code>。生成器的执行约定是先排空该核相关的在途 DMA，再完成两核会合。对解释器中的动态操作序列，则用两个 core 分别推进自己的 epoch，并轮询对方 epoch 来交接。n4 中“core0 算 C0、core1 发给 D2”就是必须建立这种依赖的具体例子。<a class="ref" data-ref href="#s15">S15</a></p>
+<h3>跨设备的就绪与确认</h3>
+<p>等待 tail/head 的循环使用 <code>tl.load(..., volatile=True)</code>，让编译器持续重读那个会被对端修改的值。否则一次读数若被提升到循环外，kernel 就可能一直盯着旧值。<strong>volatile 在这里首先解决“重新读取”问题，不能单凭这个关键字推导任意硬件上的完整 acquire/release 语义。</strong></p>
+<p>协议要求 payload 的发布先于 tail 被接收方视为就绪，消费完成先于 head 被发送方视为可复用。源码按这个协议组织操作，编译后的设备指令与硬件可见性规则需要落实它。项目文档记录了普通 store 发布计数器的仿真结果；这篇教程没有把这些记录扩大成对全部硅片内存顺序的独立认证。<a class="ref" data-ref href="#s14">S14</a><a class="ref" data-ref href="#s15">S15</a></p>
+<div class="note"><code>zcclGroupStart / zcclGroupEnd</code> 主要组织主机侧分组提交与延后 launch。它们不会自动替代本地 core barrier，也不会替代跨设备的 FIFO 数据握手。</div>
+</section>
+
+<section class="chapter" id="steady"><div class="chapter-kicker">15 / ONE INVOCATION, IN ORDER</div><h2>从前一个算子，到后一个算子</h2>
+<p>把前面的层次合起来，一次稳定态的异步 AllReduce 可以按下面的顺序理解。下图只表示先后依赖，不按实际耗时比例绘制。</p>
+<div class="pipeline-bands" role="img" aria-label="生产 stream 先计算输入并记录 ready event；通信 stream 等待 ready，发射 AllReduce，内部执行 PBLink 和归约，然后记录 done；消费 stream 等待 done 后使用结果。CPU 负责提交和 Work 管理。"><div class="lane">生产 stream</div><div class="band"><span class="step">计算输入 X</span>→<span class="step wait">记录 ready</span></div><div class="lane">通信 stream</div><div class="band"><span class="step wait">等待 ready</span>→<span class="step">AllReduce kernel</span>→<span class="step wait">记录 done</span></div><div class="lane">设备核内部</div><div class="band"><span class="step">搬运 / 归约</span>⇄<span class="step wait">FIFO / core 交接</span></div><div class="lane">消费 stream</div><div class="band"><span class="step wait">等待 done</span>→<span class="step">使用结果 Y</span></div></div>
+<ol><li>当前设备已经绑定，通信器与 peer 连接可复用；首次调用额外承担初始化工作。</li><li>框架检查输入并选择 stream，处理张量在异步执行期间的生命周期。</li><li>ZCCL 把 AllReduce 变成一个专用或 Ring 工作项。</li><li>运行时提交本设备的 kernel。所有参与 rank 都要提交对应工作，彼此才能持续获得消息。</li><li>两个 core 按本地计划工作，设备间经 FIFO 完成 send、recv、reduce；需要的中间结果通过相应层次的同步保护。</li><li>本设备的 kernel 完成后，通信 stream 的完成 event 推进。消费者在对应依赖满足后读取结果。</li></ol>
+<h3>Graph capture / replay 怎样接进来？</h3>
+<p>本版 <code>ProcessGroupZCCL::collective()</code> 要求通信器及匹配操作签名的准备工作先在 eager 阶段完成。进入 capture 后，collective 在捕获 stream 上运行，保留相关资源，后续 replay 才能重现设备操作与 stream 顺序。不能在 capture 中临时重新建组。<a class="ref" data-ref href="#s3">S3</a></p>
+<p>库层测试与框架层接口还要分开看：ZCCL 自己的测试覆盖了若干 capture/replay 场景；本文读取的 torch_zeus 版本中，<code>ProcessGroupZCCL::barrier()</code> 仍明确拒绝在 Graph capture 中调用。支持某些 AllReduce capture 场景，不表示每个分布式 API 都可被捕获。<a class="ref" data-ref href="#s17">S17</a></p>
+</section>
+
+<section class="chapter" id="performance"><div class="chapter-kicker">16 / READING THE COST</div><h2>延迟取决于搬多少、走哪里、等什么</h2>
+<p>理解这些机制后，通信性能就可以拆成几个具体问题：每条链路搬了多少字节？能同时使用哪些端口？一次 kernel 发射与小计数器访问有多贵？某个 rank 是否因为输入较晚或路径竞争，让其他设备一直等待？</p>
+<div class="table-wrap"><table><thead><tr><th>场景</th><th>值得先看的因素</th><th>从源码能推到哪里</th></tr></thead><tbody><tr><td>小 tensor</td><td>提交、轮询、barrier、地址准备、小块直线 kernel</td><td>能识别固定开销来源；不能仅从代码行数给出实测微秒数</td></tr><tr><td>大 tensor</td><td>数据量、链路争用、piece 循环、DMA 组织、可同时使用的端口</td><td>能建立流量模型；持续有效带宽仍需测量</td></tr><tr><td>完整 board 的 n4</td><td>三邻居直接交换与双核工作分配</td><td>无需让某个 chunk 沿一个长环绕行才能收齐板内贡献</td></tr><tr><td>完整 PS1 的 n16</td><td>板内归约、板间汇聚、中间设备转发和反向分发</td><td>逻辑调度是 4 个 RS alg_step + 4 个 AG alg_step</td></tr><tr><td>部分通信组</td><td>rank→device 映射、直连边是否存在、选路是否落到 Ring</td><td>通信组大小相同，不代表拓扑和执行路径相同</td></tr></tbody></table></div>
+<p>在均匀分块、忽略协议控制消息的理想 Ring 模型里，大小为 S 的 AllReduce，每 rank 的发送总量约为 <code>2 × (P−1) / P × S</code>：ReduceScatter 和 AllGather 各发送 P−1 个大小约为 S/P 的块。这个公式描述 payload 流量，不直接给出延迟；它也不能原封不动代替特定 PS1 专用程序在每条物理边上的流量。<a class="ref" data-ref href="#s11">S11</a></p>
+<p>拓扑源码给 PBLink 设置了 <code>16.0 × 0.6 = 9.6 GB/s</code> 的有效带宽参数，用于图的成本表达。<strong>这是当前软件模型的参数，不是本文测得的单链路有效带宽。</strong>链路方向口径、竞争、DMA 开销、运行频率及运行时行为都可能影响实际结果。<a class="ref" data-ref href="#s18">S18</a></p>
+<p>同样，n16 的“4+4 个阶段”与 Ring 的邻居迭代数，不能直接相除当成加速倍数。一个阶段里可能有多个发送、接收、计算与等待；真实耗时要看关键路径和并发资源。JSON 中的 <code>costs</code>、<code>makespan</code> 也属于算法模型，不能直接读成已经测得的 hardware cycles。</p>
+<div class="note">kernel 计算时间、集合通信时间、通信与计算的重叠、整层耗时，是不同的统计范围。分析完整模型时要沿着同一输入与执行范围计时，不能把局部 kernel 或通信阶段的百分比直接当成整模型收益。</div>
+</section>
+
+<section class="chapter" id="scope"><div class="chapter-kicker">17 / WHAT IS ESTABLISHED</div><h2>当前支持什么，这篇文章验证到哪一层？</h2>
+<div class="table-wrap"><table><thead><tr><th>结论</th><th>证据层次</th></tr></thead><tbody><tr><td>有 AllReduce、AllGather、ReduceScatter、Send/Recv、Barrier 等源码实现</td><td><span class="evidence">源码事实</span> 不等于全部组合的当前硬件测试均通过</td></tr><tr><td>本版主要归约 kernel 为 FP32/BF16、SUM</td><td><span class="evidence">实际选路代码</span> 辅助 primitive 里出现其他 op 分支，不代表已经构建并注册了对应 kernel</td></tr><tr><td>PS1 为 16 device、每 device 2 core；邻居集合与 ZCCL 规则一致</td><td><span class="evidence">软件模型核对</span> 不用于推断实板封装、die 数或所有端口编号</td></tr><tr><td>n16 原始 ZE 程序覆盖所有 rank 的贡献各一次</td><td><span class="evidence">静态符号推演</span> 不涵盖浮点舍入、lowering、DMA 时序或 RTL</td></tr><tr><td>有 4/16 rank 数值、P2P、初始化、拓扑、Graph 等测试代码</td><td><span class="evidence">测试存在</span> 本次未新跑整套测试或实板验证</td></tr><tr><td>当前 tensor transport 面向节点内 PBLink</td><td><span class="evidence">源码边界</span> 没有把 XML 中的 NIC 节点当成已经实现的跨节点 transport</td></tr></tbody></table></div>
+<p>一个额外的接口层次区别是 AllToAll：当前 ZCCL 库本身没有原生 AllToAll(v) 路径；本地 torch_zeus 的 <code>ProcessGroupZCCL::alltoall_base()</code> 已有通过 grouped Send/Recv 组合实现的路径。判断一个模型是否可运行，要继续看框架的实际组合、拓扑和测试，不能只用库 README 中的 API 清单代替端到端结论。<a class="ref" data-ref href="#s19">S19</a></p>
+<p>若需要定位一次具体调用，可从 <code>ZCCL_DEBUG=INFO</code> 与 <code>ZCCL_DEBUG_SUBSYS=INIT,COLL,GRAPH,P2P</code> 观察初始化、设备映射和 kernel 选路，再结合 runtime / simulator 的完成状态和实际 trace。这里列出的是诊断入口，没有把本文的静态讲解伪装成一次新的性能跑分。</p>
+<p class="small">教程依据：ZCCL <code>09bf6d75dcf7def6e07451f276a2bffdb83895e2</code>；torch_zeus <code>70bf7bbd034c</code>；阅读与符号核对日期为 2026-11-03。正式硬件的地址窗口、PHY、链路级流控和内存可见性，还需要对应运行时与硬件资料继续闭合。</p>
+</section>
+
+<section class="chapter" id="quiz"><div class="chapter-kicker">18 / CHECK YOUR MENTAL MODEL</div><h2>能回答这些问题，就已经抓住主线了</h2>
+<details class="question"><summary>D0 和 D4 都在同一个 16 路通信组，D0 就能直接写 D4 的 FIFO 吗？</summary><p>在本文的软件拓扑与本版 transport 中，没有这条直接连接。D0 的直连邻居是 D1、D2、D3、D14；可以由算法安排经 D2 等中间设备流转。通信组成员关系不自动创造物理直连边。</p></details>
+<details class="question"><summary>为什么 tail 放在接收方，head 却放在发送方？</summary><p>接收方需要就近轮询数据是否就绪；发送方需要就近判断空间是否已归还。对端通过映射写计数器，等待的一方在自己的设备内存读取。内存的所有者与计数器的写入者不是同一概念。</p></details>
+<details class="question"><summary>64 KiB 的 FIFO 槽位能处理几十 MiB 的 tensor 吗？</summary><p>可以通过分块循环处理。整 tensor 先按 owner 切成 chunk，每个 chunk 再切成不超过槽位的 piece；每段经过发送、消费和确认后，槽位被复用。</p></details>
+<details class="question"><summary>PBLink 在哪里执行加法？</summary><p>本文这条实现由设备 kernel 读取接收到的 payload 与本地累加值并做加法；PBLink 承担远端内存访问与字节传输。不能把集合通信的“归约”理解成链路自动替 kernel 完成。</p></details>
+<details class="question"><summary>每次 all_reduce 都要再跑一次 Python 和 zecc 吗？</summary><p>本版 ZCCL 这条交付路径在构建时生成并编译设备 kernel，链接进库。运行时选择已有 zbin 并准备参数。其他使用 zecc 的 JIT 场景，需要另外分析。</p></details>
+<details class="question"><summary>有了两核 barrier，为什么还需要 FIFO 的 tail/head？</summary><p>barrier 让同一 device 的两个 core 正确交接；tail/head 让不同 device 的 producer 与 consumer 知道数据和槽位的状态。它们保护的参与者与内存范围不同。</p></details>
+<details class="question"><summary>Work 已经返回，后一个算子就可以在任意 stream 使用结果吗？</summary><p>后一个算子必须建立对通信完成的依赖。框架利用 stream/event 和 Work 同步完成这件事；CPU 返回、设备提交、设备执行完成不是同一个时刻。</p></details>
+</section>
+
+<section class="chapter" id="sources"><div class="chapter-kicker">APPENDIX / SOURCE MAP</div><h2>带着问题读源码</h2>
+<p>源码路径均为对应组件内的相对路径，方便在自己的 checkout 中检索。正文的来源编号可打开片段并返回阅读位置。片段只保留解释当前结论所需的关键行；省略的参数或上下文不作为可直接编译的示例。</p>
+<details class="source-card" id="s1"><summary>S1 · ZCCL 的定位与实现范围</summary><div class="source-content"><span class="file">zeus-ccl @ 09bf6d75dcf7 · README.md:3；docs/README.md:18</span><p>README 明确把 ZCCL 定义为 Zeus 的 collective communication runtime，并列出已实现的集合通信、P2P 与节点内 PBLink 边界。</p></div></details>
+<details class="source-card" id="s2"><summary>S2 · torch_zeus 的 AllReduce 入口</summary><div class="source-content"><span class="file">torch_zeus @ 70bf7bbd034c · torch_zeus/csrc/core/ProcessGroupZCCL.cpp:2290</span><pre><code>return collective(tensors, tensors,
+    [&amp;opts](at::Tensor&amp; input, at::Tensor&amp; output,
+            zcclComm_t comm, ZEUSStream&amp; stream) {
+      // Parameter conversion and the world==1 branch are omitted here.
+      zcclAllReduce(input.data_ptr(), output.data_ptr(),
+                    input.numel(), dtype, reduce_op, comm, stream);
+    }, ...);</code></pre><p>输入和输出使用同一个 tensors 列表；实际代码通过 collective 公共路径管理设备、通信器和 stream。</p></div></details>
+<details class="source-card" id="s3"><summary>S3 · stream、生命周期与 capture</summary><div class="source-content"><span class="file">torch_zeus @ 70bf7bbd034c · torch_zeus/csrc/core/ProcessGroupZCCL.cpp:1705、1773、1820、1849</span><pre><code>const bool use_comm_stream =
+    (async_op || coalescing_active_) &amp;&amp; !capture_active;
+ZEUSStream collective_stream =
+    use_comm_stream ? getZCCLStream(devices_key) : current_stream;
+if (use_comm_stream)
+  syncZCCLStream(devices_key, current_stream, collective_stream);
+...
+fn(inputs[0], outputs[0], handle, collective_stream);
+...
+work-&gt;zccl_end_event_-&gt;place(collective_stream);</code></pre><p>捕获时还检查通信器缓存与匹配签名的 eager 准备记录。syncZCCLStream 的实现位于同文件 1582 行，执行 producer event 记录和 consumer 等待。</p></div></details>
+<details class="source-card" id="s4"><summary>S4 · 建组、映射与拓扑准备</summary><div class="source-content"><span class="file">torch_zeus @ 70bf7bbd034c · ProcessGroupZCCL.cpp:1390、527；zeus-ccl @ 09bf6d75dcf7 · src/zccl/comm/zccl_comm.cc:87、237</span><p>框架经 Store 分发 unique ID；ZCCL 收集绑定设备 ID，构建拓扑并检查一致性，计算路径、选择 Ring，为所有直连邻居建立连接，最后准备专用算法。</p><pre><code>devices[c-&gt;rank] = c-&gt;device;
+zcclBootstrapAllGatherTimeout(...);
+topoGetSystem(&amp;c-&gt;topo, c-&gt;nranks, devices.data(), fabricDevices);
+topoComputePaths(c-&gt;topo);
+searchRings(...);
+transportConnectNeighbors(...);</code></pre></div></details>
+<details class="source-card" id="s5"><summary>S5 · PS1 连线规则与仿真拓扑</summary><div class="source-content"><span class="file">zeus-ccl @ 09bf6d75dcf7 · src/zccl/graph/zccl_topo.cc:63–87、192；torch_zeus @ 70bf7bbd034c · zeus_sim_run/topologies/zeus3_ps1_topology.json</span><pre><code>board = device / 4;
+local = device % 4;
+// The three intra-board peer sets are local XOR 1, 2 and 3.
+// Port 3 connects to the previous/next board and flips local bit 1.
+int nb = (local &amp; 2) ? board + 1 : board - 1;
+peer = wrap_board(nb) * 4 + (local ^ 2);</code></pre><p>这里按当前函数语义压缩展示，变量名更明确地写作 device。原函数名是 topoPortPeer。仿真 JSON 每个 device 的 cores 为 2。本次只核对邻居集合，不把两个文件的所有端口编号当成相同。</p></div></details>
+<details class="source-card" id="s6"><summary>S6 · C API、统一入口与选路顺序</summary><div class="source-content"><span class="file">zeus-ccl @ 09bf6d75dcf7 · src/api/zccl_collectives.cc:38；src/zccl/enqueue/zccl_enqueue.cc:352、443、694</span><pre><code>zcclAllReduce(...) {
+  zcclInfo info = { zcclFuncAllReduce, ... };
+  return zcclEnqueueCheck(&amp;info);
+}
+
+argsCheck(info);
+checkSetStream(info);
+setupCollKernel(info);
+launchKernel(info-&gt;comm);</code></pre><p>setupCollKernel 先处理单 rank，再选择可用专用程序，接着 Ring，最后明确返回不支持。单独的直接窗口 AllGather 分支不属于本文 AllReduce 主线。</p></div></details>
+<details class="source-card" id="s7"><summary>S7 · n4/n16 注册、专用 kernel 选择与发射</summary><div class="source-content"><span class="file">zeus-ccl @ 09bf6d75dcf7 · src/zccl/custom/zccl_custom_api.cc:139、587、835、846、873</span><pre><code>"Allreduce.n4-PS1Board-rs1-ag1-steps2"
+"Allreduce.n16-PS1-rs4-ag4"
+
+if (!customReduceSupported(dt, op)) return nullptr;
+if (customSpecializedKernel(h-&gt;spec, dt, comm-&gt;rank,
+                            chunk * elem) == nullptr) return nullptr;
+...
+zeusLaunchKernel(kernel, algo-&gt;cores_per_device, args, stream);</code></pre><p>专用 ABI 将 4 个基本参数与最多 4 组出连接、4 组入连接的三指针打平；小块选型使用 chunkBytes，而非整 tensor 的字节数。</p></div></details>
+<details class="source-card" id="s8"><summary>S8 · 生成 Triton，并经 zecc 构建</summary><div class="source-content"><span class="file">zeus-ccl @ 09bf6d75dcf7 · CMakeLists.txt:544–565；cmake/ZcclDeviceKernels.cmake:23–35；tools/generate_custom_specialized_triton.py:732–755</span><pre><code>generate_custom_specialized_triton.py
+  --algorithm &lt;program.ze.json&gt; --rank &lt;rank&gt;
+  --dtype &lt;dtype&gt; --variant &lt;general|small&gt; --output &lt;kernel.py&gt;
+
+zecc -c &lt;kernel.py&gt; -o &lt;kernel.o&gt; --kernel-name &lt;name&gt;
+
+core = tl.program_id(0)
+if core == 0:
+    core0(...)
+else:
+    core1(...)</code></pre><p>命令参数按源文件压缩表达。构建生成目标文件，运行阶段使用已嵌入库的 kernel 数据符号。</p></div></details>
+<details class="source-card" id="s9"><summary>S9 · n4 的两核真实操作计划</summary><div class="source-content"><span class="file">zeus-ccl @ 09bf6d75dcf7 · algorithms/ps1/Allreduce.n4-PS1Board-rs1-ag1-steps2.ze.json · device 0 / cores 0,1</span><p>core0 对 C0 依次 reduce 来自 1、2、3 的数据，sync 后发送 C0 给 1、3；core1 在 sync 后发送 C0 给 2。这给出了同一 device 两核间必须建立依赖的直接例子。</p><pre><code>// Extracted operation order for chunk C0 on device 0.
+core0: reduce(src=1), reduce(src=2), reduce(src=3), sync,
+       send(dst=1), send(dst=3)
+core1: ... local sends ..., sync, send(dst=2)</code></pre></div></details>
+<details class="source-card" id="s10"><summary>S10 · n16 的 C0 路线与静态符号检查</summary><div class="source-content"><span class="file">zeus-ccl @ 09bf6d75dcf7 · algorithms/ps1/Allreduce.n16-PS1-rs4-ag4.ze.json</span><p>提取所有 <code>addr == 0</code> 的 send / recv / reduce，再以 alg_step 分组，得到正文 8 阶段表。静态执行时为每个 core 保留程序计数器，为每个有向邻居对保留 FIFO；recv 需等对应消息，sync 需等本 device 另一 core。reduce 时检查贡献集合不重叠，最后检查所有输出均为全部 rank 集合。</p><pre><code>INPUT[r][chunk] = {r}
+SEND:   FIFO[src, dst].push((chunk, contribution_set))
+RECV:   wait for FIFO message; verify chunk address
+REDUCE: verify disjoint contribution sets, then union
+SYNC:   wait for the peer core of the same device
+
+CHECK:  for every r and chunk,
+        OUTPUT[r][chunk] == {0, 1, ..., 15}</code></pre><p>本次 16×16 输出检查通过。该结果不包含浮点、编译器或硬件执行证据。</p></div></details>
+<details class="source-card" id="s11"><summary>S11 · Ring 的 ReduceScatter 与 AllGather</summary><div class="source-content"><span class="file">zeus-ccl @ 09bf6d75dcf7 · src/zccl/device/triton/zccl_ring_collectives.py:110、205、285；src/zccl/enqueue/zccl_enqueue.cc:294</span><p>ReduceScatter 的部分和 token 按 ring-prev → 当前 rank → ring-next 移动；AllGather 继续使用计数器状态，转发完整块。Ring launch 的 num_cores 为 1。</p><pre><code>counters = zccl_reducescatter_ring_impl(...)
+zccl_allgather_ring_impl(..., counter_state=counters)</code></pre></div></details>
+<details class="source-card" id="s12"><summary>S12 · FIFO 所有权、句柄交换与 IPC 导入</summary><div class="source-content"><span class="file">zeus-ccl @ 09bf6d75dcf7 · src/zccl/transport/zccl_p2p.cc:104–181；src/zccl/transport/zccl_net.h:11–35</span><pre><code>// The sender owns SendMem; the receiver owns RecvMem.
+allocOwnBlock(..., ZCCL_FIFO_SEND_MEM_BYTES, ...);
+allocOwnBlock(..., headerBytes + payloadBytes, ...);
+...
+if (zeusIpcOpenMemHandle(&amp;m, *handle, 0u) == zeusSuccess
+    &amp;&amp; m != nullptr) return m;</code></pre><p>每个邻居方向分别分配与导入；导入失败不使用裸指针兜底。zccl_net.h 明确当前只存在 PBLink backend，只为直接邻居建立连接。</p></div></details>
+<details class="source-card" id="s13"><summary>S13 · FIFO ABI 的 8 槽与 64 KiB</summary><div class="source-content"><span class="file">zeus-ccl @ 09bf6d75dcf7 · src/zccl/device/zccl_fifo.h:8–22、50–82</span><pre><code>#define ZCCL_FIFO_CAPACITY   8u
+#define ZCCL_FIFO_SLOT_BYTES (64u &lt;&lt; 10)
+
+struct ZcclFifoSendMem { volatile uint32_t head; };
+struct ZcclFifoRecvMem { volatile uint32_t tail; };
+
+payload_bytes = capacity * slot_bytes;
+recv_header_bytes = align_up(sizeof(RecvMem), 4096);</code></pre><p>最后两行按常量语义压缩展示。计数器的内存位置与唯一写入者，要结合实际发送/消费代码理解，不能只把 owned 误读成由自己写。</p></div></details>
+<details class="source-card" id="s14"><summary>S14 · 真正的搬运、归约、轮询与发布</summary><div class="source-content"><span class="file">zeus-ccl @ 09bf6d75dcf7 · src/zccl/device/triton/zccl_collective_primitives.py:36、59、285、365、373、384</span><pre><code>// send_tracked:
+zccl_move(src, ..., payload, ..., reduce=False, ...)
+tl.store(tail_ptr, next_tail)
+
+// wait_data_tracked:
+while (seen - head).to(tl.int32) &lt;= 0:
+    seen = tl.load(tail_ptr, volatile=True).to(tl.uint32)
+
+// recv_tracked:
+zccl_move(payload, ..., dst, ..., acc, ..., reduce=reduce, ...)
+if PUBLISH_HEAD:
+    tl.store(head_ptr, next_head)</code></pre><p>这是保留关键关系的伪代码。实际函数还处理 slot 偏移、边界、block、计数器 wrap 和专用参数。</p></div></details>
+<details class="source-card" id="s15"><summary>S15 · 本地两核 barrier 与 volatile 的含义</summary><div class="source-content"><span class="file">zeus-ccl @ 09bf6d75dcf7 · tools/generate_custom_specialized_triton.py:148–151；src/zccl/device/triton/zccl_collective_primitives.py:249–268；docs/npu-cross-core-fences.md:7–37</span><p>专用生成器把 sync 发成 tl.zeus.barrier，注释约定先排空本核 DMA，再交接。解释器使用各 core 的 epoch 计数与 volatile 轮询。文档区分“普通 store 发布”与“等待循环不能被编译器提升”的问题，并记录仿真验证范围。</p></div></details>
+<details class="source-card" id="s16"><summary>S16 · 运行时映射与 Work 等待</summary><div class="source-content"><span class="file">torch_zeus @ 70bf7bbd034c · runtime/zeus_api_compat.cpp:151；runtime/zeus_runtime.cpp:1045–1097；torch_zeus/csrc/core/ProcessGroupZCCL.cpp:860–907</span><p>兼容层把 zeusIpcOpenMemHandle 转到对应 zert 接口。real-runtime 分支委托厂商函数；仿真分支检查设备、拓扑、peer 可达性后打开 handle。Work 等待首先调用 synchronizeStream，显式阻塞条件再做主机侧等待。</p></div></details>
+<details class="source-card" id="s17"><summary>S17 · 测试范围与框架 Graph barrier 边界</summary><div class="source-content"><span class="file">zeus-ccl @ 09bf6d75dcf7 · tests/README.md:42–70；torch_zeus @ 70bf7bbd034c · ProcessGroupZCCL.cpp:3233–3237</span><p>测试目录包含 4/16 rank 数值、拓扑、P2P、对称窗口和 capture/replay 场景。框架的 barrier 入口明确检查当前不在 capture 中。本次只是读取和核对这些入口，没有把测试存在当作新一轮全部通过。</p></div></details>
+<details class="source-card" id="s18"><summary>S18 · 拓扑带宽参数的正确口径</summary><div class="source-content"><span class="file">zeus-ccl @ 09bf6d75dcf7 · src/zccl/graph/zccl_topo.cc:150–151</span><pre><code>constexpr float kPBLinkBwGBs = 16.0f * 0.6f;</code></pre><p>这里记录软件模型如何赋值。它不是本次实测结果，不用于给实板端到端延迟做保证。</p></div></details>
+<details class="source-card" id="s19"><summary>S19 · AllToAll 的库层与框架层</summary><div class="source-content"><span class="file">zeus-ccl @ 09bf6d75dcf7 · README.md:7–11；torch_zeus @ 70bf7bbd034c · torch_zeus/csrc/core/ProcessGroupZCCL.cpp:3292–3398</span><p>库 README 没有列出已实现的原生 AllToAll(v)。框架的 alltoall_base 使用 AutoZcclGroup 组织每个 peer 的 zcclSend / zcclRecv，分别处理均分和不均分。具体拓扑与执行资格仍需单独验证。</p></div></details>
+<details class="source-card" id="s20"><summary>S20 · 不能整除 world 时，尾部怎样处理</summary><div class="source-content"><span class="file">zeus-ccl @ 09bf6d75dcf7 · src/zccl/custom/zccl_custom_api.cc:750–773；src/zccl/device/triton/zccl_ring_collectives.py:84、313</span><p>专用 AllReduce 固定完整 chunk：向上取整并补零到 world×chunk，运行后只拷回 count 个元素。Ring 使用短块 clamp，不写越 recv[count]。</p></div></details>
+<p class="small" style="margin-top:22px">推荐阅读顺序：S2 → S4 → S5 → S6/S7 → S8 → S9/S10 → S12/S13 → S14/S15 → S3/S16。这样可以从“谁调用”一路走到“谁在读写哪个地址、为什么不会提前消费或覆盖”。</p>
+</section>
+<footer class="footer">Notes · ZCCL / Triton / PBLink · 内容更新于 2026-11-03<br>本页不依赖外部字体或脚本。图解与源码说明可离线阅读，打印时按 A4 排版。</footer>
+</main></div>
+<dialog class="source-dialog" id="source-dialog" aria-labelledby="source-dialog-title"><div class="dialog-head"><h3 id="source-dialog-title">源码依据</h3><button type="button" class="btn" id="source-close">返回正文</button></div><div class="dialog-content" id="source-dialog-content"></div></dialog>
+<script>
+(() => {
+  const root = document.documentElement;
+  let savedTheme;
+  try { savedTheme = localStorage.getItem('zccl-guide-theme'); } catch (_) {}
+  root.dataset.theme = savedTheme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem('zccl-guide-theme', root.dataset.theme); } catch (_) {}
+  });
+  document.getElementById('print-page').addEventListener('click', () => window.print());
+  const dialog = document.getElementById('source-dialog');
+  const dialogTitle = document.getElementById('source-dialog-title');
+  const dialogContent = document.getElementById('source-dialog-content');
+  let returnAnchor = null;
+  document.querySelectorAll('a[data-ref]').forEach(link => link.addEventListener('click', event => {
+    if (typeof dialog.showModal !== 'function') return;
+    const source = document.querySelector(link.getAttribute('href'));
+    if (!source) return;
+    event.preventDefault();
+    returnAnchor = link;
+    dialogTitle.textContent = source.querySelector('summary').textContent;
+    dialogContent.replaceChildren(source.querySelector('.source-content').cloneNode(true));
+    dialog.showModal();
+  }));
+  document.getElementById('source-close').addEventListener('click', () => dialog.close());
+  dialog.addEventListener('close', () => { if (returnAnchor) returnAnchor.focus({preventScroll: true}); });
+  dialog.addEventListener('click', event => { if (event.target === dialog) { const r = dialog.getBoundingClientRect(); if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) dialog.close(); } });
+  document.querySelectorAll('a[data-view]').forEach(link => link.addEventListener('click', () => {
+    const tab = document.querySelector(`#zccl-allreduce-flow [data-panel="${link.dataset.view}"]`);
+    if (tab) tab.click();
+  }));
+  const sums = [104, 108, 112, 116];
+  document.querySelectorAll('[data-matrix-phase]').forEach(button => button.addEventListener('click', () => {
+    const phase = Number(button.dataset.matrixPhase);
+    document.querySelectorAll('[data-matrix-phase]').forEach(other => { const on = other === button; other.setAttribute('aria-pressed', String(on)); other.classList.toggle('btn-primary', on); });
+    const body = document.getElementById('matrix-body');
+    body.replaceChildren();
+    for (let rank = 0; rank < 4; rank++) {
+      const row = document.createElement('tr');
+      const heading = document.createElement('td'); heading.textContent = `R${rank}`; row.append(heading);
+      for (let chunk = 0; chunk < 4; chunk++) {
+        const cell = document.createElement('td');
+        cell.textContent = phase === 0 ? (rank + 1) * 10 + chunk + 1 : phase === 1 && rank !== chunk ? '—' : sums[chunk];
+        if (phase > 0 && (phase === 2 || rank === chunk)) cell.className = 'owned';
+        row.append(cell);
+      }
+      body.append(row);
+    }
+    document.getElementById('matrix-caption').textContent = ['教学整数输入；每个 rank 都有四个 chunk。', '只显示完整归约结果的 owner；其他中间内存内容不在此图中展开。', '每个 rank 都获得同一个完整结果 [104, 108, 112, 116]。'][phase];
+  }));
+  const toc = document.getElementById('toc-details');
+  const wideToc = matchMedia('(min-width: 790px)');
+  toc.open = wideToc.matches;
+  wideToc.addEventListener('change', event => { toc.open = event.matches; });
+  const hashTarget = document.getElementById(location.hash.slice(1));
+  if (hashTarget?.tagName === 'DETAILS') hashTarget.open = true;
+  const detailStates = new Map();
+  addEventListener('beforeprint', () => { document.querySelectorAll('main details').forEach(d => { detailStates.set(d, d.open); d.open = true; }); });
+  addEventListener('afterprint', () => { detailStates.forEach((value, d) => { d.open = value; }); detailStates.clear(); });
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => { if (!entry.isIntersecting) return; document.querySelectorAll('.toc a').forEach(a => a.classList.toggle('active', a.getAttribute('href') === `#${entry.target.id}`)); });
+  }, {rootMargin: '-15% 0px -65% 0px'});
+  document.querySelectorAll('main section.chapter').forEach(section => observer.observe(section));
+})();
+</script>
+</body>
+</html>
