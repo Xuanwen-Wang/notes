@@ -30,7 +30,7 @@ def table(headers, rows, caption):
                                               + '</tr>' for row in rows) + '</tbody></table></div>')
 
 
-def chart(name, lines, ylabel, title, band=None, linear=False, labels=False):
+def chart(name, lines, ylabel, title, band=None, linear=False, labels=False, initial_batch=32):
     fig, ax = plt.subplots(figsize=(12.4, 5.4), layout='constrained')
     fig.patch.set_facecolor('#ffffff')
     ax.set_axisbelow(True)
@@ -82,7 +82,7 @@ def chart(name, lines, ylabel, title, band=None, linear=False, labels=False):
     if linear:
         series.append(dict(key='linear', label='线性参考 BS / 16', x=list(lines[0][2]),
                            y=[x / 16 for x in lines[0][2]], color='#8492a6', dashed=True))
-    config = dict(title=title, unit=ylabel, series=series, band=band, labels=labels)
+    config = dict(title=title, unit=ylabel, series=series, band=band, labels=labels, initialBatch=initial_batch)
     payload = json.dumps(config, ensure_ascii=False).replace('<', '\\u003c')
     return (f'<figure class="interactive-chart" id="chart-{name}"><figcaption><div>'
             f'<span class="chart-kicker">4 CARD · 49 DECODE STEP SAMPLES / BATCH · 42 MoE LAYERS</span><h3>{html.escape(title)}</h3></div>'
@@ -112,7 +112,8 @@ def build():
     population_chart = chart('population-comparison', [
         ('h200', 'H200 · EP4', xs, [r['tokens_s_card'] for r in h]),
         ('zeus', 'Zeus · EP4 × TP4', xs, [r['tokens_s_card'] for r in kz])],
-        'tokens/s/card', '49 个 decode step 采样点汇总 · H200 与 Zeus MoE 吞吐', labels=True)
+        'tokens/s/card', '49 个 decode step 采样点汇总 · H200 与 Zeus MoE 吞吐', labels=True,
+        initial_batch=f['selected_batch_size'])
     population_table = table(
         ['总 batch', '均摊 batch/card', 'H200 · ms', 'H200 · tokens/s/card', 'Zeus · ms', 'Zeus · tokens/s/card'],
         [[r['batch_size'], f"{r['batch_per_card']:g}", f"{r['mean_ms']:.4f}", f"{r['tokens_s_card']:.1f}",
@@ -128,7 +129,26 @@ def build():
          for label, obj in [('H200', d['h200']['selection']), ('Zeus', f)]],
         '行：执行平台；列：只用 train 选择的四卡总 batch，以及该档在 validation / test 上的单卡吞吐。每批均保留七步。')
     assert f['measurement_mode'] == 'timing_only'
-    evidence = (f"<p>原始 56 点矩阵共 {f['measured_cases']:,} 个时序 case，宿主耗时 {f['host_seconds']/3600:.2f} 小时；"
+    if f.get('evidence_type') == 'qualified_retained_campaign':
+        q = d['qualification']['current_full_mode']
+        assert q['source_commit'] == f['source_commit'] and q['passed']
+        evidence = (f"<p>本轮直接重测保留的 49 个 decode step 采样点，共 {f['cases']:,} 个时序 case，"
+                    f"{f['workers']} 个并行 worker，宿主耗时 {f['host_seconds']/3600:.2f} 小时，零失败。"
+                    "全部新旧输入、Router IDs、权重已对齐；Router/Shared/Reduce cycles 不变。"
+                    "H200 复用同输入的已完成测量，本轮未重新测量 H200。</p>"
+                    f"<p>当前源码独立数值资格：{q['integrated_regression_tests']} 项 kernel 回归通过；"
+                    f"train00/step017 上新旧合计 {q['complete_mode_cases']} 个完整模式 case 通过原有实现参考、"
+                    "Reduce exact 和 Graph 门禁，15 对保存 tensor 完全一致。"
+                    f"{q['timing_comparison_cases']} 对完整/时序模式的逐 launch/core cycles、Router IDs、"
+                    "输入/权重和去除构建日期后的 zbin 内容一致。历史 step001 资格单独保留。</p>"
+                    "<p>时序模式只用于周期评估，保持真实 Router；Routed/Shared 的 PE 数值乘加被省略，"
+                    "其输出及下游 Reduce 不计为数值 PASS。</p>")
+        if 'current_ci' in d['qualification']:
+            ci = d['qualification']['current_ci']
+            assert ci['headSha'] == f['source_commit'] and ci['conclusion'] == 'success'
+            evidence += f'<p>本轮源码 <code>{f["source_commit"][:12]}</code> 的 <a href="{html.escape(ci["url"], quote=True)}">完整 CI 已通过</a>。</p>'
+    else:
+        evidence = (f"<p>原始 56 点矩阵共 {f['measured_cases']:,} 个时序 case，宿主耗时 {f['host_seconds']/3600:.2f} 小时；"
                 f"排除 {f['excluded_cases']:,} 个 step001 case 后保留 {f['cases']:,} 个，仅重算统计，未重新仿真。"
                 "native 完成门禁与跨平台输入身份均已核对。</p>"
                 f"<p>数值资格独立保留：{f['numerical_baseline_cases']:,} 个历史完整模式基线；"
@@ -136,7 +156,7 @@ def build():
                 f"{f['mode_comparison_cases']} 个逐核 cycles / Router ID 对照。历史 train00/step001 的 "
                 f"{f['baseline_comparison_cases']:,} 个时序 case 与完整基线一致，不移作 step017 数值验证。</p>"
                 "<p>时序模式保持真实 Router，仅在已获资格的 Routed/Shared 路径省略 PE 数值乘加；"
-                "时序输出及下游 Reduce 不具备数值资格，时序 case 数不能计为数值 PASS。</p>")
+                    "时序输出及下游 Reduce 不具备数值资格，时序 case 数不能计为数值 PASS。</p>")
     stages = ('router', 'routed', 'shared', 'reduce')
     absolute = chart('kernel-time',
         [(s, s.title(), xs, [r['stages'][s] / 42 / 400 for r in kz]) for s in stages],
@@ -182,6 +202,14 @@ def build():
         [[r['batch_size'], r['routed_analytic_failed_cases'], r['shared_analytic_failed_cases']]
          for r in history['analytic_exceptions']],
         '行：四卡总 batch；列：超出局部解析预算的 case 数 / 该阶段总 case 数。与实现参考/Graph 门禁分开记录。')
+    revision = ''
+    if 'revision' in d:
+        revision = '<details class="data-details"><summary>查看本轮 Routed 优化前后：相同 49 个采样点</summary>' + table(
+            ['总 batch', '旧版 tokens/s/card', '新版 tokens/s/card', 'MoE 吞吐提升', 'Routed cycles 降幅'],
+            [[r['batch_size'], f"{r['baseline']['tokens_s_card']:.1f}", f"{r['candidate']['tokens_s_card']:.1f}",
+              f"{r['throughput_increase_pct']:.2f}%", f"{r['routed_cycles_reduction_pct']:.2f}%"]
+             for r in d['revision']['rows']],
+            '行：四卡总 batch；列：旧/新版的单卡吞吐及变化。双方采用相同 49 个采样点、完整 42 层与相同工具链；阶段降幅不可直接当作 MoE 吞吐提升。') + '</details>'
     status = f"{f['cases']:,} 个时序 case"
     source = f['source_commit']
     best_h, best_z = max(h, key=lambda r: r['tokens_s_card']), max(kz, key=lambda r: r['tokens_s_card'])
@@ -192,7 +220,7 @@ def build():
         SELECTION_TABLE=selection_table, EVIDENCE=evidence, KERNEL=kernel, UPDATED=d['updated'],
         STATUS=status, ANALYSIS=analysis, EXCEPTIONS=str(exceptions), SOURCE=source,
         SOURCE_SHORT=source[:12], DATA=json.dumps(page_data, ensure_ascii=False).replace('<', '\\u003c'),
-        HISTORY_TABLES=historical,
+        REVISION_TABLE=revision, HISTORY_TABLES=historical,
         H200_BEST=f"{best_h['tokens_s_card']:,.1f}", H200_BEST_BS=str(best_h['batch_size']), H200_BEST_CARD=f"{best_h['batch_size']/4:g}",
         ZEUS_BEST=f"{best_z['tokens_s_card']:,.1f}", ZEUS_BEST_BS=str(best_z['batch_size']), ZEUS_BEST_CARD=f"{best_z['batch_size']/4:g}",
         TOOLCHAIN=table(['组件', '冻结版本 / SHA256'], [[k, '<code>' + v + '</code>'] for k, v in d['toolchain'].items()],

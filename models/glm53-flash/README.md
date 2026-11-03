@@ -50,4 +50,19 @@ step001 完整数值基线，再强制应用采样策略，输出当前 493,920 
 
 新轮次发布前，将本轮 JSON、CSV 和图表放入独立版本子目录，增加版本记录，保留固定入口。
 公开数据禁止携带原始 prompt、凭据、内部地址或个人服务器路径。更新根目录 catalog.json，
-检查桌面/手机、键盘、无 JS 和打印；Pages 构建成功后核对线上 HTML 与本地 SHA256。
+检查桌面、键盘、无 JS 和打印；按维护者要求不再检查手机端。Pages 构建成功后核对线上 HTML 与本地 SHA256。
+
+新版 Routed 的 49 点重测使用 `scripts/import_revision.py`：输入已有发布数据与私有活动中
+经过原始记录/hash 校验的 `comparison.json`、`identity.json`、`complete.json`、`qualification.json`。
+脚本验证完整矩阵、源码/模拟器/worker/资格绑定、旧统计一致性及非 Routed 阶段不变，复用
+现有 pooled-throughput、分位数和 train/holdout 统计。可用 `--ci` 传入对应 SHA 的完整 CI 回执。
+它不替代私有原始记录审计；不得只手工生成这四个 JSON 来绕过资格和输入校验。
+公开导出只包含数值统计与 hash，不复制含私有路径的 identity 原文。
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 python3 models/glm53-flash/scripts/import_revision.py \
+  --baseline PREVIOUS_PUBLIC_DATA --evidence AUDITED_CAMPAIGN_EXPORT --ci CI_RECEIPT --out NEW_EXPORT
+```
+
+`versions/20261103-e93a57a7/` 保留旧版 49 点数据和四张图，
+`versions/20261103-b6148f98/` 保存新 Routed 的数据和四张图。固定页面入口展示新版本。
