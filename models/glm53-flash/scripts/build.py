@@ -101,7 +101,7 @@ def build():
     full_table = table(['总 BS', '每卡 BS', '平均 ms', 'tokens/s/card', 'P10', 'P90'],
         [[r['batch_size'], f"{r['batch_per_card']:g}", f"{r['mean_ms']:.4f}", f"{r['tokens_s_card']:.1f}",
           f"{r['p10']:.1f}", f"{r['p90']:.1f}"] for r in h], 'H200 56 组统计；P10/P90 是输入间分布，不是置信区间')
-    zeus56 = '<p class="pending">尚未完成 56 组扩展。本节仅在全部 564,480 个 case 通过原门禁后生成统计曲线。</p>'
+    zeus56 = '<p class="pending">56 组扩展采用新 CycleSim 时序模式：完整数值资格独立保留，564,480 个周期样本通过 native 完成门禁及输入身份检查后生成曲线。时序输出不计为数值 PASS。</p>'
     if d.get('zeus56', {}).get('complete'):
         f = d['zeus56']
         frows = f['rows']
@@ -113,9 +113,13 @@ def build():
             [[r['batch_size'], f"{r['cycles']:,.1f}", f"{r['milliseconds']:.4f}", f"{r['tokens_s_card']:.1f}",
               f"{r['p10']:.1f}", f"{r['p90']:.1f}", f"{h[i]['tokens_s_card']:.1f}"] for i, r in enumerate(frows)],
             '两侧均为总 token / 总时间 / 4；输入间 P10/P90 不是置信区间')
-        zeus56 += (f"<p>Zeus 完成 {f['cases']:,} case，原实现参考、Graph 与完成门禁全部通过。train 选择总 BS{f['selected_batch_size']}；"
+        assert f['measurement_mode'] == 'timing_only'
+        zeus56 += (f"<p>Zeus 完成 {f['cases']:,} 个时序 case，native 完成门禁与配对输入身份全部通过。train 选择总 BS{f['selected_batch_size']}；"
                    f"validation {f['holdout']['validation']:.2f}、test {f['holdout']['test']:.2f} tokens/s/card。"
-                   f"解析数学预算另记 {f['analytic_exceptions']:,} 个超限 case。</p>"
+                   f"宿主执行耗时 {f['host_seconds']/3600:.2f} 小时。</p>"
+                   f"<p>数值资格单列：保留 {f['numerical_baseline_cases']:,} 个完整模式基线；新二进制补测 {f['new_binary_numerical_cases']} 个完整数值/Graph 代表点，"
+                   f"{f['mode_comparison_cases']} 个准入用例逐 launch/core cycles 与真实 Router ID 一致；全量中的首组 {f['baseline_comparison_cases']:,} 个样本也与完整基线一致。"
+                   'Router 保持真实计算，仅 Routed/Shared 省略已资格的 PE 数值乘加。时序输出及下游 Reduce 不具备数值资格，不能把 564,480 个时序样本计为数值通过。</p>'
                    '<p><a href="data/zeus-56-paired.csv" download>下载全部 840 个配对输入的 Zeus 汇总 CSV</a></p>')
     kernel = '<p class="pending">等待每档完整 42 层结果。预热与部分层结果不用于吞吐曲线。</p>'
     analysis = '本轮尚未形成完整 15 档曲线；暂不判断 Zeus 的最佳 batch 或 Routed 增长趋势。'
@@ -166,6 +170,9 @@ def build():
         HISTORY_TABLES=historical, ZEUS56=zeus56,
         TOOLCHAIN=table(['组件', '冻结版本'], [[k, '<code>' + v + '</code>'] for k, v in d['toolchain'].items()], '本轮工具链与 kernel 身份'))
     page = (ROOT / 'page.template').read_text()
+    # Scope historical numerical claims before adding timing-only measurements.
+    page = page.replace('Zeus 每个完成 case 均要求', 'Zeus 第一阶段的 10,080 个完整模式 case 均要求')
+    page = page.replace('Model performance notebook · 2026-11-02', 'Model performance notebook · ' + d['updated'])
     for key, value in replacements.items():
         assert '{{' + key + '}}' in page, key
         page = page.replace('{{' + key + '}}', value)

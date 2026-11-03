@@ -93,7 +93,7 @@ def extended(h200, zeus, summary, points, out):
     holdouts = {split:chosen * 1e8 / statistics.mean(r['cycles'] for r in paired if r['batch_size'] == chosen and r['split'] == split) for split in ('validation', 'test')}
     with (out / 'zeus-56-paired.csv').open('w', newline='') as stream:
         fields = ['batch_size', 'group', 'step', 'split', 'cycles', 'milliseconds', 'tokens_s_card', 'analytic_exceptions']
-        writer = csv.DictWriter(stream, fieldnames=fields)
+        writer = csv.DictWriter(stream, fieldnames=fields, lineterminator='\n')
         writer.writeheader()
         writer.writerows({k:r[k] for k in fields} for r in paired)
     return dict(complete=True, cases=564480, pairs=56, rows=rows, source_commit=next(iter(heads)),
@@ -190,11 +190,11 @@ def export(h200, zeus, out, full56=False):
     (out / 'benchmark.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n')
     if layer_rows:
         with (out / 'zeus-layers.csv').open('w', newline='') as stream:
-            writer = csv.DictWriter(stream, fieldnames=list(layer_rows[0]))
+            writer = csv.DictWriter(stream, fieldnames=list(layer_rows[0]), lineterminator='\n')
             writer.writeheader()
             writer.writerows(layer_rows)
     with (out / 'throughput.csv').open('w', newline='') as stream:
-        writer = csv.writer(stream)
+        writer = csv.writer(stream, lineterminator='\n')
         writer.writerow(['global_batch', 'batch_per_card', 'h200_56_tokens_s_card',
                          'h200_pair_tokens_s_card', 'zeus_pair_tokens_s_card', 'zeus_cycles'])
         for h in hrows:
