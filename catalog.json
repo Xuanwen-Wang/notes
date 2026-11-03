@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-02",
+  "updated": "2026-11-03",
   "articles": [
     {
       "file": "models/glm53-flash/index.html",
       "category": "compiler",
-      "title": "TritonShared - GLM-5.3-Flash：MoE 性能与验证",
-      "description": "四卡 H200 EP4 与 Zeus 的配对输入吞吐、BS16–128 扫描、逐 kernel 增长和正确性记录。",
-      "date": "2026-11-02",
+      "title": "TritonShared - GLM-5.3-Flash：AF分离最大MOE FFN吞吐评估",
+      "description": "AF分离场景下的最大MOE FFN吞吐评估：四卡 H200 EP4 与 Zeus 配对输入、BS16–128 扫描及逐 kernel 增长记录。",
+      "date": "2026-11-03",
       "tags": ["GLM-5.3-Flash", "MoE", "H200", "CycleSim", "Benchmark"]
     },
     {
