@@ -1,19 +1,96 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="GLM-5.3-Flash AF分离最大MOE FFN吞吐评估：四卡 H200 EP4、Zeus CycleSim，配对输入吞吐与 kernel 增长曲线。"><title>TritonShared - GLM-5.3-Flash：AF分离最大MOE FFN吞吐评估</title><style>{{STYLE}}</style></head>
-<body><nav class="nav" aria-label="页面导航"><div class="nav-inner"><a class="brand" href="../../">NOTES / 模型优化</a><a href="#paired">配对吞吐</a><a href="#h200">H200 统计</a><a href="#kernels">Kernel 增长</a><a href="#protocol">测量口径</a><a href="#history">版本记录</a></div></nav>
-<main><header><div class="eyebrow">Model performance notebook · 2026-11-02</div><h1>GLM-5.3-Flash<br>AF分离最大MOE FFN吞吐评估</h1><p class="lead">评估 AF 分离场景下的最大 MOE FFN 吞吐，结合 kernel 增长与正确性记录。固定页面持续更新；每轮数据保留独立版本、输入范围与工具链身份。</p><div class="pills"><span class="pill">4 card · 总 BS16–128</span><span class="pill">42 层 MoE 组件回放</span><span class="pill">Zeus 16 rank / 32 core</span><span class="pill">CycleSim 400 MHz</span><span class="pill">统一 kernel 入口</span></div></header>
-<div class="metrics"><div class="metric"><small>H200 · 49 个采样点</small><strong>{{H200_BEST}} <span>tokens/s/card</span></strong><span>总 BS128 · 当前扫描边界最高，尚未饱和</span></div><div class="metric"><small>Zeus · 49 点完整时序矩阵</small><strong style="font-size:19px">{{STATUS}}</strong><span>15 档 × 49 点 × 42 层 × 16 rank</span></div><div class="metric"><small>固定的比较单位</small><strong>tokens/s/card</strong><span>四卡总 token 数 ÷ MoE 组件秒数 ÷ 4</span></div></div>
-<p class="note"><b>当前采样口径 · 2026-11-03</b>：按维护者要求，H200 与 Zeus 全部 batch、全部划分统一排除 step001。保留 017、033、049、065、081、097、113，每档 49 点（7 批请求 × 7 步）。这是查看早期路由分布后的协议修订，不宣称已证明采集损坏；原始 56 点数据与 step001 数值资格留作历史证据，均不参与当前性能曲线。索引从 decode forward 的 0 开始计数。</p>
-<section id="paired"><div class="section-head"><h2>同组输入，比较吞吐曲线</h2><span class="section-num">01 / MATCHED INPUT</span></div><p class="quality">当前示例为 train00 / step017（CycleSim 时序模式），按排除后最早保留点选择。每一档均取同一 BS128 父 hidden 的嵌套前缀；完整层结果通过输入 hash 对齐后才进入曲线。</p>{{PAIRED_CHART}}<div class="note">Zeus 是仿真周期换算，H200 是 CUDA event 测时；两者量化和 Shared 放置不同。这里比较同一输入上的各自实现，不是等价量化算法的硬件加速比，也不是整模型推理吞吐。</div>{{PAIRED_TABLE}}<p>{{ANALYSIS}}</p><div class="links"><a href="data/throughput.csv" download>下载吞吐 CSV</a><a href="assets/paired-throughput.png" download>下载高清图</a><a href="assets/paired-throughput.svg" download>下载 SVG</a></div></section>
-<section id="h200"><div class="section-head"><h2>H200：49 个采样点的统计</h2><span class="section-num">02 / WORKLOAD DISTRIBUTION</span></div><p class="quality">896 条不同请求，7 批请求 × 7 个固定 decode step；15 档均覆盖全部 42 层。阴影表示输入间 P10–P90 波动，不是测量置信区间。</p>{{FULL_CHART}}<p>{{H200_SELECTION}}</p>{{FULL_TABLE}}<div class="note">统计吞吐采用总 token 数除以总时间，不能直接平均每组 tokens/s。下面的跨平台统计使用完全相同的 49 个采样点；单点示例不代替总体统计。</div></section>
-<section id="zeus56"><div class="section-head"><h2>Zeus：49 点统计与配对比较</h2><span class="section-num">02B / EXTENDED MATRIX</span></div>{{POPULATION}}</section>
-<section id="kernels"><div class="section-head"><h2>哪些 kernel 增长超线性？</h2><span class="section-num">03 / SCALING</span></div><p class="quality">第一张图比较相对 BS16 的增长倍数；第二张图给出每层平均耗时；第三张图把增长除以 batch 倍数。Routed 使用 M1/M2/M4 合并，窗口大小与实际 M 合并大小不同。</p>{{KERNEL}}<div class="note">统一入口不代表所有 batch 生成相同二进制。T 为 constexpr，kernel 内可按 T 特化窗口和尾部；本轮继续保留 Router、Routed、Shared、Reduce 各一个默认 JIT 入口。</div></section>
-<section id="protocol"><div class="section-head"><h2>测量口径与正确性边界</h2><span class="section-num">04 / EVIDENCE</span></div><div class="grid2"><div class="mini"><h3>Zeus · TP4 × EP4</h3><p>4 card / 16 rank / 32 core。Routed 使用 per-tensor FP8；Shared 为 BF16，仅 EP0 执行。每个 launch 取最慢 core，rank 内累加所有阶段，逐层取最慢 rank，最后累加 42 层。</p><code>tokens/s/card = 总 BS × 400,000,000 / cycles / 4</code></div><div class="mini"><h3>H200 · MoE TP1 × EP4</h3><p>4 张 H200 NVL，每卡 72 个完整 Routed 专家；独立 FP8 Shared 跨四卡 TP4，每卡 I512。各层使用 rank 内测时样本中位数，取最慢 EP，再累加 42 层。</p><code>tokens/s/card = 总 BS × 1,000 / ms / 4</code></div></div><p>两侧都包含 MoE 计算与本地处理；排除通信、Attention、host 调度、JIT、数据与权重加载。激活采集拓扑为 TP4/EP1，执行拓扑分别记录，不能把采集拓扑当作测量拓扑。小 batch 是父激活前缀的组件回放，未重新运行对应 batch 的完整模型。</p><details open><summary>原有正确性门禁保持不变</summary><p>Zeus 每个完成 case 均要求 Router/Shared 实现参考、Routed LUT 参考、Reduce exact、两次 Graph replay 与 changed-input Graph 检查通过，并核对 native 完成状态。解析数学参考另行记录：历史 train00/step001 完整数值基线有 <b>{{EXCEPTIONS}}</b> 个 case 超出原解析预算；这不等于原实现参考或 Graph 失败，预算没有放宽。</p><p>解析误差涉及量化、近似激活及归并边界，端到端影响由算法团队持续进行真实推理评估。用户已向算法团队确认，目前真实推理任务未观察到相应问题；该反馈不替代本页的组件精度记录，也不证明所有任务无影响。</p><p>H200 原始 56 点矩阵共 3,360 个 rank case / 141,120 个层卡点完成；当前统计保留 2,940 个 rank case / 123,480 个层卡点。采样口径修订后 80 项 CPU 检查、输入与路由一致性、Graph/eager、EP 归属及无 NCCL profile 验证通过。最新 PR CI 以 <a href="https://github.com/DarronTam/torch_zeus/pull/643/checks">GitHub checks</a> 为准。本轮无 VCS/RTL 或整模型性能结论。</p></details>{{TOOLCHAIN}}<p class="quality">Zeus benchmark 源码：<a href="https://github.com/DarronTam/torch_zeus/commit/{{SOURCE}}"><code>{{SOURCE_SHORT}}</code></a>。工具链固定用于本轮可比性；后续更新编译器时应建立新版本记录。</p><div class="links"><a href="data/benchmark.json" download>数据与来源 JSON</a><a href="https://github.com/Xuanwen-Wang/notes/tree/master/models/glm53-flash">页面源码与生成脚本</a><a href="https://github.com/DarronTam/torch_zeus/pull/643">Draft PR #643</a></div></section>
-<section id="history"><div class="section-head"><h2>版本记录与持续更新</h2><span class="section-num">05 / CHANGELOG</span></div>
-<p><b>2026-11-03 · 排除 step001</b><br>从完整矩阵中统一排除 7 个早期采样点；重算 49 点吞吐、kernel 曲线及 train/validation/test，保留冻结输入与原始回执。<a href="data/20261102-full56/benchmark.json">旧 56 点报告归档</a>仅供追溯。</p>
-<p><b>2026-11-02 · 新版成对输入与 BS128 Routed</b><br>接入 bounded multi-window 和大 batch 静态展开；先固定一组输入完成 15 档 × 42 层，再扩展 56 组。旧 H200 TP4/EP1 曲线撤出当前比较，现用 EP4 基线。</p>
-<details><summary>历史五档：保留优化证据，不参与新曲线拟合</summary><p>旧版 Zeus 测量覆盖 BS16/24/32/40/48，共 3,360 case。各档用了不同 decode step，不能用它们选最佳 batch。旧 exact-tail 优化后的 Routed BS40/16 为 3.057×，BS48/16 为 2.878×；这些数值属于旧版本、旧输入，不代表本轮 BS128 kernel。</p>
-{{HISTORY_TABLES}}
-<p><a href="https://github.com/DarronTam/torch_zeus/blob/936fcc45cc4d24327702f0611ebee9212d7610e5/dev_docs/evaluations/glm53_zeus_exact_tail_20261102/README.md">冻结的五档完整报告</a> · <a href="https://github.com/DarronTam/torch_zeus/blob/463b823aeed7590f83c7bc062884de5819a2880c/dev_docs/evaluations/glm53_h200_ep4_20261102/README.md">H200 EP4 完整实验记录</a></p></details>
-<p class="quality">复用流程：导入完成的测量 → 校验完整性、源码 SHA 与跨平台输入 hash → 重算汇总和图表 → 更新版本说明 → 构建并验证 Pages。只发布汇总数据与来源指纹，原始输入和运行日志仍由实验归档管理。</p></section>
-<footer class="footer">GLM-5.3-Flash performance notebook · 静态 HTML，可离线阅读与打印。横轴为四卡总 batch，上方副轴为总 batch / 4；每卡 batch 是归一化请求数，不是专家实际收到的 token 数。</footer></main><script type="application/json" id="benchmark-data">{{DATA}}</script></body></html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="GLM-5.3-Flash AF分离最大MOE FFN吞吐评估：49个采样点的四卡H200与Zeus对比，kernel耗时、增长和验证记录。">
+<title>TritonShared - GLM-5.3-Flash：AF分离最大MOE FFN吞吐评估</title>
+<style>{{STYLE}}</style>
+</head>
+<body>
+<a class="skip-link" href="#overview">跳到吞吐对比</a>
+<aside class="sidebar">
+  <a class="brand" href="../../"><span class="brand-mark">N</span><span>NOTES<small>模型性能研究</small></span></a>
+  <div class="sidebar-model">GLM-5.3-Flash<span>MoE / FFN</span></div>
+  <nav class="side-nav" aria-label="页面目录">
+    <a href="#overview" aria-current="location"><span>01</span>总体吞吐对比</a>
+    <a href="#kernels"><span>02</span>Kernel 组成</a>
+    <a href="#chart-kernel-time" class="subnav">各阶段耗时</a>
+    <a href="#chart-kernel-growth" class="subnav">相对增长</a>
+    <a href="#chart-kernel-per-token" class="subnav">单 token 成本</a>
+    <a href="#sampling"><span>03</span>采样与统计</a>
+    <a href="#protocol"><span>04</span>测量与验证</a>
+    <a href="#history"><span>05</span>版本记录</a>
+  </nav>
+  <div class="sidebar-foot"><span class="status-dot"></span>49 点统计已完成<p>四卡总 batch 16–128<br>统一口径：tokens/s/card</p><a href="https://github.com/DarronTam/torch_zeus/pull/643">查看 PR #643 ↗</a></div>
+</aside>
+<main>
+<header class="page-header">
+  <div class="eyebrow">PERFORMANCE NOTEBOOK <span>更新 {{UPDATED}}</span></div>
+  <h1>GLM-5.3-Flash <span>AF分离最大MOE FFN吞吐评估</span></h1>
+  <p class="lead">从同一套真实输入出发，比较四卡吞吐，再拆解各阶段的 batch 扩展成本。</p>
+</header>
+
+<section id="overview" class="overview">
+  <div class="section-head"><div><span class="section-num">01 / THROUGHPUT</span><h2>H200 与 Zeus · 多采样点对比</h2></div><span class="scope-badge">4 card · 42 层 · 49 点 / 档</span></div>
+  <div class="metrics">
+    <div class="metric h200"><small>H200 · 扫描范围内最高</small><strong>{{H200_BEST}} <span>tokens/s/card</span></strong><span>总 BS{{H200_BEST_BS}} · 每卡均摊 {{H200_BEST_CARD}}</span></div>
+    <div class="metric zeus"><small>Zeus · 扫描范围内最高</small><strong>{{ZEUS_BEST}} <span>tokens/s/card</span></strong><span>总 BS{{ZEUS_BEST_BS}} · 每卡均摊 {{ZEUS_BEST_CARD}}</span></div>
+    <div class="metric sample"><small>每档使用同一套采样点</small><strong>7 × 7 <span>= 49 点</span></strong><span>7 批请求 × 7 个 decode 位置</span></div>
+  </div>
+  <p class="sample-strip"><b>采样数据</b>：896 条不同请求，每批 128 条；保留 step 017 / 033 / 049 / 065 / 081 / 097 / 113，排除 step001。每个点重放完整 42 层；各 batch 使用同一父输入的嵌套前缀。<a href="#sampling">采样细节 ↓</a></p>
+  {{POPULATION_CHART}}
+  <p class="reading-note">纵轴越高，单位卡的 MoE 组件吞吐越大。每个点按 <code>总 token ÷ 总时间 ÷ 4</code> 汇总 49 个样本；不直接平均样本吞吐。两条曲线分别采用 H200 CUDA event 测时和 Zeus CycleSim 400 MHz 周期换算。</p>
+  <details class="data-details"><summary>查看 15 档吞吐与耗时明细</summary>{{POPULATION_TABLE}}{{DISTRIBUTION_TABLE}}<p class="quality">P10–P90 描述采样点之间的吞吐差异，不是置信区间。</p></details>
+  <div class="note">比较范围为 42 层 MoE 组件计算，未计通信、Attention、host 调度及加载。两端的量化方式和 Shared 放置不同，结果不代表同精度算法的硬件加速比或完整模型吞吐。BS128 是当前扫描上界，H200 的最高点不代表已达到饱和。</div>
+  <div class="links"><a href="data/throughput.csv" download>吞吐 CSV ↓</a><a href="data/h200-49-paired.csv" download>H200 逐点数据 ↓</a><a href="data/zeus-49-paired.csv" download>Zeus 逐点数据 ↓</a></div>
+</section>
+
+<section id="kernels">
+  <div class="section-head"><div><span class="section-num">02 / KERNEL BREAKDOWN</span><h2>四个阶段，各自在做什么？</h2></div><span class="scope-badge">Zeus · 16 rank / 32 core</span></div>
+  <p class="quality">下列介绍对应本轮 Zeus 实现。Router 产生路由，Routed 与 Shared 形成专家输出，Reduce 完成本地加权归并；跨卡通信不计入这些窗口。</p>
+  <div class="kernel-grid">
+    <article class="kernel-card router"><span class="kernel-tag">01 · 路由选择</span><h3>Router</h3><p>对输入做路由投影、评分和带 bias 的 Top-K 选择，为每个 token 产生 8 个 routed 专家 ID 与路由权重。</p><div class="kernel-focus">关注：投影、评分与 Top-K 的周期增长。</div></article>
+    <article class="kernel-card routed"><span class="kernel-tag">02 · 稀疏专家</span><h3>Routed</h3><p>按真实路由执行专家 Gate / Up、激活与 Down。本轮采用 per-tensor FP8，使用 M1 / M2 / M4 token 合并。</p><div class="kernel-focus">关注：活跃专家数、权重复用、窗口与尾部调度。</div></article>
+    <article class="kernel-card shared"><span class="kernel-tag">03 · 共享专家</span><h3>Shared</h3><p>对全部 token 执行共享专家 FFN。本轮 Zeus 采用 BF16，仅在 EP0 上执行，并在其中按 TP4 分片。</p><div class="kernel-focus">关注：固定专家权重下，计算和数据搬运如何随 batch 增长。</div></article>
+    <article class="kernel-card reduce"><span class="kernel-tag">04 · 本地归并</span><h3>Reduce</h3><p>读取有效的本地 routed 输出，应用路由权重并求和，在持有 Shared 的分支合入共享输出。</p><div class="kernel-focus">关注：有效行读取与加权求和；不含跨卡 AllReduce。</div></article>
+  </div>
+  <p class="note">各阶段维持统一 JIT 入口；batch 维度是编译期常量，窗口和尾部可在 kernel 内特化。M 合并大小与窗口宽度是两个概念。</p>
+  {{KERNEL}}
+  <p class="reading-note">{{ANALYSIS}}</p>
+  <div class="links"><a href="data/zeus-49-stages.csv" download>49 点逐 kernel 周期 CSV ↓</a></div>
+</section>
+
+<section id="sampling">
+  <div class="section-head"><div><span class="section-num">03 / SAMPLING</span><h2>49 个点是怎样组成的？</h2></div></div>
+  <div class="sampling-flow"><div><strong>896</strong><span>条不同请求</span></div><b>→</b><div><strong>7 × 128</strong><span>批次 × 每批请求数</span></div><b>→</b><div><strong>7</strong><span>个固定 decode 位置</span></div><b>→</b><div><strong>49</strong><span>个采样点 / batch 档位</span></div></div>
+  <dl class="method-list">
+    <div><dt>一个采样点</dt><dd>一批请求在一个 decode 位置的真实逐层输入，例如 train00 / step017；每个点均重放全部 42 层 MoE。不是 49 批请求，也不是连续执行 49 个 step。</dd></div>
+    <div><dt>保留的 decode 位置</dt><dd>017、033、049、065、081、097、113。索引从第一个 decode forward 的 0 开始；step001 已从双方全部 batch 和数据划分中排除。</dd></div>
+    <div><dt>batch 如何对齐</dt><dd>总 BS16–128，间隔 8，共 15 档。每层 BS16 取该层 BS128 父输入的前 16 行，BS32 取前 32 行；H200 与 Zeus 用 hidden hash 核对。每层独立重放，不宣称运行过相应小 batch 的整模轨迹。</dd></div>
+    <div><dt>统计与选择</dt><dd>同一 batch 的 49 个点按总 token / 总时间汇总。train 3 批、validation 2 批、test 2 批；只用 train 选择 batch，随后报告 holdout。同一请求的多个 step 存在关联，不视作 49 个独立同分布样本。</dd></div>
+    <div><dt>采样口径修订</dt><dd>2026-11-03 按维护者要求，在查看早期路由分布后排除 step001；不宣称已证明旧采集损坏。原始 56 点数据和数值资格留作历史归档，不参与当前性能曲线。</dd></div>
+  </dl>
+  {{SELECTION_TABLE}}
+</section>
+
+<section id="protocol">
+  <div class="section-head"><div><span class="section-num">04 / MEASUREMENT & VALIDATION</span><h2>测量边界与验证记录</h2></div></div>
+  <div class="grid2">
+    <div class="mini"><h3>Zeus <span>TP4 × EP4</span></h3><p>4 card / 16 rank / 32 core，400 MHz。每个 launch 取最慢 core，rank 内累加阶段，逐层取最慢 rank，最后累加 42 层。</p><code>tokens/s/card = 总 BS × 400,000,000 ÷ cycles ÷ 4</code></div>
+    <div class="mini"><h3>H200 <span>MoE TP1 × EP4</span></h3><p>4 张 H200 NVL，每卡 72 个完整 Routed 专家；独立 FP8 Shared 跨四卡 TP4。各层先取每轮重复均值，再取轮次中位数，取最慢 EP 后累加 42 层。</p><code>tokens/s/card = 总 BS × 1,000 ÷ ms ÷ 4</code></div>
+  </div>
+  <p class="quality">激活采集拓扑为 TP4/EP1，与执行拓扑分开记录。当前 Zeus 统计纳入 {{STATUS}}；H200 保留 2,940 个 rank case / 123,480 个层卡点。本轮没有 VCS/RTL 或整模型性能结论。</p>
+  <details><summary>查看时序资格、数值验证与解析误差</summary>{{EVIDENCE}}<p>历史 train00/step001 的完整数值基线要求实现参考、Reduce exact、两次 Graph replay 和 changed-input Graph 门禁通过；其中 <b>{{EXCEPTIONS}}</b> 个 case 超出局部解析数学预算。该诊断与实现参考及 Graph 门禁分开记录，阈值未放宽。</p><p>端到端影响由算法团队持续进行真实推理评估。维护者已向算法团队确认，目前真实推理任务未观察到相应问题；该反馈不替代组件精度记录。采样口径修订后 80 项 CPU 检查通过，最新 PR CI 以 <a href="https://github.com/DarronTam/torch_zeus/pull/643/checks">GitHub checks</a> 为准。</p></details>
+  <details><summary>查看冻结工具链与源码版本</summary>{{TOOLCHAIN}}<p class="quality">本轮性能 kernel 源码：<a href="https://github.com/DarronTam/torch_zeus/commit/{{SOURCE}}"><code>{{SOURCE_SHORT}}</code></a>。更新编译器或 kernel 后需建立新版本记录。</p></details>
+  <div class="links"><a href="data/benchmark.json" download>完整数据与来源 JSON ↓</a><a href="https://github.com/Xuanwen-Wang/notes/tree/master/models/glm53-flash">页面与生成脚本 ↗</a></div>
+</section>
+
+<section id="history">
+  <div class="section-head"><div><span class="section-num">05 / CHANGELOG</span><h2>版本记录</h2></div></div>
+  <div class="timeline"><div><time>2026-11-03</time><p><b>以 49 点总体对比作为主视图</b><br>移除单点对比区；增加 kernel 介绍、坐标与统计范围说明、侧边导航。指标和原始测量保持不变。</p></div><div><time>2026-11-03</time><p><b>统一排除 step001</b><br>双方全部 batch 采用 49 点统计，重算吞吐和 kernel 曲线。<a href="data/20261102-full56/benchmark.json">原 56 点归档</a>仅用于追溯。</p></div><div><time>2026-11-02</time><p><b>成对输入与 BS128 Routed</b><br>接入 bounded multi-window 与大 batch 静态展开；完成 15 档扫描，H200 使用 EP4 基线。</p></div></div>
+  <details><summary>历史五档 A/B：仅保留优化证据</summary><p class="quality">BS16/24/32/40/48 的旧实验共 3,360 case，各档使用不同 decode step，不能用来选最佳 batch，不参与当前曲线。</p>{{HISTORY_TABLES}}</details>
+</section>
+<footer class="footer">GLM-5.3-Flash · 持续更新的性能记录。静态 HTML 支持离线阅读；曲线可筛选，PNG / SVG 保留完整序列。每卡 batch 为总 batch ÷ 4，不是专家实际收到的 token 数。</footer>
+</main>
+<script type="application/json" id="benchmark-data">{{DATA}}</script>
+</body></html>

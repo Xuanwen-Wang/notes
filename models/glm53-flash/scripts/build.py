@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[1]
 COLORS = {'zeus': '#2364d2', 'h200': '#0d8d7b', 'router': '#2364d2',
-          'routed': '#d85b43', 'shared': '#7856ad', 'reduce': '#0d8d7b'}
+          'routed': '#d85b43', 'shared': '#7856ad', 'reduce': '#0d8d7b', 'reference': '#8492a6'}
 plt.rcParams.update({'font.family': 'Noto Sans CJK JP', 'font.size': 11,
                      'axes.spines.top': False, 'axes.spines.right': False,
                      'axes.edgecolor': '#b9c7d7', 'text.color': '#172b48',
@@ -38,10 +38,10 @@ def chart(name, lines, ylabel, title, band=None, linear=False, labels=False):
     ax.set_title(title, loc='left', fontsize=14, pad=40, weight='bold')
     for key, label, xs, ys in lines:
         ax.plot(xs, ys, color=COLORS[key], linewidth=2.5, marker='o', markersize=5,
-                markerfacecolor='white', markeredgewidth=2, label=label)
+                markerfacecolor='white', markeredgewidth=2, label=label, linestyle='--' if key == 'reference' else '-')
         if labels:
             for x, y in zip(xs, ys):
-                ax.annotate(f'{y:,.0f}', (x, y), xytext=(0, 10 if key == 'h200' else -18),
+                ax.annotate(f'{y:,.1f}', (x, y), xytext=(0, 10 if key == 'h200' else -18),
                             textcoords='offset points', ha='center', fontsize=8.5, color=COLORS[key])
     if band:
         ax.fill_between(*band, color=COLORS['h200'], alpha=.1, linewidth=0, label='输入间 P10–P90')
@@ -76,19 +76,19 @@ def chart(name, lines, ylabel, title, band=None, linear=False, labels=False):
     svg = '\n'.join(line.rstrip() for line in svg.splitlines()) + '\n'
     (assets / f'{name}.svg').write_text(svg)
     plt.close(fig)
-    series = [dict(key=k, label=label, x=list(xs), y=list(ys), color=COLORS[k])
+    series = [dict(key=k, label=label, x=list(xs), y=list(ys), color=COLORS[k], dashed=k == 'reference')
               for k, label, xs, ys in lines]
     if linear:
         series.append(dict(key='linear', label='线性参考 BS / 16', x=list(lines[0][2]),
                            y=[x / 16 for x in lines[0][2]], color='#8492a6', dashed=True))
-    config = dict(title=title, unit=ylabel, series=series, band=band)
+    config = dict(title=title, unit=ylabel, series=series, band=band, labels=labels)
     payload = json.dumps(config, ensure_ascii=False).replace('<', '\\u003c')
     return (f'<figure class="interactive-chart" id="chart-{name}"><figcaption><div>'
-            f'<span class="chart-kicker">4 CARD · BATCH SIZE 16–128</span><h3>{html.escape(title)}</h3></div>'
+            f'<span class="chart-kicker">4 CARD · 49 SAMPLES / BATCH · 42 LAYERS</span><h3>{html.escape(title)}</h3></div>'
             f'<span class="chart-unit">{html.escape(ylabel)}</span></figcaption>'
             '<div class="chart-controls"></div><div class="chart-frame">' + svg + '</div>'
             '<div class="chart-readout"></div><div class="chart-footer">'
-            '<span>横轴：四卡总 batch size · 每卡 batch = 总 BS / 4</span>'
+            f'<span>横轴：四卡总 batch size（16–128）<br>纵轴：{html.escape(ylabel)}<br>统计范围：每档同一套 49 点，排除 step001</span>'
             f'<span><a href="assets/{name}.png" download>完整图 PNG</a>'
             f'<a href="assets/{name}.svg" download>完整图 SVG</a></span></div>'
             f'<script type="application/json" class="chart-config">{payload}</script></figure>')
@@ -101,116 +101,108 @@ def build():
     assert policy['excluded_steps'] == [1] and policy['included_steps'] == list(INCLUDED_STEPS)
     assert d['h200']['pairs'] == d['zeus_population']['pairs'] == 49
     assert d['protocol']['pair'] == dict(group='train00', step=17)
-    h, z = d['h200']['rows'], d['zeus']['rows']
-    assert [r['batch_size'] for r in h] == list(range(16, 129, 8))
-    for r in z:
+    h, kz = d['h200']['rows'], d['zeus_population']['rows']
+    assert d['zeus_population']['complete']
+    xs = list(range(16, 129, 8))
+    assert [r['batch_size'] for r in h] == [r['batch_size'] for r in kz] == xs
+    for r in kz:
         assert math.isclose(r['tokens_s_card'], r['batch_size'] * 1e8 / r['cycles'], rel_tol=1e-12)
-    xs = [r['batch_size'] for r in h]
-    lines = [('h200', 'H200 EP4 · train00 / step017', xs, [r['paired_tokens_s_card'] for r in h])]
-    if z:
-        lines.append(('zeus', 'Zeus EP4×TP4 · 同组输入', [r['batch_size'] for r in z], [r['tokens_s_card'] for r in z]))
-    paired_chart = chart('paired-throughput', lines, 'tokens/s/card', '同组输入 · 完整 42 层 MoE 组件吞吐', labels=True)
-    full_chart = chart('h200-population-throughput', [('h200', 'H200 EP4 · 49 个采样点', xs, [r['tokens_s_card'] for r in h])],
-                       'tokens/s/card', 'H200 · 49 个采样点（排除 step001）',
-                       band=(xs, [r['p10'] for r in h], [r['p90'] for r in h]), labels=True)
-    paired_rows = []
-    for r in h:
-        zr = next((a for a in z if a['batch_size'] == r['batch_size']), None)
-        paired_rows.append([r['batch_size'], f"{r['batch_per_card']:g}", f"{r['paired_ms']:.4f}",
-                           f"{r['paired_tokens_s_card']:.1f}", f"{zr['cycles']:,}" if zr else '待完成',
-                           f"{zr['milliseconds']:.4f}" if zr else '—', f"{zr['tokens_s_card']:.1f}" if zr else '—'])
-    paired_table = table(['总 BS', '每卡 BS', 'H200 ms', 'H200 tokens/s/card', 'Zeus cycles', 'Zeus ms', 'Zeus tokens/s/card'],
-                         paired_rows, '同一 train00 / step017；每个 batch 均要求完整 42 层')
-    full_table = table(['总 BS', '每卡 BS', '平均 ms', 'tokens/s/card', 'P10', 'P90'],
+    f = d['zeus_population']
+    population_chart = chart('population-comparison', [
+        ('h200', 'H200 · EP4', xs, [r['tokens_s_card'] for r in h]),
+        ('zeus', 'Zeus · EP4 × TP4', xs, [r['tokens_s_card'] for r in kz])],
+        'tokens/s/card', '49 点汇总 · H200 与 Zeus 吞吐', labels=True)
+    population_table = table(
+        ['总 batch', '均摊 batch/card', 'H200 · ms', 'H200 · tokens/s/card', 'Zeus · ms', 'Zeus · tokens/s/card'],
         [[r['batch_size'], f"{r['batch_per_card']:g}", f"{r['mean_ms']:.4f}", f"{r['tokens_s_card']:.1f}",
-          f"{r['p10']:.1f}", f"{r['p90']:.1f}"] for r in h], 'H200 49 点统计；P10/P90 是输入间分布，不是置信区间')
-    population = '<p class="pending">时序矩阵待完成；数值资格独立保留。</p>'
-    if d.get('zeus_population', {}).get('complete'):
-        f = d['zeus_population']
-        frows = f['rows']
-        population = chart('population-comparison', [
-            ('h200', 'H200 EP4 · 49 点', xs, [r['tokens_s_card'] for r in h]),
-            ('zeus', 'Zeus EP4×TP4 · 相同 49 点', xs, [r['tokens_s_card'] for r in frows])],
-            'tokens/s/card', '同一套 49 个采样点 · 完整 42 层统计', labels=True)
-        population += table(['总 BS', 'Zeus 平均 cycles', 'Zeus 平均 ms', 'Zeus tokens/s/card', 'Zeus P10', 'Zeus P90', 'H200 tokens/s/card'],
-            [[r['batch_size'], f"{r['cycles']:,.1f}", f"{r['milliseconds']:.4f}", f"{r['tokens_s_card']:.1f}",
-              f"{r['p10']:.1f}", f"{r['p90']:.1f}", f"{h[i]['tokens_s_card']:.1f}"] for i, r in enumerate(frows)],
-            '两侧均为总 token / 总时间 / 4；输入间 P10/P90 不是置信区间')
-        assert f['measurement_mode'] == 'timing_only'
-        population += (f"<p>当前统计纳入 {f['cases']:,} 个 Zeus 时序 case，native 完成门禁与配对输入身份全部通过。train 选择总 BS{f['selected_batch_size']}；"
-                   f"validation {f['holdout']['validation']:.2f}、test {f['holdout']['test']:.2f} tokens/s/card。"
-                   f"原始 56 点矩阵共 {f['measured_cases']:,} case，宿主耗时 {f['host_seconds']/3600:.2f} 小时；"
-                   f"本次排除其中 {f['excluded_cases']:,} 个 step001 case，仅重算统计，未重新仿真。</p>"
-                   f"<p>数值资格单列：保留 {f['numerical_baseline_cases']:,} 个完整模式基线；新二进制补测 {f['new_binary_numerical_cases']} 个完整数值/Graph 代表点，"
-                   f"{f['mode_comparison_cases']} 个准入用例逐 launch/core cycles 与真实 Router ID 一致；历史 train00/step001 的 {f['baseline_comparison_cases']:,} 个 case 也与完整基线一致。"
-                   'Router 保持真实计算，仅 Routed/Shared 省略已资格的 PE 数值乘加。时序输出及下游 Reduce 不具备数值资格，不能把 564,480 个时序样本计为数值通过。</p>'
-                   '<p><a href="data/zeus-49-paired.csv" download>下载当前 735 行 Zeus 配对数据</a> · '
-                   '<a href="data/h200-49-paired.csv" download>H200 配对数据与活跃专家数</a> · '
-                   '<a href="data/zeus-49-stages.csv" download>逐采样点 kernel 周期</a></p>')
-    kernel = '<p class="pending">等待每档完整 42 层结果。预热与部分层结果不用于吞吐曲线。</p>'
-    analysis = '本轮尚未形成完整 15 档曲线；暂不判断 Zeus 的最佳 batch 或 Routed 增长趋势。'
-    kz = d['zeus_population']['rows'] if d.get('zeus_population', {}).get('complete') else z
-    kernel_scope = '49 个采样点的平均周期，排除 step001' if d.get('zeus_population', {}).get('complete') else 'train00 / step017 单点输入'
-    if kz and kz[0]['batch_size'] == 16:
-        kx = [r['batch_size'] for r in kz]
-        stage_lines = [(s, s.title(), kx, [r['stages'][s] / kz[0]['stages'][s] for r in kz]) for s in ('router', 'routed', 'shared', 'reduce')]
-        growth = chart('kernel-growth', stage_lines, '相对 BS16 的 cycles 倍数', 'Zeus · 各阶段增长与线性参考', linear=True)
-        absolute = chart('kernel-time', [(s, s.title(), kx, [r['stages'][s] / 42 / 400 for r in kz]) for s in ('router', 'routed', 'shared', 'reduce')],
-                         '每层平均 μs', 'Zeus · 各阶段耗时（逐层独立最大 rank）')
-        normalized = chart('kernel-per-token', [(s, s.title(), kx, [r['stages'][s] / kz[0]['stages'][s] / (r['batch_size'] / 16) for r in kz]) for s in ('router', 'routed', 'shared', 'reduce')],
-                           'cycles/token 相对 BS16', 'Zeus · 单 token 成本（低于 1 表示相对 BS16 次线性）')
-        kt = table(['总 BS', 'Router μs', 'Routed μs', 'Shared μs', 'Reduce μs', 'Routed / BS16', '线性参考'],
-            [[r['batch_size']] + [f"{r['stages'][s] / 42 / 400:.3f}" for s in ('router', 'routed', 'shared', 'reduce')]
-             + [f"{r['stages']['routed']/kz[0]['stages']['routed']:.3f}×", f"{r['batch_size']/16:.2f}×"] for r in kz],
-            '各阶段逐层取最大 rank，累加后除以 42；Shared 仅 EP0。各阶段最大值不可相加充当完整 MoE 时间。')
-        kernel = '<p class="note">当前 kernel 曲线采样范围：' + kernel_scope + '。</p>' + growth + absolute + normalized + kt
-        superlinear = [str(r['batch_size']) for r in z if r['stages']['routed']/z[0]['stages']['routed'] > r['batch_size']/16 + 1e-9]
-        best = max(z, key=lambda r: r['tokens_s_card'])
-        analysis = (f"当前完整档位中的最高观测吞吐为 BS{best['batch_size']}：{best['tokens_s_card']:.1f} tokens/s/card。"
-                    + ('Routed 相对 BS16 仍超线性的档位：' + '、'.join(superlinear) + '。' if superlinear else '已完成档位的 Routed 相对 BS16 均未超过线性参考。')
-                    + '这只描述固定输入样本；相对 BS16 次线性不等于任意相邻两档均次线性。路由负载与窗口边界同时变化，曲线本身不能唯一归因于编译器或 kernel 调度。')
+          f"{z['milliseconds']:.4f}", f"{z['tokens_s_card']:.1f}"] for r, z in zip(h, kz)],
+        '行：四卡总 batch；列：每卡均摊 batch、各平台 42 层平均耗时（ms）与单卡吞吐。每行汇总同一套 49 点。')
+    distribution = table(
+        ['总 batch', 'H200 · P10–P90', 'Zeus · P10–P90', 'Zeus · 平均 cycles', 'H200 · 活跃专家/层'],
+        [[r['batch_size'], f"{r['p10']:.1f}–{r['p90']:.1f}", f"{z['p10']:.1f}–{z['p90']:.1f}",
+          f"{z['cycles']:,.1f}", f"{r['mean_active_experts']:.1f}"] for r, z in zip(h, kz)],
+        '行：四卡总 batch；P10–P90 单位为 tokens/s/card，来自 49 点分布；cycles 为完整 42 层平均周期；专家数按采样点和层平均。')
+    selection_table = table(['平台', 'train 选择总 batch', 'validation · tokens/s/card', 'test · tokens/s/card'],
+        [[label, obj['selected_batch_size'], f"{obj['holdout']['validation']:.2f}", f"{obj['holdout']['test']:.2f}"]
+         for label, obj in [('H200', d['h200']['selection']), ('Zeus', f)]],
+        '行：执行平台；列：只用 train 选择的四卡总 batch，以及该档在 validation / test 上的单卡吞吐。每批均保留七步。')
+    assert f['measurement_mode'] == 'timing_only'
+    evidence = (f"<p>原始 56 点矩阵共 {f['measured_cases']:,} 个时序 case，宿主耗时 {f['host_seconds']/3600:.2f} 小时；"
+                f"排除 {f['excluded_cases']:,} 个 step001 case 后保留 {f['cases']:,} 个，仅重算统计，未重新仿真。"
+                "native 完成门禁与跨平台输入身份均已核对。</p>"
+                f"<p>数值资格独立保留：{f['numerical_baseline_cases']:,} 个历史完整模式基线；"
+                f"新二进制 {f['new_binary_numerical_cases']} 个完整数值/Graph 代表点；"
+                f"{f['mode_comparison_cases']} 个逐核 cycles / Router ID 对照。历史 train00/step001 的 "
+                f"{f['baseline_comparison_cases']:,} 个时序 case 与完整基线一致，不移作 step017 数值验证。</p>"
+                "<p>时序模式保持真实 Router，仅在已获资格的 Routed/Shared 路径省略 PE 数值乘加；"
+                "时序输出及下游 Reduce 不具备数值资格，时序 case 数不能计为数值 PASS。</p>")
+    stages = ('router', 'routed', 'shared', 'reduce')
+    absolute = chart('kernel-time',
+        [(s, s.title(), xs, [r['stages'][s] / 42 / 400 for r in kz]) for s in stages],
+        '平均每层耗时（μs）', '各阶段耗时 · 哪个阶段最耗时？')
+    growth = chart('kernel-growth',
+        [(s, s.title(), xs, [r['stages'][s] / kz[0]['stages'][s] for r in kz]) for s in stages],
+        '周期增长倍数（BS16 = 1）', '相对增长 · 是否超过 batch 的线性增长？', linear=True)
+    normalized = chart('kernel-per-token',
+        [(s, s.title(), xs, [r['stages'][s] / kz[0]['stages'][s] / (r['batch_size'] / 16) for r in kz]) for s in stages]
+        + [('reference', 'BS16 单 token 成本 = 1', xs, [1] * len(xs))],
+        '单 token 周期比（BS16 = 1）', '单 token 成本 · batch 增大后是否更高效？')
+    kt = table(['总 batch', 'Router · μs/层', 'Routed · μs/层', 'Shared · μs/层', 'Reduce · μs/层', 'Routed / BS16', '线性参考'],
+        [[r['batch_size']] + [f"{r['stages'][s] / 42 / 400:.3f}" for s in stages]
+         + [f"{r['stages']['routed']/kz[0]['stages']['routed']:.3f}×", f"{r['batch_size']/16:.2f}×"] for r in kz],
+        '行：四卡总 batch；列：49 点平均的单层阶段耗时（μs）、Routed 周期倍数及 batch 倍数。Shared 仅 EP0，逐阶段独立取最大 rank。')
+    kernel = (absolute + '<p class="reading-note">纵轴是平均每层微秒数：各阶段逐层独立取最大 rank，累加 42 层后取 49 点平均，再除以 42。'
+              '各阶段的最慢 rank 可能不同，不能把它们相加当成完整 MoE 时间。</p>'
+              + growth + '<p class="reading-note">纵轴 = 当前 batch 的阶段平均 cycles ÷ BS16 的阶段平均 cycles；'
+              '虚线 = 总 batch ÷ 16。曲线低于虚线，表示相对 BS16 的增长小于线性。</p>'
+              + normalized + '<p class="reading-note">纵轴 = 周期增长倍数 ÷ batch 增长倍数。低于 1 表示每 token 的周期成本下降；'
+              '高于 1 表示上升。参考线 1 对应 BS16 的单 token 成本。</p>'
+              + '<details class="data-details"><summary>查看逐 kernel 耗时与增长明细</summary>' + kt + '</details>')
+    superlinear = [str(r['batch_size']) for r in kz
+                   if r['stages']['routed'] / kz[0]['stages']['routed'] > r['batch_size'] / 16 + 1e-9]
+    analysis = (('49 点平均下，Routed 相对 BS16 超过线性参考的档位：' + '、'.join(superlinear) + '。')
+                if superlinear else '49 点平均下，当前全部档位的 Routed 相对 BS16 均未超过线性参考。')
+    analysis += '相对 BS16 次线性不代表任意相邻两档均次线性；仅凭曲线不能唯一归因于编译器或 kernel 调度。'
     exceptions = len(d['qualification']['historical_full_mode']['analytic_budget_exceptions'])
     history = json.loads((ROOT / 'data/zeus-history-20261102.json').read_text())
     historical = table(['总 BS', '优化前 cycles', '优化后 cycles', '时间降低', '优化后 ms', 'tokens/s/card'],
         [[r['batch_size'], f"{int(r['baseline_cycles']):,}", f"{int(r['candidate_cycles']):,}",
           f"{float(r['total_reduction_pct']):.2f}%", f"{float(r['candidate_ms']):.4f}",
           f"{float(r['candidate_tokens_per_second_per_card']):.1f}"] for r in history['comparison']],
-        '历史 exact-tail A/B：同 batch 前后输入相同，不同 batch 的 decode step 不同')
+        '行：四卡总 batch；列：42 层周期、时间降低百分比、42 层毫秒数与单卡吞吐。历史同 batch 前后输入相同，不同 batch 的 step 不同。')
     old_k = history['kernels']
     stages = ('router', 'routed', 'shared', 'reduce')
     historical += table(['总 BS'] + [s.title() + ' μs' for s in stages],
         [[bs] + [f"{float(next(r for r in old_k if int(r['batch_size']) == bs and r['kernel'] == s)['mean_layer_us']):.3f}"
                  for s in stages] for bs in (16, 24, 32, 40, 48)]
         + [['48 / 16'] + [f"{float(next(r for r in old_k if int(r['batch_size']) == 48 and r['kernel'] == s)['ratio_vs_bs16']):.3f}×" for s in stages]],
-        '历史逐阶段平均层耗时：独立最大 rank；不能相加作为完整 MoE 时间')
+        '行：四卡总 batch，末行为 BS48 / BS16 倍数；列：各阶段单层平均耗时（μs）。独立最大 rank，不可相加作为 MoE 时间。')
     historical += table(['总 BS', 'Routed 解析预算超限 / 672', 'Shared 解析预算超限 / 168'],
         [[r['batch_size'], r['routed_analytic_failed_cases'], r['shared_analytic_failed_cases']]
          for r in history['analytic_exceptions']],
-        '历史局部数学预算：优化前后逐项一致，与原实现参考/Graph 门禁分开')
-    status = f"{d['zeus']['cases']:,} / {d['zeus']['total']:,} case · {'完成' if d['zeus']['complete'] else '测量中'}"
-    source = d['zeus']['source_commit'] or '待导入'
-    replacements = dict(STYLE=(ROOT / 'assets/style.css').read_text() + '\n' + (ROOT / 'assets/charts.css').read_text(), PAIRED_CHART=paired_chart,
-        FULL_CHART=full_chart, PAIRED_TABLE=paired_table, FULL_TABLE=full_table, KERNEL=kernel,
+        '行：四卡总 batch；列：超出局部解析预算的 case 数 / 该阶段总 case 数。与实现参考/Graph 门禁分开记录。')
+    status = f"{f['cases']:,} 个时序 case"
+    source = f['source_commit']
+    best_h, best_z = max(h, key=lambda r: r['tokens_s_card']), max(kz, key=lambda r: r['tokens_s_card'])
+    # Detailed historical exceptions remain downloadable without bloating every page load.
+    page_data = {key: d[key] for key in ('updated', 'protocol', 'h200', 'zeus_population', 'toolchain')}
+    replacements = dict(STYLE=(ROOT / 'assets/style.css').read_text() + '\n' + (ROOT / 'assets/charts.css').read_text(),
+        POPULATION_CHART=population_chart, POPULATION_TABLE=population_table, DISTRIBUTION_TABLE=distribution,
+        SELECTION_TABLE=selection_table, EVIDENCE=evidence, KERNEL=kernel, UPDATED=d['updated'],
         STATUS=status, ANALYSIS=analysis, EXCEPTIONS=str(exceptions), SOURCE=source,
-        SOURCE_SHORT=source[:12], DATA=json.dumps(d, ensure_ascii=False).replace('<', '\\u003c'),
-        HISTORY_TABLES=historical, POPULATION=population,
-        H200_BEST=f"{max(r['tokens_s_card'] for r in h):,.1f}",
-        H200_SELECTION=(f"train 划分选择总 BS{d['h200']['selection']['selected_batch_size']}；"
-                        f"该档 validation 为 {d['h200']['selection']['holdout']['validation']:,.2f}、"
-                        f"test 为 {d['h200']['selection']['holdout']['test']:,.2f} tokens/s/card。"
-                        '当前选择仍在扫描上界 BS128，不能据此断定已达到饱和。'),
-        TOOLCHAIN=table(['组件', '冻结版本'], [[k, '<code>' + v + '</code>'] for k, v in d['toolchain'].items()], '本轮工具链与 kernel 身份'))
+        SOURCE_SHORT=source[:12], DATA=json.dumps(page_data, ensure_ascii=False).replace('<', '\\u003c'),
+        HISTORY_TABLES=historical,
+        H200_BEST=f"{best_h['tokens_s_card']:,.1f}", H200_BEST_BS=str(best_h['batch_size']), H200_BEST_CARD=f"{best_h['batch_size']/4:g}",
+        ZEUS_BEST=f"{best_z['tokens_s_card']:,.1f}", ZEUS_BEST_BS=str(best_z['batch_size']), ZEUS_BEST_CARD=f"{best_z['batch_size']/4:g}",
+        TOOLCHAIN=table(['组件', '冻结版本 / SHA256'], [[k, '<code>' + v + '</code>'] for k, v in d['toolchain'].items()],
+                        '行：工具链或 kernel 组件；列：冻结 commit 或文件指纹，与本轮测量绑定。'))
     page = (ROOT / 'page.template').read_text()
-    # Scope historical numerical claims before adding timing-only measurements.
-    page = page.replace('Zeus 每个完成 case 均要求', '历史 train00/step001 的 10,080 个完整模式 case 均要求')
-    page = page.replace('Model performance notebook · 2026-11-02', 'Model performance notebook · ' + d['updated'])
-    if d.get('zeus_population', {}).get('complete'):
-        replacements['STATUS'] = f"{d['zeus_population']['cases']:,} case · 已纳入统计"
     for key, value in replacements.items():
         assert '{{' + key + '}}' in page, key
         page = page.replace('{{' + key + '}}', value)
     assert '{{' not in page
-    page = page.replace('</body>', '<script>' + (ROOT / 'assets/charts.js').read_text() + '</script></body>')
+    page = page.replace('</body>', '<script>' + (ROOT / 'assets/charts.js').read_text()
+                        + '\n' + (ROOT / 'assets/navigation.js').read_text() + '</script></body>')
     (ROOT / 'index.html').write_text(page)
     print(status)
 

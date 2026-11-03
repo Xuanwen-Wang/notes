@@ -1,4 +1,4 @@
-<svg role="img" aria-label="Zeus · 各阶段耗时（逐层独立最大 rank）" xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="388.8pt" viewBox="0 0 892.8 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+<svg role="img" aria-label="各阶段耗时 · 哪个阶段最耗时？" xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="388.8pt" viewBox="0 0 892.8 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
@@ -26,19 +26,19 @@ z
   </g>
   <g id="kernel-time-axes_1">
    <g id="kernel-time-patch_2">
-    <path d="M 43.767271 317.517165
+    <path d="M 43.92024 317.517165
 L 889.79976 317.517165
 L 889.79976 54.171803
-L 43.767271 54.171803
+L 43.92024 54.171803
 z
 " style="fill: #ffffff"/>
    </g>
    <g id="kernel-time-axes_2">
     <g id="kernel-time-patch_3">
-     <path d="M 43.767271 54.171803
+     <path d="M 43.92024 54.171803
 L 889.79976 54.171803
 L 889.79976 54.171802
-L 43.767271 54.171802
+L 43.92024 54.171802
 z
 " style="fill: #ffffff"/>
     </g>
@@ -51,155 +51,155 @@ L 0 -3.5
 " style="stroke: #49617c; stroke-width: 0.8"/>
        </defs>
        <g>
-        <use xlink:href="#kernel-time-mecb2e9e9a6" x="65.276572" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#kernel-time-mecb2e9e9a6" x="65.425652" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="kernel-time-text_1">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="65.276572" y="44.652115" transform="rotate(-0 65.276572 44.652115)">4</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="65.425652" y="44.652115" transform="rotate(-0 65.425652 44.652115)">4</text>
       </g>
      </g>
      <g id="kernel-time-xtick_2">
       <g id="kernel-time-line2d_2">
        <g>
-        <use xlink:href="#kernel-time-mecb2e9e9a6" x="122.634707" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#kernel-time-mecb2e9e9a6" x="122.773416" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="kernel-time-text_2">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="122.634707" y="44.652115" transform="rotate(-0 122.634707 44.652115)">6</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="122.773416" y="44.652115" transform="rotate(-0 122.773416 44.652115)">6</text>
       </g>
      </g>
      <g id="kernel-time-xtick_3">
       <g id="kernel-time-line2d_3">
        <g>
-        <use xlink:href="#kernel-time-mecb2e9e9a6" x="179.992841" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#kernel-time-mecb2e9e9a6" x="180.12118" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="kernel-time-text_3">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="179.992841" y="44.652115" transform="rotate(-0 179.992841 44.652115)">8</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="180.12118" y="44.652115" transform="rotate(-0 180.12118 44.652115)">8</text>
       </g>
      </g>
      <g id="kernel-time-xtick_4">
       <g id="kernel-time-line2d_4">
        <g>
-        <use xlink:href="#kernel-time-mecb2e9e9a6" x="237.350976" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#kernel-time-mecb2e9e9a6" x="237.468944" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="kernel-time-text_4">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="237.350976" y="44.652115" transform="rotate(-0 237.350976 44.652115)">10</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="237.468944" y="44.652115" transform="rotate(-0 237.468944 44.652115)">10</text>
       </g>
      </g>
      <g id="kernel-time-xtick_5">
       <g id="kernel-time-line2d_5">
        <g>
-        <use xlink:href="#kernel-time-mecb2e9e9a6" x="294.709111" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#kernel-time-mecb2e9e9a6" x="294.816708" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="kernel-time-text_5">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="294.709111" y="44.652115" transform="rotate(-0 294.709111 44.652115)">12</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="294.816708" y="44.652115" transform="rotate(-0 294.816708 44.652115)">12</text>
       </g>
      </g>
      <g id="kernel-time-xtick_6">
       <g id="kernel-time-line2d_6">
        <g>
-        <use xlink:href="#kernel-time-mecb2e9e9a6" x="352.067246" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#kernel-time-mecb2e9e9a6" x="352.164472" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="kernel-time-text_6">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="352.067246" y="44.652115" transform="rotate(-0 352.067246 44.652115)">14</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="352.164472" y="44.652115" transform="rotate(-0 352.164472 44.652115)">14</text>
       </g>
      </g>
      <g id="kernel-time-xtick_7">
       <g id="kernel-time-line2d_7">
        <g>
-        <use xlink:href="#kernel-time-mecb2e9e9a6" x="409.425381" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#kernel-time-mecb2e9e9a6" x="409.512236" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="kernel-time-text_7">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="409.425381" y="44.652115" transform="rotate(-0 409.425381 44.652115)">16</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="409.512236" y="44.652115" transform="rotate(-0 409.512236 44.652115)">16</text>
       </g>
      </g>
      <g id="kernel-time-xtick_8">
       <g id="kernel-time-line2d_8">
        <g>
-        <use xlink:href="#kernel-time-mecb2e9e9a6" x="466.783516" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#kernel-time-mecb2e9e9a6" x="466.86" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="kernel-time-text_8">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="466.783516" y="44.652115" transform="rotate(-0 466.783516 44.652115)">18</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="466.86" y="44.652115" transform="rotate(-0 466.86 44.652115)">18</text>
       </g>
      </g>
      <g id="kernel-time-xtick_9">
       <g id="kernel-time-line2d_9">
        <g>
-        <use xlink:href="#kernel-time-mecb2e9e9a6" x="524.14165" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#kernel-time-mecb2e9e9a6" x="524.207764" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="kernel-time-text_9">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="524.14165" y="44.652115" transform="rotate(-0 524.14165 44.652115)">20</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="524.207764" y="44.652115" transform="rotate(-0 524.207764 44.652115)">20</text>
       </g>
      </g>
      <g id="kernel-time-xtick_10">
       <g id="kernel-time-line2d_10">
        <g>
-        <use xlink:href="#kernel-time-mecb2e9e9a6" x="581.499785" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#kernel-time-mecb2e9e9a6" x="581.555528" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="kernel-time-text_10">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="581.499785" y="44.652115" transform="rotate(-0 581.499785 44.652115)">22</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="581.555528" y="44.652115" transform="rotate(-0 581.555528 44.652115)">22</text>
       </g>
      </g>
      <g id="kernel-time-xtick_11">
       <g id="kernel-time-line2d_11">
        <g>
-        <use xlink:href="#kernel-time-mecb2e9e9a6" x="638.85792" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#kernel-time-mecb2e9e9a6" x="638.903292" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="kernel-time-text_11">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="638.85792" y="44.652115" transform="rotate(-0 638.85792 44.652115)">24</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="638.903292" y="44.652115" transform="rotate(-0 638.903292 44.652115)">24</text>
       </g>
      </g>
      <g id="kernel-time-xtick_12">
       <g id="kernel-time-line2d_12">
        <g>
-        <use xlink:href="#kernel-time-mecb2e9e9a6" x="696.216055" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#kernel-time-mecb2e9e9a6" x="696.251056" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="kernel-time-text_12">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="696.216055" y="44.652115" transform="rotate(-0 696.216055 44.652115)">26</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="696.251056" y="44.652115" transform="rotate(-0 696.251056 44.652115)">26</text>
       </g>
      </g>
      <g id="kernel-time-xtick_13">
       <g id="kernel-time-line2d_13">
        <g>
-        <use xlink:href="#kernel-time-mecb2e9e9a6" x="753.57419" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#kernel-time-mecb2e9e9a6" x="753.59882" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="kernel-time-text_13">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="753.57419" y="44.652115" transform="rotate(-0 753.57419 44.652115)">28</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="753.59882" y="44.652115" transform="rotate(-0 753.59882 44.652115)">28</text>
       </g>
      </g>
      <g id="kernel-time-xtick_14">
       <g id="kernel-time-line2d_14">
        <g>
-        <use xlink:href="#kernel-time-mecb2e9e9a6" x="810.932325" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#kernel-time-mecb2e9e9a6" x="810.946584" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="kernel-time-text_14">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="810.932325" y="44.652115" transform="rotate(-0 810.932325 44.652115)">30</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="810.946584" y="44.652115" transform="rotate(-0 810.946584 44.652115)">30</text>
       </g>
      </g>
      <g id="kernel-time-xtick_15">
       <g id="kernel-time-line2d_15">
        <g>
-        <use xlink:href="#kernel-time-mecb2e9e9a6" x="868.290459" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#kernel-time-mecb2e9e9a6" x="868.294348" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="kernel-time-text_15">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="868.290459" y="44.652115" transform="rotate(-0 868.290459 44.652115)">32</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="868.294348" y="44.652115" transform="rotate(-0 868.294348 44.652115)">32</text>
       </g>
      </g>
      <g id="kernel-time-text_16">
-      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="466.783516" y="27.896802" transform="rotate(-0 466.783516 27.896802)">归一化每卡 batch = 总 batch / 4</text>
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="466.86" y="27.896802" transform="rotate(-0 466.86 27.896802)">归一化每卡 batch = 总 batch / 4</text>
      </g>
     </g>
     <g id="kernel-time-matplotlib.axis_2"/>
@@ -213,163 +213,163 @@ L 0 3.5
 " style="stroke: #49617c; stroke-width: 0.8"/>
       </defs>
       <g>
-       <use xlink:href="#kernel-time-mc6863bb9b3" x="65.276572" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mc6863bb9b3" x="65.425652" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_17">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="65.276572" y="333.272478" transform="rotate(-0 65.276572 333.272478)">16</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="65.425652" y="333.272478" transform="rotate(-0 65.425652 333.272478)">16</text>
      </g>
     </g>
     <g id="kernel-time-xtick_17">
      <g id="kernel-time-line2d_17">
       <g>
-       <use xlink:href="#kernel-time-mc6863bb9b3" x="122.634707" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mc6863bb9b3" x="122.773416" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_18">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="122.634707" y="333.272478" transform="rotate(-0 122.634707 333.272478)">24</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="122.773416" y="333.272478" transform="rotate(-0 122.773416 333.272478)">24</text>
      </g>
     </g>
     <g id="kernel-time-xtick_18">
      <g id="kernel-time-line2d_18">
       <g>
-       <use xlink:href="#kernel-time-mc6863bb9b3" x="179.992841" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mc6863bb9b3" x="180.12118" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_19">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="179.992841" y="333.272478" transform="rotate(-0 179.992841 333.272478)">32</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="180.12118" y="333.272478" transform="rotate(-0 180.12118 333.272478)">32</text>
      </g>
     </g>
     <g id="kernel-time-xtick_19">
      <g id="kernel-time-line2d_19">
       <g>
-       <use xlink:href="#kernel-time-mc6863bb9b3" x="237.350976" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mc6863bb9b3" x="237.468944" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_20">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="237.350976" y="333.272478" transform="rotate(-0 237.350976 333.272478)">40</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="237.468944" y="333.272478" transform="rotate(-0 237.468944 333.272478)">40</text>
      </g>
     </g>
     <g id="kernel-time-xtick_20">
      <g id="kernel-time-line2d_20">
       <g>
-       <use xlink:href="#kernel-time-mc6863bb9b3" x="294.709111" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mc6863bb9b3" x="294.816708" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_21">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="294.709111" y="333.272478" transform="rotate(-0 294.709111 333.272478)">48</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="294.816708" y="333.272478" transform="rotate(-0 294.816708 333.272478)">48</text>
      </g>
     </g>
     <g id="kernel-time-xtick_21">
      <g id="kernel-time-line2d_21">
       <g>
-       <use xlink:href="#kernel-time-mc6863bb9b3" x="352.067246" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mc6863bb9b3" x="352.164472" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_22">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="352.067246" y="333.272478" transform="rotate(-0 352.067246 333.272478)">56</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="352.164472" y="333.272478" transform="rotate(-0 352.164472 333.272478)">56</text>
      </g>
     </g>
     <g id="kernel-time-xtick_22">
      <g id="kernel-time-line2d_22">
       <g>
-       <use xlink:href="#kernel-time-mc6863bb9b3" x="409.425381" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mc6863bb9b3" x="409.512236" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_23">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="409.425381" y="333.272478" transform="rotate(-0 409.425381 333.272478)">64</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="409.512236" y="333.272478" transform="rotate(-0 409.512236 333.272478)">64</text>
      </g>
     </g>
     <g id="kernel-time-xtick_23">
      <g id="kernel-time-line2d_23">
       <g>
-       <use xlink:href="#kernel-time-mc6863bb9b3" x="466.783516" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mc6863bb9b3" x="466.86" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_24">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="466.783516" y="333.272478" transform="rotate(-0 466.783516 333.272478)">72</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="466.86" y="333.272478" transform="rotate(-0 466.86 333.272478)">72</text>
      </g>
     </g>
     <g id="kernel-time-xtick_24">
      <g id="kernel-time-line2d_24">
       <g>
-       <use xlink:href="#kernel-time-mc6863bb9b3" x="524.14165" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mc6863bb9b3" x="524.207764" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_25">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="524.14165" y="333.272478" transform="rotate(-0 524.14165 333.272478)">80</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="524.207764" y="333.272478" transform="rotate(-0 524.207764 333.272478)">80</text>
      </g>
     </g>
     <g id="kernel-time-xtick_25">
      <g id="kernel-time-line2d_25">
       <g>
-       <use xlink:href="#kernel-time-mc6863bb9b3" x="581.499785" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mc6863bb9b3" x="581.555528" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_26">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="581.499785" y="333.272478" transform="rotate(-0 581.499785 333.272478)">88</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="581.555528" y="333.272478" transform="rotate(-0 581.555528 333.272478)">88</text>
      </g>
     </g>
     <g id="kernel-time-xtick_26">
      <g id="kernel-time-line2d_26">
       <g>
-       <use xlink:href="#kernel-time-mc6863bb9b3" x="638.85792" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mc6863bb9b3" x="638.903292" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_27">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="638.85792" y="333.272478" transform="rotate(-0 638.85792 333.272478)">96</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="638.903292" y="333.272478" transform="rotate(-0 638.903292 333.272478)">96</text>
      </g>
     </g>
     <g id="kernel-time-xtick_27">
      <g id="kernel-time-line2d_27">
       <g>
-       <use xlink:href="#kernel-time-mc6863bb9b3" x="696.216055" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mc6863bb9b3" x="696.251056" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_28">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="696.216055" y="333.272478" transform="rotate(-0 696.216055 333.272478)">104</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="696.251056" y="333.272478" transform="rotate(-0 696.251056 333.272478)">104</text>
      </g>
     </g>
     <g id="kernel-time-xtick_28">
      <g id="kernel-time-line2d_28">
       <g>
-       <use xlink:href="#kernel-time-mc6863bb9b3" x="753.57419" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mc6863bb9b3" x="753.59882" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_29">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="753.57419" y="333.272478" transform="rotate(-0 753.57419 333.272478)">112</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="753.59882" y="333.272478" transform="rotate(-0 753.59882 333.272478)">112</text>
      </g>
     </g>
     <g id="kernel-time-xtick_29">
      <g id="kernel-time-line2d_29">
       <g>
-       <use xlink:href="#kernel-time-mc6863bb9b3" x="810.932325" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mc6863bb9b3" x="810.946584" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_30">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="810.932325" y="333.272478" transform="rotate(-0 810.932325 333.272478)">120</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="810.946584" y="333.272478" transform="rotate(-0 810.946584 333.272478)">120</text>
      </g>
     </g>
     <g id="kernel-time-xtick_30">
      <g id="kernel-time-line2d_30">
       <g>
-       <use xlink:href="#kernel-time-mc6863bb9b3" x="868.290459" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mc6863bb9b3" x="868.294348" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_31">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="868.290459" y="333.272478" transform="rotate(-0 868.290459 333.272478)">128</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="868.294348" y="333.272478" transform="rotate(-0 868.294348 333.272478)">128</text>
      </g>
     </g>
     <g id="kernel-time-text_32">
-     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="466.783516" y="356.547478" transform="rotate(-0 466.783516 356.547478)">总 batch size（4 card）</text>
+     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="466.86" y="356.547478" transform="rotate(-0 466.86 356.547478)">总 batch size（4 card）</text>
     </g>
    </g>
    <g id="kernel-time-matplotlib.axis_4">
     <g id="kernel-time-ytick_1">
      <g id="kernel-time-line2d_31">
-      <path d="M 43.767271 317.517165
+      <path d="M 43.92024 317.517165
 L 889.79976 317.517165
-" clip-path="url(#kernel-time-p32ec4956cc)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#kernel-time-p152239babe)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-time-line2d_32">
       <defs>
@@ -378,94 +378,94 @@ L -3.5 0
 " style="stroke: #49617c; stroke-width: 0.8"/>
       </defs>
       <g>
-       <use xlink:href="#kernel-time-mb630600054" x="43.767271" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mb630600054" x="43.92024" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_33">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="36.767271" y="321.894822" transform="rotate(-0 36.767271 321.894822)">0</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="36.92024" y="321.894822" transform="rotate(-0 36.92024 321.894822)">0</text>
      </g>
     </g>
     <g id="kernel-time-ytick_2">
      <g id="kernel-time-line2d_33">
-      <path d="M 43.767271 259.294996
+      <path d="M 43.92024 259.294996
 L 889.79976 259.294996
-" clip-path="url(#kernel-time-p32ec4956cc)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#kernel-time-p152239babe)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-time-line2d_34">
       <g>
-       <use xlink:href="#kernel-time-mb630600054" x="43.767271" y="259.294996" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mb630600054" x="43.92024" y="259.294996" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_34">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="36.767271" y="263.672652" transform="rotate(-0 36.767271 263.672652)">100</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="36.92024" y="263.672652" transform="rotate(-0 36.92024 263.672652)">100</text>
      </g>
     </g>
     <g id="kernel-time-ytick_3">
      <g id="kernel-time-line2d_35">
-      <path d="M 43.767271 201.072827
+      <path d="M 43.92024 201.072827
 L 889.79976 201.072827
-" clip-path="url(#kernel-time-p32ec4956cc)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#kernel-time-p152239babe)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-time-line2d_36">
       <g>
-       <use xlink:href="#kernel-time-mb630600054" x="43.767271" y="201.072827" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mb630600054" x="43.92024" y="201.072827" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_35">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="36.767271" y="205.450483" transform="rotate(-0 36.767271 205.450483)">200</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="36.92024" y="205.450483" transform="rotate(-0 36.92024 205.450483)">200</text>
      </g>
     </g>
     <g id="kernel-time-ytick_4">
      <g id="kernel-time-line2d_37">
-      <path d="M 43.767271 142.850657
+      <path d="M 43.92024 142.850657
 L 889.79976 142.850657
-" clip-path="url(#kernel-time-p32ec4956cc)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#kernel-time-p152239babe)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-time-line2d_38">
       <g>
-       <use xlink:href="#kernel-time-mb630600054" x="43.767271" y="142.850657" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mb630600054" x="43.92024" y="142.850657" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_36">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="36.767271" y="147.228313" transform="rotate(-0 36.767271 147.228313)">300</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="36.92024" y="147.228313" transform="rotate(-0 36.92024 147.228313)">300</text>
      </g>
     </g>
     <g id="kernel-time-ytick_5">
      <g id="kernel-time-line2d_39">
-      <path d="M 43.767271 84.628488
+      <path d="M 43.92024 84.628488
 L 889.79976 84.628488
-" clip-path="url(#kernel-time-p32ec4956cc)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#kernel-time-p152239babe)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-time-line2d_40">
       <g>
-       <use xlink:href="#kernel-time-mb630600054" x="43.767271" y="84.628488" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mb630600054" x="43.92024" y="84.628488" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_37">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="36.767271" y="89.006144" transform="rotate(-0 36.767271 89.006144)">400</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="36.92024" y="89.006144" transform="rotate(-0 36.92024 89.006144)">400</text>
      </g>
     </g>
     <g id="kernel-time-text_38">
-     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="11.932584" y="185.844484" transform="rotate(-90 11.932584 185.844484)">每层平均 μs</text>
+     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="12.085553" y="185.844484" transform="rotate(-90 12.085553 185.844484)">平均每层耗时（μs）</text>
     </g>
    </g>
    <g id="kernel-time-line2d_41">
-    <path d="M 65.276572 305.401132
-L 122.634707 302.075191
-L 179.992841 295.942941
-L 237.350976 289.321624
-L 294.709111 288.388614
-L 352.067246 281.813876
-L 409.425381 275.084848
-L 466.783516 275.041182
-L 524.14165 268.527577
-L 581.499785 261.798549
-L 638.85792 261.682105
-L 696.216055 255.229633
-L 753.57419 248.500606
-L 810.932325 248.251706
-L 868.290459 241.854545
-" clip-path="url(#kernel-time-p32ec4956cc)" style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
+    <path d="M 65.425652 305.401132
+L 122.773416 302.075191
+L 180.12118 295.942941
+L 237.468944 289.321624
+L 294.816708 288.388614
+L 352.164472 281.813876
+L 409.512236 275.084848
+L 466.86 275.041182
+L 524.207764 268.527577
+L 581.555528 261.798549
+L 638.903292 261.682105
+L 696.251056 255.229633
+L 753.59882 248.500606
+L 810.946584 248.251706
+L 868.294348 241.854545
+" clip-path="url(#kernel-time-p152239babe)" style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="kernel-time-m94619aaaa5" d="M 0 2.5
 C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
@@ -479,41 +479,41 @@ C -1.29895 2.236584 -0.663008 2.5 0 2.5
 z
 " style="stroke: #2364d2; stroke-width: 2"/>
     </defs>
-    <g clip-path="url(#kernel-time-p32ec4956cc)">
-     <use xlink:href="#kernel-time-m94619aaaa5" x="65.276572" y="305.401132" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="122.634707" y="302.075191" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="179.992841" y="295.942941" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="237.350976" y="289.321624" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="294.709111" y="288.388614" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="352.067246" y="281.813876" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="409.425381" y="275.084848" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="466.783516" y="275.041182" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="524.14165" y="268.527577" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="581.499785" y="261.798549" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="638.85792" y="261.682105" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="696.216055" y="255.229633" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="753.57419" y="248.500606" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="810.932325" y="248.251706" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="868.290459" y="241.854545" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+    <g clip-path="url(#kernel-time-p152239babe)">
+     <use xlink:href="#kernel-time-m94619aaaa5" x="65.425652" y="305.401132" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="122.773416" y="302.075191" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="180.12118" y="295.942941" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="237.468944" y="289.321624" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="294.816708" y="288.388614" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="352.164472" y="281.813876" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="409.512236" y="275.084848" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="466.86" y="275.041182" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="524.207764" y="268.527577" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="581.555528" y="261.798549" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="638.903292" y="261.682105" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="696.251056" y="255.229633" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="753.59882" y="248.500606" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="810.946584" y="248.251706" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="868.294348" y="241.854545" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
     </g>
    </g>
    <g id="kernel-time-line2d_42">
-    <path d="M 65.276572 280.829613
-L 122.634707 273.257408
-L 179.992841 263.039053
-L 237.350976 234.090115
-L 294.709111 225.022174
-L 352.067246 197.245687
-L 409.425381 189.034365
-L 466.783516 163.845204
-L 524.14165 150.080968
-L 581.499785 137.743078
-L 638.85792 127.536339
-L 696.216055 102.272262
-L 753.57419 88.716135
-L 810.932325 76.233125
-L 868.290459 66.135104
-" clip-path="url(#kernel-time-p32ec4956cc)" style="fill: none; stroke: #d85b43; stroke-width: 2.5; stroke-linecap: square"/>
+    <path d="M 65.425652 280.829613
+L 122.773416 273.257408
+L 180.12118 263.039053
+L 237.468944 234.090115
+L 294.816708 225.022174
+L 352.164472 197.245687
+L 409.512236 189.034365
+L 466.86 163.845204
+L 524.207764 150.080968
+L 581.555528 137.743078
+L 638.903292 127.536339
+L 696.251056 102.272262
+L 753.59882 88.716135
+L 810.946584 76.233125
+L 868.294348 66.135104
+" clip-path="url(#kernel-time-p152239babe)" style="fill: none; stroke: #d85b43; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="kernel-time-mc06e842d91" d="M 0 2.5
 C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
@@ -527,41 +527,41 @@ C -1.29895 2.236584 -0.663008 2.5 0 2.5
 z
 " style="stroke: #d85b43; stroke-width: 2"/>
     </defs>
-    <g clip-path="url(#kernel-time-p32ec4956cc)">
-     <use xlink:href="#kernel-time-mc06e842d91" x="65.276572" y="280.829613" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="122.634707" y="273.257408" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="179.992841" y="263.039053" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="237.350976" y="234.090115" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="294.709111" y="225.022174" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="352.067246" y="197.245687" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="409.425381" y="189.034365" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="466.783516" y="163.845204" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="524.14165" y="150.080968" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="581.499785" y="137.743078" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="638.85792" y="127.536339" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="696.216055" y="102.272262" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="753.57419" y="88.716135" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="810.932325" y="76.233125" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="868.290459" y="66.135104" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+    <g clip-path="url(#kernel-time-p152239babe)">
+     <use xlink:href="#kernel-time-mc06e842d91" x="65.425652" y="280.829613" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="122.773416" y="273.257408" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="180.12118" y="263.039053" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="237.468944" y="234.090115" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="294.816708" y="225.022174" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="352.164472" y="197.245687" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="409.512236" y="189.034365" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="466.86" y="163.845204" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="524.207764" y="150.080968" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="581.555528" y="137.743078" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="638.903292" y="127.536339" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="696.251056" y="102.272262" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="753.59882" y="88.716135" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="810.946584" y="76.233125" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="868.294348" y="66.135104" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
     </g>
    </g>
    <g id="kernel-time-line2d_43">
-    <path d="M 65.276572 303.816033
-L 122.634707 298.875882
-L 179.992841 294.213742
-L 237.350976 289.181891
-L 294.709111 284.15004
-L 352.067246 279.118189
-L 409.425381 274.086338
-L 466.783516 269.054487
-L 524.14165 264.022636
-L 581.499785 258.990785
-L 638.85792 253.958934
-L 696.216055 248.927083
-L 753.57419 243.895232
-L 810.932325 238.863381
-L 868.290459 233.83153
-" clip-path="url(#kernel-time-p32ec4956cc)" style="fill: none; stroke: #7856ad; stroke-width: 2.5; stroke-linecap: square"/>
+    <path d="M 65.425652 303.816033
+L 122.773416 298.875882
+L 180.12118 294.213742
+L 237.468944 289.181891
+L 294.816708 284.15004
+L 352.164472 279.118189
+L 409.512236 274.086338
+L 466.86 269.054487
+L 524.207764 264.022636
+L 581.555528 258.990785
+L 638.903292 253.958934
+L 696.251056 248.927083
+L 753.59882 243.895232
+L 810.946584 238.863381
+L 868.294348 233.83153
+" clip-path="url(#kernel-time-p152239babe)" style="fill: none; stroke: #7856ad; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="kernel-time-m4a924cdd6e" d="M 0 2.5
 C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
@@ -575,41 +575,41 @@ C -1.29895 2.236584 -0.663008 2.5 0 2.5
 z
 " style="stroke: #7856ad; stroke-width: 2"/>
     </defs>
-    <g clip-path="url(#kernel-time-p32ec4956cc)">
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="65.276572" y="303.816033" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="122.634707" y="298.875882" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="179.992841" y="294.213742" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="237.350976" y="289.181891" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="294.709111" y="284.15004" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="352.067246" y="279.118189" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="409.425381" y="274.086338" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="466.783516" y="269.054487" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="524.14165" y="264.022636" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="581.499785" y="258.990785" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="638.85792" y="253.958934" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="696.216055" y="248.927083" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="753.57419" y="243.895232" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="810.932325" y="238.863381" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="868.290459" y="233.83153" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+    <g clip-path="url(#kernel-time-p152239babe)">
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="65.425652" y="303.816033" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="122.773416" y="298.875882" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="180.12118" y="294.213742" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="237.468944" y="289.181891" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="294.816708" y="284.15004" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="352.164472" y="279.118189" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="409.512236" y="274.086338" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="466.86" y="269.054487" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="524.207764" y="264.022636" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="581.555528" y="258.990785" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="638.903292" y="253.958934" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="696.251056" y="248.927083" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="753.59882" y="243.895232" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="810.946584" y="238.863381" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="868.294348" y="233.83153" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
     </g>
    </g>
    <g id="kernel-time-line2d_44">
-    <path d="M 65.276572 301.981356
-L 122.634707 295.454508
-L 179.992841 288.981262
-L 237.350976 283.811819
-L 294.709111 277.646057
-L 352.067246 270.871018
-L 409.425381 265.627994
-L 466.783516 258.238143
-L 524.14165 253.54406
-L 581.499785 245.537375
-L 638.85792 241.504139
-L 696.216055 232.793001
-L 753.57419 229.459369
-L 810.932325 220.021668
-L 868.290459 217.442627
-" clip-path="url(#kernel-time-p32ec4956cc)" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
+    <path d="M 65.425652 301.981356
+L 122.773416 295.454508
+L 180.12118 288.981262
+L 237.468944 283.811819
+L 294.816708 277.646057
+L 352.164472 270.871018
+L 409.512236 265.627994
+L 466.86 258.238143
+L 524.207764 253.54406
+L 581.555528 245.537375
+L 638.903292 241.504139
+L 696.251056 232.793001
+L 753.59882 229.459369
+L 810.946584 220.021668
+L 868.294348 217.442627
+" clip-path="url(#kernel-time-p152239babe)" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="kernel-time-m98abdd7638" d="M 0 2.5
 C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
@@ -623,92 +623,92 @@ C -1.29895 2.236584 -0.663008 2.5 0 2.5
 z
 " style="stroke: #0d8d7b; stroke-width: 2"/>
     </defs>
-    <g clip-path="url(#kernel-time-p32ec4956cc)">
-     <use xlink:href="#kernel-time-m98abdd7638" x="65.276572" y="301.981356" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="122.634707" y="295.454508" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="179.992841" y="288.981262" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="237.350976" y="283.811819" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="294.709111" y="277.646057" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="352.067246" y="270.871018" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="409.425381" y="265.627994" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="466.783516" y="258.238143" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="524.14165" y="253.54406" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="581.499785" y="245.537375" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="638.85792" y="241.504139" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="696.216055" y="232.793001" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="753.57419" y="229.459369" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="810.932325" y="220.021668" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="868.290459" y="217.442627" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+    <g clip-path="url(#kernel-time-p152239babe)">
+     <use xlink:href="#kernel-time-m98abdd7638" x="65.425652" y="301.981356" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="122.773416" y="295.454508" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="180.12118" y="288.981262" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="237.468944" y="283.811819" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="294.816708" y="277.646057" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="352.164472" y="270.871018" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="409.512236" y="265.627994" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="466.86" y="258.238143" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="524.207764" y="253.54406" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="581.555528" y="245.537375" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="638.903292" y="241.504139" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="696.251056" y="232.793001" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="753.59882" y="229.459369" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="810.946584" y="220.021668" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="868.294348" y="217.442627" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
     </g>
    </g>
    <g id="kernel-time-patch_4">
-    <path d="M 43.767271 317.517165
-L 43.767271 54.171803
+    <path d="M 43.92024 317.517165
+L 43.92024 54.171803
 " style="fill: none; stroke: #b9c7d7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="kernel-time-patch_5">
-    <path d="M 43.767271 317.517165
+    <path d="M 43.92024 317.517165
 L 889.79976 317.517165
 " style="fill: none; stroke: #b9c7d7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="kernel-time-text_39">
-    <text style="font-weight: 700; font-size: 14px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="43.767271" y="14.171803" transform="rotate(-0 43.767271 14.171803)">Zeus · 各阶段耗时（逐层独立最大 rank）</text>
+    <text style="font-weight: 700; font-size: 14px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="43.92024" y="14.171803" transform="rotate(-0 43.92024 14.171803)">各阶段耗时 · 哪个阶段最耗时？</text>
    </g>
    <g id="kernel-time-legend_1">
     <g id="kernel-time-line2d_45">
-     <path d="M 51.867271 377.032768
-L 60.867271 377.032768
-L 69.867271 377.032768
+     <path d="M 52.02024 377.032768
+L 61.02024 377.032768
+L 70.02024 377.032768
 " style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
      <g>
-      <use xlink:href="#kernel-time-m94619aaaa5" x="60.867271" y="377.032768" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+      <use xlink:href="#kernel-time-m94619aaaa5" x="61.02024" y="377.032768" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
      </g>
     </g>
     <g id="kernel-time-text_40">
-     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="77.067271" y="380.182768" transform="rotate(-0 77.067271 380.182768)">Router</text>
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="77.22024" y="380.182768" transform="rotate(-0 77.22024 380.182768)">Router</text>
     </g>
     <g id="kernel-time-line2d_46">
-     <path d="M 123.57899 377.032768
-L 132.57899 377.032768
-L 141.57899 377.032768
+     <path d="M 123.731959 377.032768
+L 132.731959 377.032768
+L 141.731959 377.032768
 " style="fill: none; stroke: #d85b43; stroke-width: 2.5; stroke-linecap: square"/>
      <g>
-      <use xlink:href="#kernel-time-mc06e842d91" x="132.57899" y="377.032768" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+      <use xlink:href="#kernel-time-mc06e842d91" x="132.731959" y="377.032768" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
      </g>
     </g>
     <g id="kernel-time-text_41">
-     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="148.77899" y="380.182768" transform="rotate(-0 148.77899 380.182768)">Routed</text>
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="148.931959" y="380.182768" transform="rotate(-0 148.931959 380.182768)">Routed</text>
     </g>
     <g id="kernel-time-line2d_47">
-     <path d="M 197.37899 377.032768
-L 206.37899 377.032768
-L 215.37899 377.032768
+     <path d="M 197.531959 377.032768
+L 206.531959 377.032768
+L 215.531959 377.032768
 " style="fill: none; stroke: #7856ad; stroke-width: 2.5; stroke-linecap: square"/>
      <g>
-      <use xlink:href="#kernel-time-m4a924cdd6e" x="206.37899" y="377.032768" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+      <use xlink:href="#kernel-time-m4a924cdd6e" x="206.531959" y="377.032768" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
      </g>
     </g>
     <g id="kernel-time-text_42">
-     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="222.57899" y="380.182768" transform="rotate(-0 222.57899 380.182768)">Shared</text>
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="222.731959" y="380.182768" transform="rotate(-0 222.731959 380.182768)">Shared</text>
     </g>
     <g id="kernel-time-line2d_48">
-     <path d="M 270.550396 377.032768
-L 279.550396 377.032768
-L 288.550396 377.032768
+     <path d="M 270.703365 377.032768
+L 279.703365 377.032768
+L 288.703365 377.032768
 " style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
      <g>
-      <use xlink:href="#kernel-time-m98abdd7638" x="279.550396" y="377.032768" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+      <use xlink:href="#kernel-time-m98abdd7638" x="279.703365" y="377.032768" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
      </g>
     </g>
     <g id="kernel-time-text_43">
-     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="295.750396" y="380.182768" transform="rotate(-0 295.750396 380.182768)">Reduce</text>
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="295.903365" y="380.182768" transform="rotate(-0 295.903365 380.182768)">Reduce</text>
     </g>
    </g>
   </g>
  </g>
  <defs>
-  <clipPath id="kernel-time-p32ec4956cc">
-   <rect x="43.767271" y="54.171803" width="846.032489" height="263.345363"/>
+  <clipPath id="kernel-time-p152239babe">
+   <rect x="43.92024" y="54.171803" width="845.87952" height="263.345363"/>
   </clipPath>
  </defs>
 </svg>

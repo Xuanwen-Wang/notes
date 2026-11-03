@@ -1,4 +1,4 @@
-<svg role="img" aria-label="同一套 49 个采样点 · 完整 42 层统计" xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="388.8pt" viewBox="0 0 892.8 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+<svg role="img" aria-label="49 点汇总 · H200 与 Zeus 吞吐" xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="388.8pt" viewBox="0 0 892.8 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
@@ -616,97 +616,97 @@ L 889.79976 317.517165
 " style="fill: none; stroke: #b9c7d7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="population-comparison-text_43">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="71.053829" y="246.889624" transform="rotate(-0 71.053829 246.889624)">391</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="71.053829" y="246.889624" transform="rotate(-0 71.053829 246.889624)">390.9</text>
    </g>
    <g id="population-comparison-text_44">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="128.010068" y="230.15178" transform="rotate(-0 128.010068 230.15178)">499</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="128.010068" y="230.15178" transform="rotate(-0 128.010068 230.15178)">498.8</text>
    </g>
    <g id="population-comparison-text_45">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="184.966307" y="214.192523" transform="rotate(-0 184.966307 214.192523)">602</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="184.966307" y="214.192523" transform="rotate(-0 184.966307 214.192523)">601.7</text>
    </g>
    <g id="population-comparison-text_46">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="241.922545" y="198.545011" transform="rotate(-0 241.922545 198.545011)">703</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="241.922545" y="198.545011" transform="rotate(-0 241.922545 198.545011)">702.6</text>
    </g>
    <g id="population-comparison-text_47">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="298.878784" y="183.800384" transform="rotate(-0 298.878784 183.800384)">798</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="298.878784" y="183.800384" transform="rotate(-0 298.878784 183.800384)">797.7</text>
    </g>
    <g id="population-comparison-text_48">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="355.835023" y="169.667693" transform="rotate(-0 355.835023 169.667693)">889</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="355.835023" y="169.667693" transform="rotate(-0 355.835023 169.667693)">888.8</text>
    </g>
    <g id="population-comparison-text_49">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="412.791261" y="155.976184" transform="rotate(-0 412.791261 155.976184)">977</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="412.791261" y="155.976184" transform="rotate(-0 412.791261 155.976184)">977.1</text>
    </g>
    <g id="population-comparison-text_50">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="469.7475" y="144.343644" transform="rotate(-0 469.7475 144.343644)">1,052</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="469.7475" y="144.343644" transform="rotate(-0 469.7475 144.343644)">1,052.1</text>
    </g>
    <g id="population-comparison-text_51">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="526.703739" y="130.994129" transform="rotate(-0 526.703739 130.994129)">1,138</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="526.703739" y="130.994129" transform="rotate(-0 526.703739 130.994129)">1,138.1</text>
    </g>
    <g id="population-comparison-text_52">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="583.659977" y="117.527057" transform="rotate(-0 583.659977 117.527057)">1,225</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="583.659977" y="117.527057" transform="rotate(-0 583.659977 117.527057)">1,225.0</text>
    </g>
    <g id="population-comparison-text_53">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="640.616216" y="104.119079" transform="rotate(-0 640.616216 104.119079)">1,311</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="640.616216" y="104.119079" transform="rotate(-0 640.616216 104.119079)">1,311.4</text>
    </g>
    <g id="population-comparison-text_54">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="697.572455" y="91.292622" transform="rotate(-0 697.572455 91.292622)">1,394</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="697.572455" y="91.292622" transform="rotate(-0 697.572455 91.292622)">1,394.1</text>
    </g>
    <g id="population-comparison-text_55">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="754.528693" y="78.322715" transform="rotate(-0 754.528693 78.322715)">1,478</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="754.528693" y="78.322715" transform="rotate(-0 754.528693 78.322715)">1,477.7</text>
    </g>
    <g id="population-comparison-text_56">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="811.484932" y="66.160942" transform="rotate(-0 811.484932 66.160942)">1,556</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="811.484932" y="66.160942" transform="rotate(-0 811.484932 66.160942)">1,556.2</text>
    </g>
    <g id="population-comparison-text_57">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="868.441171" y="53.825032" transform="rotate(-0 868.441171 53.825032)">1,636</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="868.441171" y="53.825032" transform="rotate(-0 868.441171 53.825032)">1,635.7</text>
    </g>
    <g id="population-comparison-text_58">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="71.053829" y="212.246486" transform="rotate(-0 71.053829 212.246486)">795</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="71.053829" y="212.246486" transform="rotate(-0 71.053829 212.246486)">794.8</text>
    </g>
    <g id="population-comparison-text_59">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="128.010068" y="192.226026" transform="rotate(-0 128.010068 192.226026)">924</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="128.010068" y="192.226026" transform="rotate(-0 128.010068 192.226026)">923.9</text>
    </g>
    <g id="population-comparison-text_60">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="184.966307" y="185.20609" transform="rotate(-0 184.966307 185.20609)">969</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="184.966307" y="185.20609" transform="rotate(-0 184.966307 185.20609)">969.1</text>
    </g>
    <g id="population-comparison-text_61">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="241.922545" y="201.151291" transform="rotate(-0 241.922545 201.151291)">866</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="241.922545" y="201.151291" transform="rotate(-0 241.922545 201.151291)">866.3</text>
    </g>
    <g id="population-comparison-text_62">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="298.878784" y="190.549899" transform="rotate(-0 298.878784 190.549899)">935</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="298.878784" y="190.549899" transform="rotate(-0 298.878784 190.549899)">934.7</text>
    </g>
    <g id="population-comparison-text_63">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="355.835023" y="200.191799" transform="rotate(-0 355.835023 200.191799)">873</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="355.835023" y="200.191799" transform="rotate(-0 355.835023 200.191799)">872.5</text>
    </g>
    <g id="population-comparison-text_64">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="412.791261" y="194.570401" transform="rotate(-0 412.791261 194.570401)">909</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="412.791261" y="194.570401" transform="rotate(-0 412.791261 194.570401)">908.8</text>
    </g>
    <g id="population-comparison-text_65">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="469.7475" y="197.439786" transform="rotate(-0 469.7475 197.439786)">890</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="469.7475" y="197.439786" transform="rotate(-0 469.7475 197.439786)">890.3</text>
    </g>
    <g id="population-comparison-text_66">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="526.703739" y="195.210055" transform="rotate(-0 526.703739 195.210055)">905</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="526.703739" y="195.210055" transform="rotate(-0 526.703739 195.210055)">904.6</text>
    </g>
    <g id="population-comparison-text_67">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="583.659977" y="195.90593" transform="rotate(-0 583.659977 195.90593)">900</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="583.659977" y="195.90593" transform="rotate(-0 583.659977 195.90593)">900.2</text>
    </g>
    <g id="population-comparison-text_68">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="640.616216" y="189.699183" transform="rotate(-0 640.616216 189.699183)">940</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="640.616216" y="189.699183" transform="rotate(-0 640.616216 189.699183)">940.2</text>
    </g>
    <g id="population-comparison-text_69">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="697.572455" y="195.459644" transform="rotate(-0 697.572455 195.459644)">903</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="697.572455" y="195.459644" transform="rotate(-0 697.572455 195.459644)">903.0</text>
    </g>
    <g id="population-comparison-text_70">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="754.528693" y="193.184355" transform="rotate(-0 754.528693 193.184355)">918</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="754.528693" y="193.184355" transform="rotate(-0 754.528693 193.184355)">917.7</text>
    </g>
    <g id="population-comparison-text_71">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="811.484932" y="192.672309" transform="rotate(-0 811.484932 192.672309)">921</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="811.484932" y="192.672309" transform="rotate(-0 811.484932 192.672309)">921.0</text>
    </g>
    <g id="population-comparison-text_72">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="868.441171" y="189.203387" transform="rotate(-0 868.441171 189.203387)">943</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="868.441171" y="189.203387" transform="rotate(-0 868.441171 189.203387)">943.4</text>
    </g>
    <g id="population-comparison-text_73">
-    <text style="font-weight: 700; font-size: 14px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="49.69524" y="14.171803" transform="rotate(-0 49.69524 14.171803)">同一套 49 个采样点 · 完整 42 层统计</text>
+    <text style="font-weight: 700; font-size: 14px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="49.69524" y="14.171803" transform="rotate(-0 49.69524 14.171803)">49 点汇总 · H200 与 Zeus 吞吐</text>
    </g>
    <g id="population-comparison-legend_1">
     <g id="population-comparison-line2d_51">
@@ -719,19 +719,19 @@ L 75.79524 377.032768
      </g>
     </g>
     <g id="population-comparison-text_74">
-     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="82.99524" y="380.182768" transform="rotate(-0 82.99524 380.182768)">H200 EP4 · 49 点</text>
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="82.99524" y="380.182768" transform="rotate(-0 82.99524 380.182768)">H200 · EP4</text>
     </g>
     <g id="population-comparison-line2d_52">
-     <path d="M 170.611646 377.032768
-L 179.611646 377.032768
-L 188.611646 377.032768
+     <path d="M 147.588521 377.032768
+L 156.588521 377.032768
+L 165.588521 377.032768
 " style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
      <g>
-      <use xlink:href="#population-comparison-m94619aaaa5" x="179.611646" y="377.032768" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+      <use xlink:href="#population-comparison-m94619aaaa5" x="156.588521" y="377.032768" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
      </g>
     </g>
     <g id="population-comparison-text_75">
-     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="195.811646" y="380.182768" transform="rotate(-0 195.811646 380.182768)">Zeus EP4×TP4 · 相同 49 点</text>
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="172.788521" y="380.182768" transform="rotate(-0 172.788521 380.182768)">Zeus · EP4 × TP4</text>
     </g>
    </g>
   </g>

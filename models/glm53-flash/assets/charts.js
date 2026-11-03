@@ -3,6 +3,7 @@
   'use strict';
   const NS = 'http://www.w3.org/2000/svg';
   const format = value => new Intl.NumberFormat('zh-CN', { maximumFractionDigits: 3 }).format(value);
+  const pointLabel = value => new Intl.NumberFormat('zh-CN', { maximumFractionDigits: 1 }).format(value);
   const node = (tag, attrs = {}, text = '') => {
     const item = document.createElementNS(NS, tag);
     for (const [key, value] of Object.entries(attrs)) item.setAttribute(key, value);
@@ -28,7 +29,7 @@
     const readout = figure.querySelector('.chart-readout');
     const visible = new Set(config.series.map(s => s.key));
     const xs = config.series[0].x;
-    let index = xs.indexOf(32), labels = false, autoscale = true;
+    let index = xs.indexOf(32), labels = Boolean(config.labels), autoscale = true;
     const choices = new Map();
     let plot, marker, svg;
     const legend = element('div', 'chart-legend');
@@ -62,7 +63,7 @@
     });
     options.append(reset);
     for (const [name, initial, setter] of [
-      ['显示点值', false, value => { labels = value; }],
+      ['显示点值', labels, value => { labels = value; }],
       ['随筛选缩放纵轴', true, value => { autoscale = value; }]
     ]) {
       const label = element('label', 'chart-option');
@@ -102,6 +103,7 @@
         const item = element('div', 'readout-value');
         item.style.setProperty('--series-color', series.color);
         item.append(element('span', '', series.label), element('strong', '', format(value)));
+        item.append(element('small', '', config.unit));
         if (config.band && series.key === 'h200') item.append(element('small', '', `P10–P90：${format(config.band[1][index])}–${format(config.band[2][index])}`));
         readout.append(item);
       }
@@ -114,7 +116,7 @@
       }
       const width = Math.max(frame.clientWidth, 260), mobile = width < 600;
       const height = mobile ? 290 : 370;
-      const left = mobile ? 48 : 66, right = 20, top = 26, bottom = height - 44;
+      const left = mobile ? 48 : 66, right = 20, top = 38, bottom = height - 44;
       const selected = config.series.filter(s => visible.has(s.key));
       const scaleSeries = autoscale && selected.length ? selected : config.series;
       const values = scaleSeries.flatMap(s => s.y);
@@ -125,6 +127,7 @@
         y: value => bottom - value / maximum * (bottom - top) };
       svg = node('svg', { viewBox: `0 0 ${width} ${height}`, role: 'img', 'aria-label': config.title, class: 'live-chart' });
       svg.append(node('title', {}, config.title));
+      svg.append(node('text', { x: left, y: 16, class: 'axis-title' }, '纵轴：' + config.unit));
       svg.append(node('desc', {}, '使用图外的曲线开关筛选，数值显示在图下。纵轴始终从零起，' + (autoscale ? '上限随可见曲线变化。' : '上限固定。')));
       for (let i = 0; i <= Math.round(maximum / step); i++) {
         const value = i * step, y = plot.y(value);
@@ -152,8 +155,10 @@
           group.append(node('circle', { cx: plot.x(x), cy: plot.y(series.y[i]), r: mobile ? 2.5 : 3.5,
             fill: '#fff', stroke: series.color, 'stroke-width': 1.8 }));
           if (labels && (!mobile || i % skip === 0 || i === xs.length - 1)) {
-            group.append(node('text', { x: plot.x(x), y: plot.y(series.y[i]) - 10,
-              'text-anchor': 'middle', fill: series.color, class: 'point-value' }, format(series.y[i])));
+            // Separate the two throughput labels and keep endpoint labels inside the plot.
+            const anchor = i === 0 ? 'start' : i === xs.length - 1 ? 'end' : 'middle';
+            group.append(node('text', { x: plot.x(x), y: plot.y(series.y[i]) + (series.key === 'zeus' ? 18 : -10),
+              'text-anchor': anchor, fill: series.color, class: 'point-value' }, pointLabel(series.y[i])));
           }
         });
         svg.append(group);
