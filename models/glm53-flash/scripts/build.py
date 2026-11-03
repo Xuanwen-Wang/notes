@@ -40,8 +40,9 @@ def chart(name, lines, ylabel, title, band=None, linear=False, labels=False):
         ax.plot(xs, ys, color=COLORS[key], linewidth=2.5, marker='o', markersize=5,
                 markerfacecolor='white', markeredgewidth=2, label=label, linestyle='--' if key == 'reference' else '-')
         if labels:
-            for x, y in zip(xs, ys):
-                ax.annotate(f'{y:,.1f}', (x, y), xytext=(0, 10 if key == 'h200' else -18),
+            for index, (x, y) in enumerate(zip(xs, ys)):
+                below = len(lines) == 2 and y < next(line[3][index] for line in lines if line[0] != key)
+                ax.annotate(f'{y:,.1f}', (x, y), xytext=(0, -18 if below else 10),
                             textcoords='offset points', ha='center', fontsize=8.5, color=COLORS[key])
     if band:
         ax.fill_between(*band, color=COLORS['h200'], alpha=.1, linewidth=0, label='输入间 P10–P90')
