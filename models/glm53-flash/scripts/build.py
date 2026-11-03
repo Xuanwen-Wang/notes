@@ -85,11 +85,11 @@ def chart(name, lines, ylabel, title, band=None, linear=False, labels=False):
     config = dict(title=title, unit=ylabel, series=series, band=band, labels=labels)
     payload = json.dumps(config, ensure_ascii=False).replace('<', '\\u003c')
     return (f'<figure class="interactive-chart" id="chart-{name}"><figcaption><div>'
-            f'<span class="chart-kicker">4 CARD · 49 SAMPLES / BATCH · 42 LAYERS</span><h3>{html.escape(title)}</h3></div>'
+            f'<span class="chart-kicker">4 CARD · 49 DECODE STEP SAMPLES / BATCH · 42 MoE LAYERS</span><h3>{html.escape(title)}</h3></div>'
             f'<span class="chart-unit">{html.escape(ylabel)}</span></figcaption>'
             '<div class="chart-controls"></div><div class="chart-frame">' + svg + '</div>'
             '<div class="chart-readout"></div><div class="chart-footer">'
-            f'<span>横轴：四卡总 batch size（16–128）<br>纵轴：{html.escape(ylabel)}<br>统计范围：每档同一套 49 点，排除 step001</span>'
+            f'<span>横轴：四卡总 batch size（16–128）<br>纵轴：{html.escape(ylabel)}<br>统计范围：每档同一套 49 个 decode step 采样点（7 批请求 × 每批 7 个采样位置），排除 step001</span>'
             f'<span><a href="assets/{name}.png" download>完整图 PNG</a>'
             f'<a href="assets/{name}.svg" download>完整图 SVG</a></span></div>'
             f'<script type="application/json" class="chart-config">{payload}</script></figure>')
@@ -112,7 +112,7 @@ def build():
     population_chart = chart('population-comparison', [
         ('h200', 'H200 · EP4', xs, [r['tokens_s_card'] for r in h]),
         ('zeus', 'Zeus · EP4 × TP4', xs, [r['tokens_s_card'] for r in kz])],
-        'tokens/s/card', '49 点汇总 · H200 与 Zeus 吞吐', labels=True)
+        'tokens/s/card', '49 个 decode step 采样点汇总 · H200 与 Zeus MoE 吞吐', labels=True)
     population_table = table(
         ['总 batch', '均摊 batch/card', 'H200 · ms', 'H200 · tokens/s/card', 'Zeus · ms', 'Zeus · tokens/s/card'],
         [[r['batch_size'], f"{r['batch_per_card']:g}", f"{r['mean_ms']:.4f}", f"{r['tokens_s_card']:.1f}",

@@ -165,8 +165,8 @@ select:focus-visible,input:focus-visible { outline:3px solid #dba855; outline-of
     <div class="metric zeus"><small>Zeus · 扫描范围内最高</small><strong>969.1 <span>tokens/s/card</span></strong><span>总 BS32 · 每卡均摊 8</span></div>
     <div class="metric sample"><small>每档使用同一套采样点</small><strong>7 × 7 <span>= 49 点</span></strong><span>7 批请求 × 7 个 decode 位置</span></div>
   </div>
-  <p class="sample-strip"><b>采样数据</b>：896 条不同请求，每批 128 条；保留 step 017 / 033 / 049 / 065 / 081 / 097 / 113，排除 step001。每个点重放完整 42 层；各 batch 使用同一父输入的嵌套前缀。<a href="#sampling">采样细节 ↓</a></p>
-  <figure class="interactive-chart" id="chart-population-comparison"><figcaption><div><span class="chart-kicker">4 CARD · 49 SAMPLES / BATCH · 42 LAYERS</span><h3>49 点汇总 · H200 与 Zeus 吞吐</h3></div><span class="chart-unit">tokens/s/card</span></figcaption><div class="chart-controls"></div><div class="chart-frame"><svg role="img" aria-label="49 点汇总 · H200 与 Zeus 吞吐" xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="388.8pt" viewBox="0 0 892.8 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <p class="sample-strip"><b>采样数据</b>：49 个 decode step 采样点 = 7 批请求 × 每批 7 个采样位置。共 896 条不同请求，每批 128 条；保留 step 017 / 033 / 049 / 065 / 081 / 097 / 113，排除 step001。每个点重放完整 42 层 MoE；各 batch 使用同一父输入的嵌套前缀。<a href="#sampling">采样细节 ↓</a></p>
+  <figure class="interactive-chart" id="chart-population-comparison"><figcaption><div><span class="chart-kicker">4 CARD · 49 DECODE STEP SAMPLES / BATCH · 42 MoE LAYERS</span><h3>49 个 decode step 采样点汇总 · H200 与 Zeus MoE 吞吐</h3></div><span class="chart-unit">tokens/s/card</span></figcaption><div class="chart-controls"></div><div class="chart-frame"><svg role="img" aria-label="49 个 decode step 采样点汇总 · H200 与 Zeus MoE 吞吐" xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="388.8pt" viewBox="0 0 892.8 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
@@ -194,19 +194,19 @@ z
   </g>
   <g id="population-comparison-axes_1">
    <g id="population-comparison-patch_2">
-    <path d="M 49.69524 317.517165
-L 889.79976 317.517165
-L 889.79976 54.171803
-L 49.69524 54.171803
+    <path d="M 49.69524 317.631219
+L 889.79976 317.631219
+L 889.79976 54.913365
+L 49.69524 54.913365
 z
 " style="fill: #ffffff"/>
    </g>
    <g id="population-comparison-axes_2">
     <g id="population-comparison-patch_3">
-     <path d="M 49.69524 54.171803
-L 889.79976 54.171803
-L 889.79976 54.171802
-L 49.69524 54.171802
+     <path d="M 49.69524 54.913365
+L 889.79976 54.913365
+L 889.79976 54.913365
+L 49.69524 54.913365
 z
 " style="fill: #ffffff"/>
     </g>
@@ -219,155 +219,155 @@ L 0 -3.5
 " style="stroke: #49617c; stroke-width: 0.8"/>
        </defs>
        <g>
-        <use xlink:href="#population-comparison-mecb2e9e9a6" x="71.053829" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#population-comparison-mecb2e9e9a6" x="71.053829" y="54.913365" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="population-comparison-text_1">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="71.053829" y="44.652115" transform="rotate(-0 71.053829 44.652115)">4</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="71.053829" y="45.393677" transform="rotate(-0 71.053829 45.393677)">4</text>
       </g>
      </g>
      <g id="population-comparison-xtick_2">
       <g id="population-comparison-line2d_2">
        <g>
-        <use xlink:href="#population-comparison-mecb2e9e9a6" x="128.010068" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#population-comparison-mecb2e9e9a6" x="128.010068" y="54.913365" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="population-comparison-text_2">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="128.010068" y="44.652115" transform="rotate(-0 128.010068 44.652115)">6</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="128.010068" y="45.393677" transform="rotate(-0 128.010068 45.393677)">6</text>
       </g>
      </g>
      <g id="population-comparison-xtick_3">
       <g id="population-comparison-line2d_3">
        <g>
-        <use xlink:href="#population-comparison-mecb2e9e9a6" x="184.966307" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#population-comparison-mecb2e9e9a6" x="184.966307" y="54.913365" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="population-comparison-text_3">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="184.966307" y="44.652115" transform="rotate(-0 184.966307 44.652115)">8</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="184.966307" y="45.393677" transform="rotate(-0 184.966307 45.393677)">8</text>
       </g>
      </g>
      <g id="population-comparison-xtick_4">
       <g id="population-comparison-line2d_4">
        <g>
-        <use xlink:href="#population-comparison-mecb2e9e9a6" x="241.922545" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#population-comparison-mecb2e9e9a6" x="241.922545" y="54.913365" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="population-comparison-text_4">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="241.922545" y="44.652115" transform="rotate(-0 241.922545 44.652115)">10</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="241.922545" y="45.393677" transform="rotate(-0 241.922545 45.393677)">10</text>
       </g>
      </g>
      <g id="population-comparison-xtick_5">
       <g id="population-comparison-line2d_5">
        <g>
-        <use xlink:href="#population-comparison-mecb2e9e9a6" x="298.878784" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#population-comparison-mecb2e9e9a6" x="298.878784" y="54.913365" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="population-comparison-text_5">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="298.878784" y="44.652115" transform="rotate(-0 298.878784 44.652115)">12</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="298.878784" y="45.393677" transform="rotate(-0 298.878784 45.393677)">12</text>
       </g>
      </g>
      <g id="population-comparison-xtick_6">
       <g id="population-comparison-line2d_6">
        <g>
-        <use xlink:href="#population-comparison-mecb2e9e9a6" x="355.835023" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#population-comparison-mecb2e9e9a6" x="355.835023" y="54.913365" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="population-comparison-text_6">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="355.835023" y="44.652115" transform="rotate(-0 355.835023 44.652115)">14</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="355.835023" y="45.393677" transform="rotate(-0 355.835023 45.393677)">14</text>
       </g>
      </g>
      <g id="population-comparison-xtick_7">
       <g id="population-comparison-line2d_7">
        <g>
-        <use xlink:href="#population-comparison-mecb2e9e9a6" x="412.791261" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#population-comparison-mecb2e9e9a6" x="412.791261" y="54.913365" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="population-comparison-text_7">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="412.791261" y="44.652115" transform="rotate(-0 412.791261 44.652115)">16</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="412.791261" y="45.393677" transform="rotate(-0 412.791261 45.393677)">16</text>
       </g>
      </g>
      <g id="population-comparison-xtick_8">
       <g id="population-comparison-line2d_8">
        <g>
-        <use xlink:href="#population-comparison-mecb2e9e9a6" x="469.7475" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#population-comparison-mecb2e9e9a6" x="469.7475" y="54.913365" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="population-comparison-text_8">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="44.652115" transform="rotate(-0 469.7475 44.652115)">18</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="45.393677" transform="rotate(-0 469.7475 45.393677)">18</text>
       </g>
      </g>
      <g id="population-comparison-xtick_9">
       <g id="population-comparison-line2d_9">
        <g>
-        <use xlink:href="#population-comparison-mecb2e9e9a6" x="526.703739" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#population-comparison-mecb2e9e9a6" x="526.703739" y="54.913365" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="population-comparison-text_9">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="526.703739" y="44.652115" transform="rotate(-0 526.703739 44.652115)">20</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="526.703739" y="45.393677" transform="rotate(-0 526.703739 45.393677)">20</text>
       </g>
      </g>
      <g id="population-comparison-xtick_10">
       <g id="population-comparison-line2d_10">
        <g>
-        <use xlink:href="#population-comparison-mecb2e9e9a6" x="583.659977" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#population-comparison-mecb2e9e9a6" x="583.659977" y="54.913365" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="population-comparison-text_10">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="583.659977" y="44.652115" transform="rotate(-0 583.659977 44.652115)">22</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="583.659977" y="45.393677" transform="rotate(-0 583.659977 45.393677)">22</text>
       </g>
      </g>
      <g id="population-comparison-xtick_11">
       <g id="population-comparison-line2d_11">
        <g>
-        <use xlink:href="#population-comparison-mecb2e9e9a6" x="640.616216" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#population-comparison-mecb2e9e9a6" x="640.616216" y="54.913365" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="population-comparison-text_11">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="640.616216" y="44.652115" transform="rotate(-0 640.616216 44.652115)">24</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="640.616216" y="45.393677" transform="rotate(-0 640.616216 45.393677)">24</text>
       </g>
      </g>
      <g id="population-comparison-xtick_12">
       <g id="population-comparison-line2d_12">
        <g>
-        <use xlink:href="#population-comparison-mecb2e9e9a6" x="697.572455" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#population-comparison-mecb2e9e9a6" x="697.572455" y="54.913365" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="population-comparison-text_12">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="697.572455" y="44.652115" transform="rotate(-0 697.572455 44.652115)">26</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="697.572455" y="45.393677" transform="rotate(-0 697.572455 45.393677)">26</text>
       </g>
      </g>
      <g id="population-comparison-xtick_13">
       <g id="population-comparison-line2d_13">
        <g>
-        <use xlink:href="#population-comparison-mecb2e9e9a6" x="754.528693" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#population-comparison-mecb2e9e9a6" x="754.528693" y="54.913365" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="population-comparison-text_13">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="754.528693" y="44.652115" transform="rotate(-0 754.528693 44.652115)">28</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="754.528693" y="45.393677" transform="rotate(-0 754.528693 45.393677)">28</text>
       </g>
      </g>
      <g id="population-comparison-xtick_14">
       <g id="population-comparison-line2d_14">
        <g>
-        <use xlink:href="#population-comparison-mecb2e9e9a6" x="811.484932" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#population-comparison-mecb2e9e9a6" x="811.484932" y="54.913365" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="population-comparison-text_14">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="811.484932" y="44.652115" transform="rotate(-0 811.484932 44.652115)">30</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="811.484932" y="45.393677" transform="rotate(-0 811.484932 45.393677)">30</text>
       </g>
      </g>
      <g id="population-comparison-xtick_15">
       <g id="population-comparison-line2d_15">
        <g>
-        <use xlink:href="#population-comparison-mecb2e9e9a6" x="868.441171" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+        <use xlink:href="#population-comparison-mecb2e9e9a6" x="868.441171" y="54.913365" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
        </g>
       </g>
       <g id="population-comparison-text_15">
-       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="868.441171" y="44.652115" transform="rotate(-0 868.441171 44.652115)">32</text>
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="868.441171" y="45.393677" transform="rotate(-0 868.441171 45.393677)">32</text>
       </g>
      </g>
      <g id="population-comparison-text_16">
-      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="27.896802" transform="rotate(-0 469.7475 27.896802)">归一化每卡 batch = 总 batch / 4</text>
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="28.638365" transform="rotate(-0 469.7475 28.638365)">归一化每卡 batch = 总 batch / 4</text>
      </g>
     </g>
     <g id="population-comparison-matplotlib.axis_2"/>
@@ -381,163 +381,163 @@ L 0 3.5
 " style="stroke: #49617c; stroke-width: 0.8"/>
       </defs>
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="71.053829" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="71.053829" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="population-comparison-text_17">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="71.053829" y="333.272478" transform="rotate(-0 71.053829 333.272478)">16</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="71.053829" y="333.386531" transform="rotate(-0 71.053829 333.386531)">16</text>
      </g>
     </g>
     <g id="population-comparison-xtick_17">
      <g id="population-comparison-line2d_17">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="128.010068" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="128.010068" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="population-comparison-text_18">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="128.010068" y="333.272478" transform="rotate(-0 128.010068 333.272478)">24</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="128.010068" y="333.386531" transform="rotate(-0 128.010068 333.386531)">24</text>
      </g>
     </g>
     <g id="population-comparison-xtick_18">
      <g id="population-comparison-line2d_18">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="184.966307" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="184.966307" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="population-comparison-text_19">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="184.966307" y="333.272478" transform="rotate(-0 184.966307 333.272478)">32</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="184.966307" y="333.386531" transform="rotate(-0 184.966307 333.386531)">32</text>
      </g>
     </g>
     <g id="population-comparison-xtick_19">
      <g id="population-comparison-line2d_19">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="241.922545" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="241.922545" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="population-comparison-text_20">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="241.922545" y="333.272478" transform="rotate(-0 241.922545 333.272478)">40</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="241.922545" y="333.386531" transform="rotate(-0 241.922545 333.386531)">40</text>
      </g>
     </g>
     <g id="population-comparison-xtick_20">
      <g id="population-comparison-line2d_20">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="298.878784" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="298.878784" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="population-comparison-text_21">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="298.878784" y="333.272478" transform="rotate(-0 298.878784 333.272478)">48</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="298.878784" y="333.386531" transform="rotate(-0 298.878784 333.386531)">48</text>
      </g>
     </g>
     <g id="population-comparison-xtick_21">
      <g id="population-comparison-line2d_21">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="355.835023" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="355.835023" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="population-comparison-text_22">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="355.835023" y="333.272478" transform="rotate(-0 355.835023 333.272478)">56</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="355.835023" y="333.386531" transform="rotate(-0 355.835023 333.386531)">56</text>
      </g>
     </g>
     <g id="population-comparison-xtick_22">
      <g id="population-comparison-line2d_22">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="412.791261" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="412.791261" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="population-comparison-text_23">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="412.791261" y="333.272478" transform="rotate(-0 412.791261 333.272478)">64</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="412.791261" y="333.386531" transform="rotate(-0 412.791261 333.386531)">64</text>
      </g>
     </g>
     <g id="population-comparison-xtick_23">
      <g id="population-comparison-line2d_23">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="469.7475" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="469.7475" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="population-comparison-text_24">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="333.272478" transform="rotate(-0 469.7475 333.272478)">72</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="333.386531" transform="rotate(-0 469.7475 333.386531)">72</text>
      </g>
     </g>
     <g id="population-comparison-xtick_24">
      <g id="population-comparison-line2d_24">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="526.703739" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="526.703739" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="population-comparison-text_25">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="526.703739" y="333.272478" transform="rotate(-0 526.703739 333.272478)">80</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="526.703739" y="333.386531" transform="rotate(-0 526.703739 333.386531)">80</text>
      </g>
     </g>
     <g id="population-comparison-xtick_25">
      <g id="population-comparison-line2d_25">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="583.659977" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="583.659977" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="population-comparison-text_26">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="583.659977" y="333.272478" transform="rotate(-0 583.659977 333.272478)">88</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="583.659977" y="333.386531" transform="rotate(-0 583.659977 333.386531)">88</text>
      </g>
     </g>
     <g id="population-comparison-xtick_26">
      <g id="population-comparison-line2d_26">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="640.616216" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="640.616216" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="population-comparison-text_27">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="640.616216" y="333.272478" transform="rotate(-0 640.616216 333.272478)">96</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="640.616216" y="333.386531" transform="rotate(-0 640.616216 333.386531)">96</text>
      </g>
     </g>
     <g id="population-comparison-xtick_27">
      <g id="population-comparison-line2d_27">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="697.572455" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="697.572455" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="population-comparison-text_28">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="697.572455" y="333.272478" transform="rotate(-0 697.572455 333.272478)">104</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="697.572455" y="333.386531" transform="rotate(-0 697.572455 333.386531)">104</text>
      </g>
     </g>
     <g id="population-comparison-xtick_28">
      <g id="population-comparison-line2d_28">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="754.528693" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="754.528693" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="population-comparison-text_29">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="754.528693" y="333.272478" transform="rotate(-0 754.528693 333.272478)">112</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="754.528693" y="333.386531" transform="rotate(-0 754.528693 333.386531)">112</text>
      </g>
     </g>
     <g id="population-comparison-xtick_29">
      <g id="population-comparison-line2d_29">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="811.484932" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="811.484932" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="population-comparison-text_30">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="811.484932" y="333.272478" transform="rotate(-0 811.484932 333.272478)">120</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="811.484932" y="333.386531" transform="rotate(-0 811.484932 333.386531)">120</text>
      </g>
     </g>
     <g id="population-comparison-xtick_30">
      <g id="population-comparison-line2d_30">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="868.441171" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="868.441171" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="population-comparison-text_31">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="868.441171" y="333.272478" transform="rotate(-0 868.441171 333.272478)">128</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="868.441171" y="333.386531" transform="rotate(-0 868.441171 333.386531)">128</text>
      </g>
     </g>
     <g id="population-comparison-text_32">
-     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="356.547478" transform="rotate(-0 469.7475 356.547478)">总 batch size（4 card）</text>
+     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="356.661531" transform="rotate(-0 469.7475 356.661531)">总 batch size（4 card）</text>
     </g>
    </g>
    <g id="population-comparison-matplotlib.axis_4">
     <g id="population-comparison-ytick_1">
      <g id="population-comparison-line2d_31">
-      <path d="M 49.69524 317.517165
-L 889.79976 317.517165
-" clip-path="url(#population-comparison-p4785d5ebff)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 317.631219
+L 889.79976 317.631219
+" clip-path="url(#population-comparison-p57ef3162e0)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="population-comparison-line2d_32">
       <defs>
@@ -546,154 +546,154 @@ L -3.5 0
 " style="stroke: #49617c; stroke-width: 0.8"/>
       </defs>
       <g>
-       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="population-comparison-text_33">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="321.894822" transform="rotate(-0 42.69524 321.894822)">0</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="322.008875" transform="rotate(-0 42.69524 322.008875)">0</text>
      </g>
     </g>
     <g id="population-comparison-ytick_2">
      <g id="population-comparison-line2d_33">
-      <path d="M 49.69524 286.497728
-L 889.79976 286.497728
-" clip-path="url(#population-comparison-p4785d5ebff)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 286.685695
+L 889.79976 286.685695
+" clip-path="url(#population-comparison-p57ef3162e0)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="population-comparison-line2d_34">
       <g>
-       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="286.497728" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="286.685695" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="population-comparison-text_34">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="290.875384" transform="rotate(-0 42.69524 290.875384)">200</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="291.063352" transform="rotate(-0 42.69524 291.063352)">200</text>
      </g>
     </g>
     <g id="population-comparison-ytick_3">
      <g id="population-comparison-line2d_35">
-      <path d="M 49.69524 255.47829
-L 889.79976 255.47829
-" clip-path="url(#population-comparison-p4785d5ebff)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 255.740172
+L 889.79976 255.740172
+" clip-path="url(#population-comparison-p57ef3162e0)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="population-comparison-line2d_36">
       <g>
-       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="255.47829" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="255.740172" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="population-comparison-text_35">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="259.855946" transform="rotate(-0 42.69524 259.855946)">400</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="260.117828" transform="rotate(-0 42.69524 260.117828)">400</text>
      </g>
     </g>
     <g id="population-comparison-ytick_4">
      <g id="population-comparison-line2d_37">
-      <path d="M 49.69524 224.458853
-L 889.79976 224.458853
-" clip-path="url(#population-comparison-p4785d5ebff)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 224.794649
+L 889.79976 224.794649
+" clip-path="url(#population-comparison-p57ef3162e0)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="population-comparison-line2d_38">
       <g>
-       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="224.458853" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="224.794649" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="population-comparison-text_36">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="228.836509" transform="rotate(-0 42.69524 228.836509)">600</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="229.172305" transform="rotate(-0 42.69524 229.172305)">600</text>
      </g>
     </g>
     <g id="population-comparison-ytick_5">
      <g id="population-comparison-line2d_39">
-      <path d="M 49.69524 193.439415
-L 889.79976 193.439415
-" clip-path="url(#population-comparison-p4785d5ebff)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 193.849125
+L 889.79976 193.849125
+" clip-path="url(#population-comparison-p57ef3162e0)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="population-comparison-line2d_40">
       <g>
-       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="193.439415" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="193.849125" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="population-comparison-text_37">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="197.817071" transform="rotate(-0 42.69524 197.817071)">800</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="198.226782" transform="rotate(-0 42.69524 198.226782)">800</text>
      </g>
     </g>
     <g id="population-comparison-ytick_6">
      <g id="population-comparison-line2d_41">
-      <path d="M 49.69524 162.419977
-L 889.79976 162.419977
-" clip-path="url(#population-comparison-p4785d5ebff)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 162.903602
+L 889.79976 162.903602
+" clip-path="url(#population-comparison-p57ef3162e0)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="population-comparison-line2d_42">
       <g>
-       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="162.419977" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="162.903602" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="population-comparison-text_38">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="166.797634" transform="rotate(-0 42.69524 166.797634)">1000</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="167.281258" transform="rotate(-0 42.69524 167.281258)">1000</text>
      </g>
     </g>
     <g id="population-comparison-ytick_7">
      <g id="population-comparison-line2d_43">
-      <path d="M 49.69524 131.40054
-L 889.79976 131.40054
-" clip-path="url(#population-comparison-p4785d5ebff)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 131.958079
+L 889.79976 131.958079
+" clip-path="url(#population-comparison-p57ef3162e0)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="population-comparison-line2d_44">
       <g>
-       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="131.40054" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="131.958079" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="population-comparison-text_39">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="135.778196" transform="rotate(-0 42.69524 135.778196)">1200</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="136.335735" transform="rotate(-0 42.69524 136.335735)">1200</text>
      </g>
     </g>
     <g id="population-comparison-ytick_8">
      <g id="population-comparison-line2d_45">
-      <path d="M 49.69524 100.381102
-L 889.79976 100.381102
-" clip-path="url(#population-comparison-p4785d5ebff)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 101.012555
+L 889.79976 101.012555
+" clip-path="url(#population-comparison-p57ef3162e0)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="population-comparison-line2d_46">
       <g>
-       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="100.381102" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="101.012555" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="population-comparison-text_40">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="104.758758" transform="rotate(-0 42.69524 104.758758)">1400</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="105.390212" transform="rotate(-0 42.69524 105.390212)">1400</text>
      </g>
     </g>
     <g id="population-comparison-ytick_9">
      <g id="population-comparison-line2d_47">
-      <path d="M 49.69524 69.361664
-L 889.79976 69.361664
-" clip-path="url(#population-comparison-p4785d5ebff)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 70.067032
+L 889.79976 70.067032
+" clip-path="url(#population-comparison-p57ef3162e0)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="population-comparison-line2d_48">
       <g>
-       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="69.361664" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="70.067032" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="population-comparison-text_41">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="73.739321" transform="rotate(-0 42.69524 73.739321)">1600</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="74.444688" transform="rotate(-0 42.69524 74.444688)">1600</text>
      </g>
     </g>
     <g id="population-comparison-text_42">
-     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="11.755553" y="185.844484" transform="rotate(-90 11.755553 185.844484)">tokens/s/card</text>
+     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="11.755553" y="186.272292" transform="rotate(-90 11.755553 186.272292)">tokens/s/card</text>
     </g>
    </g>
    <g id="population-comparison-line2d_49">
-    <path d="M 71.053829 256.889624
-L 128.010068 240.15178
-L 184.966307 224.192523
-L 241.922545 208.545011
-L 298.878784 193.800384
-L 355.835023 179.667693
-L 412.791261 165.976184
-L 469.7475 154.343644
-L 526.703739 140.994129
-L 583.659977 127.527057
-L 640.616216 114.119079
-L 697.572455 101.292622
-L 754.528693 88.322715
-L 811.484932 76.160942
-L 868.441171 63.825032
-" clip-path="url(#population-comparison-p4785d5ebff)" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
+    <path d="M 71.053829 257.148143
+L 128.010068 240.450182
+L 184.966307 224.528954
+L 241.922545 208.918727
+L 298.878784 194.209234
+L 355.835023 180.110219
+L 412.791261 166.451335
+L 469.7475 154.846514
+L 526.703739 141.528808
+L 583.659977 128.093826
+L 640.616216 114.717797
+L 697.572455 101.921904
+L 754.528693 88.982901
+L 811.484932 76.850108
+L 868.441171 64.543593
+" clip-path="url(#population-comparison-p57ef3162e0)" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="population-comparison-m98abdd7638" d="M 0 2.5
 C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
@@ -707,41 +707,41 @@ C -1.29895 2.236584 -0.663008 2.5 0 2.5
 z
 " style="stroke: #0d8d7b; stroke-width: 2"/>
     </defs>
-    <g clip-path="url(#population-comparison-p4785d5ebff)">
-     <use xlink:href="#population-comparison-m98abdd7638" x="71.053829" y="256.889624" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="128.010068" y="240.15178" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="184.966307" y="224.192523" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="241.922545" y="208.545011" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="298.878784" y="193.800384" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="355.835023" y="179.667693" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="412.791261" y="165.976184" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="469.7475" y="154.343644" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="526.703739" y="140.994129" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="583.659977" y="127.527057" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="640.616216" y="114.119079" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="697.572455" y="101.292622" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="754.528693" y="88.322715" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="811.484932" y="76.160942" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="868.441171" y="63.825032" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+    <g clip-path="url(#population-comparison-p57ef3162e0)">
+     <use xlink:href="#population-comparison-m98abdd7638" x="71.053829" y="257.148143" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="128.010068" y="240.450182" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="184.966307" y="224.528954" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="241.922545" y="208.918727" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="298.878784" y="194.209234" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="355.835023" y="180.110219" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="412.791261" y="166.451335" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="469.7475" y="154.846514" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="526.703739" y="141.528808" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="583.659977" y="128.093826" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="640.616216" y="114.717797" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="697.572455" y="101.921904" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="754.528693" y="88.982901" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="811.484932" y="76.850108" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="868.441171" y="64.543593" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
     </g>
    </g>
    <g id="population-comparison-line2d_50">
-    <path d="M 71.053829 194.246486
-L 128.010068 174.226026
-L 184.966307 167.20609
-L 241.922545 183.151291
-L 298.878784 172.549899
-L 355.835023 182.191799
-L 412.791261 176.570401
-L 469.7475 179.439786
-L 526.703739 177.210055
-L 583.659977 177.90593
-L 640.616216 171.699183
-L 697.572455 177.459644
-L 754.528693 175.184355
-L 811.484932 174.672309
-L 868.441171 171.203387
-" clip-path="url(#population-comparison-p4785d5ebff)" style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
+    <path d="M 71.053829 194.654273
+L 128.010068 174.681518
+L 184.966307 167.67831
+L 241.922545 183.585516
+L 298.878784 173.009385
+L 355.835023 182.628311
+L 412.791261 177.020308
+L 469.7475 179.882856
+L 526.703739 177.658437
+L 583.659977 178.352654
+L 640.616216 172.160696
+L 697.572455 177.907432
+L 754.528693 175.637565
+L 811.484932 175.126738
+L 868.441171 171.666082
+" clip-path="url(#population-comparison-p57ef3162e0)" style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="population-comparison-m94619aaaa5" d="M 0 2.5
 C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
@@ -755,162 +755,162 @@ C -1.29895 2.236584 -0.663008 2.5 0 2.5
 z
 " style="stroke: #2364d2; stroke-width: 2"/>
     </defs>
-    <g clip-path="url(#population-comparison-p4785d5ebff)">
-     <use xlink:href="#population-comparison-m94619aaaa5" x="71.053829" y="194.246486" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="128.010068" y="174.226026" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="184.966307" y="167.20609" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="241.922545" y="183.151291" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="298.878784" y="172.549899" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="355.835023" y="182.191799" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="412.791261" y="176.570401" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="469.7475" y="179.439786" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="526.703739" y="177.210055" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="583.659977" y="177.90593" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="640.616216" y="171.699183" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="697.572455" y="177.459644" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="754.528693" y="175.184355" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="811.484932" y="174.672309" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="868.441171" y="171.203387" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+    <g clip-path="url(#population-comparison-p57ef3162e0)">
+     <use xlink:href="#population-comparison-m94619aaaa5" x="71.053829" y="194.654273" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="128.010068" y="174.681518" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="184.966307" y="167.67831" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="241.922545" y="183.585516" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="298.878784" y="173.009385" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="355.835023" y="182.628311" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="412.791261" y="177.020308" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="469.7475" y="179.882856" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="526.703739" y="177.658437" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="583.659977" y="178.352654" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="640.616216" y="172.160696" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="697.572455" y="177.907432" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="754.528693" y="175.637565" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="811.484932" y="175.126738" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="868.441171" y="171.666082" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
     </g>
    </g>
    <g id="population-comparison-patch_4">
-    <path d="M 49.69524 317.517165
-L 49.69524 54.171803
+    <path d="M 49.69524 317.631219
+L 49.69524 54.913365
 " style="fill: none; stroke: #b9c7d7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="population-comparison-patch_5">
-    <path d="M 49.69524 317.517165
-L 889.79976 317.517165
+    <path d="M 49.69524 317.631219
+L 889.79976 317.631219
 " style="fill: none; stroke: #b9c7d7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="population-comparison-text_43">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="71.053829" y="274.889624" transform="rotate(-0 71.053829 274.889624)">390.9</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="71.053829" y="275.148143" transform="rotate(-0 71.053829 275.148143)">390.9</text>
    </g>
    <g id="population-comparison-text_44">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="128.010068" y="258.15178" transform="rotate(-0 128.010068 258.15178)">498.8</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="128.010068" y="258.450182" transform="rotate(-0 128.010068 258.450182)">498.8</text>
    </g>
    <g id="population-comparison-text_45">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="184.966307" y="242.192523" transform="rotate(-0 184.966307 242.192523)">601.7</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="184.966307" y="242.528954" transform="rotate(-0 184.966307 242.528954)">601.7</text>
    </g>
    <g id="population-comparison-text_46">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="241.922545" y="226.545011" transform="rotate(-0 241.922545 226.545011)">702.6</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="241.922545" y="226.918727" transform="rotate(-0 241.922545 226.918727)">702.6</text>
    </g>
    <g id="population-comparison-text_47">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="298.878784" y="211.800384" transform="rotate(-0 298.878784 211.800384)">797.7</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="298.878784" y="212.209234" transform="rotate(-0 298.878784 212.209234)">797.7</text>
    </g>
    <g id="population-comparison-text_48">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="355.835023" y="169.667693" transform="rotate(-0 355.835023 169.667693)">888.8</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="355.835023" y="170.110219" transform="rotate(-0 355.835023 170.110219)">888.8</text>
    </g>
    <g id="population-comparison-text_49">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="412.791261" y="155.976184" transform="rotate(-0 412.791261 155.976184)">977.1</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="412.791261" y="156.451335" transform="rotate(-0 412.791261 156.451335)">977.1</text>
    </g>
    <g id="population-comparison-text_50">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="469.7475" y="144.343644" transform="rotate(-0 469.7475 144.343644)">1,052.1</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="469.7475" y="144.846514" transform="rotate(-0 469.7475 144.846514)">1,052.1</text>
    </g>
    <g id="population-comparison-text_51">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="526.703739" y="130.994129" transform="rotate(-0 526.703739 130.994129)">1,138.1</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="526.703739" y="131.528808" transform="rotate(-0 526.703739 131.528808)">1,138.1</text>
    </g>
    <g id="population-comparison-text_52">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="583.659977" y="117.527057" transform="rotate(-0 583.659977 117.527057)">1,225.0</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="583.659977" y="118.093826" transform="rotate(-0 583.659977 118.093826)">1,225.0</text>
    </g>
    <g id="population-comparison-text_53">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="640.616216" y="104.119079" transform="rotate(-0 640.616216 104.119079)">1,311.4</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="640.616216" y="104.717797" transform="rotate(-0 640.616216 104.717797)">1,311.4</text>
    </g>
    <g id="population-comparison-text_54">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="697.572455" y="91.292622" transform="rotate(-0 697.572455 91.292622)">1,394.1</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="697.572455" y="91.921904" transform="rotate(-0 697.572455 91.921904)">1,394.1</text>
    </g>
    <g id="population-comparison-text_55">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="754.528693" y="78.322715" transform="rotate(-0 754.528693 78.322715)">1,477.7</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="754.528693" y="78.982901" transform="rotate(-0 754.528693 78.982901)">1,477.7</text>
    </g>
    <g id="population-comparison-text_56">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="811.484932" y="66.160942" transform="rotate(-0 811.484932 66.160942)">1,556.2</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="811.484932" y="66.850108" transform="rotate(-0 811.484932 66.850108)">1,556.2</text>
    </g>
    <g id="population-comparison-text_57">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="868.441171" y="53.825032" transform="rotate(-0 868.441171 53.825032)">1,635.7</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="868.441171" y="54.543593" transform="rotate(-0 868.441171 54.543593)">1,635.7</text>
    </g>
    <g id="population-comparison-text_58">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="71.053829" y="184.246486" transform="rotate(-0 71.053829 184.246486)">794.8</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="71.053829" y="184.654273" transform="rotate(-0 71.053829 184.654273)">794.8</text>
    </g>
    <g id="population-comparison-text_59">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="128.010068" y="164.226026" transform="rotate(-0 128.010068 164.226026)">923.9</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="128.010068" y="164.681518" transform="rotate(-0 128.010068 164.681518)">923.9</text>
    </g>
    <g id="population-comparison-text_60">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="184.966307" y="157.20609" transform="rotate(-0 184.966307 157.20609)">969.1</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="184.966307" y="157.67831" transform="rotate(-0 184.966307 157.67831)">969.1</text>
    </g>
    <g id="population-comparison-text_61">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="241.922545" y="173.151291" transform="rotate(-0 241.922545 173.151291)">866.3</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="241.922545" y="173.585516" transform="rotate(-0 241.922545 173.585516)">866.3</text>
    </g>
    <g id="population-comparison-text_62">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="298.878784" y="162.549899" transform="rotate(-0 298.878784 162.549899)">934.7</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="298.878784" y="163.009385" transform="rotate(-0 298.878784 163.009385)">934.7</text>
    </g>
    <g id="population-comparison-text_63">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="355.835023" y="200.191799" transform="rotate(-0 355.835023 200.191799)">872.5</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="355.835023" y="200.628311" transform="rotate(-0 355.835023 200.628311)">872.5</text>
    </g>
    <g id="population-comparison-text_64">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="412.791261" y="194.570401" transform="rotate(-0 412.791261 194.570401)">908.8</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="412.791261" y="195.020308" transform="rotate(-0 412.791261 195.020308)">908.8</text>
    </g>
    <g id="population-comparison-text_65">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="469.7475" y="197.439786" transform="rotate(-0 469.7475 197.439786)">890.3</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="469.7475" y="197.882856" transform="rotate(-0 469.7475 197.882856)">890.3</text>
    </g>
    <g id="population-comparison-text_66">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="526.703739" y="195.210055" transform="rotate(-0 526.703739 195.210055)">904.6</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="526.703739" y="195.658437" transform="rotate(-0 526.703739 195.658437)">904.6</text>
    </g>
    <g id="population-comparison-text_67">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="583.659977" y="195.90593" transform="rotate(-0 583.659977 195.90593)">900.2</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="583.659977" y="196.352654" transform="rotate(-0 583.659977 196.352654)">900.2</text>
    </g>
    <g id="population-comparison-text_68">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="640.616216" y="189.699183" transform="rotate(-0 640.616216 189.699183)">940.2</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="640.616216" y="190.160696" transform="rotate(-0 640.616216 190.160696)">940.2</text>
    </g>
    <g id="population-comparison-text_69">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="697.572455" y="195.459644" transform="rotate(-0 697.572455 195.459644)">903.0</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="697.572455" y="195.907432" transform="rotate(-0 697.572455 195.907432)">903.0</text>
    </g>
    <g id="population-comparison-text_70">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="754.528693" y="193.184355" transform="rotate(-0 754.528693 193.184355)">917.7</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="754.528693" y="193.637565" transform="rotate(-0 754.528693 193.637565)">917.7</text>
    </g>
    <g id="population-comparison-text_71">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="811.484932" y="192.672309" transform="rotate(-0 811.484932 192.672309)">921.0</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="811.484932" y="193.126738" transform="rotate(-0 811.484932 193.126738)">921.0</text>
    </g>
    <g id="population-comparison-text_72">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="868.441171" y="189.203387" transform="rotate(-0 868.441171 189.203387)">943.4</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="868.441171" y="189.666082" transform="rotate(-0 868.441171 189.666082)">943.4</text>
    </g>
    <g id="population-comparison-text_73">
-    <text style="font-weight: 700; font-size: 14px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="49.69524" y="14.171803" transform="rotate(-0 49.69524 14.171803)">49 点汇总 · H200 与 Zeus 吞吐</text>
+    <text style="font-weight: 700; font-size: 14px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="49.69524" y="14.913365" transform="rotate(-0 49.69524 14.913365)">49 个 decode step 采样点汇总 · H200 与 Zeus MoE 吞吐</text>
    </g>
    <g id="population-comparison-legend_1">
     <g id="population-comparison-line2d_51">
-     <path d="M 57.79524 377.032768
-L 66.79524 377.032768
-L 75.79524 377.032768
+     <path d="M 57.79524 377.03387
+L 66.79524 377.03387
+L 75.79524 377.03387
 " style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
      <g>
-      <use xlink:href="#population-comparison-m98abdd7638" x="66.79524" y="377.032768" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+      <use xlink:href="#population-comparison-m98abdd7638" x="66.79524" y="377.03387" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
      </g>
     </g>
     <g id="population-comparison-text_74">
-     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="82.99524" y="380.182768" transform="rotate(-0 82.99524 380.182768)">H200 · EP4</text>
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="82.99524" y="380.18387" transform="rotate(-0 82.99524 380.18387)">H200 · EP4</text>
     </g>
     <g id="population-comparison-line2d_52">
-     <path d="M 147.588521 377.032768
-L 156.588521 377.032768
-L 165.588521 377.032768
+     <path d="M 147.588521 377.03387
+L 156.588521 377.03387
+L 165.588521 377.03387
 " style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
      <g>
-      <use xlink:href="#population-comparison-m94619aaaa5" x="156.588521" y="377.032768" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+      <use xlink:href="#population-comparison-m94619aaaa5" x="156.588521" y="377.03387" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
      </g>
     </g>
     <g id="population-comparison-text_75">
-     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="172.788521" y="380.182768" transform="rotate(-0 172.788521 380.182768)">Zeus · EP4 × TP4</text>
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="172.788521" y="380.18387" transform="rotate(-0 172.788521 380.18387)">Zeus · EP4 × TP4</text>
     </g>
    </g>
   </g>
  </g>
  <defs>
-  <clipPath id="population-comparison-p4785d5ebff">
-   <rect x="49.69524" y="54.171803" width="840.10452" height="263.345363"/>
+  <clipPath id="population-comparison-p57ef3162e0">
+   <rect x="49.69524" y="54.913365" width="840.10452" height="262.717854"/>
   </clipPath>
  </defs>
 </svg>
-</div><div class="chart-readout"></div><div class="chart-footer"><span>横轴：四卡总 batch size（16–128）<br>纵轴：tokens/s/card<br>统计范围：每档同一套 49 点，排除 step001</span><span><a href="assets/population-comparison.png" download>完整图 PNG</a><a href="assets/population-comparison.svg" download>完整图 SVG</a></span></div><script type="application/json" class="chart-config">{"title": "49 点汇总 · H200 与 Zeus 吞吐", "unit": "tokens/s/card", "series": [{"key": "h200", "label": "H200 · EP4", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [390.9003253918113, 498.818751988435, 601.7171780346827, 702.6056093951005, 797.6726276318873, 888.7941455369249, 977.0711057117963, 1052.072723148915, 1138.1446598816253, 1224.9745500250108, 1311.423430386602, 1394.1229091422356, 1477.7472978696726, 1556.1611837432295, 1635.6978257120554], "color": "#0d8d7b", "dashed": false}, {"key": "zeus", "label": "Zeus · EP4 × TP4", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [794.7963547232903, 923.8796758907542, 969.141202878159, 866.3334017618852, 934.6866223267282, 872.5197901574642, 908.7641481044924, 890.2635868606865, 904.6399400227411, 900.1532331349779, 940.1716738686368, 903.0306945218817, 917.7007766218403, 921.002233251854, 943.3683495761398], "color": "#2364d2", "dashed": false}], "band": null, "labels": true}</script></figure>
+</div><div class="chart-readout"></div><div class="chart-footer"><span>横轴：四卡总 batch size（16–128）<br>纵轴：tokens/s/card<br>统计范围：每档同一套 49 个 decode step 采样点（7 批请求 × 每批 7 个采样位置），排除 step001</span><span><a href="assets/population-comparison.png" download>完整图 PNG</a><a href="assets/population-comparison.svg" download>完整图 SVG</a></span></div><script type="application/json" class="chart-config">{"title": "49 个 decode step 采样点汇总 · H200 与 Zeus MoE 吞吐", "unit": "tokens/s/card", "series": [{"key": "h200", "label": "H200 · EP4", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [390.9003253918113, 498.818751988435, 601.7171780346827, 702.6056093951005, 797.6726276318873, 888.7941455369249, 977.0711057117963, 1052.072723148915, 1138.1446598816253, 1224.9745500250108, 1311.423430386602, 1394.1229091422356, 1477.7472978696726, 1556.1611837432295, 1635.6978257120554], "color": "#0d8d7b", "dashed": false}, {"key": "zeus", "label": "Zeus · EP4 × TP4", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [794.7963547232903, 923.8796758907542, 969.141202878159, 866.3334017618852, 934.6866223267282, 872.5197901574642, 908.7641481044924, 890.2635868606865, 904.6399400227411, 900.1532331349779, 940.1716738686368, 903.0306945218817, 917.7007766218403, 921.002233251854, 943.3683495761398], "color": "#2364d2", "dashed": false}], "band": null, "labels": true}</script></figure>
   <p class="reading-note">纵轴越高，单位卡的 MoE 组件吞吐越大。每个点按 <code>总 token ÷ 总时间 ÷ 4</code> 汇总 49 个样本；不直接平均样本吞吐。两条曲线分别采用 H200 CUDA event 测时和 Zeus CycleSim 400 MHz 周期换算。</p>
   <details class="data-details"><summary>查看 15 档吞吐与耗时明细</summary><div class="table-scroll" tabindex="0"><table><caption>行：四卡总 batch；列：每卡均摊 batch、各平台 42 层平均耗时（ms）与单卡吞吐。每行汇总同一套 49 点。</caption><thead><tr><th scope="col">总 batch</th><th scope="col">均摊 batch/card</th><th scope="col">H200 · ms</th><th scope="col">H200 · tokens/s/card</th><th scope="col">Zeus · ms</th><th scope="col">Zeus · tokens/s/card</th></tr></thead><tbody><tr><td>16</td><td>4</td><td>10.2328</td><td>390.9</td><td>5.0327</td><td>794.8</td></tr><tr><td>24</td><td>6</td><td>12.0284</td><td>498.8</td><td>6.4944</td><td>923.9</td></tr><tr><td>32</td><td>8</td><td>13.2953</td><td>601.7</td><td>8.2547</td><td>969.1</td></tr><tr><td>40</td><td>10</td><td>14.2327</td><td>702.6</td><td>11.5429</td><td>866.3</td></tr><tr><td>48</td><td>12</td><td>15.0438</td><td>797.7</td><td>12.8385</td><td>934.7</td></tr><tr><td>56</td><td>14</td><td>15.7517</td><td>888.8</td><td>16.0455</td><td>872.5</td></tr><tr><td>64</td><td>16</td><td>16.3755</td><td>977.1</td><td>17.6063</td><td>908.8</td></tr><tr><td>72</td><td>18</td><td>17.1091</td><td>1052.1</td><td>20.2187</td><td>890.3</td></tr><tr><td>80</td><td>20</td><td>17.5725</td><td>1138.1</td><td>22.1082</td><td>904.6</td></tr><tr><td>88</td><td>22</td><td>17.9596</td><td>1225.0</td><td>24.4403</td><td>900.2</td></tr><tr><td>96</td><td>24</td><td>18.3007</td><td>1311.4</td><td>25.5273</td><td>940.2</td></tr><tr><td>104</td><td>26</td><td>18.6497</td><td>1394.1</td><td>28.7919</td><td>903.0</td></tr><tr><td>112</td><td>28</td><td>18.9478</td><td>1477.7</td><td>30.5110</td><td>917.7</td></tr><tr><td>120</td><td>30</td><td>19.2782</td><td>1556.2</td><td>32.5732</td><td>921.0</td></tr><tr><td>128</td><td>32</td><td>19.5635</td><td>1635.7</td><td>33.9210</td><td>943.4</td></tr></tbody></table></div><div class="table-scroll" tabindex="0"><table><caption>行：四卡总 batch；P10–P90 单位为 tokens/s/card，来自 49 点分布；cycles 为完整 42 层平均周期；专家数按采样点和层平均。</caption><thead><tr><th scope="col">总 batch</th><th scope="col">H200 · P10–P90</th><th scope="col">Zeus · P10–P90</th><th scope="col">Zeus · 平均 cycles</th><th scope="col">H200 · 活跃专家/层</th></tr></thead><tbody><tr><td>16</td><td>373.4–420.1</td><td>785.6–803.7</td><td>2,013,094.3</td><td>78.3</td></tr><tr><td>24</td><td>475.4–547.6</td><td>914.0–932.6</td><td>2,597,740.9</td><td>100.3</td></tr><tr><td>32</td><td>569.6–668.1</td><td>961.5–977.0</td><td>3,301,892.4</td><td>117.8</td></tr><tr><td>40</td><td>665.3–781.0</td><td>859.2–873.9</td><td>4,617,160.1</td><td>131.7</td></tr><tr><td>48</td><td>754.4–893.0</td><td>925.0–943.2</td><td>5,135,411.0</td><td>142.9</td></tr><tr><td>56</td><td>837.6–994.1</td><td>865.1–881.3</td><td>6,418,192.5</td><td>152.0</td></tr><tr><td>64</td><td>920.8–1105.9</td><td>902.6–916.5</td><td>7,042,531.3</td><td>160.3</td></tr><tr><td>72</td><td>991.4–1195.2</td><td>883.7–897.2</td><td>8,087,492.4</td><td>167.2</td></tr><tr><td>80</td><td>1073.4–1285.2</td><td>898.2–910.4</td><td>8,843,297.4</td><td>173.2</td></tr><tr><td>88</td><td>1157.0–1382.8</td><td>893.0–907.8</td><td>9,776,113.3</td><td>178.3</td></tr><tr><td>96</td><td>1233.2–1482.4</td><td>933.1–946.9</td><td>10,210,901.1</td><td>183.1</td></tr><tr><td>104</td><td>1316.7–1589.8</td><td>894.7–908.6</td><td>11,516,773.5</td><td>187.2</td></tr><tr><td>112</td><td>1395.0–1685.2</td><td>910.7–923.0</td><td>12,204,413.8</td><td>190.9</td></tr><tr><td>120</td><td>1471.9–1774.6</td><td>912.7–927.9</td><td>13,029,284.4</td><td>194.5</td></tr><tr><td>128</td><td>1546.1–1864.9</td><td>936.2–949.3</td><td>13,568,400.9</td><td>197.5</td></tr></tbody></table></div><p class="quality">P10–P90 描述采样点之间的吞吐差异，不是置信区间。</p></details>
   <div class="note">比较范围为 42 层 MoE 组件计算，未计通信、Attention、host 调度及加载。两端的量化方式和 Shared 放置不同，结果不代表同精度算法的硬件加速比或完整模型吞吐。BS128 是当前扫描上界，H200 的最高点不代表已达到饱和。</div>
@@ -927,7 +927,7 @@ L 165.588521 377.032768
     <article class="kernel-card reduce"><span class="kernel-tag">04 · 本地归并</span><h3>Reduce</h3><p>读取有效的本地 routed 输出，应用路由权重并求和，在持有 Shared 的分支合入共享输出。</p><div class="kernel-focus">关注：有效行读取与加权求和；不含跨卡 AllReduce。</div></article>
   </div>
   <p class="note">各阶段维持统一 JIT 入口；batch 维度是编译期常量，窗口和尾部可在 kernel 内特化。M 合并大小与窗口宽度是两个概念。</p>
-  <figure class="interactive-chart" id="chart-kernel-time"><figcaption><div><span class="chart-kicker">4 CARD · 49 SAMPLES / BATCH · 42 LAYERS</span><h3>各阶段耗时 · 哪个阶段最耗时？</h3></div><span class="chart-unit">平均每层耗时（μs）</span></figcaption><div class="chart-controls"></div><div class="chart-frame"><svg role="img" aria-label="各阶段耗时 · 哪个阶段最耗时？" xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="388.8pt" viewBox="0 0 892.8 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <figure class="interactive-chart" id="chart-kernel-time"><figcaption><div><span class="chart-kicker">4 CARD · 49 DECODE STEP SAMPLES / BATCH · 42 MoE LAYERS</span><h3>各阶段耗时 · 哪个阶段最耗时？</h3></div><span class="chart-unit">平均每层耗时（μs）</span></figcaption><div class="chart-controls"></div><div class="chart-frame"><svg role="img" aria-label="各阶段耗时 · 哪个阶段最耗时？" xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="388.8pt" viewBox="0 0 892.8 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
@@ -1641,7 +1641,7 @@ L 288.703365 377.032768
   </clipPath>
  </defs>
 </svg>
-</div><div class="chart-readout"></div><div class="chart-footer"><span>横轴：四卡总 batch size（16–128）<br>纵轴：平均每层耗时（μs）<br>统计范围：每档同一套 49 点，排除 step001</span><span><a href="assets/kernel-time.png" download>完整图 PNG</a><a href="assets/kernel-time.svg" download>完整图 SVG</a></span></div><script type="application/json" class="chart-config">{"title": "各阶段耗时 · 哪个阶段最耗时？", "unit": "平均每层耗时（μs）", "series": [{"key": "router", "label": "Router", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [20.81, 26.5225, 37.055, 48.4275, 50.03, 61.3225, 72.88, 72.955, 84.1425, 95.7, 95.9, 106.9825, 118.54, 118.9675, 129.955], "color": "#2364d2", "dashed": false}, {"key": "routed", "label": "Routed", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [63.013029640427604, 76.01873663751215, 93.56936224489796, 143.2908649173955, 158.8655867346939, 206.5733369776482, 220.67676627793975, 263.94063046647227, 287.5815160349854, 308.77256681243927, 326.3032422254616, 369.69577988338193, 392.97922497570454, 414.4195298833819, 431.76347424684155], "color": "#d85b43", "dashed": false}, {"key": "shared", "label": "Shared", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [23.5325, 32.0175, 40.025, 48.6675, 57.31, 65.9525, 74.595, 83.2375, 91.88, 100.5225, 109.165, 117.8075, 126.45, 135.0925, 143.735], "color": "#7856ad", "dashed": false}, {"key": "reduce", "label": "Reduce", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [26.683666180758017, 37.89391156462585, 49.01209183673469, 57.890914723032076, 68.48097424684158, 80.11750121477162, 89.12270286686103, 101.81520651117589, 109.87757045675413, 123.62952380952382, 130.556842808552, 145.51873542274052, 151.24444484936834, 167.45425048590863, 171.88390549076772], "color": "#0d8d7b", "dashed": false}], "band": null, "labels": false}</script></figure><p class="reading-note">纵轴是平均每层微秒数：各阶段逐层独立取最大 rank，累加 42 层后取 49 点平均，再除以 42。各阶段的最慢 rank 可能不同，不能把它们相加当成完整 MoE 时间。</p><figure class="interactive-chart" id="chart-kernel-growth"><figcaption><div><span class="chart-kicker">4 CARD · 49 SAMPLES / BATCH · 42 LAYERS</span><h3>相对增长 · 是否超过 batch 的线性增长？</h3></div><span class="chart-unit">周期增长倍数（BS16 = 1）</span></figcaption><div class="chart-controls"></div><div class="chart-frame"><svg role="img" aria-label="相对增长 · 是否超过 batch 的线性增长？" xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="388.8pt" viewBox="0 0 892.8 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+</div><div class="chart-readout"></div><div class="chart-footer"><span>横轴：四卡总 batch size（16–128）<br>纵轴：平均每层耗时（μs）<br>统计范围：每档同一套 49 个 decode step 采样点（7 批请求 × 每批 7 个采样位置），排除 step001</span><span><a href="assets/kernel-time.png" download>完整图 PNG</a><a href="assets/kernel-time.svg" download>完整图 SVG</a></span></div><script type="application/json" class="chart-config">{"title": "各阶段耗时 · 哪个阶段最耗时？", "unit": "平均每层耗时（μs）", "series": [{"key": "router", "label": "Router", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [20.81, 26.5225, 37.055, 48.4275, 50.03, 61.3225, 72.88, 72.955, 84.1425, 95.7, 95.9, 106.9825, 118.54, 118.9675, 129.955], "color": "#2364d2", "dashed": false}, {"key": "routed", "label": "Routed", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [63.013029640427604, 76.01873663751215, 93.56936224489796, 143.2908649173955, 158.8655867346939, 206.5733369776482, 220.67676627793975, 263.94063046647227, 287.5815160349854, 308.77256681243927, 326.3032422254616, 369.69577988338193, 392.97922497570454, 414.4195298833819, 431.76347424684155], "color": "#d85b43", "dashed": false}, {"key": "shared", "label": "Shared", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [23.5325, 32.0175, 40.025, 48.6675, 57.31, 65.9525, 74.595, 83.2375, 91.88, 100.5225, 109.165, 117.8075, 126.45, 135.0925, 143.735], "color": "#7856ad", "dashed": false}, {"key": "reduce", "label": "Reduce", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [26.683666180758017, 37.89391156462585, 49.01209183673469, 57.890914723032076, 68.48097424684158, 80.11750121477162, 89.12270286686103, 101.81520651117589, 109.87757045675413, 123.62952380952382, 130.556842808552, 145.51873542274052, 151.24444484936834, 167.45425048590863, 171.88390549076772], "color": "#0d8d7b", "dashed": false}], "band": null, "labels": false}</script></figure><p class="reading-note">纵轴是平均每层微秒数：各阶段逐层独立取最大 rank，累加 42 层后取 49 点平均，再除以 42。各阶段的最慢 rank 可能不同，不能把它们相加当成完整 MoE 时间。</p><figure class="interactive-chart" id="chart-kernel-growth"><figcaption><div><span class="chart-kicker">4 CARD · 49 DECODE STEP SAMPLES / BATCH · 42 MoE LAYERS</span><h3>相对增长 · 是否超过 batch 的线性增长？</h3></div><span class="chart-unit">周期增长倍数（BS16 = 1）</span></figcaption><div class="chart-controls"></div><div class="chart-frame"><svg role="img" aria-label="相对增长 · 是否超过 batch 的线性增长？" xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="388.8pt" viewBox="0 0 892.8 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
@@ -2442,7 +2442,7 @@ L 350.684771 377.031397
   </clipPath>
  </defs>
 </svg>
-</div><div class="chart-readout"></div><div class="chart-footer"><span>横轴：四卡总 batch size（16–128）<br>纵轴：周期增长倍数（BS16 = 1）<br>统计范围：每档同一套 49 点，排除 step001</span><span><a href="assets/kernel-growth.png" download>完整图 PNG</a><a href="assets/kernel-growth.svg" download>完整图 SVG</a></span></div><script type="application/json" class="chart-config">{"title": "相对增长 · 是否超过 batch 的线性增长？", "unit": "周期增长倍数（BS16 = 1）", "series": [{"key": "router", "label": "Router", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 1.2745074483421432, 1.780634310427679, 2.327126381547333, 2.404132628543969, 2.946780394041326, 3.502162421912542, 3.5057664584334454, 4.043368572801538, 4.598750600672753, 4.608361364728496, 5.140917827967323, 5.696299855838539, 5.716842864007688, 6.244834214320038], "color": "#2364d2", "dashed": false}, {"key": "routed", "label": "Routed", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 1.2063971066190478, 1.4849208612700344, 2.273987867827635, 2.5211545555138595, 3.278263847277641, 3.50208151452472, 4.188667518013363, 4.563842076408912, 4.900138409062281, 5.178345559441464, 5.866973576623496, 6.236475649848438, 6.576727579171984, 6.8519713575211565], "color": "#d85b43", "dashed": false}, {"key": "shared", "label": "Shared", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 1.3605651758206736, 1.700839264846489, 2.06809731222777, 2.4353553596090514, 2.8026134069903326, 3.1698714543716138, 3.537129501752895, 3.904387549134176, 4.271645596515457, 4.638903643896739, 5.006161691278019, 5.373419738659301, 5.740677786040582, 6.107935833421863], "color": "#7856ad", "dashed": false}, {"key": "reduce", "label": "Reduce", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 1.4201163853545622, 1.8367825284847115, 2.169526268649623, 2.5664005007012203, 3.0024922614473994, 3.3399721860982026, 3.8156378445701113, 4.117783879937325, 4.633153591865681, 4.892762558343592, 5.453476086718407, 5.668053401088975, 6.275533854739285, 6.44154009147048], "color": "#0d8d7b", "dashed": false}, {"key": "linear", "label": "线性参考 BS / 16", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0], "color": "#8492a6", "dashed": true}], "band": null, "labels": false}</script></figure><p class="reading-note">纵轴 = 当前 batch 的阶段平均 cycles ÷ BS16 的阶段平均 cycles；虚线 = 总 batch ÷ 16。曲线低于虚线，表示相对 BS16 的增长小于线性。</p><figure class="interactive-chart" id="chart-kernel-per-token"><figcaption><div><span class="chart-kicker">4 CARD · 49 SAMPLES / BATCH · 42 LAYERS</span><h3>单 token 成本 · batch 增大后是否更高效？</h3></div><span class="chart-unit">单 token 周期比（BS16 = 1）</span></figcaption><div class="chart-controls"></div><div class="chart-frame"><svg role="img" aria-label="单 token 成本 · batch 增大后是否更高效？" xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="388.8pt" viewBox="0 0 892.8 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+</div><div class="chart-readout"></div><div class="chart-footer"><span>横轴：四卡总 batch size（16–128）<br>纵轴：周期增长倍数（BS16 = 1）<br>统计范围：每档同一套 49 个 decode step 采样点（7 批请求 × 每批 7 个采样位置），排除 step001</span><span><a href="assets/kernel-growth.png" download>完整图 PNG</a><a href="assets/kernel-growth.svg" download>完整图 SVG</a></span></div><script type="application/json" class="chart-config">{"title": "相对增长 · 是否超过 batch 的线性增长？", "unit": "周期增长倍数（BS16 = 1）", "series": [{"key": "router", "label": "Router", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 1.2745074483421432, 1.780634310427679, 2.327126381547333, 2.404132628543969, 2.946780394041326, 3.502162421912542, 3.5057664584334454, 4.043368572801538, 4.598750600672753, 4.608361364728496, 5.140917827967323, 5.696299855838539, 5.716842864007688, 6.244834214320038], "color": "#2364d2", "dashed": false}, {"key": "routed", "label": "Routed", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 1.2063971066190478, 1.4849208612700344, 2.273987867827635, 2.5211545555138595, 3.278263847277641, 3.50208151452472, 4.188667518013363, 4.563842076408912, 4.900138409062281, 5.178345559441464, 5.866973576623496, 6.236475649848438, 6.576727579171984, 6.8519713575211565], "color": "#d85b43", "dashed": false}, {"key": "shared", "label": "Shared", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 1.3605651758206736, 1.700839264846489, 2.06809731222777, 2.4353553596090514, 2.8026134069903326, 3.1698714543716138, 3.537129501752895, 3.904387549134176, 4.271645596515457, 4.638903643896739, 5.006161691278019, 5.373419738659301, 5.740677786040582, 6.107935833421863], "color": "#7856ad", "dashed": false}, {"key": "reduce", "label": "Reduce", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 1.4201163853545622, 1.8367825284847115, 2.169526268649623, 2.5664005007012203, 3.0024922614473994, 3.3399721860982026, 3.8156378445701113, 4.117783879937325, 4.633153591865681, 4.892762558343592, 5.453476086718407, 5.668053401088975, 6.275533854739285, 6.44154009147048], "color": "#0d8d7b", "dashed": false}, {"key": "linear", "label": "线性参考 BS / 16", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0], "color": "#8492a6", "dashed": true}], "band": null, "labels": false}</script></figure><p class="reading-note">纵轴 = 当前 batch 的阶段平均 cycles ÷ BS16 的阶段平均 cycles；虚线 = 总 batch ÷ 16。曲线低于虚线，表示相对 BS16 的增长小于线性。</p><figure class="interactive-chart" id="chart-kernel-per-token"><figcaption><div><span class="chart-kicker">4 CARD · 49 DECODE STEP SAMPLES / BATCH · 42 MoE LAYERS</span><h3>单 token 成本 · batch 增大后是否更高效？</h3></div><span class="chart-unit">单 token 周期比（BS16 = 1）</span></figcaption><div class="chart-controls"></div><div class="chart-frame"><svg role="img" aria-label="单 token 成本 · batch 增大后是否更高效？" xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="388.8pt" viewBox="0 0 892.8 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
@@ -3231,7 +3231,7 @@ L 359.847427 377.032768
   </clipPath>
  </defs>
 </svg>
-</div><div class="chart-readout"></div><div class="chart-footer"><span>横轴：四卡总 batch size（16–128）<br>纵轴：单 token 周期比（BS16 = 1）<br>统计范围：每档同一套 49 点，排除 step001</span><span><a href="assets/kernel-per-token.png" download>完整图 PNG</a><a href="assets/kernel-per-token.svg" download>完整图 SVG</a></span></div><script type="application/json" class="chart-config">{"title": "单 token 成本 · batch 增大后是否更高效？", "unit": "单 token 周期比（BS16 = 1）", "series": [{"key": "router", "label": "Router", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 0.8496716322280955, 0.8903171552138395, 0.9308505526189332, 0.8013775428479897, 0.8419372554403789, 0.8755406054781355, 0.7790592129852101, 0.8086737145603076, 0.8361364728495915, 0.7680602274547493, 0.7909104350718958, 0.8137571222626485, 0.7622457152010251, 0.7806042767900048], "color": "#2364d2", "dashed": false}, {"key": "routed", "label": "Routed", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 0.8042647377460318, 0.7424604306350172, 0.909595147131054, 0.8403848518379532, 0.9366468135078974, 0.87552037863118, 0.9308150040029695, 0.9127684152817824, 0.890934256193142, 0.863057593240244, 0.9026113194805379, 0.8909250928354912, 0.8768970105562646, 0.8564964196901446], "color": "#d85b43", "dashed": false}, {"key": "shared", "label": "Shared", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 0.9070434505471158, 0.8504196324232445, 0.8272389248911081, 0.8117851198696838, 0.8007466877115236, 0.7924678635929034, 0.78602877816731, 0.7808775098268352, 0.7766628357300831, 0.7731506073161231, 0.77017872173508, 0.767631391237043, 0.7654237048054109, 0.7634919791777329], "color": "#7856ad", "dashed": false}, {"key": "reduce", "label": "Reduce", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 0.9467442569030414, 0.9183912642423557, 0.8678105074598491, 0.8554668335670734, 0.8578549318421141, 0.8349930465245506, 0.8479195210155803, 0.823556775987465, 0.8423915621573965, 0.8154604263905987, 0.8389963210336011, 0.8097219144412822, 0.8367378472985714, 0.80519251143381], "color": "#0d8d7b", "dashed": false}, {"key": "reference", "label": "BS16 单 token 成本 = 1", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], "color": "#8492a6", "dashed": true}], "band": null, "labels": false}</script></figure><p class="reading-note">纵轴 = 周期增长倍数 ÷ batch 增长倍数。低于 1 表示每 token 的周期成本下降；高于 1 表示上升。参考线 1 对应 BS16 的单 token 成本。</p><details class="data-details"><summary>查看逐 kernel 耗时与增长明细</summary><div class="table-scroll" tabindex="0"><table><caption>行：四卡总 batch；列：49 点平均的单层阶段耗时（μs）、Routed 周期倍数及 batch 倍数。Shared 仅 EP0，逐阶段独立取最大 rank。</caption><thead><tr><th scope="col">总 batch</th><th scope="col">Router · μs/层</th><th scope="col">Routed · μs/层</th><th scope="col">Shared · μs/层</th><th scope="col">Reduce · μs/层</th><th scope="col">Routed / BS16</th><th scope="col">线性参考</th></tr></thead><tbody><tr><td>16</td><td>20.810</td><td>63.013</td><td>23.532</td><td>26.684</td><td>1.000×</td><td>1.00×</td></tr><tr><td>24</td><td>26.523</td><td>76.019</td><td>32.017</td><td>37.894</td><td>1.206×</td><td>1.50×</td></tr><tr><td>32</td><td>37.055</td><td>93.569</td><td>40.025</td><td>49.012</td><td>1.485×</td><td>2.00×</td></tr><tr><td>40</td><td>48.428</td><td>143.291</td><td>48.667</td><td>57.891</td><td>2.274×</td><td>2.50×</td></tr><tr><td>48</td><td>50.030</td><td>158.866</td><td>57.310</td><td>68.481</td><td>2.521×</td><td>3.00×</td></tr><tr><td>56</td><td>61.322</td><td>206.573</td><td>65.953</td><td>80.118</td><td>3.278×</td><td>3.50×</td></tr><tr><td>64</td><td>72.880</td><td>220.677</td><td>74.595</td><td>89.123</td><td>3.502×</td><td>4.00×</td></tr><tr><td>72</td><td>72.955</td><td>263.941</td><td>83.237</td><td>101.815</td><td>4.189×</td><td>4.50×</td></tr><tr><td>80</td><td>84.142</td><td>287.582</td><td>91.880</td><td>109.878</td><td>4.564×</td><td>5.00×</td></tr><tr><td>88</td><td>95.700</td><td>308.773</td><td>100.522</td><td>123.630</td><td>4.900×</td><td>5.50×</td></tr><tr><td>96</td><td>95.900</td><td>326.303</td><td>109.165</td><td>130.557</td><td>5.178×</td><td>6.00×</td></tr><tr><td>104</td><td>106.983</td><td>369.696</td><td>117.808</td><td>145.519</td><td>5.867×</td><td>6.50×</td></tr><tr><td>112</td><td>118.540</td><td>392.979</td><td>126.450</td><td>151.244</td><td>6.236×</td><td>7.00×</td></tr><tr><td>120</td><td>118.968</td><td>414.420</td><td>135.093</td><td>167.454</td><td>6.577×</td><td>7.50×</td></tr><tr><td>128</td><td>129.955</td><td>431.763</td><td>143.735</td><td>171.884</td><td>6.852×</td><td>8.00×</td></tr></tbody></table></div></details>
+</div><div class="chart-readout"></div><div class="chart-footer"><span>横轴：四卡总 batch size（16–128）<br>纵轴：单 token 周期比（BS16 = 1）<br>统计范围：每档同一套 49 个 decode step 采样点（7 批请求 × 每批 7 个采样位置），排除 step001</span><span><a href="assets/kernel-per-token.png" download>完整图 PNG</a><a href="assets/kernel-per-token.svg" download>完整图 SVG</a></span></div><script type="application/json" class="chart-config">{"title": "单 token 成本 · batch 增大后是否更高效？", "unit": "单 token 周期比（BS16 = 1）", "series": [{"key": "router", "label": "Router", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 0.8496716322280955, 0.8903171552138395, 0.9308505526189332, 0.8013775428479897, 0.8419372554403789, 0.8755406054781355, 0.7790592129852101, 0.8086737145603076, 0.8361364728495915, 0.7680602274547493, 0.7909104350718958, 0.8137571222626485, 0.7622457152010251, 0.7806042767900048], "color": "#2364d2", "dashed": false}, {"key": "routed", "label": "Routed", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 0.8042647377460318, 0.7424604306350172, 0.909595147131054, 0.8403848518379532, 0.9366468135078974, 0.87552037863118, 0.9308150040029695, 0.9127684152817824, 0.890934256193142, 0.863057593240244, 0.9026113194805379, 0.8909250928354912, 0.8768970105562646, 0.8564964196901446], "color": "#d85b43", "dashed": false}, {"key": "shared", "label": "Shared", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 0.9070434505471158, 0.8504196324232445, 0.8272389248911081, 0.8117851198696838, 0.8007466877115236, 0.7924678635929034, 0.78602877816731, 0.7808775098268352, 0.7766628357300831, 0.7731506073161231, 0.77017872173508, 0.767631391237043, 0.7654237048054109, 0.7634919791777329], "color": "#7856ad", "dashed": false}, {"key": "reduce", "label": "Reduce", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 0.9467442569030414, 0.9183912642423557, 0.8678105074598491, 0.8554668335670734, 0.8578549318421141, 0.8349930465245506, 0.8479195210155803, 0.823556775987465, 0.8423915621573965, 0.8154604263905987, 0.8389963210336011, 0.8097219144412822, 0.8367378472985714, 0.80519251143381], "color": "#0d8d7b", "dashed": false}, {"key": "reference", "label": "BS16 单 token 成本 = 1", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], "color": "#8492a6", "dashed": true}], "band": null, "labels": false}</script></figure><p class="reading-note">纵轴 = 周期增长倍数 ÷ batch 增长倍数。低于 1 表示每 token 的周期成本下降；高于 1 表示上升。参考线 1 对应 BS16 的单 token 成本。</p><details class="data-details"><summary>查看逐 kernel 耗时与增长明细</summary><div class="table-scroll" tabindex="0"><table><caption>行：四卡总 batch；列：49 点平均的单层阶段耗时（μs）、Routed 周期倍数及 batch 倍数。Shared 仅 EP0，逐阶段独立取最大 rank。</caption><thead><tr><th scope="col">总 batch</th><th scope="col">Router · μs/层</th><th scope="col">Routed · μs/层</th><th scope="col">Shared · μs/层</th><th scope="col">Reduce · μs/层</th><th scope="col">Routed / BS16</th><th scope="col">线性参考</th></tr></thead><tbody><tr><td>16</td><td>20.810</td><td>63.013</td><td>23.532</td><td>26.684</td><td>1.000×</td><td>1.00×</td></tr><tr><td>24</td><td>26.523</td><td>76.019</td><td>32.017</td><td>37.894</td><td>1.206×</td><td>1.50×</td></tr><tr><td>32</td><td>37.055</td><td>93.569</td><td>40.025</td><td>49.012</td><td>1.485×</td><td>2.00×</td></tr><tr><td>40</td><td>48.428</td><td>143.291</td><td>48.667</td><td>57.891</td><td>2.274×</td><td>2.50×</td></tr><tr><td>48</td><td>50.030</td><td>158.866</td><td>57.310</td><td>68.481</td><td>2.521×</td><td>3.00×</td></tr><tr><td>56</td><td>61.322</td><td>206.573</td><td>65.953</td><td>80.118</td><td>3.278×</td><td>3.50×</td></tr><tr><td>64</td><td>72.880</td><td>220.677</td><td>74.595</td><td>89.123</td><td>3.502×</td><td>4.00×</td></tr><tr><td>72</td><td>72.955</td><td>263.941</td><td>83.237</td><td>101.815</td><td>4.189×</td><td>4.50×</td></tr><tr><td>80</td><td>84.142</td><td>287.582</td><td>91.880</td><td>109.878</td><td>4.564×</td><td>5.00×</td></tr><tr><td>88</td><td>95.700</td><td>308.773</td><td>100.522</td><td>123.630</td><td>4.900×</td><td>5.50×</td></tr><tr><td>96</td><td>95.900</td><td>326.303</td><td>109.165</td><td>130.557</td><td>5.178×</td><td>6.00×</td></tr><tr><td>104</td><td>106.983</td><td>369.696</td><td>117.808</td><td>145.519</td><td>5.867×</td><td>6.50×</td></tr><tr><td>112</td><td>118.540</td><td>392.979</td><td>126.450</td><td>151.244</td><td>6.236×</td><td>7.00×</td></tr><tr><td>120</td><td>118.968</td><td>414.420</td><td>135.093</td><td>167.454</td><td>6.577×</td><td>7.50×</td></tr><tr><td>128</td><td>129.955</td><td>431.763</td><td>143.735</td><td>171.884</td><td>6.852×</td><td>8.00×</td></tr></tbody></table></div></details>
   <p class="reading-note">49 点平均下，当前全部档位的 Routed 相对 BS16 均未超过线性参考。相对 BS16 次线性不代表任意相邻两档均次线性；仅凭曲线不能唯一归因于编译器或 kernel 调度。</p>
   <div class="links"><a href="data/zeus-49-stages.csv" download>49 点逐 kernel 周期 CSV ↓</a></div>
 </section>

@@ -37,7 +37,7 @@
     <div class="metric zeus"><small>Zeus · 扫描范围内最高</small><strong>{{ZEUS_BEST}} <span>tokens/s/card</span></strong><span>总 BS{{ZEUS_BEST_BS}} · 每卡均摊 {{ZEUS_BEST_CARD}}</span></div>
     <div class="metric sample"><small>每档使用同一套采样点</small><strong>7 × 7 <span>= 49 点</span></strong><span>7 批请求 × 7 个 decode 位置</span></div>
   </div>
-  <p class="sample-strip"><b>采样数据</b>：896 条不同请求，每批 128 条；保留 step 017 / 033 / 049 / 065 / 081 / 097 / 113，排除 step001。每个点重放完整 42 层；各 batch 使用同一父输入的嵌套前缀。<a href="#sampling">采样细节 ↓</a></p>
+  <p class="sample-strip"><b>采样数据</b>：49 个 decode step 采样点 = 7 批请求 × 每批 7 个采样位置。共 896 条不同请求，每批 128 条；保留 step 017 / 033 / 049 / 065 / 081 / 097 / 113，排除 step001。每个点重放完整 42 层 MoE；各 batch 使用同一父输入的嵌套前缀。<a href="#sampling">采样细节 ↓</a></p>
   {{POPULATION_CHART}}
   <p class="reading-note">纵轴越高，单位卡的 MoE 组件吞吐越大。每个点按 <code>总 token ÷ 总时间 ÷ 4</code> 汇总 49 个样本；不直接平均样本吞吐。两条曲线分别采用 H200 CUDA event 测时和 Zeus CycleSim 400 MHz 周期换算。</p>
   <details class="data-details"><summary>查看 15 档吞吐与耗时明细</summary>{{POPULATION_TABLE}}{{DISTRIBUTION_TABLE}}<p class="quality">P10–P90 描述采样点之间的吞吐差异，不是置信区间。</p></details>
