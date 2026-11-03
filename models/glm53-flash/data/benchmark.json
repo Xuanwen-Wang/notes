@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated": "2026-11-02",
+  "updated": "2026-11-03",
   "protocol": {
     "cards": 4,
     "layers": 42,
@@ -56856,13 +56856,248 @@
         "shared_budget_pass": null
       }
     ],
-    "full56_status": "pending",
+    "full56_status": "complete",
     "matched_input_hashes": true
   },
   "toolchain": {
     "triton_shared": "4ec41039673c0c6afea9537f789b94d3e6137d6a",
     "triton": "5321c2ebe470d2527078491642b136a13ab72c49",
     "cyclesim": "6248b44d30bced522c8958029bce717d50640d43",
-    "routed_sha256": "dc2c684c0961dbf8f2903e5d9d5879f1de68c94c89380722294dea0f62f1b2d9"
+    "routed_sha256": "dc2c684c0961dbf8f2903e5d9d5879f1de68c94c89380722294dea0f62f1b2d9",
+    "cyclesim_full56": "b39990784ba2e1324c258c1db5fb02c13f93953b",
+    "cyclesim_full56_binary_sha256": "efdf5ee46eac45b7c6bc0f15641eb1e194bca7680d160eb3ab4ea5bc8a025ea6"
+  },
+  "zeus56": {
+    "complete": true,
+    "cases": 564480,
+    "pairs": 56,
+    "rows": [
+      {
+        "batch_size": 16,
+        "cycles": 2014423.875,
+        "milliseconds": 5.0360596875,
+        "tokens_s_card": 794.271761696629,
+        "p10": 785.2065174566337,
+        "p90": 803.5765213301406,
+        "stages": {
+          "router": 349608,
+          "routed": 1061171.3214285714,
+          "shared": 395346,
+          "reduce": 450783.625
+        }
+      },
+      {
+        "batch_size": 24,
+        "cycles": 2607266.8214285714,
+        "milliseconds": 6.518167053571428,
+        "tokens_s_card": 920.5041771233042,
+        "p10": 903.5493144085406,
+        "p90": 931.2016610130005,
+        "stages": {
+          "router": 445578,
+          "routed": 1289453.982142857,
+          "shared": 537894,
+          "reduce": 640659.1428571428
+        }
+      },
+      {
+        "batch_size": 32,
+        "cycles": 3316604.410714286,
+        "milliseconds": 8.291511026785715,
+        "tokens_s_card": 964.8422313081429,
+        "p10": 947.5295241075044,
+        "p90": 976.8902946868027,
+        "stages": {
+          "router": 622524,
+          "routed": 1589542.0714285714,
+          "shared": 672420,
+          "reduce": 829050.4285714285
+        }
+      },
+      {
+        "batch_size": 40,
+        "cycles": 4635876.803571428,
+        "milliseconds": 11.589692008928571,
+        "tokens_s_card": 862.835698506579,
+        "p10": 845.9979946644539,
+        "p90": 873.3645417536725,
+        "stages": {
+          "router": 813582,
+          "routed": 2433762.464285714,
+          "shared": 817614,
+          "reduce": 982375.6607142857
+        }
+      },
+      {
+        "batch_size": 48,
+        "cycles": 5176222.017857143,
+        "milliseconds": 12.940555044642856,
+        "tokens_s_card": 927.3172563774822,
+        "p10": 885.0212328043715,
+        "p90": 942.7252655198702,
+        "stages": {
+          "router": 840504,
+          "routed": 2717931.8035714286,
+          "shared": 962808,
+          "reduce": 1161031.732142857
+        }
+      },
+      {
+        "batch_size": 56,
+        "cycles": 6463173.464285715,
+        "milliseconds": 16.157933660714285,
+        "tokens_s_card": 866.4474241554169,
+        "p10": 830.4796858639659,
+        "p90": 880.3864217344013,
+        "stages": {
+          "router": 1030218,
+          "routed": 3525084.1428571427,
+          "shared": 1108002,
+          "reduce": 1360199.8214285714
+        }
+      },
+      {
+        "batch_size": 64,
+        "cycles": 7073622.071428572,
+        "milliseconds": 17.68405517857143,
+        "tokens_s_card": 904.7698527534524,
+        "p10": 883.811132331009,
+        "p90": 916.3107828952717,
+        "stages": {
+          "router": 1224384,
+          "routed": 3747107.4285714286,
+          "shared": 1253196,
+          "reduce": 1512363.9464285714
+        }
+      },
+      {
+        "batch_size": 72,
+        "cycles": 8120371.696428572,
+        "milliseconds": 20.30092924107143,
+        "tokens_s_card": 886.6589202027093,
+        "p10": 869.2765869499054,
+        "p90": 896.3444100588929,
+        "stages": {
+          "router": 1225644,
+          "routed": 4477621.428571428,
+          "shared": 1398390,
+          "reduce": 1729302.3035714286
+        }
+      },
+      {
+        "batch_size": 80,
+        "cycles": 8878961.07142857,
+        "milliseconds": 22.19740267857143,
+        "tokens_s_card": 901.0063154509189,
+        "p10": 881.2147760790552,
+        "p90": 910.2473379555285,
+        "stages": {
+          "router": 1413594,
+          "routed": 4876559.696428572,
+          "shared": 1543584,
+          "reduce": 1865300.107142857
+        }
+      },
+      {
+        "batch_size": 88,
+        "cycles": 9810635.785714285,
+        "milliseconds": 24.526589464285713,
+        "tokens_s_card": 896.9856992157513,
+        "p10": 879.9387411100797,
+        "p90": 907.5351509019201,
+        "stages": {
+          "router": 1607760,
+          "routed": 5237946.321428572,
+          "shared": 1688778,
+          "reduce": 2100152.410714286
+        }
+      },
+      {
+        "batch_size": 96,
+        "cycles": 10258259,
+        "milliseconds": 25.6456475,
+        "tokens_s_card": 935.8313140660613,
+        "p10": 914.1904454285395,
+        "p90": 946.8394534604804,
+        "stages": {
+          "router": 1611120,
+          "routed": 5543307.678571428,
+          "shared": 1833972,
+          "reduce": 2217245.4464285714
+        }
+      },
+      {
+        "batch_size": 104,
+        "cycles": 11560279.07142857,
+        "milliseconds": 28.900697678571426,
+        "tokens_s_card": 899.6322611020506,
+        "p10": 880.8224374637581,
+        "p90": 908.348707292596,
+        "stages": {
+          "router": 1797306,
+          "routed": 6274638.178571428,
+          "shared": 1979166,
+          "reduce": 2472154.125
+        }
+      },
+      {
+        "batch_size": 112,
+        "cycles": 12255806.107142856,
+        "milliseconds": 30.639515267857142,
+        "tokens_s_card": 913.8525774712185,
+        "p10": 894.630829555098,
+        "p90": 922.9452765972119,
+        "stages": {
+          "router": 1991472,
+          "routed": 6668647.089285715,
+          "shared": 2124360,
+          "reduce": 2569248.964285714
+        }
+      },
+      {
+        "batch_size": 120,
+        "cycles": 13074754.607142856,
+        "milliseconds": 32.68688651785714,
+        "tokens_s_card": 917.7992521132513,
+        "p10": 903.7449729601769,
+        "p90": 927.0360122151465,
+        "stages": {
+          "router": 1998654,
+          "routed": 7034680.482142857,
+          "shared": 2269554,
+          "reduce": 2844995
+        }
+      },
+      {
+        "batch_size": 128,
+        "cycles": 13631215.55357143,
+        "milliseconds": 34.07803888392857,
+        "tokens_s_card": 939.0211716405844,
+        "p10": 918.439995520168,
+        "p90": 949.0007172957551,
+        "stages": {
+          "router": 2183244,
+          "routed": 7336936.571428572,
+          "shared": 2414748,
+          "reduce": 2920532.2678571427
+        }
+      }
+    ],
+    "source_commit": "e93a57a73c573409bb18aa2a428fa34bd09b80c4",
+    "measurement_mode": "timing_only",
+    "numerical_validation": "separate_full_mode",
+    "selected_batch_size": 32,
+    "holdout": {
+      "validation": 964.8922994565112,
+      "test": 962.7591956477869
+    },
+    "baseline_comparison_cases": 10080,
+    "qualification_sha256": "96b343d60987a828846a1a4133c61b6842883bad2e039ddda9cfa30febe997a9",
+    "numerical_baseline_cases": 10080,
+    "new_binary_numerical_cases": 3,
+    "mode_comparison_cases": 720,
+    "simulator_source": "b39990784ba2e1324c258c1db5fb02c13f93953b",
+    "binary_sha256": "efdf5ee46eac45b7c6bc0f15641eb1e194bca7680d160eb3ab4ea5bc8a025ea6",
+    "host_seconds": 8920.605123519897
   }
 }

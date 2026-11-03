@@ -559,20 +559,20 @@ z
    </g>
    <g id="kernel-growth-line2d_50">
     <path d="M 53.740482 309.509885
-L 111.901127 298.521438
-L 170.061773 287.308654
-L 228.222418 257.280806
-L 286.383064 242.392934
-L 344.543709 215.382211
-L 402.704355 209.97606
-L 460.865 184.785898
-L 519.025645 172.927674
-L 577.186291 158.250633
-L 635.346936 145.305442
-L 693.507582 120.840286
-L 751.668227 106.831993
-L 809.828873 92.855534
-L 867.989518 80.058064
+L 111.901127 302.036529
+L 170.061773 292.212457
+L 228.222418 264.574968
+L 286.383064 255.272034
+L 344.543709 228.848052
+L 402.704355 221.579611
+L 460.865 197.664561
+L 519.025645 184.604402
+L 577.186291 172.773583
+L 635.346936 162.776879
+L 693.507582 138.835099
+L 751.668227 125.936315
+L 809.828873 113.953373
+L 867.989518 104.058327
 " clip-path="url(#kernel-growth-p3ab3e897c5)" style="fill: none; stroke: #d85b43; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="kernel-growth-mc06e842d91" d="M 0 2.5
@@ -589,20 +589,20 @@ z
     </defs>
     <g clip-path="url(#kernel-growth-p3ab3e897c5)">
      <use xlink:href="#kernel-growth-mc06e842d91" x="53.740482" y="309.509885" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="111.901127" y="298.521438" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="170.061773" y="287.308654" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="228.222418" y="257.280806" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="286.383064" y="242.392934" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="344.543709" y="215.382211" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="402.704355" y="209.97606" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="460.865" y="184.785898" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="519.025645" y="172.927674" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="577.186291" y="158.250633" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="635.346936" y="145.305442" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="693.507582" y="120.840286" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="751.668227" y="106.831993" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="809.828873" y="92.855534" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="867.989518" y="80.058064" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="111.901127" y="302.036529" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="170.061773" y="292.212457" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="228.222418" y="264.574968" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="286.383064" y="255.272034" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="344.543709" y="228.848052" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="402.704355" y="221.579611" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="460.865" y="197.664561" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="519.025645" y="184.604402" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="577.186291" y="172.773583" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="635.346936" y="162.776879" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="693.507582" y="138.835099" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="751.668227" y="125.936315" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="809.828873" y="113.953373" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="867.989518" y="104.058327" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
     </g>
    </g>
    <g id="kernel-growth-line2d_51">
@@ -655,20 +655,20 @@ z
    </g>
    <g id="kernel-growth-line2d_52">
     <path d="M 53.740482 309.509885
-L 111.901127 295.005878
-L 170.061773 280.744282
-L 228.222418 266.622975
-L 286.383064 253.359594
-L 344.543709 236.54444
-L 402.704355 225.095516
-L 460.865 207.394818
-L 519.025645 197.128573
-L 577.186291 177.696273
-L 635.346936 169.091229
-L 693.507582 148.193474
-L 751.668227 140.39676
-L 809.828873 118.148272
-L 867.989518 112.162718
+L 111.901127 294.877029
+L 170.061773 280.358556
+L 228.222418 268.542467
+L 286.383064 254.774244
+L 344.543709 239.425251
+L 402.704355 227.698644
+L 460.865 210.980176
+L 519.025645 200.499434
+L 577.186291 182.400419
+L 635.346936 173.376583
+L 693.507582 153.731913
+L 751.668227 146.249249
+L 809.828873 124.998737
+L 867.989518 119.177418
 " clip-path="url(#kernel-growth-p3ab3e897c5)" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="kernel-growth-m98abdd7638" d="M 0 2.5
@@ -685,20 +685,20 @@ z
     </defs>
     <g clip-path="url(#kernel-growth-p3ab3e897c5)">
      <use xlink:href="#kernel-growth-m98abdd7638" x="53.740482" y="309.509885" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="111.901127" y="295.005878" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="170.061773" y="280.744282" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="228.222418" y="266.622975" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="286.383064" y="253.359594" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="344.543709" y="236.54444" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="402.704355" y="225.095516" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="460.865" y="207.394818" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="519.025645" y="197.128573" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="577.186291" y="177.696273" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="635.346936" y="169.091229" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="693.507582" y="148.193474" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="751.668227" y="140.39676" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="809.828873" y="118.148272" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="867.989518" y="112.162718" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="111.901127" y="294.877029" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="170.061773" y="280.358556" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="228.222418" y="268.542467" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="286.383064" y="254.774244" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="344.543709" y="239.425251" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="402.704355" y="227.698644" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="460.865" y="210.980176" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="519.025645" y="200.499434" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="577.186291" y="182.400419" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="635.346936" y="173.376583" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="693.507582" y="153.731913" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="751.668227" y="146.249249" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="809.828873" y="124.998737" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="867.989518" y="119.177418" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
     </g>
    </g>
    <g id="kernel-growth-line2d_53">
