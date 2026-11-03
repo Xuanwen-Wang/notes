@@ -122,6 +122,8 @@ def extend(h200, baseline, timing, out):
     d['toolchain']['cyclesim_full56']=identity['simulator_source']
     d['toolchain']['cyclesim_full56_binary_sha256']=identity['binary_sha256']
     (out/'benchmark.json').write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n')
+    # Retain per-input stage totals so later policy changes can be recomputed.
+    (out/'audited-timing-samples.json').write_text(json.dumps(samples)+'\n')
     print(json.dumps(dict(timing_cases=count,numerical_baseline_cases=10080,paired_hashes_matched=True)))
 
 
@@ -130,4 +132,7 @@ if __name__=='__main__':
     for name in ('h200','baseline','timing','out'):parser.add_argument('--'+name,type=Path,required=True)
     args=parser.parse_args()
     export(args.h200,args.baseline,args.out)
+    (args.out/'zeus-layers.csv').rename(args.out/'historical-step001-layers.csv')
     extend(args.h200,args.baseline,args.timing,args.out)
+    from sampling_policy import apply_policy
+    apply_policy(args.h200, args.out)

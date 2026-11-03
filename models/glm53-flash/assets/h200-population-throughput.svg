@@ -1,0 +1,676 @@
+<svg role="img" aria-label="H200 · 49 个采样点（排除 step001）" xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="388.8pt" viewBox="0 0 892.8 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.9, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="h200-population-throughput-figure_1">
+  <g id="h200-population-throughput-patch_1">
+   <path d="M 0 388.8
+L 892.8 388.8
+L 892.8 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="h200-population-throughput-axes_1">
+   <g id="h200-population-throughput-patch_2">
+    <path d="M 49.69524 317.651233
+L 889.79976 317.651233
+L 889.79976 55.04024
+L 49.69524 55.04024
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="h200-population-throughput-axes_2">
+    <g id="h200-population-throughput-patch_3">
+     <path d="M 49.69524 55.04024
+L 889.79976 55.04024
+L 889.79976 55.04024
+L 49.69524 55.04024
+z
+" style="fill: #ffffff"/>
+    </g>
+    <g id="h200-population-throughput-matplotlib.axis_1">
+     <g id="h200-population-throughput-xtick_1">
+      <g id="h200-population-throughput-line2d_1">
+       <defs>
+        <path id="h200-population-throughput-mecb2e9e9a6" d="M 0 0
+L 0 -3.5
+" style="stroke: #49617c; stroke-width: 0.8"/>
+       </defs>
+       <g>
+        <use xlink:href="#h200-population-throughput-mecb2e9e9a6" x="71.053829" y="55.04024" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-population-throughput-text_1">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="71.053829" y="45.520552" transform="rotate(-0 71.053829 45.520552)">4</text>
+      </g>
+     </g>
+     <g id="h200-population-throughput-xtick_2">
+      <g id="h200-population-throughput-line2d_2">
+       <g>
+        <use xlink:href="#h200-population-throughput-mecb2e9e9a6" x="128.010068" y="55.04024" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-population-throughput-text_2">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="128.010068" y="45.520552" transform="rotate(-0 128.010068 45.520552)">6</text>
+      </g>
+     </g>
+     <g id="h200-population-throughput-xtick_3">
+      <g id="h200-population-throughput-line2d_3">
+       <g>
+        <use xlink:href="#h200-population-throughput-mecb2e9e9a6" x="184.966307" y="55.04024" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-population-throughput-text_3">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="184.966307" y="45.520552" transform="rotate(-0 184.966307 45.520552)">8</text>
+      </g>
+     </g>
+     <g id="h200-population-throughput-xtick_4">
+      <g id="h200-population-throughput-line2d_4">
+       <g>
+        <use xlink:href="#h200-population-throughput-mecb2e9e9a6" x="241.922545" y="55.04024" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-population-throughput-text_4">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="241.922545" y="45.520552" transform="rotate(-0 241.922545 45.520552)">10</text>
+      </g>
+     </g>
+     <g id="h200-population-throughput-xtick_5">
+      <g id="h200-population-throughput-line2d_5">
+       <g>
+        <use xlink:href="#h200-population-throughput-mecb2e9e9a6" x="298.878784" y="55.04024" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-population-throughput-text_5">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="298.878784" y="45.520552" transform="rotate(-0 298.878784 45.520552)">12</text>
+      </g>
+     </g>
+     <g id="h200-population-throughput-xtick_6">
+      <g id="h200-population-throughput-line2d_6">
+       <g>
+        <use xlink:href="#h200-population-throughput-mecb2e9e9a6" x="355.835023" y="55.04024" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-population-throughput-text_6">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="355.835023" y="45.520552" transform="rotate(-0 355.835023 45.520552)">14</text>
+      </g>
+     </g>
+     <g id="h200-population-throughput-xtick_7">
+      <g id="h200-population-throughput-line2d_7">
+       <g>
+        <use xlink:href="#h200-population-throughput-mecb2e9e9a6" x="412.791261" y="55.04024" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-population-throughput-text_7">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="412.791261" y="45.520552" transform="rotate(-0 412.791261 45.520552)">16</text>
+      </g>
+     </g>
+     <g id="h200-population-throughput-xtick_8">
+      <g id="h200-population-throughput-line2d_8">
+       <g>
+        <use xlink:href="#h200-population-throughput-mecb2e9e9a6" x="469.7475" y="55.04024" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-population-throughput-text_8">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="45.520552" transform="rotate(-0 469.7475 45.520552)">18</text>
+      </g>
+     </g>
+     <g id="h200-population-throughput-xtick_9">
+      <g id="h200-population-throughput-line2d_9">
+       <g>
+        <use xlink:href="#h200-population-throughput-mecb2e9e9a6" x="526.703739" y="55.04024" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-population-throughput-text_9">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="526.703739" y="45.520552" transform="rotate(-0 526.703739 45.520552)">20</text>
+      </g>
+     </g>
+     <g id="h200-population-throughput-xtick_10">
+      <g id="h200-population-throughput-line2d_10">
+       <g>
+        <use xlink:href="#h200-population-throughput-mecb2e9e9a6" x="583.659977" y="55.04024" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-population-throughput-text_10">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="583.659977" y="45.520552" transform="rotate(-0 583.659977 45.520552)">22</text>
+      </g>
+     </g>
+     <g id="h200-population-throughput-xtick_11">
+      <g id="h200-population-throughput-line2d_11">
+       <g>
+        <use xlink:href="#h200-population-throughput-mecb2e9e9a6" x="640.616216" y="55.04024" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-population-throughput-text_11">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="640.616216" y="45.520552" transform="rotate(-0 640.616216 45.520552)">24</text>
+      </g>
+     </g>
+     <g id="h200-population-throughput-xtick_12">
+      <g id="h200-population-throughput-line2d_12">
+       <g>
+        <use xlink:href="#h200-population-throughput-mecb2e9e9a6" x="697.572455" y="55.04024" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-population-throughput-text_12">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="697.572455" y="45.520552" transform="rotate(-0 697.572455 45.520552)">26</text>
+      </g>
+     </g>
+     <g id="h200-population-throughput-xtick_13">
+      <g id="h200-population-throughput-line2d_13">
+       <g>
+        <use xlink:href="#h200-population-throughput-mecb2e9e9a6" x="754.528693" y="55.04024" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-population-throughput-text_13">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="754.528693" y="45.520552" transform="rotate(-0 754.528693 45.520552)">28</text>
+      </g>
+     </g>
+     <g id="h200-population-throughput-xtick_14">
+      <g id="h200-population-throughput-line2d_14">
+       <g>
+        <use xlink:href="#h200-population-throughput-mecb2e9e9a6" x="811.484932" y="55.04024" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-population-throughput-text_14">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="811.484932" y="45.520552" transform="rotate(-0 811.484932 45.520552)">30</text>
+      </g>
+     </g>
+     <g id="h200-population-throughput-xtick_15">
+      <g id="h200-population-throughput-line2d_15">
+       <g>
+        <use xlink:href="#h200-population-throughput-mecb2e9e9a6" x="868.441171" y="55.04024" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="h200-population-throughput-text_15">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="868.441171" y="45.520552" transform="rotate(-0 868.441171 45.520552)">32</text>
+      </g>
+     </g>
+     <g id="h200-population-throughput-text_16">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="28.76524" transform="rotate(-0 469.7475 28.76524)">归一化每卡 batch = 总 batch / 4</text>
+     </g>
+    </g>
+    <g id="h200-population-throughput-matplotlib.axis_2"/>
+   </g>
+   <g id="h200-population-throughput-matplotlib.axis_3">
+    <g id="h200-population-throughput-xtick_16">
+     <g id="h200-population-throughput-line2d_16">
+      <defs>
+       <path id="h200-population-throughput-mc6863bb9b3" d="M 0 0
+L 0 3.5
+" style="stroke: #49617c; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#h200-population-throughput-mc6863bb9b3" x="71.053829" y="317.651233" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-population-throughput-text_17">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="71.053829" y="333.406546" transform="rotate(-0 71.053829 333.406546)">16</text>
+     </g>
+    </g>
+    <g id="h200-population-throughput-xtick_17">
+     <g id="h200-population-throughput-line2d_17">
+      <g>
+       <use xlink:href="#h200-population-throughput-mc6863bb9b3" x="128.010068" y="317.651233" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-population-throughput-text_18">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="128.010068" y="333.406546" transform="rotate(-0 128.010068 333.406546)">24</text>
+     </g>
+    </g>
+    <g id="h200-population-throughput-xtick_18">
+     <g id="h200-population-throughput-line2d_18">
+      <g>
+       <use xlink:href="#h200-population-throughput-mc6863bb9b3" x="184.966307" y="317.651233" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-population-throughput-text_19">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="184.966307" y="333.406546" transform="rotate(-0 184.966307 333.406546)">32</text>
+     </g>
+    </g>
+    <g id="h200-population-throughput-xtick_19">
+     <g id="h200-population-throughput-line2d_19">
+      <g>
+       <use xlink:href="#h200-population-throughput-mc6863bb9b3" x="241.922545" y="317.651233" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-population-throughput-text_20">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="241.922545" y="333.406546" transform="rotate(-0 241.922545 333.406546)">40</text>
+     </g>
+    </g>
+    <g id="h200-population-throughput-xtick_20">
+     <g id="h200-population-throughput-line2d_20">
+      <g>
+       <use xlink:href="#h200-population-throughput-mc6863bb9b3" x="298.878784" y="317.651233" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-population-throughput-text_21">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="298.878784" y="333.406546" transform="rotate(-0 298.878784 333.406546)">48</text>
+     </g>
+    </g>
+    <g id="h200-population-throughput-xtick_21">
+     <g id="h200-population-throughput-line2d_21">
+      <g>
+       <use xlink:href="#h200-population-throughput-mc6863bb9b3" x="355.835023" y="317.651233" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-population-throughput-text_22">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="355.835023" y="333.406546" transform="rotate(-0 355.835023 333.406546)">56</text>
+     </g>
+    </g>
+    <g id="h200-population-throughput-xtick_22">
+     <g id="h200-population-throughput-line2d_22">
+      <g>
+       <use xlink:href="#h200-population-throughput-mc6863bb9b3" x="412.791261" y="317.651233" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-population-throughput-text_23">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="412.791261" y="333.406546" transform="rotate(-0 412.791261 333.406546)">64</text>
+     </g>
+    </g>
+    <g id="h200-population-throughput-xtick_23">
+     <g id="h200-population-throughput-line2d_23">
+      <g>
+       <use xlink:href="#h200-population-throughput-mc6863bb9b3" x="469.7475" y="317.651233" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-population-throughput-text_24">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="333.406546" transform="rotate(-0 469.7475 333.406546)">72</text>
+     </g>
+    </g>
+    <g id="h200-population-throughput-xtick_24">
+     <g id="h200-population-throughput-line2d_24">
+      <g>
+       <use xlink:href="#h200-population-throughput-mc6863bb9b3" x="526.703739" y="317.651233" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-population-throughput-text_25">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="526.703739" y="333.406546" transform="rotate(-0 526.703739 333.406546)">80</text>
+     </g>
+    </g>
+    <g id="h200-population-throughput-xtick_25">
+     <g id="h200-population-throughput-line2d_25">
+      <g>
+       <use xlink:href="#h200-population-throughput-mc6863bb9b3" x="583.659977" y="317.651233" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-population-throughput-text_26">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="583.659977" y="333.406546" transform="rotate(-0 583.659977 333.406546)">88</text>
+     </g>
+    </g>
+    <g id="h200-population-throughput-xtick_26">
+     <g id="h200-population-throughput-line2d_26">
+      <g>
+       <use xlink:href="#h200-population-throughput-mc6863bb9b3" x="640.616216" y="317.651233" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-population-throughput-text_27">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="640.616216" y="333.406546" transform="rotate(-0 640.616216 333.406546)">96</text>
+     </g>
+    </g>
+    <g id="h200-population-throughput-xtick_27">
+     <g id="h200-population-throughput-line2d_27">
+      <g>
+       <use xlink:href="#h200-population-throughput-mc6863bb9b3" x="697.572455" y="317.651233" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-population-throughput-text_28">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="697.572455" y="333.406546" transform="rotate(-0 697.572455 333.406546)">104</text>
+     </g>
+    </g>
+    <g id="h200-population-throughput-xtick_28">
+     <g id="h200-population-throughput-line2d_28">
+      <g>
+       <use xlink:href="#h200-population-throughput-mc6863bb9b3" x="754.528693" y="317.651233" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-population-throughput-text_29">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="754.528693" y="333.406546" transform="rotate(-0 754.528693 333.406546)">112</text>
+     </g>
+    </g>
+    <g id="h200-population-throughput-xtick_29">
+     <g id="h200-population-throughput-line2d_29">
+      <g>
+       <use xlink:href="#h200-population-throughput-mc6863bb9b3" x="811.484932" y="317.651233" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-population-throughput-text_30">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="811.484932" y="333.406546" transform="rotate(-0 811.484932 333.406546)">120</text>
+     </g>
+    </g>
+    <g id="h200-population-throughput-xtick_30">
+     <g id="h200-population-throughput-line2d_30">
+      <g>
+       <use xlink:href="#h200-population-throughput-mc6863bb9b3" x="868.441171" y="317.651233" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-population-throughput-text_31">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="868.441171" y="333.406546" transform="rotate(-0 868.441171 333.406546)">128</text>
+     </g>
+    </g>
+    <g id="h200-population-throughput-text_32">
+     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="356.681546" transform="rotate(-0 469.7475 356.681546)">总 batch size（4 card）</text>
+    </g>
+   </g>
+   <g id="h200-population-throughput-matplotlib.axis_4">
+    <g id="h200-population-throughput-ytick_1">
+     <g id="h200-population-throughput-line2d_31">
+      <path d="M 49.69524 317.651233
+L 889.79976 317.651233
+" clip-path="url(#h200-population-throughput-p99da51d170)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="h200-population-throughput-line2d_32">
+      <defs>
+       <path id="h200-population-throughput-mb630600054" d="M 0 0
+L -3.5 0
+" style="stroke: #49617c; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#h200-population-throughput-mb630600054" x="49.69524" y="317.651233" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-population-throughput-text_33">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="322.02889" transform="rotate(-0 42.69524 322.02889)">0</text>
+     </g>
+    </g>
+    <g id="h200-population-throughput-ytick_2">
+     <g id="h200-population-throughput-line2d_33">
+      <path d="M 49.69524 283.801317
+L 889.79976 283.801317
+" clip-path="url(#h200-population-throughput-p99da51d170)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="h200-population-throughput-line2d_34">
+      <g>
+       <use xlink:href="#h200-population-throughput-mb630600054" x="49.69524" y="283.801317" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-population-throughput-text_34">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="288.178973" transform="rotate(-0 42.69524 288.178973)">250</text>
+     </g>
+    </g>
+    <g id="h200-population-throughput-ytick_3">
+     <g id="h200-population-throughput-line2d_35">
+      <path d="M 49.69524 249.9514
+L 889.79976 249.9514
+" clip-path="url(#h200-population-throughput-p99da51d170)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="h200-population-throughput-line2d_36">
+      <g>
+       <use xlink:href="#h200-population-throughput-mb630600054" x="49.69524" y="249.9514" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-population-throughput-text_35">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="254.329056" transform="rotate(-0 42.69524 254.329056)">500</text>
+     </g>
+    </g>
+    <g id="h200-population-throughput-ytick_4">
+     <g id="h200-population-throughput-line2d_37">
+      <path d="M 49.69524 216.101483
+L 889.79976 216.101483
+" clip-path="url(#h200-population-throughput-p99da51d170)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="h200-population-throughput-line2d_38">
+      <g>
+       <use xlink:href="#h200-population-throughput-mb630600054" x="49.69524" y="216.101483" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-population-throughput-text_36">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="220.479139" transform="rotate(-0 42.69524 220.479139)">750</text>
+     </g>
+    </g>
+    <g id="h200-population-throughput-ytick_5">
+     <g id="h200-population-throughput-line2d_39">
+      <path d="M 49.69524 182.251566
+L 889.79976 182.251566
+" clip-path="url(#h200-population-throughput-p99da51d170)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="h200-population-throughput-line2d_40">
+      <g>
+       <use xlink:href="#h200-population-throughput-mb630600054" x="49.69524" y="182.251566" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-population-throughput-text_37">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="186.629223" transform="rotate(-0 42.69524 186.629223)">1000</text>
+     </g>
+    </g>
+    <g id="h200-population-throughput-ytick_6">
+     <g id="h200-population-throughput-line2d_41">
+      <path d="M 49.69524 148.40165
+L 889.79976 148.40165
+" clip-path="url(#h200-population-throughput-p99da51d170)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="h200-population-throughput-line2d_42">
+      <g>
+       <use xlink:href="#h200-population-throughput-mb630600054" x="49.69524" y="148.40165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-population-throughput-text_38">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="152.779306" transform="rotate(-0 42.69524 152.779306)">1250</text>
+     </g>
+    </g>
+    <g id="h200-population-throughput-ytick_7">
+     <g id="h200-population-throughput-line2d_43">
+      <path d="M 49.69524 114.551733
+L 889.79976 114.551733
+" clip-path="url(#h200-population-throughput-p99da51d170)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="h200-population-throughput-line2d_44">
+      <g>
+       <use xlink:href="#h200-population-throughput-mb630600054" x="49.69524" y="114.551733" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-population-throughput-text_39">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="118.929389" transform="rotate(-0 42.69524 118.929389)">1500</text>
+     </g>
+    </g>
+    <g id="h200-population-throughput-ytick_8">
+     <g id="h200-population-throughput-line2d_45">
+      <path d="M 49.69524 80.701816
+L 889.79976 80.701816
+" clip-path="url(#h200-population-throughput-p99da51d170)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="h200-population-throughput-line2d_46">
+      <g>
+       <use xlink:href="#h200-population-throughput-mb630600054" x="49.69524" y="80.701816" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="h200-population-throughput-text_40">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="85.079472" transform="rotate(-0 42.69524 85.079472)">1750</text>
+     </g>
+    </g>
+    <g id="h200-population-throughput-text_41">
+     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="11.755553" y="186.345737" transform="rotate(-90 11.755553 186.345737)">tokens/s/card</text>
+    </g>
+   </g>
+   <g id="h200-population-throughput-FillBetweenPolyCollection_1">
+    <defs>
+     <path id="h200-population-throughput-m020218eaad" d="M 71.053829 -128.029831
+L 71.053829 -121.706575
+L 128.010068 -135.512622
+L 184.966307 -148.278804
+L 241.922545 -161.226945
+L 298.878784 -173.294545
+L 355.835023 -184.558154
+L 412.791261 -195.828413
+L 469.7475 -205.387638
+L 526.703739 -216.486095
+L 583.659977 -227.807612
+L 640.616216 -238.122077
+L 697.572455 -249.426453
+L 754.528693 -260.026871
+L 811.484932 -270.449092
+L 868.441171 -280.49661
+L 868.441171 -323.661989
+L 868.441171 -323.661989
+L 811.484932 -311.430567
+L 754.528693 -299.329454
+L 697.572455 -286.401948
+L 640.616216 -271.86817
+L 583.659977 -258.380718
+L 526.703739 -245.163796
+L 469.7475 -232.984462
+L 412.791261 -220.884837
+L 355.835023 -205.748049
+L 298.878784 -192.065937
+L 241.922545 -176.899572
+L 184.966307 -161.606926
+L 128.010068 -145.30034
+L 71.053829 -128.029831
+z
+"/>
+    </defs>
+    <g clip-path="url(#h200-population-throughput-p99da51d170)">
+     <use xlink:href="#h200-population-throughput-m020218eaad" x="0" y="388.8" style="fill: #0d8d7b; fill-opacity: 0.1"/>
+    </g>
+   </g>
+   <g id="h200-population-throughput-line2d_47">
+    <path d="M 71.053829 264.72346
+L 128.010068 250.11134
+L 184.966307 236.178928
+L 241.922545 222.518668
+L 298.878784 209.646625
+L 355.835023 197.308802
+L 412.791261 185.356131
+L 469.7475 175.200937
+L 526.703739 163.546825
+L 583.659977 151.790087
+L 640.616216 140.084937
+L 697.572455 128.887456
+L 754.528693 117.564741
+L 811.484932 106.947527
+L 868.441171 96.178292
+" clip-path="url(#h200-population-throughput-p99da51d170)" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
+    <defs>
+     <path id="h200-population-throughput-m98abdd7638" d="M 0 2.5
+C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
+C 2.236584 1.29895 2.5 0.663008 2.5 0
+C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767
+C 1.29895 -2.236584 0.663008 -2.5 0 -2.5
+C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767
+C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0
+C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767
+C -1.29895 2.236584 -0.663008 2.5 0 2.5
+z
+" style="stroke: #0d8d7b; stroke-width: 2"/>
+    </defs>
+    <g clip-path="url(#h200-population-throughput-p99da51d170)">
+     <use xlink:href="#h200-population-throughput-m98abdd7638" x="71.053829" y="264.72346" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-population-throughput-m98abdd7638" x="128.010068" y="250.11134" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-population-throughput-m98abdd7638" x="184.966307" y="236.178928" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-population-throughput-m98abdd7638" x="241.922545" y="222.518668" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-population-throughput-m98abdd7638" x="298.878784" y="209.646625" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-population-throughput-m98abdd7638" x="355.835023" y="197.308802" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-population-throughput-m98abdd7638" x="412.791261" y="185.356131" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-population-throughput-m98abdd7638" x="469.7475" y="175.200937" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-population-throughput-m98abdd7638" x="526.703739" y="163.546825" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-population-throughput-m98abdd7638" x="583.659977" y="151.790087" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-population-throughput-m98abdd7638" x="640.616216" y="140.084937" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-population-throughput-m98abdd7638" x="697.572455" y="128.887456" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-population-throughput-m98abdd7638" x="754.528693" y="117.564741" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-population-throughput-m98abdd7638" x="811.484932" y="106.947527" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#h200-population-throughput-m98abdd7638" x="868.441171" y="96.178292" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+    </g>
+   </g>
+   <g id="h200-population-throughput-patch_4">
+    <path d="M 49.69524 317.651233
+L 49.69524 55.04024
+" style="fill: none; stroke: #b9c7d7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="h200-population-throughput-patch_5">
+    <path d="M 49.69524 317.651233
+L 889.79976 317.651233
+" style="fill: none; stroke: #b9c7d7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="h200-population-throughput-text_42">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="71.053829" y="254.72346" transform="rotate(-0 71.053829 254.72346)">391</text>
+   </g>
+   <g id="h200-population-throughput-text_43">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="128.010068" y="240.11134" transform="rotate(-0 128.010068 240.11134)">499</text>
+   </g>
+   <g id="h200-population-throughput-text_44">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="184.966307" y="226.178928" transform="rotate(-0 184.966307 226.178928)">602</text>
+   </g>
+   <g id="h200-population-throughput-text_45">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="241.922545" y="212.518668" transform="rotate(-0 241.922545 212.518668)">703</text>
+   </g>
+   <g id="h200-population-throughput-text_46">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="298.878784" y="199.646625" transform="rotate(-0 298.878784 199.646625)">798</text>
+   </g>
+   <g id="h200-population-throughput-text_47">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="355.835023" y="187.308802" transform="rotate(-0 355.835023 187.308802)">889</text>
+   </g>
+   <g id="h200-population-throughput-text_48">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="412.791261" y="175.356131" transform="rotate(-0 412.791261 175.356131)">977</text>
+   </g>
+   <g id="h200-population-throughput-text_49">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="469.7475" y="165.200937" transform="rotate(-0 469.7475 165.200937)">1,052</text>
+   </g>
+   <g id="h200-population-throughput-text_50">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="526.703739" y="153.546825" transform="rotate(-0 526.703739 153.546825)">1,138</text>
+   </g>
+   <g id="h200-population-throughput-text_51">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="583.659977" y="141.790087" transform="rotate(-0 583.659977 141.790087)">1,225</text>
+   </g>
+   <g id="h200-population-throughput-text_52">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="640.616216" y="130.084937" transform="rotate(-0 640.616216 130.084937)">1,311</text>
+   </g>
+   <g id="h200-population-throughput-text_53">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="697.572455" y="118.887456" transform="rotate(-0 697.572455 118.887456)">1,394</text>
+   </g>
+   <g id="h200-population-throughput-text_54">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="754.528693" y="107.564741" transform="rotate(-0 754.528693 107.564741)">1,478</text>
+   </g>
+   <g id="h200-population-throughput-text_55">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="811.484932" y="96.947527" transform="rotate(-0 811.484932 96.947527)">1,556</text>
+   </g>
+   <g id="h200-population-throughput-text_56">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="868.441171" y="86.178292" transform="rotate(-0 868.441171 86.178292)">1,636</text>
+   </g>
+   <g id="h200-population-throughput-text_57">
+    <text style="font-weight: 700; font-size: 14px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="49.69524" y="15.04024" transform="rotate(-0 49.69524 15.04024)">H200 · 49 个采样点（排除 step001）</text>
+   </g>
+   <g id="h200-population-throughput-legend_1">
+    <g id="h200-population-throughput-line2d_48">
+     <path d="M 57.79524 377.03465
+L 66.79524 377.03465
+L 75.79524 377.03465
+" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
+     <g>
+      <use xlink:href="#h200-population-throughput-m98abdd7638" x="66.79524" y="377.03465" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     </g>
+    </g>
+    <g id="h200-population-throughput-text_58">
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="82.99524" y="380.18465" transform="rotate(-0 82.99524 380.18465)">H200 EP4 · 49 个采样点</text>
+    </g>
+    <g id="h200-population-throughput-patch_6">
+     <path d="M 197.611646 380.18465
+L 215.611646 380.18465
+L 215.611646 373.88465
+L 197.611646 373.88465
+z
+" style="fill: #0d8d7b; fill-opacity: 0.1"/>
+    </g>
+    <g id="h200-population-throughput-text_59">
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="222.811646" y="380.18465" transform="rotate(-0 222.811646 380.18465)">输入间 P10–P90</text>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="h200-population-throughput-p99da51d170">
+   <rect x="49.69524" y="55.04024" width="840.10452" height="262.610993"/>
+  </clipPath>
+ </defs>
+</svg>

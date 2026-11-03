@@ -6,6 +6,8 @@ import math
 from pathlib import Path
 import re
 
+from sampling_policy import INCLUDED_STEPS
+
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -94,17 +96,22 @@ def chart(name, lines, ylabel, title, band=None, linear=False, labels=False):
 
 def build():
     d = json.loads((ROOT / 'data/benchmark.json').read_text())
+    assert d['schema_version'] == 2, 'Re-export with the current sampling policy before publishing'
+    policy = d['protocol']['sampling_policy']
+    assert policy['excluded_steps'] == [1] and policy['included_steps'] == list(INCLUDED_STEPS)
+    assert d['h200']['pairs'] == d['zeus_population']['pairs'] == 49
+    assert d['protocol']['pair'] == dict(group='train00', step=17)
     h, z = d['h200']['rows'], d['zeus']['rows']
     assert [r['batch_size'] for r in h] == list(range(16, 129, 8))
     for r in z:
         assert math.isclose(r['tokens_s_card'], r['batch_size'] * 1e8 / r['cycles'], rel_tol=1e-12)
     xs = [r['batch_size'] for r in h]
-    lines = [('h200', 'H200 EP4 · train00 / step001', xs, [r['paired_tokens_s_card'] for r in h])]
+    lines = [('h200', 'H200 EP4 · train00 / step017', xs, [r['paired_tokens_s_card'] for r in h])]
     if z:
         lines.append(('zeus', 'Zeus EP4×TP4 · 同组输入', [r['batch_size'] for r in z], [r['tokens_s_card'] for r in z]))
     paired_chart = chart('paired-throughput', lines, 'tokens/s/card', '同组输入 · 完整 42 层 MoE 组件吞吐', labels=True)
-    full_chart = chart('h200-56-throughput', [('h200', 'H200 EP4 · 56 组统计', xs, [r['tokens_s_card'] for r in h])],
-                       'tokens/s/card', 'H200 · 56 组成对输入',
+    full_chart = chart('h200-population-throughput', [('h200', 'H200 EP4 · 49 个采样点', xs, [r['tokens_s_card'] for r in h])],
+                       'tokens/s/card', 'H200 · 49 个采样点（排除 step001）',
                        band=(xs, [r['p10'] for r in h], [r['p90'] for r in h]), labels=True)
     paired_rows = []
     for r in h:
@@ -113,34 +120,37 @@ def build():
                            f"{r['paired_tokens_s_card']:.1f}", f"{zr['cycles']:,}" if zr else '待完成',
                            f"{zr['milliseconds']:.4f}" if zr else '—', f"{zr['tokens_s_card']:.1f}" if zr else '—'])
     paired_table = table(['总 BS', '每卡 BS', 'H200 ms', 'H200 tokens/s/card', 'Zeus cycles', 'Zeus ms', 'Zeus tokens/s/card'],
-                         paired_rows, '同一 train00 / step001；每个 batch 均要求完整 42 层')
+                         paired_rows, '同一 train00 / step017；每个 batch 均要求完整 42 层')
     full_table = table(['总 BS', '每卡 BS', '平均 ms', 'tokens/s/card', 'P10', 'P90'],
         [[r['batch_size'], f"{r['batch_per_card']:g}", f"{r['mean_ms']:.4f}", f"{r['tokens_s_card']:.1f}",
-          f"{r['p10']:.1f}", f"{r['p90']:.1f}"] for r in h], 'H200 56 组统计；P10/P90 是输入间分布，不是置信区间')
-    zeus56 = '<p class="pending">56 组扩展采用新 CycleSim 时序模式：完整数值资格独立保留，564,480 个周期样本通过 native 完成门禁及输入身份检查后生成曲线。时序输出不计为数值 PASS。</p>'
-    if d.get('zeus56', {}).get('complete'):
-        f = d['zeus56']
+          f"{r['p10']:.1f}", f"{r['p90']:.1f}"] for r in h], 'H200 49 点统计；P10/P90 是输入间分布，不是置信区间')
+    population = '<p class="pending">时序矩阵待完成；数值资格独立保留。</p>'
+    if d.get('zeus_population', {}).get('complete'):
+        f = d['zeus_population']
         frows = f['rows']
-        zeus56 = chart('full56-comparison', [
-            ('h200', 'H200 EP4 · 56 组', xs, [r['tokens_s_card'] for r in h]),
-            ('zeus', 'Zeus EP4×TP4 · 相同 56 组', xs, [r['tokens_s_card'] for r in frows])],
-            'tokens/s/card', '同一套 56 组成对输入 · 完整 42 层统计', labels=True)
-        zeus56 += table(['总 BS', 'Zeus 平均 cycles', 'Zeus 平均 ms', 'Zeus tokens/s/card', 'Zeus P10', 'Zeus P90', 'H200 tokens/s/card'],
+        population = chart('population-comparison', [
+            ('h200', 'H200 EP4 · 49 点', xs, [r['tokens_s_card'] for r in h]),
+            ('zeus', 'Zeus EP4×TP4 · 相同 49 点', xs, [r['tokens_s_card'] for r in frows])],
+            'tokens/s/card', '同一套 49 个采样点 · 完整 42 层统计', labels=True)
+        population += table(['总 BS', 'Zeus 平均 cycles', 'Zeus 平均 ms', 'Zeus tokens/s/card', 'Zeus P10', 'Zeus P90', 'H200 tokens/s/card'],
             [[r['batch_size'], f"{r['cycles']:,.1f}", f"{r['milliseconds']:.4f}", f"{r['tokens_s_card']:.1f}",
               f"{r['p10']:.1f}", f"{r['p90']:.1f}", f"{h[i]['tokens_s_card']:.1f}"] for i, r in enumerate(frows)],
             '两侧均为总 token / 总时间 / 4；输入间 P10/P90 不是置信区间')
         assert f['measurement_mode'] == 'timing_only'
-        zeus56 += (f"<p>Zeus 完成 {f['cases']:,} 个时序 case，native 完成门禁与配对输入身份全部通过。train 选择总 BS{f['selected_batch_size']}；"
+        population += (f"<p>当前统计纳入 {f['cases']:,} 个 Zeus 时序 case，native 完成门禁与配对输入身份全部通过。train 选择总 BS{f['selected_batch_size']}；"
                    f"validation {f['holdout']['validation']:.2f}、test {f['holdout']['test']:.2f} tokens/s/card。"
-                   f"宿主执行耗时 {f['host_seconds']/3600:.2f} 小时。</p>"
+                   f"原始 56 点矩阵共 {f['measured_cases']:,} case，宿主耗时 {f['host_seconds']/3600:.2f} 小时；"
+                   f"本次排除其中 {f['excluded_cases']:,} 个 step001 case，仅重算统计，未重新仿真。</p>"
                    f"<p>数值资格单列：保留 {f['numerical_baseline_cases']:,} 个完整模式基线；新二进制补测 {f['new_binary_numerical_cases']} 个完整数值/Graph 代表点，"
-                   f"{f['mode_comparison_cases']} 个准入用例逐 launch/core cycles 与真实 Router ID 一致；全量中的首组 {f['baseline_comparison_cases']:,} 个样本也与完整基线一致。"
+                   f"{f['mode_comparison_cases']} 个准入用例逐 launch/core cycles 与真实 Router ID 一致；历史 train00/step001 的 {f['baseline_comparison_cases']:,} 个 case 也与完整基线一致。"
                    'Router 保持真实计算，仅 Routed/Shared 省略已资格的 PE 数值乘加。时序输出及下游 Reduce 不具备数值资格，不能把 564,480 个时序样本计为数值通过。</p>'
-                   '<p><a href="data/zeus-56-paired.csv" download>下载全部 840 个配对输入的 Zeus 汇总 CSV</a></p>')
+                   '<p><a href="data/zeus-49-paired.csv" download>下载当前 735 行 Zeus 配对数据</a> · '
+                   '<a href="data/h200-49-paired.csv" download>H200 配对数据与活跃专家数</a> · '
+                   '<a href="data/zeus-49-stages.csv" download>逐采样点 kernel 周期</a></p>')
     kernel = '<p class="pending">等待每档完整 42 层结果。预热与部分层结果不用于吞吐曲线。</p>'
     analysis = '本轮尚未形成完整 15 档曲线；暂不判断 Zeus 的最佳 batch 或 Routed 增长趋势。'
-    kz = d['zeus56']['rows'] if d.get('zeus56', {}).get('complete') else z
-    kernel_scope = '56 组输入的平均周期' if d.get('zeus56', {}).get('complete') else 'train00 / step001 单组输入'
+    kz = d['zeus_population']['rows'] if d.get('zeus_population', {}).get('complete') else z
+    kernel_scope = '49 个采样点的平均周期，排除 step001' if d.get('zeus_population', {}).get('complete') else 'train00 / step017 单点输入'
     if kz and kz[0]['batch_size'] == 16:
         kx = [r['batch_size'] for r in kz]
         stage_lines = [(s, s.title(), kx, [r['stages'][s] / kz[0]['stages'][s] for r in kz]) for s in ('router', 'routed', 'shared', 'reduce')]
@@ -159,7 +169,7 @@ def build():
         analysis = (f"当前完整档位中的最高观测吞吐为 BS{best['batch_size']}：{best['tokens_s_card']:.1f} tokens/s/card。"
                     + ('Routed 相对 BS16 仍超线性的档位：' + '、'.join(superlinear) + '。' if superlinear else '已完成档位的 Routed 相对 BS16 均未超过线性参考。')
                     + '这只描述固定输入样本；相对 BS16 次线性不等于任意相邻两档均次线性。路由负载与窗口边界同时变化，曲线本身不能唯一归因于编译器或 kernel 调度。')
-    exceptions = len(d['zeus']['analytic_budget_exceptions'])
+    exceptions = len(d['qualification']['historical_full_mode']['analytic_budget_exceptions'])
     history = json.loads((ROOT / 'data/zeus-history-20261102.json').read_text())
     historical = table(['总 BS', '优化前 cycles', '优化后 cycles', '时间降低', '优化后 ms', 'tokens/s/card'],
         [[r['batch_size'], f"{int(r['baseline_cycles']):,}", f"{int(r['candidate_cycles']):,}",
@@ -183,16 +193,19 @@ def build():
         FULL_CHART=full_chart, PAIRED_TABLE=paired_table, FULL_TABLE=full_table, KERNEL=kernel,
         STATUS=status, ANALYSIS=analysis, EXCEPTIONS=str(exceptions), SOURCE=source,
         SOURCE_SHORT=source[:12], DATA=json.dumps(d, ensure_ascii=False).replace('<', '\\u003c'),
-        HISTORY_TABLES=historical, ZEUS56=zeus56,
+        HISTORY_TABLES=historical, POPULATION=population,
+        H200_BEST=f"{max(r['tokens_s_card'] for r in h):,.1f}",
+        H200_SELECTION=(f"train 划分选择总 BS{d['h200']['selection']['selected_batch_size']}；"
+                        f"该档 validation 为 {d['h200']['selection']['holdout']['validation']:,.2f}、"
+                        f"test 为 {d['h200']['selection']['holdout']['test']:,.2f} tokens/s/card。"
+                        '当前选择仍在扫描上界 BS128，不能据此断定已达到饱和。'),
         TOOLCHAIN=table(['组件', '冻结版本'], [[k, '<code>' + v + '</code>'] for k, v in d['toolchain'].items()], '本轮工具链与 kernel 身份'))
     page = (ROOT / 'page.template').read_text()
     # Scope historical numerical claims before adding timing-only measurements.
-    page = page.replace('Zeus 每个完成 case 均要求', 'Zeus 第一阶段的 10,080 个完整模式 case 均要求')
+    page = page.replace('Zeus 每个完成 case 均要求', '历史 train00/step001 的 10,080 个完整模式 case 均要求')
     page = page.replace('Model performance notebook · 2026-11-02', 'Model performance notebook · ' + d['updated'])
-    if d.get('zeus56', {}).get('complete'):
-        page = page.replace('Zeus · 第一阶段同组完整层扫描', 'Zeus · 完整 56 组时序矩阵')
-        page = page.replace('15 档 × 42 层 × 16 rank；随后扩展 56 组', '15 档 × 56 组 × 42 层 × 16 rank；数值资格独立记录')
-        replacements['STATUS'] = f"{d['zeus56']['cases']:,} / {d['zeus56']['cases']:,} case · 完成"
+    if d.get('zeus_population', {}).get('complete'):
+        replacements['STATUS'] = f"{d['zeus_population']['cases']:,} case · 已纳入统计"
     for key, value in replacements.items():
         assert '{{' + key + '}}' in page, key
         page = page.replace('{{' + key + '}}', value)
