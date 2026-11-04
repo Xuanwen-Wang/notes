@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-04",
+  "updated": "2026-11-05",
   "articles": [
     {
       "file": "2026-11-03-zccl-allreduce-pblink.html",
@@ -13,8 +13,8 @@
       "file": "models/glm53-flash/index.html",
       "category": "compiler",
       "title": "TritonShared - GLM-5.3-Flash：AF分离最大MOE FFN吞吐评估",
-      "description": "49个 decode step 采样点的四卡吞吐对比；各 kernel 吞吐率支持纵轴趋势放大，含相邻 batch 回落、平台期分析、阶段耗时与版本归档。",
-      "date": "2026-11-04",
+      "description": "49个 decode step 采样点的四卡吞吐对比，联动展示 Zeus/H200 比值柱图；各 kernel 吞吐率支持趋势放大，含阶段耗时与版本归档。",
+      "date": "2026-11-05",
       "tags": ["GLM-5.3-Flash", "MoE", "H200", "CycleSim", "Benchmark"]
     },
     {

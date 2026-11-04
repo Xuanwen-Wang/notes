@@ -41,7 +41,7 @@
   <p class="sample-strip"><b>采样数据</b>：49 个 decode step 采样点 = 7 批请求 × 每批 7 个采样位置。共 896 条不同请求，每批 128 条；保留 step 017 / 033 / 049 / 065 / 081 / 097 / 113，排除 step001。每个点重放完整 42 层 MoE；各 batch 使用同一父输入的嵌套前缀。<a href="#sampling">采样细节 ↓</a></p>
   <p class="reading-note"><b>2026-11-04 完整复测</b>：当前曲线使用本地 Router → 一次 gather → direct transport 的统一流程，Router 为 calibrated sigmoid。四卡总 BS16–128 的 493,920 个时序 case 全部完成；最佳档位为 BS32，1,134.6 tokens/s/card。相对上一版扫描峰值提高 15.7%。</p>
   {{POPULATION_CHART}}
-  <p class="reading-note">纵轴越高，单位卡的 MoE 组件吞吐越大。每个点按 <code>总 token ÷ 总时间 ÷ 4</code> 汇总 49 个样本；不直接平均样本吞吐。两条曲线分别采用 H200 CUDA event 测时和 Zeus CycleSim 400 MHz 周期换算。</p>
+  <p class="reading-note">上图比较单卡 MoE 组件吞吐，下图显示同一 batch 的 <code>Zeus 吞吐 ÷ H200 吞吐</code>：高于 1× 表示 Zeus 较高，低于 1× 表示 H200 较高。每个吞吐点按 <code>总 token ÷ 总时间 ÷ 4</code> 汇总 49 个样本；不直接平均样本吞吐或逐点比值。两条曲线分别采用 H200 CUDA event 测时和 Zeus CycleSim 400 MHz 周期换算。</p>
   <details class="data-details"><summary>查看 15 档吞吐与耗时明细</summary>{{POPULATION_TABLE}}{{DISTRIBUTION_TABLE}}<p class="quality">P10–P90 描述采样点之间的吞吐差异，不是置信区间。</p></details>
   <div class="note">比较范围为 42 层 MoE 组件计算，未计通信、Attention、host 调度及加载。两端的量化方式和 Shared 放置不同，结果不代表同精度算法的硬件加速比或完整模型吞吐。BS128 是当前扫描上界，H200 的最高点不代表已达到饱和。</div>
   <div class="links"><a href="data/throughput.csv" download>吞吐 CSV ↓</a><a href="data/h200-49-paired.csv" download>H200 逐点数据 ↓</a><a href="data/zeus-49-paired.csv" download>Zeus 逐点数据 ↓</a></div>

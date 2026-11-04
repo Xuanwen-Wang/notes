@@ -31,8 +31,20 @@ def table(headers, rows, caption):
 
 
 def chart(name, lines, ylabel, title, band=None, linear=False, labels=False, initial_batch=32, initial_visible=None,
-          zero_baseline=True):
-    fig, ax = plt.subplots(figsize=(12.4, 5.4), layout='constrained')
+          zero_baseline=True, ratio=None):
+    if ratio:
+        # Divide the pooled throughput series, never rounded labels or per-sample ratios.
+        numerator, denominator = [next(line for line in lines if line[0] == key) for key in ratio]
+        assert list(numerator[2]) == list(denominator[2])
+        assert len(numerator[2]) == len(numerator[3]) == len(denominator[3])
+        assert all(math.isfinite(y) and y >= 0 for y in numerator[3])
+        assert all(math.isfinite(y) and y > 0 for y in denominator[3])
+        ratios = [n / d for n, d in zip(numerator[3], denominator[3])]
+        ratio_label = f'{ratio[0].title()} / {ratio[1].upper()}'
+        fig, (ax, ratio_ax) = plt.subplots(2, 1, figsize=(12.4, 8), sharex=True,
+                                         height_ratios=[2.4, 1], layout='constrained')
+    else:
+        fig, ax = plt.subplots(figsize=(12.4, 5.4), layout='constrained')
     fig.patch.set_facecolor('#ffffff')
     ax.set_axisbelow(True)
     ax.grid(axis='y', color='#e3eaf2', linewidth=.8)
@@ -55,13 +67,37 @@ def chart(name, lines, ylabel, title, band=None, linear=False, labels=False, ini
     ax.set_ylim(bottom=0)
     ax.margins(y=.17)
     ax.set_ylabel(ylabel)
-    ax.set_xlabel('总 batch size（4 card）', labelpad=12)
+    if not ratio:
+        ax.set_xlabel('总 batch size（4 card）', labelpad=12)
     top = ax.secondary_xaxis('top', functions=(lambda x: x / 4, lambda x: x * 4))
     top.set_xticks(list(range(4, 33, 2)))
     top.set_xlabel('归一化每卡 batch = 总 batch / 4', labelpad=8, fontsize=10)
     top.spines['top'].set_visible(False)
-    ax.legend(loc='upper left', bbox_to_anchor=(0, -.18), ncol=min(len(lines) + int(linear) + int(bool(band)), 5),
+    ax.legend(loc='upper left', bbox_to_anchor=(0, 1 if ratio else -.18), ncol=min(len(lines) + int(linear) + int(bool(band)), 5),
               frameon=False, fontsize=9)
+    ratio_note = ''
+    if ratio:
+        ratio_ax.set_facecolor('#f7faff')
+        ratio_ax.set_axisbelow(True)
+        ratio_ax.grid(axis='y', color='#e3eaf2', linewidth=.8)
+        ratio_ax.bar(numerator[2], ratios, width=4,
+                     color=[COLORS['zeus'] if y >= 1 else COLORS['h200'] for y in ratios], alpha=.78, zorder=3)
+        for x, y in zip(numerator[2], ratios):
+            if labels:
+                ratio_ax.annotate(f'{y:.2f}×', (x, y), xytext=(0, 5), textcoords='offset points',
+                                  ha='center', fontsize=9, color=COLORS['zeus'] if y >= 1 else COLORS['h200'],
+                                  bbox=dict(facecolor='#f7faff', edgecolor='none', pad=.3), zorder=5)
+        ratio_ax.axhline(1, color='#687c95', linestyle=(0, (4, 4)), linewidth=1.2, zorder=4)
+        ratio_ax.annotate('1× · 吞吐持平', (1, 1), xycoords=('axes fraction', 'data'),
+                          xytext=(-5, 6), textcoords='offset points', ha='right', fontsize=9, color='#49617c')
+        ratio_ax.set_ylim(0, max(1, max(ratios)) * 1.2)
+        ratio_ax.yaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda y, _: f'{y:g}×'))
+        ratio_ax.set_ylabel('吞吐比值（倍）')
+        ratio_ax.set_title(f'{ratio_label} · 吞吐比值', loc='left', fontsize=12, pad=14, weight='bold')
+        ratio_ax.text(1, 1.08, '蓝 ≥ 1×：Zeus 较高或持平    绿 < 1×：H200 较高',
+                      transform=ratio_ax.transAxes, ha='right', fontsize=9, color='#687c95')
+        ratio_ax.set_xlabel('总 batch size（4 card）· 上下图共用横轴', labelpad=12)
+        ratio_note = '<br>附图纵轴：Zeus / H200 吞吐比值（倍）；1× 表示持平。使用同档汇总吞吐相除，不是逐点比值的平均。'
     assets = ROOT / 'assets'
     assets.mkdir(exist_ok=True)
     fig.savefig(assets / f'{name}.png', dpi=180, metadata={'Software': 'GLM53 benchmark builder'})
@@ -84,6 +120,8 @@ def chart(name, lines, ylabel, title, band=None, linear=False, labels=False, ini
         series.append(dict(key='linear', label='线性参考 BS / 16', x=list(lines[0][2]),
                            y=[x / 16 for x in lines[0][2]], color='#8492a6', dashed=True))
     config = dict(title=title, unit=ylabel, series=series, band=band, labels=labels, initialBatch=initial_batch)
+    if ratio:
+        config['ratio'] = dict(numerator=ratio[0], denominator=ratio[1], label=ratio_label)
     if not zero_baseline:
         config['zeroBaseline'] = False
     if initial_visible is not None:
@@ -95,7 +133,7 @@ def chart(name, lines, ylabel, title, band=None, linear=False, labels=False, ini
             f'<span class="chart-unit">{html.escape(ylabel)}</span></figcaption>'
             '<div class="chart-controls"></div><div class="chart-frame">' + svg + '</div>'
             '<div class="chart-readout"></div><div class="chart-footer">'
-            f'<span>横轴：四卡总 batch size（16–128）<br>纵轴：{html.escape(ylabel)}<br>统计范围：每档同一套 49 个 decode step 采样点（7 批请求 × 每批 7 个采样位置），排除 step001</span>'
+            f'<span>横轴：四卡总 batch size（16–128）<br>纵轴：{html.escape(ylabel)}{ratio_note}<br>统计范围：每档同一套 49 个 decode step 采样点（7 批请求 × 每批 7 个采样位置），排除 step001</span>'
             f'<span><a href="assets/{name}.png" download>完整图 PNG</a>'
             f'<a href="assets/{name}.svg" download>完整图 SVG</a></span></div>'
             f'<script type="application/json" class="chart-config">{payload}</script></figure>')
@@ -119,7 +157,7 @@ def build():
         ('h200', 'H200 · EP4', xs, [r['tokens_s_card'] for r in h]),
         ('zeus', 'Zeus · EP4 × TP4', xs, [r['tokens_s_card'] for r in kz])],
         'tokens/s/card', '49 个 decode step 采样点汇总 · H200 与 Zeus MoE 吞吐', labels=True,
-        initial_batch=f['selected_batch_size'])
+        initial_batch=f['selected_batch_size'], ratio=('zeus', 'h200'))
     population_table = table(
         ['总 batch', '均摊 batch/card', 'H200 · ms', 'H200 · tokens/s/card', 'Zeus · ms', 'Zeus · tokens/s/card'],
         [[r['batch_size'], f"{r['batch_per_card']:g}", f"{r['mean_ms']:.4f}", f"{r['tokens_s_card']:.1f}",

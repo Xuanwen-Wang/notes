@@ -42,15 +42,21 @@
     // A much faster stage can otherwise flatten all consumer curves on the shared scale.
     const visible = new Set(config.initialVisible ?? config.series.map(s => s.key));
     const xs = config.series[0].x;
+    // Keep the comparison bound to both full-precision source series even when
+    // the reader hides a line. Visibility and axis controls affect only the top panel.
+    const ratios = config.ratio ? config.series.find(s => s.key === config.ratio.numerator).y.map((value, i) =>
+      value / config.series.find(s => s.key === config.ratio.denominator).y[i]) : null;
+    const ratioColor = value => value >= 1 ? '#2364d2' : '#0d8d7b';
     let index = xs.indexOf(config.initialBatch ?? 32), labels = Boolean(config.labels), autoscale = true;
     let zeroBaseline = config.zeroBaseline ?? true;
     const choices = new Map();
-    let plot, marker, svg;
+    let plot, ratioPlot, marker, svg;
     const legend = element('div', 'chart-legend');
     legend.setAttribute('role', 'group');
     legend.setAttribute('aria-label', config.title + ' · 曲线选择');
     const options = element('div', 'chart-options');
     const hint = element('p', 'chart-hint', '勾选显示曲线，或点「只看」放大比较。悬停 / 轻触看数值；图上可用 ← → 切换 batch。');
+    if (ratios) hint.textContent = '上下图悬停、点选与方向键联动。曲线筛选及纵轴设置仅影响上图；附图始终使用两端完整数据。';
     controls.append(legend, options, hint);
     const scaleNote = element('p', 'chart-scale-note');
     frame.before(scaleNote);
@@ -105,23 +111,40 @@
       select.value = xs[index];
       marker.replaceChildren(); readout.replaceChildren();
       const selected = config.series.filter(s => visible.has(s.key));
-      if (!selected.length) {
+      if (!selected.length && !ratios) {
         readout.append(element('span', 'chart-empty', '已隐藏全部曲线，点击「显示全部」恢复。'));
         return;
       }
       const x = plot.x(xs[index]);
       marker.append(node('line', { x1: x, x2: x, y1: plot.top, y2: plot.bottom, stroke: '#9cacc0', 'stroke-dasharray': '3 5' }));
+      if (ratioPlot) {
+        marker.append(node('line', { x1: x, x2: x, y1: ratioPlot.top, y2: ratioPlot.bottom, stroke: '#9cacc0', 'stroke-dasharray': '3 5' }));
+        svg.querySelectorAll('[data-ratio-index]').forEach(bar => {
+          const active = Number(bar.getAttribute('data-ratio-index')) === index;
+          bar.setAttribute('fill-opacity', active ? '1' : '.72');
+          bar.setAttribute('stroke-width', active ? '2' : '0');
+          bar.setAttribute('data-selected', String(active));
+        });
+      }
       const batch = element('div', 'readout-batch');
       batch.append(element('strong', '', 'BS ' + xs[index]), element('span', '', `${xs[index] / 4} / card`));
       readout.append(batch);
-      for (const series of selected) {
+      for (const series of ratios ? config.series : selected) {
         const value = series.y[index];
-        marker.append(node('circle', { cx: x, cy: plot.y(value), r: 5, fill: series.color, stroke: '#fff', 'stroke-width': 2 }));
+        if (visible.has(series.key)) marker.append(node('circle', { cx: x, cy: plot.y(value), r: 5, fill: series.color, stroke: '#fff', 'stroke-width': 2 }));
         const item = element('div', 'readout-value');
         item.style.setProperty('--series-color', series.color);
         item.append(element('span', '', series.label), element('strong', '', format(value)));
         item.append(element('small', '', config.unit));
         if (config.band && series.key === 'h200') item.append(element('small', '', `P10–P90：${format(config.band[1][index])}–${format(config.band[2][index])}`));
+        readout.append(item);
+      }
+      if (ratios) {
+        const value = ratios[index], delta = (value - 1) * 100;
+        const item = element('div', 'readout-value readout-ratio');
+        item.style.setProperty('--series-color', ratioColor(value));
+        item.append(element('span', '', config.ratio.label + ' · 吞吐比值'), element('strong', '', value.toFixed(3) + '×'),
+          element('small', '', delta === 0 ? '与 H200 持平' : `比 H200 ${delta > 0 ? '高' : '低'} ${pointLabel(Math.abs(delta))}%`));
         readout.append(item);
       }
     }
@@ -132,18 +155,20 @@
         input.closest('.series-chip').classList.toggle('is-hidden', !input.checked);
       }
       const width = Math.max(frame.clientWidth, 260), mobile = width < 600;
-      const height = mobile ? 290 : 370;
-      const left = mobile ? 48 : 66, right = 20, top = 38, bottom = height - 44;
+      const mainHeight = mobile ? 290 : 370, height = mainHeight + (ratios ? 230 : 0);
+      const left = mobile ? 48 : 66, right = ratios ? 30 : 20, top = 38, bottom = mainHeight - 44;
+      // Leave half a batch interval at the edges so the first and last bars fit.
+      const xInset = ratios ? Math.min(20, (width - left - right) / xs.length / 2) : 0;
       const selected = config.series.filter(s => visible.has(s.key));
       const scaleSeries = autoscale && selected.length ? selected : config.series;
       const values = scaleSeries.flatMap(s => s.y);
       if (config.band && scaleSeries.some(s => s.key === 'h200')) values.push(...config.band[1], ...config.band[2]);
       const { minimum, maximum, step } = axisRange(values, zeroBaseline);
-      const rangeText = `纵轴范围：${format(minimum)}–${format(maximum)}`
+      const rangeText = `${ratios ? '主图' : ''}纵轴范围：${format(minimum)}–${format(maximum)}`
         + (minimum > 0 ? ' · 非零起点，突出变化趋势' : ' · 从 0 开始，比较绝对比例');
       scaleNote.textContent = rangeText;
       scaleNote.classList.toggle('is-zoomed', minimum > 0);
-      plot = { top, bottom, x: value => left + (value - xs[0]) / (xs.at(-1) - xs[0]) * (width - left - right),
+      plot = { top, bottom, x: value => left + xInset + (value - xs[0]) / (xs.at(-1) - xs[0]) * (width - left - right - 2 * xInset),
         y: value => bottom - (value - minimum) / (maximum - minimum) * (bottom - top) };
       svg = node('svg', { viewBox: `0 0 ${width} ${height}`, role: 'img', 'aria-label': config.title,
         class: 'live-chart', 'data-y-min': minimum, 'data-y-max': maximum });
@@ -159,7 +184,7 @@
       const skip = mobile ? 3 : 1;
       xs.forEach((x, i) => {
         if (i % skip && i !== xs.length - 1) return;
-        svg.append(node('text', { x: plot.x(x), y: bottom + 22, 'text-anchor': 'middle', class: 'axis-label' }, String(x)));
+        svg.append(node('text', { x: plot.x(x), y: height - 22, 'text-anchor': 'middle', class: 'axis-label' }, String(x)));
       });
       svg.append(node('text', { x: (left + width - right) / 2, y: height - 2, 'text-anchor': 'middle', class: 'axis-title' }, '总 batch size（4 card）'));
       if (config.band && visible.has('h200')) {
@@ -187,7 +212,43 @@
         });
         svg.append(group);
       }
-      if (!selected.length) svg.append(node('text', { x: width / 2, y: height / 2, 'text-anchor': 'middle', class: 'axis-title' }, '请选择至少一条曲线'));
+      if (!selected.length) svg.append(node('text', { x: width / 2, y: (top + bottom) / 2, 'text-anchor': 'middle', class: 'axis-title' }, '请选择至少一条曲线'));
+      if (ratios) {
+        const ratioTop = bottom + 72, ratioBottom = height - 44;
+        const range = axisRange([...ratios, 1], true);
+        const barWidth = Math.min(30, (plot.x(xs[1]) - plot.x(xs[0])) * .5);
+        ratioPlot = { top: ratioTop, bottom: ratioBottom,
+          y: value => ratioBottom - value / range.maximum * (ratioBottom - ratioTop) };
+        const group = node('g', { class: 'ratio-panel', 'data-ratio-max': range.maximum });
+        group.append(node('rect', { x: left, y: ratioTop - 8, width: width - left - right,
+          height: ratioBottom - ratioTop + 8, rx: 6, fill: '#f7faff' }));
+        group.append(node('text', { x: left, y: ratioTop - 30, class: 'ratio-title' }, config.ratio.label + ' · 吞吐比值（倍）'));
+        if (!mobile) group.append(node('text', { x: width - right, y: ratioTop - 30, 'text-anchor': 'end', class: 'axis-title' },
+          '蓝 ≥ 1×：Zeus 较高或持平　绿 < 1×：H200 较高'));
+        for (let i = 0; i <= Math.round(range.maximum / range.step); i++) {
+          const value = i * range.step, y = ratioPlot.y(value);
+          group.append(node('line', { x1: left, x2: width - right, y1: y, y2: y, stroke: i ? '#e4ecf6' : '#bccbdd' }));
+          group.append(node('text', { x: left - 10, y: y + 4, 'text-anchor': 'end', class: 'axis-label' }, format(value) + '×'));
+        }
+        const ratioLabels = node('g');
+        ratios.forEach((value, i) => {
+          const x = plot.x(xs[i]), y = ratioPlot.y(value);
+          const bar = node('rect', { x: x - barWidth / 2, y, width: barWidth, height: ratioBottom - y,
+            rx: 3, fill: ratioColor(value), stroke: ratioColor(value), 'data-ratio-index': i, 'data-ratio': value });
+          bar.append(node('title', {}, `BS ${xs[i]} · ${config.ratio.label}：${value.toFixed(3)}×`));
+          group.append(bar);
+          if (labels && (!mobile || i % skip === 0 || i === xs.length - 1)) ratioLabels.append(node('text', {
+            x, y: y - 8, 'text-anchor': 'middle', fill: ratioColor(value), class: 'point-value ratio-value'
+          }, value.toFixed(2) + '×'));
+        });
+        const baseline = ratioPlot.y(1);
+        group.append(node('line', { x1: left, x2: width - right, y1: baseline, y2: baseline,
+          stroke: '#687c95', 'stroke-width': 1.2, 'stroke-dasharray': '4 4', 'data-ratio-baseline': 1 }));
+        group.append(ratioLabels);
+        group.append(node('text', { x: width - right - 4, y: baseline - 8, 'text-anchor': 'end',
+          class: 'point-value', fill: '#49617c' }, '1× · 吞吐持平'));
+        svg.append(group);
+      }
       marker = node('g', { class: 'chart-selection', 'pointer-events': 'none' }); svg.append(marker);
       frame.replaceChildren(svg); selection();
     }

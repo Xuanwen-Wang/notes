@@ -85,6 +85,8 @@ details{border:1px solid var(--line);border-radius:9px;padding:13px 16px;margin:
 .axis-label { fill:#708198; font-size:11px; font-family:inherit; font-variant-numeric:tabular-nums; }
 .axis-title { fill:#708198; font-size:11px; font-family:inherit; }
 .point-value { font-size:10px; font-family:inherit; paint-order:stroke; stroke:#fff; stroke-width:4px; stroke-linejoin:round; font-variant-numeric:tabular-nums; }
+.ratio-title { fill:#29496c; font-size:12px; font-family:inherit; font-weight:650; }
+.ratio-value { font-weight:600; }
 .chart-readout { display:flex; flex-wrap:wrap; align-items:stretch; gap:10px 22px; padding:15px 17px; background:#f6f9fd; border:1px solid #e8eef5; border-radius:10px; min-height:87px; margin-top:10px; }
 .readout-batch { display:flex; flex-direction:column; justify-content:center; padding-right:20px; border-right:1px solid #dde6f0; min-width:85px; }
 .readout-batch strong { font-size:17px; color:#29496c; }
@@ -93,6 +95,7 @@ details{border:1px solid var(--line);border-radius:9px;padding:13px 16px;margin:
 .readout-value > span { font-size:11px; color:#718196; }
 .readout-value strong { color:var(--series-color); font-size:18px; font-weight:650; font-variant-numeric:tabular-nums; line-height:1.65; }
 .readout-value small { font-size:10px; color:#74869b; }
+.readout-ratio { margin-left:auto; border-left:1px solid #dde6f0; padding-left:22px; }
 .chart-footer { display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px; color:#8290a1; font-size:10px; margin-top:12px; }
 .chart-footer a { color:#6c8199; margin-left:14px; }
 .chart-empty { font-size:12px; color:#7a8ba0; align-self:center; }
@@ -170,7 +173,7 @@ select:focus-visible,input:focus-visible { outline:3px solid #dba855; outline-of
   </div>
   <p class="sample-strip"><b>采样数据</b>：49 个 decode step 采样点 = 7 批请求 × 每批 7 个采样位置。共 896 条不同请求，每批 128 条；保留 step 017 / 033 / 049 / 065 / 081 / 097 / 113，排除 step001。每个点重放完整 42 层 MoE；各 batch 使用同一父输入的嵌套前缀。<a href="#sampling">采样细节 ↓</a></p>
   <p class="reading-note"><b>2026-11-04 完整复测</b>：当前曲线使用本地 Router → 一次 gather → direct transport 的统一流程，Router 为 calibrated sigmoid。四卡总 BS16–128 的 493,920 个时序 case 全部完成；最佳档位为 BS32，1,134.6 tokens/s/card。相对上一版扫描峰值提高 15.7%。</p>
-  <figure class="interactive-chart" id="chart-population-comparison"><figcaption><div><span class="chart-kicker">4 CARD · 49 DECODE STEP SAMPLES / BATCH · 42 MoE LAYERS</span><h3>49 个 decode step 采样点汇总 · H200 与 Zeus MoE 吞吐</h3></div><span class="chart-unit">tokens/s/card</span></figcaption><div class="chart-controls"></div><div class="chart-frame"><svg role="img" aria-label="49 个 decode step 采样点汇总 · H200 与 Zeus MoE 吞吐" xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="388.8pt" viewBox="0 0 892.8 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <figure class="interactive-chart" id="chart-population-comparison"><figcaption><div><span class="chart-kicker">4 CARD · 49 DECODE STEP SAMPLES / BATCH · 42 MoE LAYERS</span><h3>49 个 decode step 采样点汇总 · H200 与 Zeus MoE 吞吐</h3></div><span class="chart-unit">tokens/s/card</span></figcaption><div class="chart-controls"></div><div class="chart-frame"><svg role="img" aria-label="49 个 decode step 采样点汇总 · H200 与 Zeus MoE 吞吐" xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="576pt" viewBox="0 0 892.8 576" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
@@ -189,8 +192,8 @@ select:focus-visible,input:focus-visible { outline:3px solid #dba855; outline-of
  </defs>
  <g id="population-comparison-figure_1">
   <g id="population-comparison-patch_1">
-   <path d="M 0 388.8
-L 892.8 388.8
+   <path d="M 0 576
+L 892.8 576
 L 892.8 0
 L 0 0
 z
@@ -198,8 +201,8 @@ z
   </g>
   <g id="population-comparison-axes_1">
    <g id="population-comparison-patch_2">
-    <path d="M 49.69524 317.631219
-L 889.79976 317.631219
+    <path d="M 49.69524 365.426915
+L 889.79976 365.426915
 L 889.79976 54.913365
 L 49.69524 54.913365
 z
@@ -385,163 +388,115 @@ L 0 3.5
 " style="stroke: #49617c; stroke-width: 0.8"/>
       </defs>
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="71.053829" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="71.053829" y="365.426915" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
-     </g>
-     <g id="population-comparison-text_17">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="71.053829" y="333.386531" transform="rotate(-0 71.053829 333.386531)">16</text>
      </g>
     </g>
     <g id="population-comparison-xtick_17">
      <g id="population-comparison-line2d_17">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="128.010068" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="128.010068" y="365.426915" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
-     </g>
-     <g id="population-comparison-text_18">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="128.010068" y="333.386531" transform="rotate(-0 128.010068 333.386531)">24</text>
      </g>
     </g>
     <g id="population-comparison-xtick_18">
      <g id="population-comparison-line2d_18">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="184.966307" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="184.966307" y="365.426915" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
-     </g>
-     <g id="population-comparison-text_19">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="184.966307" y="333.386531" transform="rotate(-0 184.966307 333.386531)">32</text>
      </g>
     </g>
     <g id="population-comparison-xtick_19">
      <g id="population-comparison-line2d_19">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="241.922545" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="241.922545" y="365.426915" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
-     </g>
-     <g id="population-comparison-text_20">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="241.922545" y="333.386531" transform="rotate(-0 241.922545 333.386531)">40</text>
      </g>
     </g>
     <g id="population-comparison-xtick_20">
      <g id="population-comparison-line2d_20">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="298.878784" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="298.878784" y="365.426915" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
-     </g>
-     <g id="population-comparison-text_21">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="298.878784" y="333.386531" transform="rotate(-0 298.878784 333.386531)">48</text>
      </g>
     </g>
     <g id="population-comparison-xtick_21">
      <g id="population-comparison-line2d_21">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="355.835023" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="355.835023" y="365.426915" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
-     </g>
-     <g id="population-comparison-text_22">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="355.835023" y="333.386531" transform="rotate(-0 355.835023 333.386531)">56</text>
      </g>
     </g>
     <g id="population-comparison-xtick_22">
      <g id="population-comparison-line2d_22">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="412.791261" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="412.791261" y="365.426915" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
-     </g>
-     <g id="population-comparison-text_23">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="412.791261" y="333.386531" transform="rotate(-0 412.791261 333.386531)">64</text>
      </g>
     </g>
     <g id="population-comparison-xtick_23">
      <g id="population-comparison-line2d_23">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="469.7475" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="469.7475" y="365.426915" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
-     </g>
-     <g id="population-comparison-text_24">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="333.386531" transform="rotate(-0 469.7475 333.386531)">72</text>
      </g>
     </g>
     <g id="population-comparison-xtick_24">
      <g id="population-comparison-line2d_24">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="526.703739" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="526.703739" y="365.426915" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
-     </g>
-     <g id="population-comparison-text_25">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="526.703739" y="333.386531" transform="rotate(-0 526.703739 333.386531)">80</text>
      </g>
     </g>
     <g id="population-comparison-xtick_25">
      <g id="population-comparison-line2d_25">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="583.659977" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="583.659977" y="365.426915" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
-     </g>
-     <g id="population-comparison-text_26">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="583.659977" y="333.386531" transform="rotate(-0 583.659977 333.386531)">88</text>
      </g>
     </g>
     <g id="population-comparison-xtick_26">
      <g id="population-comparison-line2d_26">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="640.616216" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="640.616216" y="365.426915" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
-     </g>
-     <g id="population-comparison-text_27">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="640.616216" y="333.386531" transform="rotate(-0 640.616216 333.386531)">96</text>
      </g>
     </g>
     <g id="population-comparison-xtick_27">
      <g id="population-comparison-line2d_27">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="697.572455" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="697.572455" y="365.426915" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
-     </g>
-     <g id="population-comparison-text_28">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="697.572455" y="333.386531" transform="rotate(-0 697.572455 333.386531)">104</text>
      </g>
     </g>
     <g id="population-comparison-xtick_28">
      <g id="population-comparison-line2d_28">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="754.528693" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="754.528693" y="365.426915" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
-     </g>
-     <g id="population-comparison-text_29">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="754.528693" y="333.386531" transform="rotate(-0 754.528693 333.386531)">112</text>
      </g>
     </g>
     <g id="population-comparison-xtick_29">
      <g id="population-comparison-line2d_29">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="811.484932" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="811.484932" y="365.426915" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
-     </g>
-     <g id="population-comparison-text_30">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="811.484932" y="333.386531" transform="rotate(-0 811.484932 333.386531)">120</text>
      </g>
     </g>
     <g id="population-comparison-xtick_30">
      <g id="population-comparison-line2d_30">
       <g>
-       <use xlink:href="#population-comparison-mc6863bb9b3" x="868.441171" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="868.441171" y="365.426915" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="population-comparison-text_31">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="868.441171" y="333.386531" transform="rotate(-0 868.441171 333.386531)">128</text>
-     </g>
-    </g>
-    <g id="population-comparison-text_32">
-     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="356.661531" transform="rotate(-0 469.7475 356.661531)">总 batch size（4 card）</text>
     </g>
    </g>
    <g id="population-comparison-matplotlib.axis_4">
     <g id="population-comparison-ytick_1">
      <g id="population-comparison-line2d_31">
-      <path d="M 49.69524 317.631219
-L 889.79976 317.631219
-" clip-path="url(#population-comparison-p57ef3162e0)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 365.426915
+L 889.79976 365.426915
+" clip-path="url(#population-comparison-pb36fa2216a)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="population-comparison-line2d_32">
       <defs>
@@ -550,154 +505,154 @@ L -3.5 0
 " style="stroke: #49617c; stroke-width: 0.8"/>
       </defs>
       <g>
-       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="317.631219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="365.426915" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="population-comparison-text_33">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="322.008875" transform="rotate(-0 42.69524 322.008875)">0</text>
+     <g id="population-comparison-text_17">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="369.804572" transform="rotate(-0 42.69524 369.804572)">0</text>
      </g>
     </g>
     <g id="population-comparison-ytick_2">
      <g id="population-comparison-line2d_33">
-      <path d="M 49.69524 286.685695
-L 889.79976 286.685695
-" clip-path="url(#population-comparison-p57ef3162e0)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 328.851539
+L 889.79976 328.851539
+" clip-path="url(#population-comparison-pb36fa2216a)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="population-comparison-line2d_34">
       <g>
-       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="286.685695" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="328.851539" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="population-comparison-text_34">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="291.063352" transform="rotate(-0 42.69524 291.063352)">200</text>
+     <g id="population-comparison-text_18">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="333.229195" transform="rotate(-0 42.69524 333.229195)">200</text>
      </g>
     </g>
     <g id="population-comparison-ytick_3">
      <g id="population-comparison-line2d_35">
-      <path d="M 49.69524 255.740172
-L 889.79976 255.740172
-" clip-path="url(#population-comparison-p57ef3162e0)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 292.276163
+L 889.79976 292.276163
+" clip-path="url(#population-comparison-pb36fa2216a)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="population-comparison-line2d_36">
       <g>
-       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="255.740172" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="292.276163" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="population-comparison-text_35">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="260.117828" transform="rotate(-0 42.69524 260.117828)">400</text>
+     <g id="population-comparison-text_19">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="296.653819" transform="rotate(-0 42.69524 296.653819)">400</text>
      </g>
     </g>
     <g id="population-comparison-ytick_4">
      <g id="population-comparison-line2d_37">
-      <path d="M 49.69524 224.794649
-L 889.79976 224.794649
-" clip-path="url(#population-comparison-p57ef3162e0)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 255.700787
+L 889.79976 255.700787
+" clip-path="url(#population-comparison-pb36fa2216a)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="population-comparison-line2d_38">
       <g>
-       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="224.794649" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="255.700787" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="population-comparison-text_36">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="229.172305" transform="rotate(-0 42.69524 229.172305)">600</text>
+     <g id="population-comparison-text_20">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="260.078443" transform="rotate(-0 42.69524 260.078443)">600</text>
      </g>
     </g>
     <g id="population-comparison-ytick_5">
      <g id="population-comparison-line2d_39">
-      <path d="M 49.69524 193.849125
-L 889.79976 193.849125
-" clip-path="url(#population-comparison-p57ef3162e0)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 219.125411
+L 889.79976 219.125411
+" clip-path="url(#population-comparison-pb36fa2216a)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="population-comparison-line2d_40">
       <g>
-       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="193.849125" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="219.125411" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="population-comparison-text_37">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="198.226782" transform="rotate(-0 42.69524 198.226782)">800</text>
+     <g id="population-comparison-text_21">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="223.503067" transform="rotate(-0 42.69524 223.503067)">800</text>
      </g>
     </g>
     <g id="population-comparison-ytick_6">
      <g id="population-comparison-line2d_41">
-      <path d="M 49.69524 162.903602
-L 889.79976 162.903602
-" clip-path="url(#population-comparison-p57ef3162e0)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 182.550035
+L 889.79976 182.550035
+" clip-path="url(#population-comparison-pb36fa2216a)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="population-comparison-line2d_42">
       <g>
-       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="162.903602" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="182.550035" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="population-comparison-text_38">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="167.281258" transform="rotate(-0 42.69524 167.281258)">1000</text>
+     <g id="population-comparison-text_22">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="186.927691" transform="rotate(-0 42.69524 186.927691)">1000</text>
      </g>
     </g>
     <g id="population-comparison-ytick_7">
      <g id="population-comparison-line2d_43">
-      <path d="M 49.69524 131.958079
-L 889.79976 131.958079
-" clip-path="url(#population-comparison-p57ef3162e0)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 145.974658
+L 889.79976 145.974658
+" clip-path="url(#population-comparison-pb36fa2216a)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="population-comparison-line2d_44">
       <g>
-       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="131.958079" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="145.974658" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="population-comparison-text_39">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="136.335735" transform="rotate(-0 42.69524 136.335735)">1200</text>
+     <g id="population-comparison-text_23">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="150.352315" transform="rotate(-0 42.69524 150.352315)">1200</text>
      </g>
     </g>
     <g id="population-comparison-ytick_8">
      <g id="population-comparison-line2d_45">
-      <path d="M 49.69524 101.012555
-L 889.79976 101.012555
-" clip-path="url(#population-comparison-p57ef3162e0)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 109.399282
+L 889.79976 109.399282
+" clip-path="url(#population-comparison-pb36fa2216a)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="population-comparison-line2d_46">
       <g>
-       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="101.012555" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="109.399282" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="population-comparison-text_40">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="105.390212" transform="rotate(-0 42.69524 105.390212)">1400</text>
+     <g id="population-comparison-text_24">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="113.776939" transform="rotate(-0 42.69524 113.776939)">1400</text>
      </g>
     </g>
     <g id="population-comparison-ytick_9">
      <g id="population-comparison-line2d_47">
-      <path d="M 49.69524 70.067032
-L 889.79976 70.067032
-" clip-path="url(#population-comparison-p57ef3162e0)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 49.69524 72.823906
+L 889.79976 72.823906
+" clip-path="url(#population-comparison-pb36fa2216a)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="population-comparison-line2d_48">
       <g>
-       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="70.067032" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="72.823906" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
-     <g id="population-comparison-text_41">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="74.444688" transform="rotate(-0 42.69524 74.444688)">1600</text>
+     <g id="population-comparison-text_25">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="77.201562" transform="rotate(-0 42.69524 77.201562)">1600</text>
      </g>
     </g>
-    <g id="population-comparison-text_42">
-     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="11.755553" y="186.272292" transform="rotate(-90 11.755553 186.272292)">tokens/s/card</text>
+    <g id="population-comparison-text_26">
+     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="11.755553" y="210.17014" transform="rotate(-90 11.755553 210.17014)">tokens/s/card</text>
     </g>
    </g>
    <g id="population-comparison-line2d_49">
-    <path d="M 71.053829 257.148143
-L 128.010068 240.450182
-L 184.966307 224.528954
-L 241.922545 208.918727
-L 298.878784 194.209234
-L 355.835023 180.110219
-L 412.791261 166.451335
-L 469.7475 154.846514
-L 526.703739 141.528808
-L 583.659977 128.093826
-L 640.616216 114.717797
-L 697.572455 101.921904
-L 754.528693 88.982901
-L 811.484932 76.850108
-L 868.441171 64.543593
-" clip-path="url(#population-comparison-p57ef3162e0)" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
+    <path d="M 71.053829 293.940283
+L 128.010068 274.204498
+L 184.966307 255.386755
+L 241.922545 236.936593
+L 298.878784 219.551033
+L 355.835023 202.887014
+L 412.791261 186.743199
+L 469.7475 173.027137
+L 526.703739 157.28657
+L 583.659977 141.407391
+L 640.616216 125.597889
+L 697.572455 110.474066
+L 754.528693 95.181099
+L 811.484932 80.841012
+L 868.441171 66.295599
+" clip-path="url(#population-comparison-pb36fa2216a)" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="population-comparison-m98abdd7638" d="M 0 2.5
 C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
@@ -711,41 +666,41 @@ C -1.29895 2.236584 -0.663008 2.5 0 2.5
 z
 " style="stroke: #0d8d7b; stroke-width: 2"/>
     </defs>
-    <g clip-path="url(#population-comparison-p57ef3162e0)">
-     <use xlink:href="#population-comparison-m98abdd7638" x="71.053829" y="257.148143" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="128.010068" y="240.450182" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="184.966307" y="224.528954" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="241.922545" y="208.918727" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="298.878784" y="194.209234" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="355.835023" y="180.110219" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="412.791261" y="166.451335" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="469.7475" y="154.846514" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="526.703739" y="141.528808" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="583.659977" y="128.093826" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="640.616216" y="114.717797" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="697.572455" y="101.921904" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="754.528693" y="88.982901" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="811.484932" y="76.850108" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m98abdd7638" x="868.441171" y="64.543593" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+    <g clip-path="url(#population-comparison-pb36fa2216a)">
+     <use xlink:href="#population-comparison-m98abdd7638" x="71.053829" y="293.940283" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="128.010068" y="274.204498" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="184.966307" y="255.386755" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="241.922545" y="236.936593" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="298.878784" y="219.551033" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="355.835023" y="202.887014" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="412.791261" y="186.743199" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="469.7475" y="173.027137" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="526.703739" y="157.28657" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="583.659977" y="141.407391" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="640.616216" y="125.597889" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="697.572455" y="110.474066" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="754.528693" y="95.181099" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="811.484932" y="80.841012" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m98abdd7638" x="868.441171" y="66.295599" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
     </g>
    </g>
    <g id="population-comparison-line2d_50">
-    <path d="M 71.053829 179.978798
-L 128.010068 157.25719
-L 184.966307 142.081685
-L 241.922545 169.57958
-L 298.878784 169.586643
-L 355.835023 171.897384
-L 412.791261 151.64832
-L 469.7475 164.198339
-L 526.703739 168.927007
-L 583.659977 165.682055
-L 640.616216 163.237541
-L 697.572455 166.810252
-L 754.528693 162.326467
-L 811.484932 159.642682
-L 868.441171 149.507996
-" clip-path="url(#population-comparison-p57ef3162e0)" style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
+    <path d="M 71.053829 202.731685
+L 128.010068 175.876383
+L 184.966307 157.940031
+L 241.922545 190.440559
+L 298.878784 190.448906
+L 355.835023 193.180036
+L 412.791261 169.247103
+L 469.7475 184.080321
+L 526.703739 189.669265
+L 583.659977 185.833965
+L 640.616216 182.944726
+L 697.572455 187.167413
+L 754.528693 181.867903
+L 811.484932 178.695862
+L 868.441171 166.717394
+" clip-path="url(#population-comparison-pb36fa2216a)" style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="population-comparison-m94619aaaa5" d="M 0 2.5
 C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
@@ -759,163 +714,690 @@ C -1.29895 2.236584 -0.663008 2.5 0 2.5
 z
 " style="stroke: #2364d2; stroke-width: 2"/>
     </defs>
-    <g clip-path="url(#population-comparison-p57ef3162e0)">
-     <use xlink:href="#population-comparison-m94619aaaa5" x="71.053829" y="179.978798" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="128.010068" y="157.25719" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="184.966307" y="142.081685" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="241.922545" y="169.57958" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="298.878784" y="169.586643" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="355.835023" y="171.897384" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="412.791261" y="151.64832" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="469.7475" y="164.198339" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="526.703739" y="168.927007" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="583.659977" y="165.682055" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="640.616216" y="163.237541" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="697.572455" y="166.810252" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="754.528693" y="162.326467" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="811.484932" y="159.642682" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="868.441171" y="149.507996" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+    <g clip-path="url(#population-comparison-pb36fa2216a)">
+     <use xlink:href="#population-comparison-m94619aaaa5" x="71.053829" y="202.731685" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="128.010068" y="175.876383" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="184.966307" y="157.940031" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="241.922545" y="190.440559" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="298.878784" y="190.448906" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="355.835023" y="193.180036" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="412.791261" y="169.247103" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="469.7475" y="184.080321" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="526.703739" y="189.669265" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="583.659977" y="185.833965" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="640.616216" y="182.944726" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="697.572455" y="187.167413" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="754.528693" y="181.867903" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="811.484932" y="178.695862" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="868.441171" y="166.717394" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
     </g>
    </g>
    <g id="population-comparison-patch_4">
-    <path d="M 49.69524 317.631219
+    <path d="M 49.69524 365.426915
 L 49.69524 54.913365
 " style="fill: none; stroke: #b9c7d7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="population-comparison-patch_5">
-    <path d="M 49.69524 317.631219
-L 889.79976 317.631219
+    <path d="M 49.69524 365.426915
+L 889.79976 365.426915
 " style="fill: none; stroke: #b9c7d7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
+   <g id="population-comparison-text_27">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="71.053829" y="311.940283" transform="rotate(-0 71.053829 311.940283)">390.9</text>
+   </g>
+   <g id="population-comparison-text_28">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="128.010068" y="292.204498" transform="rotate(-0 128.010068 292.204498)">498.8</text>
+   </g>
+   <g id="population-comparison-text_29">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="184.966307" y="273.386755" transform="rotate(-0 184.966307 273.386755)">601.7</text>
+   </g>
+   <g id="population-comparison-text_30">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="241.922545" y="254.936593" transform="rotate(-0 241.922545 254.936593)">702.6</text>
+   </g>
+   <g id="population-comparison-text_31">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="298.878784" y="237.551033" transform="rotate(-0 298.878784 237.551033)">797.7</text>
+   </g>
+   <g id="population-comparison-text_32">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="355.835023" y="220.887014" transform="rotate(-0 355.835023 220.887014)">888.8</text>
+   </g>
+   <g id="population-comparison-text_33">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="412.791261" y="204.743199" transform="rotate(-0 412.791261 204.743199)">977.1</text>
+   </g>
+   <g id="population-comparison-text_34">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="469.7475" y="163.027137" transform="rotate(-0 469.7475 163.027137)">1,052.1</text>
+   </g>
+   <g id="population-comparison-text_35">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="526.703739" y="147.28657" transform="rotate(-0 526.703739 147.28657)">1,138.1</text>
+   </g>
+   <g id="population-comparison-text_36">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="583.659977" y="131.407391" transform="rotate(-0 583.659977 131.407391)">1,225.0</text>
+   </g>
+   <g id="population-comparison-text_37">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="640.616216" y="115.597889" transform="rotate(-0 640.616216 115.597889)">1,311.4</text>
+   </g>
+   <g id="population-comparison-text_38">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="697.572455" y="100.474066" transform="rotate(-0 697.572455 100.474066)">1,394.1</text>
+   </g>
+   <g id="population-comparison-text_39">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="754.528693" y="85.181099" transform="rotate(-0 754.528693 85.181099)">1,477.7</text>
+   </g>
+   <g id="population-comparison-text_40">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="811.484932" y="70.841012" transform="rotate(-0 811.484932 70.841012)">1,556.2</text>
+   </g>
+   <g id="population-comparison-text_41">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="868.441171" y="56.295599" transform="rotate(-0 868.441171 56.295599)">1,635.7</text>
+   </g>
+   <g id="population-comparison-text_42">
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="71.053829" y="192.731685" transform="rotate(-0 71.053829 192.731685)">889.6</text>
+   </g>
    <g id="population-comparison-text_43">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="71.053829" y="275.148143" transform="rotate(-0 71.053829 275.148143)">390.9</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="128.010068" y="165.876383" transform="rotate(-0 128.010068 165.876383)">1,036.5</text>
    </g>
    <g id="population-comparison-text_44">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="128.010068" y="258.450182" transform="rotate(-0 128.010068 258.450182)">498.8</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="184.966307" y="147.940031" transform="rotate(-0 184.966307 147.940031)">1,134.6</text>
    </g>
    <g id="population-comparison-text_45">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="184.966307" y="242.528954" transform="rotate(-0 184.966307 242.528954)">601.7</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="241.922545" y="180.440559" transform="rotate(-0 241.922545 180.440559)">956.9</text>
    </g>
    <g id="population-comparison-text_46">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="241.922545" y="226.918727" transform="rotate(-0 241.922545 226.918727)">702.6</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="298.878784" y="180.448906" transform="rotate(-0 298.878784 180.448906)">956.8</text>
    </g>
    <g id="population-comparison-text_47">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="298.878784" y="212.209234" transform="rotate(-0 298.878784 212.209234)">797.7</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="355.835023" y="183.180036" transform="rotate(-0 355.835023 183.180036)">941.9</text>
    </g>
    <g id="population-comparison-text_48">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="355.835023" y="198.110219" transform="rotate(-0 355.835023 198.110219)">888.8</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="412.791261" y="159.247103" transform="rotate(-0 412.791261 159.247103)">1,072.7</text>
    </g>
    <g id="population-comparison-text_49">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="412.791261" y="184.451335" transform="rotate(-0 412.791261 184.451335)">977.1</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="469.7475" y="202.080321" transform="rotate(-0 469.7475 202.080321)">991.6</text>
    </g>
    <g id="population-comparison-text_50">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="469.7475" y="144.846514" transform="rotate(-0 469.7475 144.846514)">1,052.1</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="526.703739" y="207.669265" transform="rotate(-0 526.703739 207.669265)">961.1</text>
    </g>
    <g id="population-comparison-text_51">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="526.703739" y="131.528808" transform="rotate(-0 526.703739 131.528808)">1,138.1</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="583.659977" y="203.833965" transform="rotate(-0 583.659977 203.833965)">982.0</text>
    </g>
    <g id="population-comparison-text_52">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="583.659977" y="118.093826" transform="rotate(-0 583.659977 118.093826)">1,225.0</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="640.616216" y="200.944726" transform="rotate(-0 640.616216 200.944726)">997.8</text>
    </g>
    <g id="population-comparison-text_53">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="640.616216" y="104.717797" transform="rotate(-0 640.616216 104.717797)">1,311.4</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="697.572455" y="205.167413" transform="rotate(-0 697.572455 205.167413)">974.8</text>
    </g>
    <g id="population-comparison-text_54">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="697.572455" y="91.921904" transform="rotate(-0 697.572455 91.921904)">1,394.1</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="754.528693" y="199.867903" transform="rotate(-0 754.528693 199.867903)">1,003.7</text>
    </g>
    <g id="population-comparison-text_55">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="754.528693" y="78.982901" transform="rotate(-0 754.528693 78.982901)">1,477.7</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="811.484932" y="196.695862" transform="rotate(-0 811.484932 196.695862)">1,021.1</text>
    </g>
    <g id="population-comparison-text_56">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="811.484932" y="66.850108" transform="rotate(-0 811.484932 66.850108)">1,556.2</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="868.441171" y="184.717394" transform="rotate(-0 868.441171 184.717394)">1,086.6</text>
    </g>
    <g id="population-comparison-text_57">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="868.441171" y="54.543593" transform="rotate(-0 868.441171 54.543593)">1,635.7</text>
-   </g>
-   <g id="population-comparison-text_58">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="71.053829" y="169.978798" transform="rotate(-0 71.053829 169.978798)">889.6</text>
-   </g>
-   <g id="population-comparison-text_59">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="128.010068" y="147.25719" transform="rotate(-0 128.010068 147.25719)">1,036.5</text>
-   </g>
-   <g id="population-comparison-text_60">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="184.966307" y="132.081685" transform="rotate(-0 184.966307 132.081685)">1,134.6</text>
-   </g>
-   <g id="population-comparison-text_61">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="241.922545" y="159.57958" transform="rotate(-0 241.922545 159.57958)">956.9</text>
-   </g>
-   <g id="population-comparison-text_62">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="298.878784" y="159.586643" transform="rotate(-0 298.878784 159.586643)">956.8</text>
-   </g>
-   <g id="population-comparison-text_63">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="355.835023" y="161.897384" transform="rotate(-0 355.835023 161.897384)">941.9</text>
-   </g>
-   <g id="population-comparison-text_64">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="412.791261" y="141.64832" transform="rotate(-0 412.791261 141.64832)">1,072.7</text>
-   </g>
-   <g id="population-comparison-text_65">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="469.7475" y="182.198339" transform="rotate(-0 469.7475 182.198339)">991.6</text>
-   </g>
-   <g id="population-comparison-text_66">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="526.703739" y="186.927007" transform="rotate(-0 526.703739 186.927007)">961.1</text>
-   </g>
-   <g id="population-comparison-text_67">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="583.659977" y="183.682055" transform="rotate(-0 583.659977 183.682055)">982.0</text>
-   </g>
-   <g id="population-comparison-text_68">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="640.616216" y="181.237541" transform="rotate(-0 640.616216 181.237541)">997.8</text>
-   </g>
-   <g id="population-comparison-text_69">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="697.572455" y="184.810252" transform="rotate(-0 697.572455 184.810252)">974.8</text>
-   </g>
-   <g id="population-comparison-text_70">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="754.528693" y="180.326467" transform="rotate(-0 754.528693 180.326467)">1,003.7</text>
-   </g>
-   <g id="population-comparison-text_71">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="811.484932" y="177.642682" transform="rotate(-0 811.484932 177.642682)">1,021.1</text>
-   </g>
-   <g id="population-comparison-text_72">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="868.441171" y="167.507996" transform="rotate(-0 868.441171 167.507996)">1,086.6</text>
-   </g>
-   <g id="population-comparison-text_73">
     <text style="font-weight: 700; font-size: 14px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="49.69524" y="14.913365" transform="rotate(-0 49.69524 14.913365)">49 个 decode step 采样点汇总 · H200 与 Zeus MoE 吞吐</text>
    </g>
    <g id="population-comparison-legend_1">
     <g id="population-comparison-line2d_51">
-     <path d="M 57.79524 377.03387
-L 66.79524 377.03387
-L 75.79524 377.03387
+     <path d="M 57.79524 67.026803
+L 66.79524 67.026803
+L 75.79524 67.026803
 " style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
      <g>
-      <use xlink:href="#population-comparison-m98abdd7638" x="66.79524" y="377.03387" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+      <use xlink:href="#population-comparison-m98abdd7638" x="66.79524" y="67.026803" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
      </g>
     </g>
-    <g id="population-comparison-text_74">
-     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="82.99524" y="380.18387" transform="rotate(-0 82.99524 380.18387)">H200 · EP4</text>
+    <g id="population-comparison-text_58">
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="82.99524" y="70.176803" transform="rotate(-0 82.99524 70.176803)">H200 · EP4</text>
     </g>
     <g id="population-comparison-line2d_52">
-     <path d="M 147.588521 377.03387
-L 156.588521 377.03387
-L 165.588521 377.03387
+     <path d="M 147.588521 67.026803
+L 156.588521 67.026803
+L 165.588521 67.026803
 " style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
      <g>
-      <use xlink:href="#population-comparison-m94619aaaa5" x="156.588521" y="377.03387" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+      <use xlink:href="#population-comparison-m94619aaaa5" x="156.588521" y="67.026803" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     </g>
+    </g>
+    <g id="population-comparison-text_59">
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="172.788521" y="70.176803" transform="rotate(-0 172.788521 70.176803)">Zeus · EP4 × TP4</text>
+    </g>
+   </g>
+  </g>
+  <g id="population-comparison-axes_3">
+   <g id="population-comparison-patch_6">
+    <path d="M 49.69524 531.44976
+L 889.79976 531.44976
+L 889.79976 402.069114
+L 49.69524 402.069114
+z
+" style="fill: #f7faff"/>
+   </g>
+   <g id="population-comparison-matplotlib.axis_5">
+    <g id="population-comparison-xtick_31">
+     <g id="population-comparison-line2d_53">
+      <g>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="71.053829" y="531.44976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="population-comparison-text_60">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="71.053829" y="547.205073" transform="rotate(-0 71.053829 547.205073)">16</text>
+     </g>
+    </g>
+    <g id="population-comparison-xtick_32">
+     <g id="population-comparison-line2d_54">
+      <g>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="128.010068" y="531.44976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="population-comparison-text_61">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="128.010068" y="547.205073" transform="rotate(-0 128.010068 547.205073)">24</text>
+     </g>
+    </g>
+    <g id="population-comparison-xtick_33">
+     <g id="population-comparison-line2d_55">
+      <g>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="184.966307" y="531.44976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="population-comparison-text_62">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="184.966307" y="547.205073" transform="rotate(-0 184.966307 547.205073)">32</text>
+     </g>
+    </g>
+    <g id="population-comparison-xtick_34">
+     <g id="population-comparison-line2d_56">
+      <g>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="241.922545" y="531.44976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="population-comparison-text_63">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="241.922545" y="547.205073" transform="rotate(-0 241.922545 547.205073)">40</text>
+     </g>
+    </g>
+    <g id="population-comparison-xtick_35">
+     <g id="population-comparison-line2d_57">
+      <g>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="298.878784" y="531.44976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="population-comparison-text_64">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="298.878784" y="547.205073" transform="rotate(-0 298.878784 547.205073)">48</text>
+     </g>
+    </g>
+    <g id="population-comparison-xtick_36">
+     <g id="population-comparison-line2d_58">
+      <g>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="355.835023" y="531.44976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="population-comparison-text_65">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="355.835023" y="547.205073" transform="rotate(-0 355.835023 547.205073)">56</text>
+     </g>
+    </g>
+    <g id="population-comparison-xtick_37">
+     <g id="population-comparison-line2d_59">
+      <g>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="412.791261" y="531.44976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="population-comparison-text_66">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="412.791261" y="547.205073" transform="rotate(-0 412.791261 547.205073)">64</text>
+     </g>
+    </g>
+    <g id="population-comparison-xtick_38">
+     <g id="population-comparison-line2d_60">
+      <g>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="469.7475" y="531.44976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="population-comparison-text_67">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="547.205073" transform="rotate(-0 469.7475 547.205073)">72</text>
+     </g>
+    </g>
+    <g id="population-comparison-xtick_39">
+     <g id="population-comparison-line2d_61">
+      <g>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="526.703739" y="531.44976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="population-comparison-text_68">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="526.703739" y="547.205073" transform="rotate(-0 526.703739 547.205073)">80</text>
+     </g>
+    </g>
+    <g id="population-comparison-xtick_40">
+     <g id="population-comparison-line2d_62">
+      <g>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="583.659977" y="531.44976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="population-comparison-text_69">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="583.659977" y="547.205073" transform="rotate(-0 583.659977 547.205073)">88</text>
+     </g>
+    </g>
+    <g id="population-comparison-xtick_41">
+     <g id="population-comparison-line2d_63">
+      <g>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="640.616216" y="531.44976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="population-comparison-text_70">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="640.616216" y="547.205073" transform="rotate(-0 640.616216 547.205073)">96</text>
+     </g>
+    </g>
+    <g id="population-comparison-xtick_42">
+     <g id="population-comparison-line2d_64">
+      <g>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="697.572455" y="531.44976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="population-comparison-text_71">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="697.572455" y="547.205073" transform="rotate(-0 697.572455 547.205073)">104</text>
+     </g>
+    </g>
+    <g id="population-comparison-xtick_43">
+     <g id="population-comparison-line2d_65">
+      <g>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="754.528693" y="531.44976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="population-comparison-text_72">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="754.528693" y="547.205073" transform="rotate(-0 754.528693 547.205073)">112</text>
+     </g>
+    </g>
+    <g id="population-comparison-xtick_44">
+     <g id="population-comparison-line2d_66">
+      <g>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="811.484932" y="531.44976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="population-comparison-text_73">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="811.484932" y="547.205073" transform="rotate(-0 811.484932 547.205073)">120</text>
+     </g>
+    </g>
+    <g id="population-comparison-xtick_45">
+     <g id="population-comparison-line2d_67">
+      <g>
+       <use xlink:href="#population-comparison-mc6863bb9b3" x="868.441171" y="531.44976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="population-comparison-text_74">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="868.441171" y="547.205073" transform="rotate(-0 868.441171 547.205073)">128</text>
      </g>
     </g>
     <g id="population-comparison-text_75">
-     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="172.788521" y="380.18387" transform="rotate(-0 172.788521 380.18387)">Zeus · EP4 × TP4</text>
+     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="469.7475" y="570.480073" transform="rotate(-0 469.7475 570.480073)">总 batch size（4 card）· 上下图共用横轴</text>
     </g>
+   </g>
+   <g id="population-comparison-matplotlib.axis_6">
+    <g id="population-comparison-ytick_10">
+     <g id="population-comparison-line2d_68">
+      <path d="M 49.69524 531.44976
+L 889.79976 531.44976
+" clip-path="url(#population-comparison-p8bc1d16d6e)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="population-comparison-line2d_69">
+      <g>
+       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="531.44976" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="population-comparison-text_76">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="535.827416" transform="rotate(-0 42.69524 535.827416)">0×</text>
+     </g>
+    </g>
+    <g id="population-comparison-ytick_11">
+     <g id="population-comparison-line2d_70">
+      <path d="M 49.69524 484.075975
+L 889.79976 484.075975
+" clip-path="url(#population-comparison-p8bc1d16d6e)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="population-comparison-line2d_71">
+      <g>
+       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="484.075975" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="population-comparison-text_77">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="488.453631" transform="rotate(-0 42.69524 488.453631)">1×</text>
+     </g>
+    </g>
+    <g id="population-comparison-ytick_12">
+     <g id="population-comparison-line2d_72">
+      <path d="M 49.69524 436.70219
+L 889.79976 436.70219
+" clip-path="url(#population-comparison-p8bc1d16d6e)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="population-comparison-line2d_73">
+      <g>
+       <use xlink:href="#population-comparison-mb630600054" x="49.69524" y="436.70219" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="population-comparison-text_78">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="42.69524" y="441.079846" transform="rotate(-0 42.69524 441.079846)">2×</text>
+     </g>
+    </g>
+    <g id="population-comparison-text_79">
+     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="19.070553" y="466.759437" transform="rotate(-90 19.070553 466.759437)">吞吐比值（倍）</text>
+    </g>
+   </g>
+   <g id="population-comparison-patch_7">
+    <path d="M 49.69524 531.44976
+L 49.69524 402.069114
+" style="fill: none; stroke: #b9c7d7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="population-comparison-patch_8">
+    <path d="M 49.69524 531.44976
+L 889.79976 531.44976
+" style="fill: none; stroke: #b9c7d7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="population-comparison-patch_9">
+    <path d="M 56.81477 531.44976
+L 85.292889 531.44976
+L 85.292889 423.632555
+L 56.81477 423.632555
+z
+" clip-path="url(#population-comparison-p8bc1d16d6e)" style="fill: #2364d2; opacity: 0.78"/>
+   </g>
+   <g id="population-comparison-patch_10">
+    <path d="M 113.771008 531.44976
+L 142.249128 531.44976
+L 142.249128 433.012047
+L 113.771008 433.012047
+z
+" clip-path="url(#population-comparison-p8bc1d16d6e)" style="fill: #2364d2; opacity: 0.78"/>
+   </g>
+   <g id="population-comparison-patch_11">
+    <path d="M 170.727247 531.44976
+L 199.205366 531.44976
+L 199.205366 442.123836
+L 170.727247 442.123836
+z
+" clip-path="url(#population-comparison-p8bc1d16d6e)" style="fill: #2364d2; opacity: 0.78"/>
+   </g>
+   <g id="population-comparison-patch_12">
+    <path d="M 227.683486 531.44976
+L 256.161605 531.44976
+L 256.161605 466.933103
+L 227.683486 466.933103
+z
+" clip-path="url(#population-comparison-p8bc1d16d6e)" style="fill: #2364d2; opacity: 0.78"/>
+   </g>
+   <g id="population-comparison-patch_13">
+    <path d="M 284.639724 531.44976
+L 313.117844 531.44976
+L 313.117844 474.624941
+L 284.639724 474.624941
+z
+" clip-path="url(#population-comparison-p8bc1d16d6e)" style="fill: #2364d2; opacity: 0.78"/>
+   </g>
+   <g id="population-comparison-patch_14">
+    <path d="M 341.595963 531.44976
+L 370.074082 531.44976
+L 370.074082 481.246785
+L 341.595963 481.246785
+z
+" clip-path="url(#population-comparison-p8bc1d16d6e)" style="fill: #2364d2; opacity: 0.78"/>
+   </g>
+   <g id="population-comparison-patch_15">
+    <path d="M 398.552202 531.44976
+L 427.030321 531.44976
+L 427.030321 479.437296
+L 398.552202 479.437296
+z
+" clip-path="url(#population-comparison-p8bc1d16d6e)" style="fill: #2364d2; opacity: 0.78"/>
+   </g>
+   <g id="population-comparison-patch_16">
+    <path d="M 455.50844 531.44976
+L 483.98656 531.44976
+L 483.98656 486.797554
+L 455.50844 486.797554
+z
+" clip-path="url(#population-comparison-p8bc1d16d6e)" style="fill: #0d8d7b; opacity: 0.78"/>
+   </g>
+   <g id="population-comparison-patch_17">
+    <path d="M 512.464679 531.44976
+L 540.942798 531.44976
+L 540.942798 491.446438
+L 512.464679 491.446438
+z
+" clip-path="url(#population-comparison-p8bc1d16d6e)" style="fill: #0d8d7b; opacity: 0.78"/>
+   </g>
+   <g id="population-comparison-patch_18">
+    <path d="M 569.420918 531.44976
+L 597.899037 531.44976
+L 597.899037 493.470937
+L 569.420918 493.470937
+z
+" clip-path="url(#population-comparison-p8bc1d16d6e)" style="fill: #0d8d7b; opacity: 0.78"/>
+   </g>
+   <g id="population-comparison-patch_19">
+    <path d="M 626.377156 531.44976
+L 654.855276 531.44976
+L 654.855276 495.403781
+L 626.377156 495.403781
+z
+" clip-path="url(#population-comparison-p8bc1d16d6e)" style="fill: #0d8d7b; opacity: 0.78"/>
+   </g>
+   <g id="population-comparison-patch_20">
+    <path d="M 683.333395 531.44976
+L 711.811514 531.44976
+L 711.811514 498.326665
+L 683.333395 498.326665
+z
+" clip-path="url(#population-comparison-p8bc1d16d6e)" style="fill: #0d8d7b; opacity: 0.78"/>
+   </g>
+   <g id="population-comparison-patch_21">
+    <path d="M 740.289634 531.44976
+L 768.767753 531.44976
+L 768.767753 499.272073
+L 740.289634 499.272073
+z
+" clip-path="url(#population-comparison-p8bc1d16d6e)" style="fill: #0d8d7b; opacity: 0.78"/>
+   </g>
+   <g id="population-comparison-patch_22">
+    <path d="M 797.245872 531.44976
+L 825.723992 531.44976
+L 825.723992 500.365449
+L 797.245872 500.365449
+z
+" clip-path="url(#population-comparison-p8bc1d16d6e)" style="fill: #0d8d7b; opacity: 0.78"/>
+   </g>
+   <g id="population-comparison-patch_23">
+    <path d="M 854.202111 531.44976
+L 882.68023 531.44976
+L 882.68023 499.979895
+L 854.202111 499.979895
+z
+" clip-path="url(#population-comparison-p8bc1d16d6e)" style="fill: #0d8d7b; opacity: 0.78"/>
+   </g>
+   <g id="population-comparison-text_80">
+    <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="884.79976" y="478.075975" transform="rotate(-0 884.79976 478.075975)">1× · 吞吐持平</text>
+   </g>
+   <g id="population-comparison-text_81">
+    <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #687c95" x="889.79976" y="391.718662" transform="rotate(-0 889.79976 391.718662)">蓝 ≥ 1×：Zeus 较高或持平    绿 &lt; 1×：H200 较高</text>
+   </g>
+   <g id="population-comparison-text_82">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="49.69524" y="388.069114" transform="rotate(-0 49.69524 388.069114)">Zeus / H200 · 吞吐比值</text>
+   </g>
+   <g id="population-comparison-line2d_74">
+    <path d="M 49.69524 484.075975
+L 889.79976 484.075975
+" clip-path="url(#population-comparison-p8bc1d16d6e)" style="fill: none; stroke-dasharray: 4.8,4.8; stroke-dashoffset: 0; stroke: #687c95; stroke-width: 1.2"/>
+   </g>
+   <g id="population-comparison-text_83">
+    <g id="population-comparison-patch_24">
+     <path d="M 57.54047 420.964118
+L 84.567189 420.964118
+L 84.567189 411.199118
+L 57.54047 411.199118
+z
+" style="fill: #f7faff"/>
+    </g>
+    <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="71.053829" y="418.632555" transform="rotate(-0 71.053829 418.632555)">2.28×</text>
+   </g>
+   <g id="population-comparison-text_84">
+    <g id="population-comparison-patch_25">
+     <path d="M 114.496709 430.343609
+L 141.523428 430.343609
+L 141.523428 420.578609
+L 114.496709 420.578609
+z
+" style="fill: #f7faff"/>
+    </g>
+    <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="128.010068" y="428.012047" transform="rotate(-0 128.010068 428.012047)">2.08×</text>
+   </g>
+   <g id="population-comparison-text_85">
+    <g id="population-comparison-patch_26">
+     <path d="M 171.452947 439.455398
+L 198.479666 439.455398
+L 198.479666 429.690398
+L 171.452947 429.690398
+z
+" style="fill: #f7faff"/>
+    </g>
+    <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="184.966307" y="437.123836" transform="rotate(-0 184.966307 437.123836)">1.89×</text>
+   </g>
+   <g id="population-comparison-text_86">
+    <g id="population-comparison-patch_27">
+     <path d="M 228.409186 464.264666
+L 255.435905 464.264666
+L 255.435905 454.499666
+L 228.409186 454.499666
+z
+" style="fill: #f7faff"/>
+    </g>
+    <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="241.922545" y="461.933103" transform="rotate(-0 241.922545 461.933103)">1.36×</text>
+   </g>
+   <g id="population-comparison-text_87">
+    <g id="population-comparison-patch_28">
+     <path d="M 285.365425 471.956504
+L 312.392143 471.956504
+L 312.392143 462.191504
+L 285.365425 462.191504
+z
+" style="fill: #f7faff"/>
+    </g>
+    <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="298.878784" y="469.624941" transform="rotate(-0 298.878784 469.624941)">1.20×</text>
+   </g>
+   <g id="population-comparison-text_88">
+    <g id="population-comparison-patch_29">
+     <path d="M 342.321663 478.578347
+L 369.348382 478.578347
+L 369.348382 468.813347
+L 342.321663 468.813347
+z
+" style="fill: #f7faff"/>
+    </g>
+    <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="355.835023" y="476.246785" transform="rotate(-0 355.835023 476.246785)">1.06×</text>
+   </g>
+   <g id="population-comparison-text_89">
+    <g id="population-comparison-patch_30">
+     <path d="M 399.277902 476.768859
+L 426.304621 476.768859
+L 426.304621 467.003859
+L 399.277902 467.003859
+z
+" style="fill: #f7faff"/>
+    </g>
+    <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="412.791261" y="474.437296" transform="rotate(-0 412.791261 474.437296)">1.10×</text>
+   </g>
+   <g id="population-comparison-text_90">
+    <g id="population-comparison-patch_31">
+     <path d="M 456.234141 484.129116
+L 483.260859 484.129116
+L 483.260859 474.364116
+L 456.234141 474.364116
+z
+" style="fill: #f7faff"/>
+    </g>
+    <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="469.7475" y="481.797554" transform="rotate(-0 469.7475 481.797554)">0.94×</text>
+   </g>
+   <g id="population-comparison-text_91">
+    <g id="population-comparison-patch_32">
+     <path d="M 513.190379 488.778001
+L 540.217098 488.778001
+L 540.217098 479.013001
+L 513.190379 479.013001
+z
+" style="fill: #f7faff"/>
+    </g>
+    <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="526.703739" y="486.446438" transform="rotate(-0 526.703739 486.446438)">0.84×</text>
+   </g>
+   <g id="population-comparison-text_92">
+    <g id="population-comparison-patch_33">
+     <path d="M 570.146618 490.8025
+L 597.173337 490.8025
+L 597.173337 481.0375
+L 570.146618 481.0375
+z
+" style="fill: #f7faff"/>
+    </g>
+    <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="583.659977" y="488.470937" transform="rotate(-0 583.659977 488.470937)">0.80×</text>
+   </g>
+   <g id="population-comparison-text_93">
+    <g id="population-comparison-patch_34">
+     <path d="M 627.102857 492.735344
+L 654.129575 492.735344
+L 654.129575 482.970344
+L 627.102857 482.970344
+z
+" style="fill: #f7faff"/>
+    </g>
+    <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="640.616216" y="490.403781" transform="rotate(-0 640.616216 490.403781)">0.76×</text>
+   </g>
+   <g id="population-comparison-text_94">
+    <g id="population-comparison-patch_35">
+     <path d="M 684.059095 495.658228
+L 711.085814 495.658228
+L 711.085814 485.893228
+L 684.059095 485.893228
+z
+" style="fill: #f7faff"/>
+    </g>
+    <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="697.572455" y="493.326665" transform="rotate(-0 697.572455 493.326665)">0.70×</text>
+   </g>
+   <g id="population-comparison-text_95">
+    <g id="population-comparison-patch_36">
+     <path d="M 741.015334 496.603636
+L 768.042053 496.603636
+L 768.042053 486.838636
+L 741.015334 486.838636
+z
+" style="fill: #f7faff"/>
+    </g>
+    <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="754.528693" y="494.272073" transform="rotate(-0 754.528693 494.272073)">0.68×</text>
+   </g>
+   <g id="population-comparison-text_96">
+    <g id="population-comparison-patch_37">
+     <path d="M 797.971572 497.697011
+L 824.998291 497.697011
+L 824.998291 487.932011
+L 797.971572 487.932011
+z
+" style="fill: #f7faff"/>
+    </g>
+    <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="811.484932" y="495.365449" transform="rotate(-0 811.484932 495.365449)">0.66×</text>
+   </g>
+   <g id="population-comparison-text_97">
+    <g id="population-comparison-patch_38">
+     <path d="M 854.927811 497.311457
+L 881.95453 497.311457
+L 881.95453 487.546457
+L 854.927811 487.546457
+z
+" style="fill: #f7faff"/>
+    </g>
+    <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="868.441171" y="494.979895" transform="rotate(-0 868.441171 494.979895)">0.66×</text>
    </g>
   </g>
  </g>
  <defs>
-  <clipPath id="population-comparison-p57ef3162e0">
-   <rect x="49.69524" y="54.913365" width="840.10452" height="262.717854"/>
+  <clipPath id="population-comparison-pb36fa2216a">
+   <rect x="49.69524" y="54.913365" width="840.10452" height="310.51355"/>
+  </clipPath>
+  <clipPath id="population-comparison-p8bc1d16d6e">
+   <rect x="49.69524" y="402.069114" width="840.10452" height="129.380646"/>
   </clipPath>
  </defs>
 </svg>
-</div><div class="chart-readout"></div><div class="chart-footer"><span>横轴：四卡总 batch size（16–128）<br>纵轴：tokens/s/card<br>统计范围：每档同一套 49 个 decode step 采样点（7 批请求 × 每批 7 个采样位置），排除 step001</span><span><a href="assets/population-comparison.png" download>完整图 PNG</a><a href="assets/population-comparison.svg" download>完整图 SVG</a></span></div><script type="application/json" class="chart-config">{"title": "49 个 decode step 采样点汇总 · H200 与 Zeus MoE 吞吐", "unit": "tokens/s/card", "series": [{"key": "h200", "label": "H200 · EP4", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [390.9003253918113, 498.818751988435, 601.7171780346827, 702.6056093951005, 797.6726276318873, 888.7941455369249, 977.0711057117963, 1052.072723148915, 1138.1446598816253, 1224.9745500250108, 1311.423430386602, 1394.1229091422356, 1477.7472978696726, 1556.1611837432295, 1635.6978257120554], "color": "#0d8d7b", "dashed": false}, {"key": "zeus", "label": "Zeus · EP4 × TP4", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [889.6435123552534, 1036.4925950800834, 1134.571430547832, 956.8533537680757, 956.8077067671421, 941.8734537134106, 1072.7425564477237, 991.6321508831054, 961.070913080695, 982.042941699702, 997.8417620285237, 974.7514396262007, 1003.7300073895781, 1021.0752306644979, 1086.5754076143332], "color": "#2364d2", "dashed": false}], "band": null, "labels": true, "initialBatch": 32}</script></figure>
-  <p class="reading-note">纵轴越高，单位卡的 MoE 组件吞吐越大。每个点按 <code>总 token ÷ 总时间 ÷ 4</code> 汇总 49 个样本；不直接平均样本吞吐。两条曲线分别采用 H200 CUDA event 测时和 Zeus CycleSim 400 MHz 周期换算。</p>
+</div><div class="chart-readout"></div><div class="chart-footer"><span>横轴：四卡总 batch size（16–128）<br>纵轴：tokens/s/card<br>附图纵轴：Zeus / H200 吞吐比值（倍）；1× 表示持平。使用同档汇总吞吐相除，不是逐点比值的平均。<br>统计范围：每档同一套 49 个 decode step 采样点（7 批请求 × 每批 7 个采样位置），排除 step001</span><span><a href="assets/population-comparison.png" download>完整图 PNG</a><a href="assets/population-comparison.svg" download>完整图 SVG</a></span></div><script type="application/json" class="chart-config">{"title": "49 个 decode step 采样点汇总 · H200 与 Zeus MoE 吞吐", "unit": "tokens/s/card", "series": [{"key": "h200", "label": "H200 · EP4", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [390.9003253918113, 498.818751988435, 601.7171780346827, 702.6056093951005, 797.6726276318873, 888.7941455369249, 977.0711057117963, 1052.072723148915, 1138.1446598816253, 1224.9745500250108, 1311.423430386602, 1394.1229091422356, 1477.7472978696726, 1556.1611837432295, 1635.6978257120554], "color": "#0d8d7b", "dashed": false}, {"key": "zeus", "label": "Zeus · EP4 × TP4", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [889.6435123552534, 1036.4925950800834, 1134.571430547832, 956.8533537680757, 956.8077067671421, 941.8734537134106, 1072.7425564477237, 991.6321508831054, 961.070913080695, 982.042941699702, 997.8417620285237, 974.7514396262007, 1003.7300073895781, 1021.0752306644979, 1086.5754076143332], "color": "#2364d2", "dashed": false}], "band": null, "labels": true, "initialBatch": 32, "ratio": {"numerator": "zeus", "denominator": "h200", "label": "Zeus / H200"}}</script></figure>
+  <p class="reading-note">上图比较单卡 MoE 组件吞吐，下图显示同一 batch 的 <code>Zeus 吞吐 ÷ H200 吞吐</code>：高于 1× 表示 Zeus 较高，低于 1× 表示 H200 较高。每个吞吐点按 <code>总 token ÷ 总时间 ÷ 4</code> 汇总 49 个样本；不直接平均样本吞吐或逐点比值。两条曲线分别采用 H200 CUDA event 测时和 Zeus CycleSim 400 MHz 周期换算。</p>
   <details class="data-details"><summary>查看 15 档吞吐与耗时明细</summary><div class="table-scroll" tabindex="0"><table><caption>行：四卡总 batch；列：每卡均摊 batch、各平台 42 层平均耗时（ms）与单卡吞吐。每行汇总同一套 49 点。</caption><thead><tr><th scope="col">总 batch</th><th scope="col">均摊 batch/card</th><th scope="col">H200 · ms</th><th scope="col">H200 · tokens/s/card</th><th scope="col">Zeus · ms</th><th scope="col">Zeus · tokens/s/card</th></tr></thead><tbody><tr><td>16</td><td>4</td><td>10.2328</td><td>390.9</td><td>4.4962</td><td>889.6</td></tr><tr><td>24</td><td>6</td><td>12.0284</td><td>498.8</td><td>5.7888</td><td>1036.5</td></tr><tr><td>32</td><td>8</td><td>13.2953</td><td>601.7</td><td>7.0511</td><td>1134.6</td></tr><tr><td>40</td><td>10</td><td>14.2327</td><td>702.6</td><td>10.4509</td><td>956.9</td></tr><tr><td>48</td><td>12</td><td>15.0438</td><td>797.7</td><td>12.5417</td><td>956.8</td></tr><tr><td>56</td><td>14</td><td>15.7517</td><td>888.8</td><td>14.8640</td><td>941.9</td></tr><tr><td>64</td><td>16</td><td>16.3755</td><td>977.1</td><td>14.9150</td><td>1072.7</td></tr><tr><td>72</td><td>18</td><td>17.1091</td><td>1052.1</td><td>18.1519</td><td>991.6</td></tr><tr><td>80</td><td>20</td><td>17.5725</td><td>1138.1</td><td>20.8101</td><td>961.1</td></tr><tr><td>88</td><td>22</td><td>17.9596</td><td>1225.0</td><td>22.4023</td><td>982.0</td></tr><tr><td>96</td><td>24</td><td>18.3007</td><td>1311.4</td><td>24.0519</td><td>997.8</td></tr><tr><td>104</td><td>26</td><td>18.6497</td><td>1394.1</td><td>26.6735</td><td>974.8</td></tr><tr><td>112</td><td>28</td><td>18.9478</td><td>1477.7</td><td>27.8959</td><td>1003.7</td></tr><tr><td>120</td><td>30</td><td>19.2782</td><td>1556.2</td><td>29.3808</td><td>1021.1</td></tr><tr><td>128</td><td>32</td><td>19.5635</td><td>1635.7</td><td>29.4503</td><td>1086.6</td></tr></tbody></table></div><div class="table-scroll" tabindex="0"><table><caption>行：四卡总 batch；P10–P90 单位为 tokens/s/card，来自 49 点分布；cycles 为完整 42 层平均周期；专家数按采样点和层平均。</caption><thead><tr><th scope="col">总 batch</th><th scope="col">H200 · P10–P90</th><th scope="col">Zeus · P10–P90</th><th scope="col">Zeus · 平均 cycles</th><th scope="col">H200 · 活跃专家/层</th></tr></thead><tbody><tr><td>16</td><td>373.4–420.1</td><td>878.2–900.9</td><td>1,798,473.2</td><td>78.3</td></tr><tr><td>24</td><td>475.4–547.6</td><td>1023.5–1047.8</td><td>2,315,501.3</td><td>100.3</td></tr><tr><td>32</td><td>569.6–668.1</td><td>1123.6–1145.5</td><td>2,820,448.2</td><td>117.8</td></tr><tr><td>40</td><td>665.3–781.0</td><td>947.8–964.5</td><td>4,180,368.9</td><td>131.7</td></tr><tr><td>48</td><td>754.4–893.0</td><td>948.0–964.7</td><td>5,016,682.0</td><td>142.9</td></tr><tr><td>56</td><td>837.6–994.1</td><td>932.8–950.1</td><td>5,945,597.0</td><td>152.0</td></tr><tr><td>64</td><td>920.8–1105.9</td><td>1061.4–1086.5</td><td>5,966,016.7</td><td>160.3</td></tr><tr><td>72</td><td>991.4–1195.2</td><td>983.1–1000.6</td><td>7,260,756.9</td><td>167.2</td></tr><tr><td>80</td><td>1073.4–1285.2</td><td>951.6–973.5</td><td>8,324,047.6</td><td>173.2</td></tr><tr><td>88</td><td>1157.0–1382.8</td><td>971.0–993.5</td><td>8,960,911.6</td><td>178.3</td></tr><tr><td>96</td><td>1233.2–1482.4</td><td>986.3–1009.8</td><td>9,620,763.9</td><td>183.1</td></tr><tr><td>104</td><td>1316.7–1589.8</td><td>963.7–986.2</td><td>10,669,386.7</td><td>187.2</td></tr><tr><td>112</td><td>1395.0–1685.2</td><td>993.0–1014.9</td><td>11,158,379.2</td><td>190.9</td></tr><tr><td>120</td><td>1471.9–1774.6</td><td>1009.9–1032.1</td><td>11,752,317.2</td><td>194.5</td></tr><tr><td>128</td><td>1546.1–1864.9</td><td>1074.5–1098.7</td><td>11,780,130.4</td><td>197.5</td></tr></tbody></table></div><p class="quality">P10–P90 描述采样点之间的吞吐差异，不是置信区间。</p></details>
   <div class="note">比较范围为 42 层 MoE 组件计算，未计通信、Attention、host 调度及加载。两端的量化方式和 Shared 放置不同，结果不代表同精度算法的硬件加速比或完整模型吞吐。BS128 是当前扫描上界，H200 的最高点不代表已达到饱和。</div>
   <div class="links"><a href="data/throughput.csv" download>吞吐 CSV ↓</a><a href="data/h200-49-paired.csv" download>H200 逐点数据 ↓</a><a href="data/zeus-49-paired.csv" download>Zeus 逐点数据 ↓</a></div>
@@ -4140,15 +4622,21 @@ L 359.847427 377.032768
     // A much faster stage can otherwise flatten all consumer curves on the shared scale.
     const visible = new Set(config.initialVisible ?? config.series.map(s => s.key));
     const xs = config.series[0].x;
+    // Keep the comparison bound to both full-precision source series even when
+    // the reader hides a line. Visibility and axis controls affect only the top panel.
+    const ratios = config.ratio ? config.series.find(s => s.key === config.ratio.numerator).y.map((value, i) =>
+      value / config.series.find(s => s.key === config.ratio.denominator).y[i]) : null;
+    const ratioColor = value => value >= 1 ? '#2364d2' : '#0d8d7b';
     let index = xs.indexOf(config.initialBatch ?? 32), labels = Boolean(config.labels), autoscale = true;
     let zeroBaseline = config.zeroBaseline ?? true;
     const choices = new Map();
-    let plot, marker, svg;
+    let plot, ratioPlot, marker, svg;
     const legend = element('div', 'chart-legend');
     legend.setAttribute('role', 'group');
     legend.setAttribute('aria-label', config.title + ' · 曲线选择');
     const options = element('div', 'chart-options');
     const hint = element('p', 'chart-hint', '勾选显示曲线，或点「只看」放大比较。悬停 / 轻触看数值；图上可用 ← → 切换 batch。');
+    if (ratios) hint.textContent = '上下图悬停、点选与方向键联动。曲线筛选及纵轴设置仅影响上图；附图始终使用两端完整数据。';
     controls.append(legend, options, hint);
     const scaleNote = element('p', 'chart-scale-note');
     frame.before(scaleNote);
@@ -4203,23 +4691,40 @@ L 359.847427 377.032768
       select.value = xs[index];
       marker.replaceChildren(); readout.replaceChildren();
       const selected = config.series.filter(s => visible.has(s.key));
-      if (!selected.length) {
+      if (!selected.length && !ratios) {
         readout.append(element('span', 'chart-empty', '已隐藏全部曲线，点击「显示全部」恢复。'));
         return;
       }
       const x = plot.x(xs[index]);
       marker.append(node('line', { x1: x, x2: x, y1: plot.top, y2: plot.bottom, stroke: '#9cacc0', 'stroke-dasharray': '3 5' }));
+      if (ratioPlot) {
+        marker.append(node('line', { x1: x, x2: x, y1: ratioPlot.top, y2: ratioPlot.bottom, stroke: '#9cacc0', 'stroke-dasharray': '3 5' }));
+        svg.querySelectorAll('[data-ratio-index]').forEach(bar => {
+          const active = Number(bar.getAttribute('data-ratio-index')) === index;
+          bar.setAttribute('fill-opacity', active ? '1' : '.72');
+          bar.setAttribute('stroke-width', active ? '2' : '0');
+          bar.setAttribute('data-selected', String(active));
+        });
+      }
       const batch = element('div', 'readout-batch');
       batch.append(element('strong', '', 'BS ' + xs[index]), element('span', '', `${xs[index] / 4} / card`));
       readout.append(batch);
-      for (const series of selected) {
+      for (const series of ratios ? config.series : selected) {
         const value = series.y[index];
-        marker.append(node('circle', { cx: x, cy: plot.y(value), r: 5, fill: series.color, stroke: '#fff', 'stroke-width': 2 }));
+        if (visible.has(series.key)) marker.append(node('circle', { cx: x, cy: plot.y(value), r: 5, fill: series.color, stroke: '#fff', 'stroke-width': 2 }));
         const item = element('div', 'readout-value');
         item.style.setProperty('--series-color', series.color);
         item.append(element('span', '', series.label), element('strong', '', format(value)));
         item.append(element('small', '', config.unit));
         if (config.band && series.key === 'h200') item.append(element('small', '', `P10–P90：${format(config.band[1][index])}–${format(config.band[2][index])}`));
+        readout.append(item);
+      }
+      if (ratios) {
+        const value = ratios[index], delta = (value - 1) * 100;
+        const item = element('div', 'readout-value readout-ratio');
+        item.style.setProperty('--series-color', ratioColor(value));
+        item.append(element('span', '', config.ratio.label + ' · 吞吐比值'), element('strong', '', value.toFixed(3) + '×'),
+          element('small', '', delta === 0 ? '与 H200 持平' : `比 H200 ${delta > 0 ? '高' : '低'} ${pointLabel(Math.abs(delta))}%`));
         readout.append(item);
       }
     }
@@ -4230,18 +4735,20 @@ L 359.847427 377.032768
         input.closest('.series-chip').classList.toggle('is-hidden', !input.checked);
       }
       const width = Math.max(frame.clientWidth, 260), mobile = width < 600;
-      const height = mobile ? 290 : 370;
-      const left = mobile ? 48 : 66, right = 20, top = 38, bottom = height - 44;
+      const mainHeight = mobile ? 290 : 370, height = mainHeight + (ratios ? 230 : 0);
+      const left = mobile ? 48 : 66, right = ratios ? 30 : 20, top = 38, bottom = mainHeight - 44;
+      // Leave half a batch interval at the edges so the first and last bars fit.
+      const xInset = ratios ? Math.min(20, (width - left - right) / xs.length / 2) : 0;
       const selected = config.series.filter(s => visible.has(s.key));
       const scaleSeries = autoscale && selected.length ? selected : config.series;
       const values = scaleSeries.flatMap(s => s.y);
       if (config.band && scaleSeries.some(s => s.key === 'h200')) values.push(...config.band[1], ...config.band[2]);
       const { minimum, maximum, step } = axisRange(values, zeroBaseline);
-      const rangeText = `纵轴范围：${format(minimum)}–${format(maximum)}`
+      const rangeText = `${ratios ? '主图' : ''}纵轴范围：${format(minimum)}–${format(maximum)}`
         + (minimum > 0 ? ' · 非零起点，突出变化趋势' : ' · 从 0 开始，比较绝对比例');
       scaleNote.textContent = rangeText;
       scaleNote.classList.toggle('is-zoomed', minimum > 0);
-      plot = { top, bottom, x: value => left + (value - xs[0]) / (xs.at(-1) - xs[0]) * (width - left - right),
+      plot = { top, bottom, x: value => left + xInset + (value - xs[0]) / (xs.at(-1) - xs[0]) * (width - left - right - 2 * xInset),
         y: value => bottom - (value - minimum) / (maximum - minimum) * (bottom - top) };
       svg = node('svg', { viewBox: `0 0 ${width} ${height}`, role: 'img', 'aria-label': config.title,
         class: 'live-chart', 'data-y-min': minimum, 'data-y-max': maximum });
@@ -4257,7 +4764,7 @@ L 359.847427 377.032768
       const skip = mobile ? 3 : 1;
       xs.forEach((x, i) => {
         if (i % skip && i !== xs.length - 1) return;
-        svg.append(node('text', { x: plot.x(x), y: bottom + 22, 'text-anchor': 'middle', class: 'axis-label' }, String(x)));
+        svg.append(node('text', { x: plot.x(x), y: height - 22, 'text-anchor': 'middle', class: 'axis-label' }, String(x)));
       });
       svg.append(node('text', { x: (left + width - right) / 2, y: height - 2, 'text-anchor': 'middle', class: 'axis-title' }, '总 batch size（4 card）'));
       if (config.band && visible.has('h200')) {
@@ -4285,7 +4792,43 @@ L 359.847427 377.032768
         });
         svg.append(group);
       }
-      if (!selected.length) svg.append(node('text', { x: width / 2, y: height / 2, 'text-anchor': 'middle', class: 'axis-title' }, '请选择至少一条曲线'));
+      if (!selected.length) svg.append(node('text', { x: width / 2, y: (top + bottom) / 2, 'text-anchor': 'middle', class: 'axis-title' }, '请选择至少一条曲线'));
+      if (ratios) {
+        const ratioTop = bottom + 72, ratioBottom = height - 44;
+        const range = axisRange([...ratios, 1], true);
+        const barWidth = Math.min(30, (plot.x(xs[1]) - plot.x(xs[0])) * .5);
+        ratioPlot = { top: ratioTop, bottom: ratioBottom,
+          y: value => ratioBottom - value / range.maximum * (ratioBottom - ratioTop) };
+        const group = node('g', { class: 'ratio-panel', 'data-ratio-max': range.maximum });
+        group.append(node('rect', { x: left, y: ratioTop - 8, width: width - left - right,
+          height: ratioBottom - ratioTop + 8, rx: 6, fill: '#f7faff' }));
+        group.append(node('text', { x: left, y: ratioTop - 30, class: 'ratio-title' }, config.ratio.label + ' · 吞吐比值（倍）'));
+        if (!mobile) group.append(node('text', { x: width - right, y: ratioTop - 30, 'text-anchor': 'end', class: 'axis-title' },
+          '蓝 ≥ 1×：Zeus 较高或持平　绿 < 1×：H200 较高'));
+        for (let i = 0; i <= Math.round(range.maximum / range.step); i++) {
+          const value = i * range.step, y = ratioPlot.y(value);
+          group.append(node('line', { x1: left, x2: width - right, y1: y, y2: y, stroke: i ? '#e4ecf6' : '#bccbdd' }));
+          group.append(node('text', { x: left - 10, y: y + 4, 'text-anchor': 'end', class: 'axis-label' }, format(value) + '×'));
+        }
+        const ratioLabels = node('g');
+        ratios.forEach((value, i) => {
+          const x = plot.x(xs[i]), y = ratioPlot.y(value);
+          const bar = node('rect', { x: x - barWidth / 2, y, width: barWidth, height: ratioBottom - y,
+            rx: 3, fill: ratioColor(value), stroke: ratioColor(value), 'data-ratio-index': i, 'data-ratio': value });
+          bar.append(node('title', {}, `BS ${xs[i]} · ${config.ratio.label}：${value.toFixed(3)}×`));
+          group.append(bar);
+          if (labels && (!mobile || i % skip === 0 || i === xs.length - 1)) ratioLabels.append(node('text', {
+            x, y: y - 8, 'text-anchor': 'middle', fill: ratioColor(value), class: 'point-value ratio-value'
+          }, value.toFixed(2) + '×'));
+        });
+        const baseline = ratioPlot.y(1);
+        group.append(node('line', { x1: left, x2: width - right, y1: baseline, y2: baseline,
+          stroke: '#687c95', 'stroke-width': 1.2, 'stroke-dasharray': '4 4', 'data-ratio-baseline': 1 }));
+        group.append(ratioLabels);
+        group.append(node('text', { x: width - right - 4, y: baseline - 8, 'text-anchor': 'end',
+          class: 'point-value', fill: '#49617c' }, '1× · 吞吐持平'));
+        svg.append(group);
+      }
       marker = node('g', { class: 'chart-selection', 'pointer-events': 'none' }); svg.append(marker);
       frame.replaceChildren(svg); selection();
     }
