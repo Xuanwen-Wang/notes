@@ -14,6 +14,7 @@
   <nav class="side-nav" aria-label="页面目录">
     <a href="#overview" aria-current="location"><span>01</span>总体吞吐对比</a>
     <a href="#kernels"><span>02</span>Kernel 组成</a>
+    <a href="#chart-kernel-throughput" class="subnav">各 kernel 吞吐率</a>
     <a href="#chart-kernel-time" class="subnav">各阶段耗时</a>
     <a href="#chart-kernel-growth" class="subnav">相对增长</a>
     <a href="#chart-kernel-per-token" class="subnav">单 token 成本</a>
@@ -56,9 +57,10 @@
     <article class="kernel-card reduce"><span class="kernel-tag">04 · 本地归并</span><h3>Reduce</h3><p>读取有效的本地 routed 输出，应用路由权重并求和，在持有 Shared 的分支合入共享输出。</p><div class="kernel-focus">关注：有效行读取与加权求和；不含跨卡 AllReduce。</div></article>
   </div>
   <p class="note">BS16–128 的各阶段维持统一 JIT 入口；gather 后 Shared / Routed / Reduce 都直接读取 rank blocks。batch 维度是编译期常量，窗口和尾部在 kernel 内特化。M 合并大小与窗口宽度是两个概念。</p>
+  {{KERNEL_THROUGHPUT}}
   {{KERNEL}}
   <p class="reading-note">{{ANALYSIS}}</p>
-  <div class="links"><a href="data/zeus-49-stages.csv" download>49 点逐 kernel 周期 CSV ↓</a></div>
+  <div class="links"><a href="data/zeus-49-stages.csv" download>49 点逐 kernel 周期 CSV ↓</a><a href="data/kernel-throughput.csv" download>各 kernel 吞吐与相邻档变化 CSV ↓</a></div>
 </section>
 
 <section id="sampling">

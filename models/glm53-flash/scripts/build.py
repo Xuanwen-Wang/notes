@@ -6,7 +6,7 @@ import math
 from pathlib import Path
 import re
 
-from sampling_policy import INCLUDED_STEPS
+from sampling_policy import INCLUDED_STEPS, write_csv
 
 import matplotlib
 matplotlib.use('Agg')
@@ -30,7 +30,7 @@ def table(headers, rows, caption):
                                               + '</tr>' for row in rows) + '</tbody></table></div>')
 
 
-def chart(name, lines, ylabel, title, band=None, linear=False, labels=False, initial_batch=32):
+def chart(name, lines, ylabel, title, band=None, linear=False, labels=False, initial_batch=32, initial_visible=None):
     fig, ax = plt.subplots(figsize=(12.4, 5.4), layout='constrained')
     fig.patch.set_facecolor('#ffffff')
     ax.set_axisbelow(True)
@@ -83,6 +83,9 @@ def chart(name, lines, ylabel, title, band=None, linear=False, labels=False, ini
         series.append(dict(key='linear', label='线性参考 BS / 16', x=list(lines[0][2]),
                            y=[x / 16 for x in lines[0][2]], color='#8492a6', dashed=True))
     config = dict(title=title, unit=ylabel, series=series, band=band, labels=labels, initialBatch=initial_batch)
+    if initial_visible is not None:
+        assert set(initial_visible) <= {s['key'] for s in series}
+        config['initialVisible'] = list(initial_visible)
     payload = json.dumps(config, ensure_ascii=False).replace('<', '\\u003c')
     return (f'<figure class="interactive-chart" id="chart-{name}"><figcaption><div>'
             f'<span class="chart-kicker">4 CARD · 49 DECODE STEP SAMPLES / BATCH · 42 MoE LAYERS</span><h3>{html.escape(title)}</h3></div>'
@@ -182,6 +185,63 @@ def build():
                 "<p>时序模式保持真实 Router，仅在已获资格的 Routed/Shared 路径省略 PE 数值乘加；"
                     "时序输出及下游 Reduce 不具备数值资格，时序 case 数不能计为数值 PASS。</p>")
     stages = ('router', 'routed', 'shared', 'reduce')
+    # Keep the model-token numerator and all four cards for every stage, including Shared.
+    # Invert the pooled 42-layer stage time, not the mean of per-sample reciprocal times.
+    hz = d['protocol']['frequency_mhz'] * 1e6
+    cards = d['protocol']['cards']
+    stage_rates = {s: [r['batch_size'] * hz / (r['stages'][s] * cards) for r in kz] for s in stages}
+    throughput_rows, peak_rows, throughput_export = [], [], []
+    for i, row in enumerate(kz):
+        cells = [row['batch_size']]
+        for stage in stages:
+            value = stage_rates[stage][i]
+            delta = (value / stage_rates[stage][i - 1] - 1) * 100 if i else None
+            cells.extend([f'{value:,.1f}', '—' if delta is None else f'{delta:+.2f}%'])
+            throughput_export.append(dict(batch_size=row['batch_size'], batch_per_card=row['batch_size'] / cards,
+                kernel=stage, mean_42_layer_cycles=row['stages'][stage],
+                mean_42_layer_ms=row['stages'][stage] / hz * 1000, tokens_s_card=value,
+                previous_batch_size=kz[i - 1]['batch_size'] if i else '',
+                change_vs_previous_pct=delta if delta is not None else '', cards=cards,
+                frequency_mhz=d['protocol']['frequency_mhz'], source_commit=f['source_commit']))
+        throughput_rows.append(cells)
+    for stage in stages:
+        values = stage_rates[stage]
+        peak = max(range(len(kz)), key=lambda i: values[i])
+        worst = min(range(1, len(kz)), key=lambda i: values[i] / values[i - 1])
+        peak_rows.append([stage.title(), f"BS{kz[peak]['batch_size']} · {values[peak]:,.1f}",
+            f'{values[-1]:,.1f}', f'{(values[-1] / values[peak] - 1) * 100:+.2f}%',
+            f"BS{kz[worst - 1]['batch_size']} → BS{kz[worst]['batch_size']} · {(values[worst] / values[worst - 1] - 1) * 100:+.2f}%"])
+    write_csv(ROOT / 'data/kernel-throughput.csv', throughput_export)
+    throughput = chart('kernel-throughput',
+        [(s, s.title(), xs, stage_rates[s]) for s in stages], 'tokens/s/card（阶段等效）',
+        '各个 kernel 的吞吐率 · 大 batch 是否进入平台期？', initial_batch=128,
+        initial_visible=('routed', 'shared', 'reduce'))
+    throughput += ('<p class="reading-note">口径：<code>总 BS × 400,000,000 ÷ 该阶段 42 层平均 cycles ÷ 4</code>。'
+        '各层先取该阶段最慢 rank（Router 取最慢 owner），累加 42 层，再对 49 个采样点取平均时间。'
+        '分子只计模型输入 token，不乘 Top-K 或层数；Shared 也按四卡归一化。</p>'
+        '<p class="reading-note">曲线走平表示增加 batch 后该阶段的单位卡处理速率不再明显提高；'
+        '向下表示时间增长超过 token 数增长。默认隐藏吞吐数量级较大的 Router，可勾选或点「只看」检查；'
+        '下载图包含全部四条曲线。</p>'
+        '<div class="note">这是仅计某一阶段耗时的等效吞吐，用于定位扩展性问题；'
+        '不代表完整 MoE 吞吐或已经测得的流水线容量，四阶段不能相加。'
+        '不同阶段的最慢 rank 可能不同，判断实际瓶颈还需结合下方耗时图。</div>')
+    throughput += table(['阶段', '扫描峰值 · BS / tokens/s/card', 'BS128 · tokens/s/card',
+        'BS128 相对峰值', '最大相邻档回落'], peak_rows,
+        '行：四个 kernel 阶段；列：当前 15 档扫描峰值、BS128 等效吞吐、相对峰值变化，以及最大相邻 batch 回落。未测档位不作推断。')
+    throughput += '<details class="data-details"><summary>查看 15 档阶段吞吐与相邻档变化</summary>' + table(
+        ['总 batch'] + [label for s in stages for label in (s.title() + ' · tokens/s/card', s.title() + ' · 相邻档变化')],
+        throughput_rows, '行：四卡总 batch；每阶段两列：42 层阶段等效吞吐与相对上一档的吞吐变化。'
+        '负值表示回落，BS16 无前一档。全部基于同一套 49 个采样点。') + '</details>'
+    # Describe observed scaling only; adjacent drops cannot by themselves identify hardware saturation.
+    i32, i40, i48 = (xs.index(bs) for bs in (32, 40, 48))
+    throughput += (f'<p class="reading-note"><b>当前优先关注：</b>Routed 在 BS32 → BS40 下降 '
+        f'{(1 - stage_rates["routed"][i40] / stage_rates["routed"][i32]) * 100:.1f}%，'
+        f'BS128 仍比 BS32 低 {(1 - stage_rates["routed"][-1] / stage_rates["routed"][i32]) * 100:.1f}%；'
+        f'Reduce 在 BS40 → BS48 下降 {(1 - stage_rates["reduce"][i48] / stage_rates["reduce"][i40]) * 100:.1f}%。'
+        f'Shared 从 BS32 到 BS128，batch 增至 4 倍，而吞吐只提高 '
+        f'{(stage_rates["shared"][-1] / stage_rates["shared"][i32] - 1) * 100:.1f}%，整体接近平台。'
+        'Router 有明显跳点，但绝对耗时较小，不能仅凭相对跌幅认定为主瓶颈；'
+        '这些曲线不能单独区分 kernel 调度、编译器或硬件带宽原因。</p>')
     absolute = chart('kernel-time',
         [(s, s.title(), xs, [r['stages'][s] / 42 / 400 for r in kz]) for s in stages],
         '平均每层耗时（μs）', '各阶段耗时 · 哪个阶段最耗时？')
@@ -251,7 +311,7 @@ def build():
     replacements = dict(STYLE=(ROOT / 'assets/style.css').read_text() + '\n' + (ROOT / 'assets/charts.css').read_text(),
         POPULATION_CHART=population_chart, POPULATION_TABLE=population_table, DISTRIBUTION_TABLE=distribution,
         SELECTION_TABLE=selection_table, EVIDENCE=evidence, KERNEL=kernel, UPDATED=d['updated'],
-        STATUS=status, ANALYSIS=analysis, EXCEPTIONS=str(exceptions), SOURCE=source,
+        STATUS=status, ANALYSIS=analysis, EXCEPTIONS=str(exceptions), SOURCE=source, KERNEL_THROUGHPUT=throughput,
         SOURCE_SHORT=source[:12], DATA=json.dumps(page_data, ensure_ascii=False).replace('<', '\\u003c'),
         REVISION_TABLE=revision, HISTORY_TABLES=historical,
         H200_BEST=f"{best_h['tokens_s_card']:,.1f}", H200_BEST_BS=str(best_h['batch_size']), H200_BEST_CARD=f"{best_h['batch_size']/4:g}",

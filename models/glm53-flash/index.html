@@ -142,6 +142,7 @@ select:focus-visible,input:focus-visible { outline:3px solid #dba855; outline-of
   <nav class="side-nav" aria-label="页面目录">
     <a href="#overview" aria-current="location"><span>01</span>总体吞吐对比</a>
     <a href="#kernels"><span>02</span>Kernel 组成</a>
+    <a href="#chart-kernel-throughput" class="subnav">各 kernel 吞吐率</a>
     <a href="#chart-kernel-time" class="subnav">各阶段耗时</a>
     <a href="#chart-kernel-growth" class="subnav">相对增长</a>
     <a href="#chart-kernel-per-token" class="subnav">单 token 成本</a>
@@ -928,6 +929,766 @@ L 165.588521 377.03387
     <article class="kernel-card reduce"><span class="kernel-tag">04 · 本地归并</span><h3>Reduce</h3><p>读取有效的本地 routed 输出，应用路由权重并求和，在持有 Shared 的分支合入共享输出。</p><div class="kernel-focus">关注：有效行读取与加权求和；不含跨卡 AllReduce。</div></article>
   </div>
   <p class="note">BS16–128 的各阶段维持统一 JIT 入口；gather 后 Shared / Routed / Reduce 都直接读取 rank blocks。batch 维度是编译期常量，窗口和尾部在 kernel 内特化。M 合并大小与窗口宽度是两个概念。</p>
+  <figure class="interactive-chart" id="chart-kernel-throughput"><figcaption><div><span class="chart-kicker">4 CARD · 49 DECODE STEP SAMPLES / BATCH · 42 MoE LAYERS</span><h3>各个 kernel 的吞吐率 · 大 batch 是否进入平台期？</h3></div><span class="chart-unit">tokens/s/card（阶段等效）</span></figcaption><div class="chart-controls"></div><div class="chart-frame"><svg role="img" aria-label="各个 kernel 的吞吐率 · 大 batch 是否进入平台期？" xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="388.8pt" viewBox="0 0 892.8 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.9, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="kernel-throughput-figure_1">
+  <g id="kernel-throughput-patch_1">
+   <path d="M 0 388.8
+L 892.8 388.8
+L 892.8 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="kernel-throughput-axes_1">
+   <g id="kernel-throughput-patch_2">
+    <path d="M 55.91024 317.517165
+L 889.79976 317.517165
+L 889.79976 54.171803
+L 55.91024 54.171803
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="kernel-throughput-axes_2">
+    <g id="kernel-throughput-patch_3">
+     <path d="M 55.91024 54.171803
+L 889.79976 54.171803
+L 889.79976 54.171802
+L 55.91024 54.171802
+z
+" style="fill: #ffffff"/>
+    </g>
+    <g id="kernel-throughput-matplotlib.axis_1">
+     <g id="kernel-throughput-xtick_1">
+      <g id="kernel-throughput-line2d_1">
+       <defs>
+        <path id="kernel-throughput-mecb2e9e9a6" d="M 0 0
+L 0 -3.5
+" style="stroke: #49617c; stroke-width: 0.8"/>
+       </defs>
+       <g>
+        <use xlink:href="#kernel-throughput-mecb2e9e9a6" x="77.110821" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-throughput-text_1">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="77.110821" y="44.652115" transform="rotate(-0 77.110821 44.652115)">4</text>
+      </g>
+     </g>
+     <g id="kernel-throughput-xtick_2">
+      <g id="kernel-throughput-line2d_2">
+       <g>
+        <use xlink:href="#kernel-throughput-mecb2e9e9a6" x="133.645704" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-throughput-text_2">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="133.645704" y="44.652115" transform="rotate(-0 133.645704 44.652115)">6</text>
+      </g>
+     </g>
+     <g id="kernel-throughput-xtick_3">
+      <g id="kernel-throughput-line2d_3">
+       <g>
+        <use xlink:href="#kernel-throughput-mecb2e9e9a6" x="190.180586" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-throughput-text_3">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="190.180586" y="44.652115" transform="rotate(-0 190.180586 44.652115)">8</text>
+      </g>
+     </g>
+     <g id="kernel-throughput-xtick_4">
+      <g id="kernel-throughput-line2d_4">
+       <g>
+        <use xlink:href="#kernel-throughput-mecb2e9e9a6" x="246.715469" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-throughput-text_4">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="246.715469" y="44.652115" transform="rotate(-0 246.715469 44.652115)">10</text>
+      </g>
+     </g>
+     <g id="kernel-throughput-xtick_5">
+      <g id="kernel-throughput-line2d_5">
+       <g>
+        <use xlink:href="#kernel-throughput-mecb2e9e9a6" x="303.250352" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-throughput-text_5">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="303.250352" y="44.652115" transform="rotate(-0 303.250352 44.652115)">12</text>
+      </g>
+     </g>
+     <g id="kernel-throughput-xtick_6">
+      <g id="kernel-throughput-line2d_6">
+       <g>
+        <use xlink:href="#kernel-throughput-mecb2e9e9a6" x="359.785235" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-throughput-text_6">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="359.785235" y="44.652115" transform="rotate(-0 359.785235 44.652115)">14</text>
+      </g>
+     </g>
+     <g id="kernel-throughput-xtick_7">
+      <g id="kernel-throughput-line2d_7">
+       <g>
+        <use xlink:href="#kernel-throughput-mecb2e9e9a6" x="416.320117" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-throughput-text_7">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="416.320117" y="44.652115" transform="rotate(-0 416.320117 44.652115)">16</text>
+      </g>
+     </g>
+     <g id="kernel-throughput-xtick_8">
+      <g id="kernel-throughput-line2d_8">
+       <g>
+        <use xlink:href="#kernel-throughput-mecb2e9e9a6" x="472.855" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-throughput-text_8">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="472.855" y="44.652115" transform="rotate(-0 472.855 44.652115)">18</text>
+      </g>
+     </g>
+     <g id="kernel-throughput-xtick_9">
+      <g id="kernel-throughput-line2d_9">
+       <g>
+        <use xlink:href="#kernel-throughput-mecb2e9e9a6" x="529.389883" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-throughput-text_9">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="529.389883" y="44.652115" transform="rotate(-0 529.389883 44.652115)">20</text>
+      </g>
+     </g>
+     <g id="kernel-throughput-xtick_10">
+      <g id="kernel-throughput-line2d_10">
+       <g>
+        <use xlink:href="#kernel-throughput-mecb2e9e9a6" x="585.924765" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-throughput-text_10">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="585.924765" y="44.652115" transform="rotate(-0 585.924765 44.652115)">22</text>
+      </g>
+     </g>
+     <g id="kernel-throughput-xtick_11">
+      <g id="kernel-throughput-line2d_11">
+       <g>
+        <use xlink:href="#kernel-throughput-mecb2e9e9a6" x="642.459648" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-throughput-text_11">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="642.459648" y="44.652115" transform="rotate(-0 642.459648 44.652115)">24</text>
+      </g>
+     </g>
+     <g id="kernel-throughput-xtick_12">
+      <g id="kernel-throughput-line2d_12">
+       <g>
+        <use xlink:href="#kernel-throughput-mecb2e9e9a6" x="698.994531" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-throughput-text_12">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="698.994531" y="44.652115" transform="rotate(-0 698.994531 44.652115)">26</text>
+      </g>
+     </g>
+     <g id="kernel-throughput-xtick_13">
+      <g id="kernel-throughput-line2d_13">
+       <g>
+        <use xlink:href="#kernel-throughput-mecb2e9e9a6" x="755.529414" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-throughput-text_13">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="755.529414" y="44.652115" transform="rotate(-0 755.529414 44.652115)">28</text>
+      </g>
+     </g>
+     <g id="kernel-throughput-xtick_14">
+      <g id="kernel-throughput-line2d_14">
+       <g>
+        <use xlink:href="#kernel-throughput-mecb2e9e9a6" x="812.064296" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-throughput-text_14">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="812.064296" y="44.652115" transform="rotate(-0 812.064296 44.652115)">30</text>
+      </g>
+     </g>
+     <g id="kernel-throughput-xtick_15">
+      <g id="kernel-throughput-line2d_15">
+       <g>
+        <use xlink:href="#kernel-throughput-mecb2e9e9a6" x="868.599179" y="54.171802" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       </g>
+      </g>
+      <g id="kernel-throughput-text_15">
+       <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="868.599179" y="44.652115" transform="rotate(-0 868.599179 44.652115)">32</text>
+      </g>
+     </g>
+     <g id="kernel-throughput-text_16">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="472.855" y="27.896802" transform="rotate(-0 472.855 27.896802)">归一化每卡 batch = 总 batch / 4</text>
+     </g>
+    </g>
+    <g id="kernel-throughput-matplotlib.axis_2"/>
+   </g>
+   <g id="kernel-throughput-matplotlib.axis_3">
+    <g id="kernel-throughput-xtick_16">
+     <g id="kernel-throughput-line2d_16">
+      <defs>
+       <path id="kernel-throughput-mc6863bb9b3" d="M 0 0
+L 0 3.5
+" style="stroke: #49617c; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#kernel-throughput-mc6863bb9b3" x="77.110821" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-throughput-text_17">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="77.110821" y="333.272478" transform="rotate(-0 77.110821 333.272478)">16</text>
+     </g>
+    </g>
+    <g id="kernel-throughput-xtick_17">
+     <g id="kernel-throughput-line2d_17">
+      <g>
+       <use xlink:href="#kernel-throughput-mc6863bb9b3" x="133.645704" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-throughput-text_18">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="133.645704" y="333.272478" transform="rotate(-0 133.645704 333.272478)">24</text>
+     </g>
+    </g>
+    <g id="kernel-throughput-xtick_18">
+     <g id="kernel-throughput-line2d_18">
+      <g>
+       <use xlink:href="#kernel-throughput-mc6863bb9b3" x="190.180586" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-throughput-text_19">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="190.180586" y="333.272478" transform="rotate(-0 190.180586 333.272478)">32</text>
+     </g>
+    </g>
+    <g id="kernel-throughput-xtick_19">
+     <g id="kernel-throughput-line2d_19">
+      <g>
+       <use xlink:href="#kernel-throughput-mc6863bb9b3" x="246.715469" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-throughput-text_20">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="246.715469" y="333.272478" transform="rotate(-0 246.715469 333.272478)">40</text>
+     </g>
+    </g>
+    <g id="kernel-throughput-xtick_20">
+     <g id="kernel-throughput-line2d_20">
+      <g>
+       <use xlink:href="#kernel-throughput-mc6863bb9b3" x="303.250352" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-throughput-text_21">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="303.250352" y="333.272478" transform="rotate(-0 303.250352 333.272478)">48</text>
+     </g>
+    </g>
+    <g id="kernel-throughput-xtick_21">
+     <g id="kernel-throughput-line2d_21">
+      <g>
+       <use xlink:href="#kernel-throughput-mc6863bb9b3" x="359.785235" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-throughput-text_22">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="359.785235" y="333.272478" transform="rotate(-0 359.785235 333.272478)">56</text>
+     </g>
+    </g>
+    <g id="kernel-throughput-xtick_22">
+     <g id="kernel-throughput-line2d_22">
+      <g>
+       <use xlink:href="#kernel-throughput-mc6863bb9b3" x="416.320117" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-throughput-text_23">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="416.320117" y="333.272478" transform="rotate(-0 416.320117 333.272478)">64</text>
+     </g>
+    </g>
+    <g id="kernel-throughput-xtick_23">
+     <g id="kernel-throughput-line2d_23">
+      <g>
+       <use xlink:href="#kernel-throughput-mc6863bb9b3" x="472.855" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-throughput-text_24">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="472.855" y="333.272478" transform="rotate(-0 472.855 333.272478)">72</text>
+     </g>
+    </g>
+    <g id="kernel-throughput-xtick_24">
+     <g id="kernel-throughput-line2d_24">
+      <g>
+       <use xlink:href="#kernel-throughput-mc6863bb9b3" x="529.389883" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-throughput-text_25">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="529.389883" y="333.272478" transform="rotate(-0 529.389883 333.272478)">80</text>
+     </g>
+    </g>
+    <g id="kernel-throughput-xtick_25">
+     <g id="kernel-throughput-line2d_25">
+      <g>
+       <use xlink:href="#kernel-throughput-mc6863bb9b3" x="585.924765" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-throughput-text_26">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="585.924765" y="333.272478" transform="rotate(-0 585.924765 333.272478)">88</text>
+     </g>
+    </g>
+    <g id="kernel-throughput-xtick_26">
+     <g id="kernel-throughput-line2d_26">
+      <g>
+       <use xlink:href="#kernel-throughput-mc6863bb9b3" x="642.459648" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-throughput-text_27">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="642.459648" y="333.272478" transform="rotate(-0 642.459648 333.272478)">96</text>
+     </g>
+    </g>
+    <g id="kernel-throughput-xtick_27">
+     <g id="kernel-throughput-line2d_27">
+      <g>
+       <use xlink:href="#kernel-throughput-mc6863bb9b3" x="698.994531" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-throughput-text_28">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="698.994531" y="333.272478" transform="rotate(-0 698.994531 333.272478)">104</text>
+     </g>
+    </g>
+    <g id="kernel-throughput-xtick_28">
+     <g id="kernel-throughput-line2d_28">
+      <g>
+       <use xlink:href="#kernel-throughput-mc6863bb9b3" x="755.529414" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-throughput-text_29">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="755.529414" y="333.272478" transform="rotate(-0 755.529414 333.272478)">112</text>
+     </g>
+    </g>
+    <g id="kernel-throughput-xtick_29">
+     <g id="kernel-throughput-line2d_29">
+      <g>
+       <use xlink:href="#kernel-throughput-mc6863bb9b3" x="812.064296" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-throughput-text_30">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="812.064296" y="333.272478" transform="rotate(-0 812.064296 333.272478)">120</text>
+     </g>
+    </g>
+    <g id="kernel-throughput-xtick_30">
+     <g id="kernel-throughput-line2d_30">
+      <g>
+       <use xlink:href="#kernel-throughput-mc6863bb9b3" x="868.599179" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-throughput-text_31">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="868.599179" y="333.272478" transform="rotate(-0 868.599179 333.272478)">128</text>
+     </g>
+    </g>
+    <g id="kernel-throughput-text_32">
+     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="472.855" y="356.547478" transform="rotate(-0 472.855 356.547478)">总 batch size（4 card）</text>
+    </g>
+   </g>
+   <g id="kernel-throughput-matplotlib.axis_4">
+    <g id="kernel-throughput-ytick_1">
+     <g id="kernel-throughput-line2d_31">
+      <path d="M 55.91024 317.517165
+L 889.79976 317.517165
+" clip-path="url(#kernel-throughput-p9e23a61372)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="kernel-throughput-line2d_32">
+      <defs>
+       <path id="kernel-throughput-mb630600054" d="M 0 0
+L -3.5 0
+" style="stroke: #49617c; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#kernel-throughput-mb630600054" x="55.91024" y="317.517165" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-throughput-text_33">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="48.91024" y="321.894822" transform="rotate(-0 48.91024 321.894822)">0</text>
+     </g>
+    </g>
+    <g id="kernel-throughput-ytick_2">
+     <g id="kernel-throughput-line2d_33">
+      <path d="M 55.91024 284.444198
+L 889.79976 284.444198
+" clip-path="url(#kernel-throughput-p9e23a61372)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="kernel-throughput-line2d_34">
+      <g>
+       <use xlink:href="#kernel-throughput-mb630600054" x="55.91024" y="284.444198" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-throughput-text_34">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="48.91024" y="288.821855" transform="rotate(-0 48.91024 288.821855)">10000</text>
+     </g>
+    </g>
+    <g id="kernel-throughput-ytick_3">
+     <g id="kernel-throughput-line2d_35">
+      <path d="M 55.91024 251.371231
+L 889.79976 251.371231
+" clip-path="url(#kernel-throughput-p9e23a61372)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="kernel-throughput-line2d_36">
+      <g>
+       <use xlink:href="#kernel-throughput-mb630600054" x="55.91024" y="251.371231" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-throughput-text_35">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="48.91024" y="255.748888" transform="rotate(-0 48.91024 255.748888)">20000</text>
+     </g>
+    </g>
+    <g id="kernel-throughput-ytick_4">
+     <g id="kernel-throughput-line2d_37">
+      <path d="M 55.91024 218.298265
+L 889.79976 218.298265
+" clip-path="url(#kernel-throughput-p9e23a61372)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="kernel-throughput-line2d_38">
+      <g>
+       <use xlink:href="#kernel-throughput-mb630600054" x="55.91024" y="218.298265" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-throughput-text_36">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="48.91024" y="222.675921" transform="rotate(-0 48.91024 222.675921)">30000</text>
+     </g>
+    </g>
+    <g id="kernel-throughput-ytick_5">
+     <g id="kernel-throughput-line2d_39">
+      <path d="M 55.91024 185.225298
+L 889.79976 185.225298
+" clip-path="url(#kernel-throughput-p9e23a61372)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="kernel-throughput-line2d_40">
+      <g>
+       <use xlink:href="#kernel-throughput-mb630600054" x="55.91024" y="185.225298" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-throughput-text_37">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="48.91024" y="189.602954" transform="rotate(-0 48.91024 189.602954)">40000</text>
+     </g>
+    </g>
+    <g id="kernel-throughput-ytick_6">
+     <g id="kernel-throughput-line2d_41">
+      <path d="M 55.91024 152.152331
+L 889.79976 152.152331
+" clip-path="url(#kernel-throughput-p9e23a61372)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="kernel-throughput-line2d_42">
+      <g>
+       <use xlink:href="#kernel-throughput-mb630600054" x="55.91024" y="152.152331" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-throughput-text_38">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="48.91024" y="156.529987" transform="rotate(-0 48.91024 156.529987)">50000</text>
+     </g>
+    </g>
+    <g id="kernel-throughput-ytick_7">
+     <g id="kernel-throughput-line2d_43">
+      <path d="M 55.91024 119.079364
+L 889.79976 119.079364
+" clip-path="url(#kernel-throughput-p9e23a61372)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="kernel-throughput-line2d_44">
+      <g>
+       <use xlink:href="#kernel-throughput-mb630600054" x="55.91024" y="119.079364" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-throughput-text_39">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="48.91024" y="123.45702" transform="rotate(-0 48.91024 123.45702)">60000</text>
+     </g>
+    </g>
+    <g id="kernel-throughput-ytick_8">
+     <g id="kernel-throughput-line2d_45">
+      <path d="M 55.91024 86.006397
+L 889.79976 86.006397
+" clip-path="url(#kernel-throughput-p9e23a61372)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="kernel-throughput-line2d_46">
+      <g>
+       <use xlink:href="#kernel-throughput-mb630600054" x="55.91024" y="86.006397" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="kernel-throughput-text_40">
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="48.91024" y="90.384053" transform="rotate(-0 48.91024 90.384053)">70000</text>
+     </g>
+    </g>
+    <g id="kernel-throughput-text_41">
+     <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="11.865553" y="185.844484" transform="rotate(-90 11.865553 185.844484)">tokens/s/card（阶段等效）</text>
+    </g>
+   </g>
+   <g id="kernel-throughput-line2d_47">
+    <path d="M 77.110821 274.807926
+L 133.645704 258.14287
+L 190.180586 238.351438
+L 246.715469 259.616313
+L 303.250352 248.036142
+L 359.785235 236.455972
+L 416.320117 169.595527
+L 472.855 245.612898
+L 529.389883 237.623535
+L 585.924765 233.143927
+L 642.459648 225.473633
+L 698.994531 238.238399
+L 755.529414 232.140032
+L 812.064296 226.041666
+L 868.599179 66.474067
+" clip-path="url(#kernel-throughput-p9e23a61372)" style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
+    <defs>
+     <path id="kernel-throughput-m94619aaaa5" d="M 0 2.5
+C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
+C 2.236584 1.29895 2.5 0.663008 2.5 0
+C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767
+C 1.29895 -2.236584 0.663008 -2.5 0 -2.5
+C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767
+C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0
+C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767
+C -1.29895 2.236584 -0.663008 2.5 0 2.5
+z
+" style="stroke: #2364d2; stroke-width: 2"/>
+    </defs>
+    <g clip-path="url(#kernel-throughput-p9e23a61372)">
+     <use xlink:href="#kernel-throughput-m94619aaaa5" x="77.110821" y="274.807926" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m94619aaaa5" x="133.645704" y="258.14287" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m94619aaaa5" x="190.180586" y="238.351438" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m94619aaaa5" x="246.715469" y="259.616313" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m94619aaaa5" x="303.250352" y="248.036142" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m94619aaaa5" x="359.785235" y="236.455972" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m94619aaaa5" x="416.320117" y="169.595527" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m94619aaaa5" x="472.855" y="245.612898" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m94619aaaa5" x="529.389883" y="237.623535" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m94619aaaa5" x="585.924765" y="233.143927" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m94619aaaa5" x="642.459648" y="225.473633" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m94619aaaa5" x="698.994531" y="238.238399" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m94619aaaa5" x="755.529414" y="232.140032" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m94619aaaa5" x="812.064296" y="226.041666" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m94619aaaa5" x="868.599179" y="66.474067" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+    </g>
+   </g>
+   <g id="kernel-throughput-line2d_48">
+    <path d="M 77.110821 312.519351
+L 133.645704 311.364179
+L 190.180586 310.788025
+L 246.715469 311.947388
+L 303.250352 311.554627
+L 359.785235 312.12724
+L 416.320117 311.306291
+L 472.855 311.71224
+L 529.389883 311.585047
+L 585.924765 311.439135
+L 642.459648 311.213941
+L 698.994531 311.519337
+L 755.529414 311.43192
+L 812.064296 311.330041
+L 868.599179 311.161898
+" clip-path="url(#kernel-throughput-p9e23a61372)" style="fill: none; stroke: #d85b43; stroke-width: 2.5; stroke-linecap: square"/>
+    <defs>
+     <path id="kernel-throughput-mc06e842d91" d="M 0 2.5
+C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
+C 2.236584 1.29895 2.5 0.663008 2.5 0
+C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767
+C 1.29895 -2.236584 0.663008 -2.5 0 -2.5
+C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767
+C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0
+C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767
+C -1.29895 2.236584 -0.663008 2.5 0 2.5
+z
+" style="stroke: #d85b43; stroke-width: 2"/>
+    </defs>
+    <g clip-path="url(#kernel-throughput-p9e23a61372)">
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="77.110821" y="312.519351" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="133.645704" y="311.364179" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="190.180586" y="310.788025" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="246.715469" y="311.947388" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="303.250352" y="311.554627" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="359.785235" y="312.12724" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="416.320117" y="311.306291" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="472.855" y="311.71224" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="529.389883" y="311.585047" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="585.924765" y="311.439135" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="642.459648" y="311.213941" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="698.994531" y="311.519337" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="755.529414" y="311.43192" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="812.064296" y="311.330041" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="868.599179" y="311.161898" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+    </g>
+   </g>
+   <g id="kernel-throughput-line2d_49">
+    <path d="M 77.110821 304.154958
+L 133.645704 302.775482
+L 190.180586 301.789759
+L 246.715469 301.830097
+L 303.250352 301.429625
+L 359.785235 301.170911
+L 416.320117 300.638305
+L 472.855 300.788088
+L 529.389883 301.645525
+L 585.924765 301.64258
+L 642.459648 301.435785
+L 698.994531 301.470656
+L 755.529414 300.275161
+L 812.064296 300.228269
+L 868.599179 299.991161
+" clip-path="url(#kernel-throughput-p9e23a61372)" style="fill: none; stroke: #7856ad; stroke-width: 2.5; stroke-linecap: square"/>
+    <defs>
+     <path id="kernel-throughput-m4a924cdd6e" d="M 0 2.5
+C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
+C 2.236584 1.29895 2.5 0.663008 2.5 0
+C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767
+C 1.29895 -2.236584 0.663008 -2.5 0 -2.5
+C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767
+C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0
+C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767
+C -1.29895 2.236584 -0.663008 2.5 0 2.5
+z
+" style="stroke: #7856ad; stroke-width: 2"/>
+    </defs>
+    <g clip-path="url(#kernel-throughput-p9e23a61372)">
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="77.110821" y="304.154958" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="133.645704" y="302.775482" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="190.180586" y="301.789759" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="246.715469" y="301.830097" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="303.250352" y="301.429625" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="359.785235" y="301.170911" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="416.320117" y="300.638305" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="472.855" y="300.788088" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="529.389883" y="301.645525" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="585.924765" y="301.64258" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="642.459648" y="301.435785" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="698.994531" y="301.470656" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="755.529414" y="300.275161" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="812.064296" y="300.228269" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="868.599179" y="299.991161" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+    </g>
+   </g>
+   <g id="kernel-throughput-line2d_50">
+    <path d="M 77.110821 305.829256
+L 133.645704 305.141994
+L 190.180586 304.725684
+L 246.715469 305.770203
+L 303.250352 307.326962
+L 359.785235 306.376005
+L 416.320117 304.941418
+L 472.855 305.77004
+L 529.389883 307.042648
+L 585.924765 306.802869
+L 642.459648 306.983716
+L 698.994531 306.78306
+L 755.529414 306.466754
+L 812.064296 306.280426
+L 868.599179 305.418594
+" clip-path="url(#kernel-throughput-p9e23a61372)" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
+    <defs>
+     <path id="kernel-throughput-m98abdd7638" d="M 0 2.5
+C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
+C 2.236584 1.29895 2.5 0.663008 2.5 0
+C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767
+C 1.29895 -2.236584 0.663008 -2.5 0 -2.5
+C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767
+C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0
+C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767
+C -1.29895 2.236584 -0.663008 2.5 0 2.5
+z
+" style="stroke: #0d8d7b; stroke-width: 2"/>
+    </defs>
+    <g clip-path="url(#kernel-throughput-p9e23a61372)">
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="77.110821" y="305.829256" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="133.645704" y="305.141994" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="190.180586" y="304.725684" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="246.715469" y="305.770203" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="303.250352" y="307.326962" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="359.785235" y="306.376005" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="416.320117" y="304.941418" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="472.855" y="305.77004" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="529.389883" y="307.042648" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="585.924765" y="306.802869" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="642.459648" y="306.983716" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="698.994531" y="306.78306" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="755.529414" y="306.466754" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="812.064296" y="306.280426" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="868.599179" y="305.418594" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+    </g>
+   </g>
+   <g id="kernel-throughput-patch_4">
+    <path d="M 55.91024 317.517165
+L 55.91024 54.171803
+" style="fill: none; stroke: #b9c7d7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="kernel-throughput-patch_5">
+    <path d="M 55.91024 317.517165
+L 889.79976 317.517165
+" style="fill: none; stroke: #b9c7d7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="kernel-throughput-text_42">
+    <text style="font-weight: 700; font-size: 14px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="55.91024" y="14.171803" transform="rotate(-0 55.91024 14.171803)">各个 kernel 的吞吐率 · 大 batch 是否进入平台期？</text>
+   </g>
+   <g id="kernel-throughput-legend_1">
+    <g id="kernel-throughput-line2d_51">
+     <path d="M 64.01024 377.032768
+L 73.01024 377.032768
+L 82.01024 377.032768
+" style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
+     <g>
+      <use xlink:href="#kernel-throughput-m94619aaaa5" x="73.01024" y="377.032768" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     </g>
+    </g>
+    <g id="kernel-throughput-text_43">
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="89.21024" y="380.182768" transform="rotate(-0 89.21024 380.182768)">Router</text>
+    </g>
+    <g id="kernel-throughput-line2d_52">
+     <path d="M 135.721959 377.032768
+L 144.721959 377.032768
+L 153.721959 377.032768
+" style="fill: none; stroke: #d85b43; stroke-width: 2.5; stroke-linecap: square"/>
+     <g>
+      <use xlink:href="#kernel-throughput-mc06e842d91" x="144.721959" y="377.032768" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     </g>
+    </g>
+    <g id="kernel-throughput-text_44">
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="160.921959" y="380.182768" transform="rotate(-0 160.921959 380.182768)">Routed</text>
+    </g>
+    <g id="kernel-throughput-line2d_53">
+     <path d="M 209.521959 377.032768
+L 218.521959 377.032768
+L 227.521959 377.032768
+" style="fill: none; stroke: #7856ad; stroke-width: 2.5; stroke-linecap: square"/>
+     <g>
+      <use xlink:href="#kernel-throughput-m4a924cdd6e" x="218.521959" y="377.032768" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     </g>
+    </g>
+    <g id="kernel-throughput-text_45">
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="234.721959" y="380.182768" transform="rotate(-0 234.721959 380.182768)">Shared</text>
+    </g>
+    <g id="kernel-throughput-line2d_54">
+     <path d="M 282.693365 377.032768
+L 291.693365 377.032768
+L 300.693365 377.032768
+" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
+     <g>
+      <use xlink:href="#kernel-throughput-m98abdd7638" x="291.693365" y="377.032768" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     </g>
+    </g>
+    <g id="kernel-throughput-text_46">
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="307.893365" y="380.182768" transform="rotate(-0 307.893365 380.182768)">Reduce</text>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="kernel-throughput-p9e23a61372">
+   <rect x="55.91024" y="54.171803" width="833.88952" height="263.345363"/>
+  </clipPath>
+ </defs>
+</svg>
+</div><div class="chart-readout"></div><div class="chart-footer"><span>横轴：四卡总 batch size（16–128）<br>纵轴：tokens/s/card（阶段等效）<br>统计范围：每档同一套 49 个 decode step 采样点（7 批请求 × 每批 7 个采样位置），排除 step001</span><span><a href="assets/kernel-throughput.png" download>完整图 PNG</a><a href="assets/kernel-throughput.svg" download>完整图 SVG</a></span></div><script type="application/json" class="chart-config">{"title": "各个 kernel 的吞吐率 · 大 batch 是否进入平台期？", "unit": "tokens/s/card（阶段等效）", "series": [{"key": "router", "label": "Router", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [12913.6400322841, 17952.515596247926, 23936.6874616639, 17507.00280112045, 21008.40336134454, 24509.803921568626, 44725.84454973654, 21741.099737295044, 24156.777485883384, 25511.239440376175, 27830.44302586492, 23970.86617802978, 25814.778960955147, 27658.691743880514, 75905.82933048687], "color": "#2364d2", "dashed": false}, {"key": "routed", "label": "Routed", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1511.1477504474415, 1860.427795879684, 2034.634514112539, 1684.0876946392946, 1802.843475082898, 1629.7073024897645, 1877.9308423822283, 1755.1873447569628, 1793.6457181185733, 1837.7638209162405, 1905.8540665662802, 1813.5139995647353, 1839.9454764611899, 1870.7495984513935, 1921.589774358056], "color": "#d85b43", "dashed": false}, {"key": "shared", "label": "Shared", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [4040.220394022494, 4457.321149988857, 4755.366133471239, 4743.169243393359, 4864.25683276077, 4942.481867269649, 5103.521748976903, 5058.232906334172, 4798.976858133846, 4799.867349120534, 4862.3942429252165, 4851.850607787594, 5213.322646021909, 5227.500836400134, 5299.193280622921], "color": "#7856ad", "dashed": false}, {"key": "reduce", "label": "Reduce", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [3533.9766613296406, 3741.7783488868495, 3867.6546781293623, 3551.832140123112, 3081.1276633807242, 3368.660730490642, 3802.424795136786, 3551.881465741877, 3167.0933059136305, 3239.593287394418, 3184.912161117881, 3245.5827163854865, 3341.221794826297, 3397.560045720064, 3658.14525293304], "color": "#0d8d7b", "dashed": false}], "band": null, "labels": false, "initialBatch": 128, "initialVisible": ["routed", "shared", "reduce"]}</script></figure><p class="reading-note">口径：<code>总 BS × 400,000,000 ÷ 该阶段 42 层平均 cycles ÷ 4</code>。各层先取该阶段最慢 rank（Router 取最慢 owner），累加 42 层，再对 49 个采样点取平均时间。分子只计模型输入 token，不乘 Top-K 或层数；Shared 也按四卡归一化。</p><p class="reading-note">曲线走平表示增加 batch 后该阶段的单位卡处理速率不再明显提高；向下表示时间增长超过 token 数增长。默认隐藏吞吐数量级较大的 Router，可勾选或点「只看」检查；下载图包含全部四条曲线。</p><div class="note">这是仅计某一阶段耗时的等效吞吐，用于定位扩展性问题；不代表完整 MoE 吞吐或已经测得的流水线容量，四阶段不能相加。不同阶段的最慢 rank 可能不同，判断实际瓶颈还需结合下方耗时图。</div><div class="table-scroll" tabindex="0"><table><caption>行：四个 kernel 阶段；列：当前 15 档扫描峰值、BS128 等效吞吐、相对峰值变化，以及最大相邻 batch 回落。未测档位不作推断。</caption><thead><tr><th scope="col">阶段</th><th scope="col">扫描峰值 · BS / tokens/s/card</th><th scope="col">BS128 · tokens/s/card</th><th scope="col">BS128 相对峰值</th><th scope="col">最大相邻档回落</th></tr></thead><tbody><tr><td>Router</td><td>BS128 · 75,905.8</td><td>75,905.8</td><td>+0.00%</td><td>BS64 → BS72 · -51.39%</td></tr><tr><td>Routed</td><td>BS32 · 2,034.6</td><td>1,921.6</td><td>-5.56%</td><td>BS32 → BS40 · -17.23%</td></tr><tr><td>Shared</td><td>BS128 · 5,299.2</td><td>5,299.2</td><td>+0.00%</td><td>BS72 → BS80 · -5.13%</td></tr><tr><td>Reduce</td><td>BS32 · 3,867.7</td><td>3,658.1</td><td>-5.42%</td><td>BS40 → BS48 · -13.25%</td></tr></tbody></table></div><details class="data-details"><summary>查看 15 档阶段吞吐与相邻档变化</summary><div class="table-scroll" tabindex="0"><table><caption>行：四卡总 batch；每阶段两列：42 层阶段等效吞吐与相对上一档的吞吐变化。负值表示回落，BS16 无前一档。全部基于同一套 49 个采样点。</caption><thead><tr><th scope="col">总 batch</th><th scope="col">Router · tokens/s/card</th><th scope="col">Router · 相邻档变化</th><th scope="col">Routed · tokens/s/card</th><th scope="col">Routed · 相邻档变化</th><th scope="col">Shared · tokens/s/card</th><th scope="col">Shared · 相邻档变化</th><th scope="col">Reduce · tokens/s/card</th><th scope="col">Reduce · 相邻档变化</th></tr></thead><tbody><tr><td>16</td><td>12,913.6</td><td>—</td><td>1,511.1</td><td>—</td><td>4,040.2</td><td>—</td><td>3,534.0</td><td>—</td></tr><tr><td>24</td><td>17,952.5</td><td>+39.02%</td><td>1,860.4</td><td>+23.11%</td><td>4,457.3</td><td>+10.32%</td><td>3,741.8</td><td>+5.88%</td></tr><tr><td>32</td><td>23,936.7</td><td>+33.33%</td><td>2,034.6</td><td>+9.36%</td><td>4,755.4</td><td>+6.69%</td><td>3,867.7</td><td>+3.36%</td></tr><tr><td>40</td><td>17,507.0</td><td>-26.86%</td><td>1,684.1</td><td>-17.23%</td><td>4,743.2</td><td>-0.26%</td><td>3,551.8</td><td>-8.17%</td></tr><tr><td>48</td><td>21,008.4</td><td>+20.00%</td><td>1,802.8</td><td>+7.05%</td><td>4,864.3</td><td>+2.55%</td><td>3,081.1</td><td>-13.25%</td></tr><tr><td>56</td><td>24,509.8</td><td>+16.67%</td><td>1,629.7</td><td>-9.60%</td><td>4,942.5</td><td>+1.61%</td><td>3,368.7</td><td>+9.33%</td></tr><tr><td>64</td><td>44,725.8</td><td>+82.48%</td><td>1,877.9</td><td>+15.23%</td><td>5,103.5</td><td>+3.26%</td><td>3,802.4</td><td>+12.88%</td></tr><tr><td>72</td><td>21,741.1</td><td>-51.39%</td><td>1,755.2</td><td>-6.54%</td><td>5,058.2</td><td>-0.89%</td><td>3,551.9</td><td>-6.59%</td></tr><tr><td>80</td><td>24,156.8</td><td>+11.11%</td><td>1,793.6</td><td>+2.19%</td><td>4,799.0</td><td>-5.13%</td><td>3,167.1</td><td>-10.83%</td></tr><tr><td>88</td><td>25,511.2</td><td>+5.61%</td><td>1,837.8</td><td>+2.46%</td><td>4,799.9</td><td>+0.02%</td><td>3,239.6</td><td>+2.29%</td></tr><tr><td>96</td><td>27,830.4</td><td>+9.09%</td><td>1,905.9</td><td>+3.71%</td><td>4,862.4</td><td>+1.30%</td><td>3,184.9</td><td>-1.69%</td></tr><tr><td>104</td><td>23,970.9</td><td>-13.87%</td><td>1,813.5</td><td>-4.85%</td><td>4,851.9</td><td>-0.22%</td><td>3,245.6</td><td>+1.90%</td></tr><tr><td>112</td><td>25,814.8</td><td>+7.69%</td><td>1,839.9</td><td>+1.46%</td><td>5,213.3</td><td>+7.45%</td><td>3,341.2</td><td>+2.95%</td></tr><tr><td>120</td><td>27,658.7</td><td>+7.14%</td><td>1,870.7</td><td>+1.67%</td><td>5,227.5</td><td>+0.27%</td><td>3,397.6</td><td>+1.69%</td></tr><tr><td>128</td><td>75,905.8</td><td>+174.44%</td><td>1,921.6</td><td>+2.72%</td><td>5,299.2</td><td>+1.37%</td><td>3,658.1</td><td>+7.67%</td></tr></tbody></table></div></details><p class="reading-note"><b>当前优先关注：</b>Routed 在 BS32 → BS40 下降 17.2%，BS128 仍比 BS32 低 5.6%；Reduce 在 BS40 → BS48 下降 13.3%。Shared 从 BS32 到 BS128，batch 增至 4 倍，而吞吐只提高 11.4%，整体接近平台。Router 有明显跳点，但绝对耗时较小，不能仅凭相对跌幅认定为主瓶颈；这些曲线不能单独区分 kernel 调度、编译器或硬件带宽原因。</p>
   <figure class="interactive-chart" id="chart-kernel-time"><figcaption><div><span class="chart-kicker">4 CARD · 49 DECODE STEP SAMPLES / BATCH · 42 MoE LAYERS</span><h3>各阶段耗时 · 哪个阶段最耗时？</h3></div><span class="chart-unit">平均每层耗时（μs）</span></figcaption><div class="chart-controls"></div><div class="chart-frame"><svg role="img" aria-label="各阶段耗时 · 哪个阶段最耗时？" xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="388.8pt" viewBox="0 0 892.8 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
@@ -3294,7 +4055,7 @@ L 359.847427 377.032768
 </svg>
 </div><div class="chart-readout"></div><div class="chart-footer"><span>横轴：四卡总 batch size（16–128）<br>纵轴：单 token 周期比（BS16 = 1）<br>统计范围：每档同一套 49 个 decode step 采样点（7 批请求 × 每批 7 个采样位置），排除 step001</span><span><a href="assets/kernel-per-token.png" download>完整图 PNG</a><a href="assets/kernel-per-token.svg" download>完整图 SVG</a></span></div><script type="application/json" class="chart-config">{"title": "单 token 成本 · batch 增大后是否更高效？", "unit": "单 token 周期比（BS16 = 1）", "series": [{"key": "router", "label": "Router", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 0.7193220338983051, 0.5394915254237288, 0.7376271186440678, 0.6146892655367232, 0.5268765133171913, 0.288728813559322, 0.5939736346516008, 0.5345762711864407, 0.5061941448382127, 0.4640112994350283, 0.5387222946544981, 0.5002421307506053, 0.4668926553672316, 0.1701271186440678], "color": "#2364d2", "dashed": false}, {"key": "routed", "label": "Routed", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 0.8122582095334213, 0.7427121382075688, 0.8973094187776878, 0.8382024126514679, 0.9272510150373658, 0.804687646820099, 0.8609609424096475, 0.8425006873891154, 0.8222752745747491, 0.792897933245241, 0.8332705183473272, 0.8213002883943428, 0.8077766001919069, 0.7864049708280059], "color": "#d85b43", "dashed": false}, {"key": "shared", "label": "Shared", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 0.9064234453989465, 0.8496128963834977, 0.8517976455615655, 0.8305935588786367, 0.8174476917715862, 0.7916534096934987, 0.7987414713472619, 0.8418920352105207, 0.8417358439630154, 0.8309117262346661, 0.8327173939646101, 0.7749799251549172, 0.772878000494927, 0.7624217838583095], "color": "#7856ad", "dashed": false}, {"key": "reduce", "label": "Reduce", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 0.9444644582918631, 0.9137260059212139, 0.9949728821382724, 1.1469750842625046, 1.049074675090513, 0.9294008038895379, 0.9949590647703395, 1.115842294488439, 1.0908704728709921, 1.1095994120256176, 1.0888573701998667, 1.0576899345029456, 1.0401513479596693, 0.9660569542710632], "color": "#0d8d7b", "dashed": false}, {"key": "reference", "label": "BS16 单 token 成本 = 1", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], "color": "#8492a6", "dashed": true}], "band": null, "labels": false, "initialBatch": 32}</script></figure><p class="reading-note">纵轴 = 周期增长倍数 ÷ batch 增长倍数。低于 1 表示每 token 的周期成本下降；高于 1 表示上升。参考线 1 对应 BS16 的单 token 成本。</p><details class="data-details"><summary>查看逐 kernel 耗时与增长明细</summary><div class="table-scroll" tabindex="0"><table><caption>行：四卡总 batch；列：49 点平均的单层阶段耗时（μs）、Routed 周期倍数及 batch 倍数。Shared 仅 EP0，逐阶段独立取最大 rank。</caption><thead><tr><th scope="col">总 batch</th><th scope="col">Router · μs/层</th><th scope="col">Routed · μs/层</th><th scope="col">Shared · μs/层</th><th scope="col">Reduce · μs/层</th><th scope="col">Routed / BS16</th><th scope="col">线性参考</th></tr></thead><tbody><tr><td>16</td><td>7.375</td><td>63.024</td><td>23.573</td><td>26.949</td><td>1.000×</td><td>1.00×</td></tr><tr><td>24</td><td>7.957</td><td>76.787</td><td>32.050</td><td>38.179</td><td>1.218×</td><td>1.50×</td></tr><tr><td>32</td><td>7.957</td><td>93.617</td><td>40.055</td><td>49.248</td><td>1.485×</td><td>2.00×</td></tr><tr><td>40</td><td>13.600</td><td>141.379</td><td>50.197</td><td>67.034</td><td>2.243×</td><td>2.50×</td></tr><tr><td>48</td><td>13.600</td><td>158.480</td><td>58.737</td><td>92.730</td><td>2.515×</td><td>3.00×</td></tr><tr><td>56</td><td>13.600</td><td>204.536</td><td>67.442</td><td>98.951</td><td>3.245×</td><td>3.50×</td></tr><tr><td>64</td><td>8.518</td><td>202.858</td><td>74.645</td><td>100.187</td><td>3.219×</td><td>4.00×</td></tr><tr><td>72</td><td>19.712</td><td>244.174</td><td>84.728</td><td>120.660</td><td>3.874×</td><td>4.50×</td></tr><tr><td>80</td><td>19.712</td><td>265.487</td><td>99.228</td><td>150.356</td><td>4.213×</td><td>5.00×</td></tr><tr><td>88</td><td>20.532</td><td>285.025</td><td>109.130</td><td>161.690</td><td>4.523×</td><td>5.50×</td></tr><tr><td>96</td><td>20.532</td><td>299.828</td><td>117.520</td><td>179.417</td><td>4.757×</td><td>6.00×</td></tr><tr><td>104</td><td>25.825</td><td>341.353</td><td>127.590</td><td>190.735</td><td>5.416×</td><td>6.50×</td></tr><tr><td>112</td><td>25.825</td><td>362.330</td><td>127.877</td><td>199.528</td><td>5.749×</td><td>7.00×</td></tr><tr><td>120</td><td>25.825</td><td>381.818</td><td>136.640</td><td>210.235</td><td>6.058×</td><td>7.50×</td></tr><tr><td>128</td><td>10.037</td><td>396.497</td><td>143.778</td><td>208.276</td><td>6.291×</td><td>8.00×</td></tr></tbody></table></div></details>
   <p class="reading-note">49 点平均下，当前全部档位的 Routed 相对 BS16 均未超过线性参考。相对 BS16 次线性不代表任意相邻两档均次线性；仅凭曲线不能唯一归因于编译器或 kernel 调度。</p>
-  <div class="links"><a href="data/zeus-49-stages.csv" download>49 点逐 kernel 周期 CSV ↓</a></div>
+  <div class="links"><a href="data/zeus-49-stages.csv" download>49 点逐 kernel 周期 CSV ↓</a><a href="data/kernel-throughput.csv" download>各 kernel 吞吐与相邻档变化 CSV ↓</a></div>
 </section>
 
 <section id="sampling">
@@ -3362,7 +4123,8 @@ L 359.847427 377.032768
     const frame = figure.querySelector('.chart-frame');
     const controls = figure.querySelector('.chart-controls');
     const readout = figure.querySelector('.chart-readout');
-    const visible = new Set(config.series.map(s => s.key));
+    // A much faster stage can otherwise flatten all consumer curves on the shared scale.
+    const visible = new Set(config.initialVisible ?? config.series.map(s => s.key));
     const xs = config.series[0].x;
     let index = xs.indexOf(config.initialBatch ?? 32), labels = Boolean(config.labels), autoscale = true;
     const choices = new Map();

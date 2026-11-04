@@ -27,7 +27,8 @@
     const frame = figure.querySelector('.chart-frame');
     const controls = figure.querySelector('.chart-controls');
     const readout = figure.querySelector('.chart-readout');
-    const visible = new Set(config.series.map(s => s.key));
+    // A much faster stage can otherwise flatten all consumer curves on the shared scale.
+    const visible = new Set(config.initialVisible ?? config.series.map(s => s.key));
     const xs = config.series[0].x;
     let index = xs.indexOf(config.initialBatch ?? 32), labels = Boolean(config.labels), autoscale = true;
     const choices = new Map();

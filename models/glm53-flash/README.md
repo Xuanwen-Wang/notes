@@ -7,17 +7,23 @@
 `scripts/build.py` 使用 Matplotlib 生成 PNG/SVG 和可离线阅读的 HTML。
 不直接修改生成的 `index.html`。Python 构建依赖 Matplotlib 和 Noto Sans CJK 字体。
 
-页面按「49 点总体吞吐 → 四个 kernel 介绍和三张阶段图 → 采样协议 → 验证 → 历史」组织。
+页面按「49 点总体吞吐 → Kernel 组成（先介绍，再吞吐率、耗时与增长图）→ 采样协议 → 验证 → 历史」组织。
 删除单点性能区和重复的 H200 单独曲线；原始数据与历史导出图继续归档。
 桌面侧边目录由 `assets/navigation.js` 跟随阅读位置高亮，手机改为顶部横向导航。
 明细表默认折叠，caption 说明行、列、单位与统计范围；每张图同时标明 X/Y 轴和 49 点范围。
 
-全部四张图共用 `assets/charts.js` 和 `assets/charts.css`。生成器把每张图的真实序列以
+全部五张图共用 `assets/charts.js` 和 `assets/charts.css`。生成器把每张图的真实序列以
 JSON 内嵌到 HTML；交互图和 Matplotlib 下载图使用相同序列，不平滑、不改写数据。
 支持逐曲线显示、只看一条、显示全部、点值、batch选择、鼠标/触摸与方向键查看精确数值。
 默认纵轴从零开始，上限随所选曲线调整；关闭“随筛选缩放纵轴”可固定为完整图的刻度。
 吞吐主图默认显示点值，P10/P90 分布放入明细表。图例放在图外；PNG/SVG 下载始终包含完整曲线。
 脚本与样式内嵌，无 CDN 依赖；禁用 JavaScript 时保留静态 SVG，仍可离线阅读和打印。
+
+阶段吞吐图使用 `总 BS × 频率 ÷ 该阶段 42 层平均 cycles ÷ 4`，按模型输入 token 计数，
+不乘 Top-K 或层数。原始周期先对 49 点汇总，再求吞吐；不平均各样本的吞吐。
+它只计单个阶段的时间，不是端到端或流水线吞吐。图中可见曲线由 `initialVisible` 指定，
+此图默认显示 Routed / Shared / Reduce；Router 可勾选，避免数量级差异压扁其他曲线。
+`build.py` 同步生成 `data/kernel-throughput.csv`、峰值/回落表与相邻档变化；图表、表格和 CSV 共用一份计算结果。
 
 ```bash
 python3 models/glm53-flash/scripts/import_timing.py --h200 H200_ARCHIVE --baseline FULL_CAMPAIGN --timing TIMING_CAMPAIGN --out NEW_EXPORT
@@ -87,7 +93,7 @@ PYTHONDONTWRITEBYTECODE=1 python3 models/glm53-flash/scripts/import_flow.py \
   --ci CURRENT_PR_CI --out NEW_EXPORT
 ```
 
-将导出的 JSON / CSV 同步到 `data/` 后，重建四张图、HTML 与目录首页，并将这一轮
+将导出的 JSON / CSV 同步到 `data/` 后，重建五张图、HTML 与目录首页，并将这一轮
 导出和图表复制到独立版本目录。`flow-revision.json` / `flow-comparison.csv` 是完整方案
 对照；流程、sigmoid 和编译器同时变化，Router IDs 不保证相同，不能标成 Routed 单独
 优化 A/B。历史 `routed-revision.json` 与历史五档表保留原值，且只在版本记录中引用。

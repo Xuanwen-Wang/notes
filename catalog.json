@@ -13,7 +13,7 @@
       "file": "models/glm53-flash/index.html",
       "category": "compiler",
       "title": "TritonShared - GLM-5.3-Flash：AF分离最大MOE FFN吞吐评估",
-      "description": "统一本地 Router 与 direct transport 后完成49个 decode step 采样点复测：四卡 Zeus 在 BS32 达1,134.6 tokens/s/card；含 H200 对比、kernel 增长曲线、完整流程对照与版本归档。",
+      "description": "49个 decode step 采样点的四卡吞吐对比；新增各 kernel 吞吐率、相邻 batch 回落与平台期分析，含阶段耗时、增长曲线和版本归档。",
       "date": "2026-11-04",
       "tags": ["GLM-5.3-Flash", "MoE", "H200", "CycleSim", "Benchmark"]
     },
