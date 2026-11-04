@@ -21,6 +21,18 @@
     const power = 10 ** Math.floor(Math.log10(raw));
     return [1, 2, 2.5, 5, 10].find(v => v * power >= raw) * power;
   };
+  const axisRange = (values, fromZero) => {
+    const low = Math.min(...values), high = Math.max(...values);
+    // Fit both ends to expose variation without changing the samples. Keep
+    // some headroom for labels, and a nonzero span for flat or all-zero data.
+    const padding = fromZero ? Math.max(high * .1, .000001)
+      : Math.max((high - low) * .12, Math.abs(high) * .01, .000001);
+    const lower = fromZero ? 0 : Math.max(0, low - padding);
+    const step = niceStep(high + padding - lower);
+    const minimum = Math.floor(lower / step) * step;
+    const maximum = Math.max(minimum + step, Math.ceil((high + padding) / step) * step);
+    return { minimum, maximum, step };
+  };
 
   for (const figure of document.querySelectorAll('.interactive-chart')) {
     const config = JSON.parse(figure.querySelector('.chart-config').textContent);
@@ -31,6 +43,7 @@
     const visible = new Set(config.initialVisible ?? config.series.map(s => s.key));
     const xs = config.series[0].x;
     let index = xs.indexOf(config.initialBatch ?? 32), labels = Boolean(config.labels), autoscale = true;
+    let zeroBaseline = config.zeroBaseline ?? true;
     const choices = new Map();
     let plot, marker, svg;
     const legend = element('div', 'chart-legend');
@@ -39,6 +52,8 @@
     const options = element('div', 'chart-options');
     const hint = element('p', 'chart-hint', '勾选显示曲线，或点「只看」放大比较。悬停 / 轻触看数值；图上可用 ← → 切换 batch。');
     controls.append(legend, options, hint);
+    const scaleNote = element('p', 'chart-scale-note');
+    frame.before(scaleNote);
     for (const series of config.series) {
       const chip = element('div', 'series-chip');
       chip.style.setProperty('--series-color', series.color);
@@ -65,7 +80,8 @@
     options.append(reset);
     for (const [name, initial, setter] of [
       ['显示点值', labels, value => { labels = value; }],
-      ['随筛选缩放纵轴', true, value => { autoscale = value; }]
+      ['随筛选缩放纵轴', true, value => { autoscale = value; }],
+      ['纵轴从 0 开始', zeroBaseline, value => { zeroBaseline = value; }]
     ]) {
       const label = element('label', 'chart-option');
       const input = document.createElement('input'); input.type = 'checkbox'; input.checked = initial;
@@ -121,17 +137,22 @@
       const selected = config.series.filter(s => visible.has(s.key));
       const scaleSeries = autoscale && selected.length ? selected : config.series;
       const values = scaleSeries.flatMap(s => s.y);
-      if (config.band && scaleSeries.some(s => s.key === 'h200')) values.push(...config.band[2]);
-      const step = niceStep(Math.max(...values) * 1.1);
-      const maximum = Math.ceil(Math.max(...values) * 1.1 / step) * step;
+      if (config.band && scaleSeries.some(s => s.key === 'h200')) values.push(...config.band[1], ...config.band[2]);
+      const { minimum, maximum, step } = axisRange(values, zeroBaseline);
+      const rangeText = `纵轴范围：${format(minimum)}–${format(maximum)}`
+        + (minimum > 0 ? ' · 非零起点，突出变化趋势' : ' · 从 0 开始，比较绝对比例');
+      scaleNote.textContent = rangeText;
+      scaleNote.classList.toggle('is-zoomed', minimum > 0);
       plot = { top, bottom, x: value => left + (value - xs[0]) / (xs.at(-1) - xs[0]) * (width - left - right),
-        y: value => bottom - value / maximum * (bottom - top) };
-      svg = node('svg', { viewBox: `0 0 ${width} ${height}`, role: 'img', 'aria-label': config.title, class: 'live-chart' });
+        y: value => bottom - (value - minimum) / (maximum - minimum) * (bottom - top) };
+      svg = node('svg', { viewBox: `0 0 ${width} ${height}`, role: 'img', 'aria-label': config.title,
+        class: 'live-chart', 'data-y-min': minimum, 'data-y-max': maximum });
       svg.append(node('title', {}, config.title));
       svg.append(node('text', { x: left, y: 16, class: 'axis-title' }, '纵轴：' + config.unit));
-      svg.append(node('desc', {}, '使用图外的曲线开关筛选，数值显示在图下。纵轴始终从零起，' + (autoscale ? '上限随可见曲线变化。' : '上限固定。')));
-      for (let i = 0; i <= Math.round(maximum / step); i++) {
-        const value = i * step, y = plot.y(value);
+      svg.append(node('desc', {}, '使用图外的曲线开关筛选，数值显示在图下。' + rangeText
+        + (autoscale ? '，范围随可见曲线变化。' : '，范围按全部曲线固定。')));
+      for (let i = 0; i <= Math.round((maximum - minimum) / step); i++) {
+        const value = minimum + i * step, y = plot.y(value);
         svg.append(node('line', { x1: left, x2: width - right, y1: y, y2: y, stroke: i ? '#e8eef5' : '#bccbdd' }));
         svg.append(node('text', { x: left - 10, y: y + 4, 'text-anchor': 'end', class: 'axis-label' }, format(value)));
       }

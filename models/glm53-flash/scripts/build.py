@@ -30,7 +30,8 @@ def table(headers, rows, caption):
                                               + '</tr>' for row in rows) + '</tbody></table></div>')
 
 
-def chart(name, lines, ylabel, title, band=None, linear=False, labels=False, initial_batch=32, initial_visible=None):
+def chart(name, lines, ylabel, title, band=None, linear=False, labels=False, initial_batch=32, initial_visible=None,
+          zero_baseline=True):
     fig, ax = plt.subplots(figsize=(12.4, 5.4), layout='constrained')
     fig.patch.set_facecolor('#ffffff')
     ax.set_axisbelow(True)
@@ -83,6 +84,8 @@ def chart(name, lines, ylabel, title, band=None, linear=False, labels=False, ini
         series.append(dict(key='linear', label='线性参考 BS / 16', x=list(lines[0][2]),
                            y=[x / 16 for x in lines[0][2]], color='#8492a6', dashed=True))
     config = dict(title=title, unit=ylabel, series=series, band=band, labels=labels, initialBatch=initial_batch)
+    if not zero_baseline:
+        config['zeroBaseline'] = False
     if initial_visible is not None:
         assert set(initial_visible) <= {s['key'] for s in series}
         config['initialVisible'] = list(initial_visible)
@@ -215,13 +218,14 @@ def build():
     throughput = chart('kernel-throughput',
         [(s, s.title(), xs, stage_rates[s]) for s in stages], 'tokens/s/card（阶段等效）',
         '各个 kernel 的吞吐率 · 大 batch 是否进入平台期？', initial_batch=128,
-        initial_visible=('routed', 'shared', 'reduce'))
+        initial_visible=('routed', 'shared', 'reduce'), zero_baseline=False)
     throughput += ('<p class="reading-note">口径：<code>总 BS × 400,000,000 ÷ 该阶段 42 层平均 cycles ÷ 4</code>。'
         '各层先取该阶段最慢 rank（Router 取最慢 owner），累加 42 层，再对 49 个采样点取平均时间。'
         '分子只计模型输入 token，不乘 Top-K 或层数；Shared 也按四卡归一化。</p>'
         '<p class="reading-note">曲线走平表示增加 batch 后该阶段的单位卡处理速率不再明显提高；'
         '向下表示时间增长超过 token 数增长。默认隐藏吞吐数量级较大的 Router，可勾选或点「只看」检查；'
-        '下载图包含全部四条曲线。</p>'
+        '交互图默认放大纵轴范围，突出变化趋势；可勾选「纵轴从 0 开始」比较绝对比例。'
+        '下载图保留从零开始的完整四条曲线。</p>'
         '<div class="note">这是仅计某一阶段耗时的等效吞吐，用于定位扩展性问题；'
         '不代表完整 MoE 吞吐或已经测得的流水线容量，四阶段不能相加。'
         '不同阶段的最慢 rank 可能不同，判断实际瓶颈还需结合下方耗时图。</div>')

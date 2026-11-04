@@ -23,6 +23,8 @@
 .batch-select-label { display:flex; gap:7px; align-items:center; margin-left:auto; }
 .batch-select-label select { font:inherit; color:#244f80; border:1px solid #d8e3ef; border-radius:6px; padding:5px 7px; background:white; }
 .chart-hint { margin:10px 0 0; font-size:11px; color:#8290a1; }
+.chart-scale-note { width:fit-content; margin:12px 0 0; padding:6px 10px; border-radius:6px; background:#f3f6fa; color:#667b95; font-size:11px; font-variant-numeric:tabular-nums; }
+.chart-scale-note.is-zoomed { background:#edf4ff; color:#245ca4; }
 .chart-frame { width:100%; min-width:0; overflow:hidden; margin-top:10px; border-radius:6px; }
 .chart-frame svg { width:100%; height:auto; display:block; }
 .live-chart { user-select:none; }
