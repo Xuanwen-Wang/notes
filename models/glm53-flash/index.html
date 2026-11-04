@@ -153,7 +153,7 @@ select:focus-visible,input:focus-visible { outline:3px solid #dba855; outline-of
 </aside>
 <main>
 <header class="page-header">
-  <div class="eyebrow">PERFORMANCE NOTEBOOK <span>更新 2026-11-03</span></div>
+  <div class="eyebrow">PERFORMANCE NOTEBOOK <span>更新 2026-11-04</span></div>
   <h1>GLM-5.3-Flash <span>AF分离最大MOE FFN吞吐评估</span></h1>
   <p class="lead">从同一套真实输入出发，比较四卡吞吐，再拆解各阶段的 batch 扩展成本。</p>
 </header>
@@ -162,10 +162,11 @@ select:focus-visible,input:focus-visible { outline:3px solid #dba855; outline-of
   <div class="section-head"><div><span class="section-num">01 / THROUGHPUT</span><h2>H200 与 Zeus · 多采样点对比</h2></div><span class="scope-badge">4 card · 42 层 · 49 点 / 档</span></div>
   <div class="metrics">
     <div class="metric h200"><small>H200 · 扫描范围内最高</small><strong>1,635.7 <span>tokens/s/card</span></strong><span>总 BS128 · 每卡均摊 32</span></div>
-    <div class="metric zeus"><small>Zeus · 扫描范围内最高</small><strong>980.4 <span>tokens/s/card</span></strong><span>总 BS128 · 每卡均摊 32</span></div>
+    <div class="metric zeus"><small>Zeus · 扫描范围内最高</small><strong>1,134.6 <span>tokens/s/card</span></strong><span>总 BS32 · 每卡均摊 8</span></div>
     <div class="metric sample"><small>每档使用同一套采样点</small><strong>7 × 7 <span>= 49 点</span></strong><span>7 批请求 × 7 个 decode 位置</span></div>
   </div>
   <p class="sample-strip"><b>采样数据</b>：49 个 decode step 采样点 = 7 批请求 × 每批 7 个采样位置。共 896 条不同请求，每批 128 条；保留 step 017 / 033 / 049 / 065 / 081 / 097 / 113，排除 step001。每个点重放完整 42 层 MoE；各 batch 使用同一父输入的嵌套前缀。<a href="#sampling">采样细节 ↓</a></p>
+  <p class="reading-note"><b>2026-11-04 完整复测</b>：当前曲线使用本地 Router → 一次 gather → direct transport 的统一流程，Router 为 calibrated sigmoid。四卡总 BS16–128 的 493,920 个时序 case 全部完成；最佳档位为 BS32，1,134.6 tokens/s/card。相对上一版扫描峰值提高 15.7%。</p>
   <figure class="interactive-chart" id="chart-population-comparison"><figcaption><div><span class="chart-kicker">4 CARD · 49 DECODE STEP SAMPLES / BATCH · 42 MoE LAYERS</span><h3>49 个 decode step 采样点汇总 · H200 与 Zeus MoE 吞吐</h3></div><span class="chart-unit">tokens/s/card</span></figcaption><div class="chart-controls"></div><div class="chart-frame"><svg role="img" aria-label="49 个 decode step 采样点汇总 · H200 与 Zeus MoE 吞吐" xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="388.8pt" viewBox="0 0 892.8 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
@@ -726,21 +727,21 @@ z
     </g>
    </g>
    <g id="population-comparison-line2d_50">
-    <path d="M 71.053829 194.654273
-L 128.010068 174.681518
-L 184.966307 167.67831
-L 241.922545 181.869127
-L 298.878784 172.884089
-L 355.835023 182.131288
-L 412.791261 171.385998
-L 469.7475 174.727508
-L 526.703739 172.276509
-L 583.659977 173.066771
-L 640.616216 166.36357
-L 697.572455 172.735358
-L 754.528693 170.208248
-L 811.484932 169.672629
-L 868.441171 165.935591
+    <path d="M 71.053829 179.978798
+L 128.010068 157.25719
+L 184.966307 142.081685
+L 241.922545 169.57958
+L 298.878784 169.586643
+L 355.835023 171.897384
+L 412.791261 151.64832
+L 469.7475 164.198339
+L 526.703739 168.927007
+L 583.659977 165.682055
+L 640.616216 163.237541
+L 697.572455 166.810252
+L 754.528693 162.326467
+L 811.484932 159.642682
+L 868.441171 149.507996
 " clip-path="url(#population-comparison-p57ef3162e0)" style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="population-comparison-m94619aaaa5" d="M 0 2.5
@@ -756,21 +757,21 @@ z
 " style="stroke: #2364d2; stroke-width: 2"/>
     </defs>
     <g clip-path="url(#population-comparison-p57ef3162e0)">
-     <use xlink:href="#population-comparison-m94619aaaa5" x="71.053829" y="194.654273" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="128.010068" y="174.681518" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="184.966307" y="167.67831" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="241.922545" y="181.869127" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="298.878784" y="172.884089" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="355.835023" y="182.131288" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="412.791261" y="171.385998" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="469.7475" y="174.727508" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="526.703739" y="172.276509" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="583.659977" y="173.066771" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="640.616216" y="166.36357" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="697.572455" y="172.735358" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="754.528693" y="170.208248" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="811.484932" y="169.672629" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#population-comparison-m94619aaaa5" x="868.441171" y="165.935591" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="71.053829" y="179.978798" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="128.010068" y="157.25719" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="184.966307" y="142.081685" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="241.922545" y="169.57958" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="298.878784" y="169.586643" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="355.835023" y="171.897384" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="412.791261" y="151.64832" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="469.7475" y="164.198339" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="526.703739" y="168.927007" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="583.659977" y="165.682055" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="640.616216" y="163.237541" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="697.572455" y="166.810252" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="754.528693" y="162.326467" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="811.484932" y="159.642682" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#population-comparison-m94619aaaa5" x="868.441171" y="149.507996" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
     </g>
    </g>
    <g id="population-comparison-patch_4">
@@ -799,10 +800,10 @@ L 889.79976 317.631219
     <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="298.878784" y="212.209234" transform="rotate(-0 298.878784 212.209234)">797.7</text>
    </g>
    <g id="population-comparison-text_48">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="355.835023" y="170.110219" transform="rotate(-0 355.835023 170.110219)">888.8</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="355.835023" y="198.110219" transform="rotate(-0 355.835023 198.110219)">888.8</text>
    </g>
    <g id="population-comparison-text_49">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="412.791261" y="156.451335" transform="rotate(-0 412.791261 156.451335)">977.1</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="412.791261" y="184.451335" transform="rotate(-0 412.791261 184.451335)">977.1</text>
    </g>
    <g id="population-comparison-text_50">
     <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="469.7475" y="144.846514" transform="rotate(-0 469.7475 144.846514)">1,052.1</text>
@@ -829,49 +830,49 @@ L 889.79976 317.631219
     <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #0d8d7b" x="868.441171" y="54.543593" transform="rotate(-0 868.441171 54.543593)">1,635.7</text>
    </g>
    <g id="population-comparison-text_58">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="71.053829" y="184.654273" transform="rotate(-0 71.053829 184.654273)">794.8</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="71.053829" y="169.978798" transform="rotate(-0 71.053829 169.978798)">889.6</text>
    </g>
    <g id="population-comparison-text_59">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="128.010068" y="164.681518" transform="rotate(-0 128.010068 164.681518)">923.9</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="128.010068" y="147.25719" transform="rotate(-0 128.010068 147.25719)">1,036.5</text>
    </g>
    <g id="population-comparison-text_60">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="184.966307" y="157.67831" transform="rotate(-0 184.966307 157.67831)">969.1</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="184.966307" y="132.081685" transform="rotate(-0 184.966307 132.081685)">1,134.6</text>
    </g>
    <g id="population-comparison-text_61">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="241.922545" y="171.869127" transform="rotate(-0 241.922545 171.869127)">877.4</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="241.922545" y="159.57958" transform="rotate(-0 241.922545 159.57958)">956.9</text>
    </g>
    <g id="population-comparison-text_62">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="298.878784" y="162.884089" transform="rotate(-0 298.878784 162.884089)">935.5</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="298.878784" y="159.586643" transform="rotate(-0 298.878784 159.586643)">956.8</text>
    </g>
    <g id="population-comparison-text_63">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="355.835023" y="200.131288" transform="rotate(-0 355.835023 200.131288)">875.7</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="355.835023" y="161.897384" transform="rotate(-0 355.835023 161.897384)">941.9</text>
    </g>
    <g id="population-comparison-text_64">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="412.791261" y="189.385998" transform="rotate(-0 412.791261 189.385998)">945.2</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="412.791261" y="141.64832" transform="rotate(-0 412.791261 141.64832)">1,072.7</text>
    </g>
    <g id="population-comparison-text_65">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="469.7475" y="192.727508" transform="rotate(-0 469.7475 192.727508)">923.6</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="469.7475" y="182.198339" transform="rotate(-0 469.7475 182.198339)">991.6</text>
    </g>
    <g id="population-comparison-text_66">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="526.703739" y="190.276509" transform="rotate(-0 526.703739 190.276509)">939.4</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="526.703739" y="186.927007" transform="rotate(-0 526.703739 186.927007)">961.1</text>
    </g>
    <g id="population-comparison-text_67">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="583.659977" y="191.066771" transform="rotate(-0 583.659977 191.066771)">934.3</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="583.659977" y="183.682055" transform="rotate(-0 583.659977 183.682055)">982.0</text>
    </g>
    <g id="population-comparison-text_68">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="640.616216" y="184.36357" transform="rotate(-0 640.616216 184.36357)">977.6</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="640.616216" y="181.237541" transform="rotate(-0 640.616216 181.237541)">997.8</text>
    </g>
    <g id="population-comparison-text_69">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="697.572455" y="190.735358" transform="rotate(-0 697.572455 190.735358)">936.5</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="697.572455" y="184.810252" transform="rotate(-0 697.572455 184.810252)">974.8</text>
    </g>
    <g id="population-comparison-text_70">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="754.528693" y="188.208248" transform="rotate(-0 754.528693 188.208248)">952.8</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="754.528693" y="180.326467" transform="rotate(-0 754.528693 180.326467)">1,003.7</text>
    </g>
    <g id="population-comparison-text_71">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="811.484932" y="187.672629" transform="rotate(-0 811.484932 187.672629)">956.3</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="811.484932" y="177.642682" transform="rotate(-0 811.484932 177.642682)">1,021.1</text>
    </g>
    <g id="population-comparison-text_72">
-    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="868.441171" y="183.935591" transform="rotate(-0 868.441171 183.935591)">980.4</text>
+    <text style="font-size: 8.5px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #2364d2" x="868.441171" y="167.507996" transform="rotate(-0 868.441171 167.507996)">1,086.6</text>
    </g>
    <g id="population-comparison-text_73">
     <text style="font-weight: 700; font-size: 14px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="49.69524" y="14.913365" transform="rotate(-0 49.69524 14.913365)">49 个 decode step 采样点汇总 · H200 与 Zeus MoE 吞吐</text>
@@ -910,9 +911,9 @@ L 165.588521 377.03387
   </clipPath>
  </defs>
 </svg>
-</div><div class="chart-readout"></div><div class="chart-footer"><span>横轴：四卡总 batch size（16–128）<br>纵轴：tokens/s/card<br>统计范围：每档同一套 49 个 decode step 采样点（7 批请求 × 每批 7 个采样位置），排除 step001</span><span><a href="assets/population-comparison.png" download>完整图 PNG</a><a href="assets/population-comparison.svg" download>完整图 SVG</a></span></div><script type="application/json" class="chart-config">{"title": "49 个 decode step 采样点汇总 · H200 与 Zeus MoE 吞吐", "unit": "tokens/s/card", "series": [{"key": "h200", "label": "H200 · EP4", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [390.9003253918113, 498.818751988435, 601.7171780346827, 702.6056093951005, 797.6726276318873, 888.7941455369249, 977.0711057117963, 1052.072723148915, 1138.1446598816253, 1224.9745500250108, 1311.423430386602, 1394.1229091422356, 1477.7472978696726, 1556.1611837432295, 1635.6978257120554], "color": "#0d8d7b", "dashed": false}, {"key": "zeus", "label": "Zeus · EP4 × TP4", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [794.7963547232903, 923.8796758907542, 969.141202878159, 877.4263737875926, 935.4964089188446, 875.7320349078278, 945.1785272401189, 923.5824479354873, 939.4231798844843, 934.3157380192625, 977.6383272398726, 936.4576510585761, 952.7902897669302, 956.2519808991528, 980.4043478588111], "color": "#2364d2", "dashed": false}], "band": null, "labels": true, "initialBatch": 128}</script></figure>
+</div><div class="chart-readout"></div><div class="chart-footer"><span>横轴：四卡总 batch size（16–128）<br>纵轴：tokens/s/card<br>统计范围：每档同一套 49 个 decode step 采样点（7 批请求 × 每批 7 个采样位置），排除 step001</span><span><a href="assets/population-comparison.png" download>完整图 PNG</a><a href="assets/population-comparison.svg" download>完整图 SVG</a></span></div><script type="application/json" class="chart-config">{"title": "49 个 decode step 采样点汇总 · H200 与 Zeus MoE 吞吐", "unit": "tokens/s/card", "series": [{"key": "h200", "label": "H200 · EP4", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [390.9003253918113, 498.818751988435, 601.7171780346827, 702.6056093951005, 797.6726276318873, 888.7941455369249, 977.0711057117963, 1052.072723148915, 1138.1446598816253, 1224.9745500250108, 1311.423430386602, 1394.1229091422356, 1477.7472978696726, 1556.1611837432295, 1635.6978257120554], "color": "#0d8d7b", "dashed": false}, {"key": "zeus", "label": "Zeus · EP4 × TP4", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [889.6435123552534, 1036.4925950800834, 1134.571430547832, 956.8533537680757, 956.8077067671421, 941.8734537134106, 1072.7425564477237, 991.6321508831054, 961.070913080695, 982.042941699702, 997.8417620285237, 974.7514396262007, 1003.7300073895781, 1021.0752306644979, 1086.5754076143332], "color": "#2364d2", "dashed": false}], "band": null, "labels": true, "initialBatch": 32}</script></figure>
   <p class="reading-note">纵轴越高，单位卡的 MoE 组件吞吐越大。每个点按 <code>总 token ÷ 总时间 ÷ 4</code> 汇总 49 个样本；不直接平均样本吞吐。两条曲线分别采用 H200 CUDA event 测时和 Zeus CycleSim 400 MHz 周期换算。</p>
-  <details class="data-details"><summary>查看 15 档吞吐与耗时明细</summary><div class="table-scroll" tabindex="0"><table><caption>行：四卡总 batch；列：每卡均摊 batch、各平台 42 层平均耗时（ms）与单卡吞吐。每行汇总同一套 49 点。</caption><thead><tr><th scope="col">总 batch</th><th scope="col">均摊 batch/card</th><th scope="col">H200 · ms</th><th scope="col">H200 · tokens/s/card</th><th scope="col">Zeus · ms</th><th scope="col">Zeus · tokens/s/card</th></tr></thead><tbody><tr><td>16</td><td>4</td><td>10.2328</td><td>390.9</td><td>5.0327</td><td>794.8</td></tr><tr><td>24</td><td>6</td><td>12.0284</td><td>498.8</td><td>6.4944</td><td>923.9</td></tr><tr><td>32</td><td>8</td><td>13.2953</td><td>601.7</td><td>8.2547</td><td>969.1</td></tr><tr><td>40</td><td>10</td><td>14.2327</td><td>702.6</td><td>11.3970</td><td>877.4</td></tr><tr><td>48</td><td>12</td><td>15.0438</td><td>797.7</td><td>12.8274</td><td>935.5</td></tr><tr><td>56</td><td>14</td><td>15.7517</td><td>888.8</td><td>15.9866</td><td>875.7</td></tr><tr><td>64</td><td>16</td><td>16.3755</td><td>977.1</td><td>16.9280</td><td>945.2</td></tr><tr><td>72</td><td>18</td><td>17.1091</td><td>1052.1</td><td>19.4893</td><td>923.6</td></tr><tr><td>80</td><td>20</td><td>17.5725</td><td>1138.1</td><td>21.2897</td><td>939.4</td></tr><tr><td>88</td><td>22</td><td>17.9596</td><td>1225.0</td><td>23.5466</td><td>934.3</td></tr><tr><td>96</td><td>24</td><td>18.3007</td><td>1311.4</td><td>24.5490</td><td>977.6</td></tr><tr><td>104</td><td>26</td><td>18.6497</td><td>1394.1</td><td>27.7642</td><td>936.5</td></tr><tr><td>112</td><td>28</td><td>18.9478</td><td>1477.7</td><td>29.3874</td><td>952.8</td></tr><tr><td>120</td><td>30</td><td>19.2782</td><td>1556.2</td><td>31.3725</td><td>956.3</td></tr><tr><td>128</td><td>32</td><td>19.5635</td><td>1635.7</td><td>32.6396</td><td>980.4</td></tr></tbody></table></div><div class="table-scroll" tabindex="0"><table><caption>行：四卡总 batch；P10–P90 单位为 tokens/s/card，来自 49 点分布；cycles 为完整 42 层平均周期；专家数按采样点和层平均。</caption><thead><tr><th scope="col">总 batch</th><th scope="col">H200 · P10–P90</th><th scope="col">Zeus · P10–P90</th><th scope="col">Zeus · 平均 cycles</th><th scope="col">H200 · 活跃专家/层</th></tr></thead><tbody><tr><td>16</td><td>373.4–420.1</td><td>785.6–803.7</td><td>2,013,094.3</td><td>78.3</td></tr><tr><td>24</td><td>475.4–547.6</td><td>914.0–932.6</td><td>2,597,740.9</td><td>100.3</td></tr><tr><td>32</td><td>569.6–668.1</td><td>961.5–977.0</td><td>3,301,892.4</td><td>117.8</td></tr><tr><td>40</td><td>665.3–781.0</td><td>869.5–883.9</td><td>4,558,787.1</td><td>131.7</td></tr><tr><td>48</td><td>754.4–893.0</td><td>926.8–941.7</td><td>5,130,965.7</td><td>142.9</td></tr><tr><td>56</td><td>837.6–994.1</td><td>868.0–882.5</td><td>6,394,650.2</td><td>152.0</td></tr><tr><td>64</td><td>920.8–1105.9</td><td>937.1–954.5</td><td>6,771,207.6</td><td>160.3</td></tr><tr><td>72</td><td>991.4–1195.2</td><td>916.7–931.1</td><td>7,795,730.7</td><td>167.2</td></tr><tr><td>80</td><td>1073.4–1285.2</td><td>931.6–948.2</td><td>8,515,864.0</td><td>173.2</td></tr><tr><td>88</td><td>1157.0–1382.8</td><td>925.0–943.1</td><td>9,418,657.6</td><td>178.3</td></tr><tr><td>96</td><td>1233.2–1482.4</td><td>967.9–985.6</td><td>9,819,582.3</td><td>183.1</td></tr><tr><td>104</td><td>1316.7–1589.8</td><td>927.1–944.7</td><td>11,105,681.1</td><td>187.2</td></tr><tr><td>112</td><td>1395.0–1685.2</td><td>944.4–960.9</td><td>11,754,947.7</td><td>190.9</td></tr><tr><td>120</td><td>1471.9–1774.6</td><td>946.8–965.6</td><td>12,548,993.6</td><td>194.5</td></tr><tr><td>128</td><td>1546.1–1864.9</td><td>971.4–987.9</td><td>13,055,837.7</td><td>197.5</td></tr></tbody></table></div><p class="quality">P10–P90 描述采样点之间的吞吐差异，不是置信区间。</p></details>
+  <details class="data-details"><summary>查看 15 档吞吐与耗时明细</summary><div class="table-scroll" tabindex="0"><table><caption>行：四卡总 batch；列：每卡均摊 batch、各平台 42 层平均耗时（ms）与单卡吞吐。每行汇总同一套 49 点。</caption><thead><tr><th scope="col">总 batch</th><th scope="col">均摊 batch/card</th><th scope="col">H200 · ms</th><th scope="col">H200 · tokens/s/card</th><th scope="col">Zeus · ms</th><th scope="col">Zeus · tokens/s/card</th></tr></thead><tbody><tr><td>16</td><td>4</td><td>10.2328</td><td>390.9</td><td>4.4962</td><td>889.6</td></tr><tr><td>24</td><td>6</td><td>12.0284</td><td>498.8</td><td>5.7888</td><td>1036.5</td></tr><tr><td>32</td><td>8</td><td>13.2953</td><td>601.7</td><td>7.0511</td><td>1134.6</td></tr><tr><td>40</td><td>10</td><td>14.2327</td><td>702.6</td><td>10.4509</td><td>956.9</td></tr><tr><td>48</td><td>12</td><td>15.0438</td><td>797.7</td><td>12.5417</td><td>956.8</td></tr><tr><td>56</td><td>14</td><td>15.7517</td><td>888.8</td><td>14.8640</td><td>941.9</td></tr><tr><td>64</td><td>16</td><td>16.3755</td><td>977.1</td><td>14.9150</td><td>1072.7</td></tr><tr><td>72</td><td>18</td><td>17.1091</td><td>1052.1</td><td>18.1519</td><td>991.6</td></tr><tr><td>80</td><td>20</td><td>17.5725</td><td>1138.1</td><td>20.8101</td><td>961.1</td></tr><tr><td>88</td><td>22</td><td>17.9596</td><td>1225.0</td><td>22.4023</td><td>982.0</td></tr><tr><td>96</td><td>24</td><td>18.3007</td><td>1311.4</td><td>24.0519</td><td>997.8</td></tr><tr><td>104</td><td>26</td><td>18.6497</td><td>1394.1</td><td>26.6735</td><td>974.8</td></tr><tr><td>112</td><td>28</td><td>18.9478</td><td>1477.7</td><td>27.8959</td><td>1003.7</td></tr><tr><td>120</td><td>30</td><td>19.2782</td><td>1556.2</td><td>29.3808</td><td>1021.1</td></tr><tr><td>128</td><td>32</td><td>19.5635</td><td>1635.7</td><td>29.4503</td><td>1086.6</td></tr></tbody></table></div><div class="table-scroll" tabindex="0"><table><caption>行：四卡总 batch；P10–P90 单位为 tokens/s/card，来自 49 点分布；cycles 为完整 42 层平均周期；专家数按采样点和层平均。</caption><thead><tr><th scope="col">总 batch</th><th scope="col">H200 · P10–P90</th><th scope="col">Zeus · P10–P90</th><th scope="col">Zeus · 平均 cycles</th><th scope="col">H200 · 活跃专家/层</th></tr></thead><tbody><tr><td>16</td><td>373.4–420.1</td><td>878.2–900.9</td><td>1,798,473.2</td><td>78.3</td></tr><tr><td>24</td><td>475.4–547.6</td><td>1023.5–1047.8</td><td>2,315,501.3</td><td>100.3</td></tr><tr><td>32</td><td>569.6–668.1</td><td>1123.6–1145.5</td><td>2,820,448.2</td><td>117.8</td></tr><tr><td>40</td><td>665.3–781.0</td><td>947.8–964.5</td><td>4,180,368.9</td><td>131.7</td></tr><tr><td>48</td><td>754.4–893.0</td><td>948.0–964.7</td><td>5,016,682.0</td><td>142.9</td></tr><tr><td>56</td><td>837.6–994.1</td><td>932.8–950.1</td><td>5,945,597.0</td><td>152.0</td></tr><tr><td>64</td><td>920.8–1105.9</td><td>1061.4–1086.5</td><td>5,966,016.7</td><td>160.3</td></tr><tr><td>72</td><td>991.4–1195.2</td><td>983.1–1000.6</td><td>7,260,756.9</td><td>167.2</td></tr><tr><td>80</td><td>1073.4–1285.2</td><td>951.6–973.5</td><td>8,324,047.6</td><td>173.2</td></tr><tr><td>88</td><td>1157.0–1382.8</td><td>971.0–993.5</td><td>8,960,911.6</td><td>178.3</td></tr><tr><td>96</td><td>1233.2–1482.4</td><td>986.3–1009.8</td><td>9,620,763.9</td><td>183.1</td></tr><tr><td>104</td><td>1316.7–1589.8</td><td>963.7–986.2</td><td>10,669,386.7</td><td>187.2</td></tr><tr><td>112</td><td>1395.0–1685.2</td><td>993.0–1014.9</td><td>11,158,379.2</td><td>190.9</td></tr><tr><td>120</td><td>1471.9–1774.6</td><td>1009.9–1032.1</td><td>11,752,317.2</td><td>194.5</td></tr><tr><td>128</td><td>1546.1–1864.9</td><td>1074.5–1098.7</td><td>11,780,130.4</td><td>197.5</td></tr></tbody></table></div><p class="quality">P10–P90 描述采样点之间的吞吐差异，不是置信区间。</p></details>
   <div class="note">比较范围为 42 层 MoE 组件计算，未计通信、Attention、host 调度及加载。两端的量化方式和 Shared 放置不同，结果不代表同精度算法的硬件加速比或完整模型吞吐。BS128 是当前扫描上界，H200 的最高点不代表已达到饱和。</div>
   <div class="links"><a href="data/throughput.csv" download>吞吐 CSV ↓</a><a href="data/h200-49-paired.csv" download>H200 逐点数据 ↓</a><a href="data/zeus-49-paired.csv" download>Zeus 逐点数据 ↓</a></div>
 </section>
@@ -921,12 +922,12 @@ L 165.588521 377.03387
   <div class="section-head"><div><span class="section-num">02 / KERNEL BREAKDOWN</span><h2>四个阶段，各自在做什么？</h2></div><span class="scope-badge">Zeus · 16 rank / 32 core</span></div>
   <p class="quality">下列介绍对应本轮 Zeus 实现。Router 产生路由，Routed 与 Shared 形成专家输出，Reduce 完成本地加权归并；跨卡通信不计入这些窗口。</p>
   <div class="kernel-grid">
-    <article class="kernel-card router"><span class="kernel-tag">01 · 路由选择</span><h3>Router</h3><p>对输入做路由投影、评分和带 bias 的 Top-K 选择，为每个 token 产生 8 个 routed 专家 ID 与路由权重。</p><div class="kernel-focus">关注：投影、评分与 Top-K 的周期增长。</div></article>
+    <article class="kernel-card router"><span class="kernel-tag">01 · 路由选择</span><h3>Router</h3><p>每个 rank 只处理自己的本地 token，采用 calibrated sigmoid 与带 bias 的 Top-K，产生 8 个专家 ID 和路由权重，再进行一次 raw-word gather。</p><div class="kernel-focus">关注：本地 1–8 行特化、投影、评分与 Top-K 的周期增长。</div></article>
     <article class="kernel-card routed"><span class="kernel-tag">02 · 稀疏专家</span><h3>Routed</h3><p>按真实路由执行专家 Gate / Up、激活与 Down。本轮采用 per-tensor FP8，使用 M1 / M2 / M4 token 合并。</p><div class="kernel-focus">关注：活跃专家数、权重复用、窗口与尾部调度。</div></article>
     <article class="kernel-card shared"><span class="kernel-tag">03 · 共享专家</span><h3>Shared</h3><p>对全部 token 执行共享专家 FFN。本轮 Zeus 采用 BF16，仅在 EP0 上执行，并在其中按 TP4 分片。</p><div class="kernel-focus">关注：固定专家权重下，计算和数据搬运如何随 batch 增长。</div></article>
     <article class="kernel-card reduce"><span class="kernel-tag">04 · 本地归并</span><h3>Reduce</h3><p>读取有效的本地 routed 输出，应用路由权重并求和，在持有 Shared 的分支合入共享输出。</p><div class="kernel-focus">关注：有效行读取与加权求和；不含跨卡 AllReduce。</div></article>
   </div>
-  <p class="note">各阶段维持统一 JIT 入口；batch 维度是编译期常量，窗口和尾部可在 kernel 内特化。M 合并大小与窗口宽度是两个概念。</p>
+  <p class="note">BS16–128 的各阶段维持统一 JIT 入口；gather 后 Shared / Routed / Reduce 都直接读取 rank blocks。batch 维度是编译期常量，窗口和尾部在 kernel 内特化。M 合并大小与窗口宽度是两个概念。</p>
   <figure class="interactive-chart" id="chart-kernel-time"><figcaption><div><span class="chart-kicker">4 CARD · 49 DECODE STEP SAMPLES / BATCH · 42 MoE LAYERS</span><h3>各阶段耗时 · 哪个阶段最耗时？</h3></div><span class="chart-unit">平均每层耗时（μs）</span></figcaption><div class="chart-controls"></div><div class="chart-frame"><svg role="img" aria-label="各阶段耗时 · 哪个阶段最耗时？" xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="388.8pt" viewBox="0 0 892.8 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
@@ -1316,122 +1317,122 @@ L -3.5 0
     </g>
     <g id="kernel-time-ytick_2">
      <g id="kernel-time-line2d_33">
-      <path d="M 43.92024 285.771863
-L 889.79976 285.771863
+      <path d="M 43.92024 285.861517
+L 889.79976 285.861517
 " clip-path="url(#kernel-time-p152239babe)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-time-line2d_34">
       <g>
-       <use xlink:href="#kernel-time-mb630600054" x="43.92024" y="285.771863" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mb630600054" x="43.92024" y="285.861517" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_34">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="36.92024" y="290.149519" transform="rotate(-0 36.92024 290.149519)">50</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="36.92024" y="290.239173" transform="rotate(-0 36.92024 290.239173)">50</text>
      </g>
     </g>
     <g id="kernel-time-ytick_3">
      <g id="kernel-time-line2d_35">
-      <path d="M 43.92024 254.026561
-L 889.79976 254.026561
+      <path d="M 43.92024 254.205869
+L 889.79976 254.205869
 " clip-path="url(#kernel-time-p152239babe)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-time-line2d_36">
       <g>
-       <use xlink:href="#kernel-time-mb630600054" x="43.92024" y="254.026561" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mb630600054" x="43.92024" y="254.205869" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_35">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="36.92024" y="258.404217" transform="rotate(-0 36.92024 258.404217)">100</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="36.92024" y="258.583525" transform="rotate(-0 36.92024 258.583525)">100</text>
      </g>
     </g>
     <g id="kernel-time-ytick_4">
      <g id="kernel-time-line2d_37">
-      <path d="M 43.92024 222.281258
-L 889.79976 222.281258
+      <path d="M 43.92024 222.550221
+L 889.79976 222.550221
 " clip-path="url(#kernel-time-p152239babe)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-time-line2d_38">
       <g>
-       <use xlink:href="#kernel-time-mb630600054" x="43.92024" y="222.281258" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mb630600054" x="43.92024" y="222.550221" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_36">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="36.92024" y="226.658914" transform="rotate(-0 36.92024 226.658914)">150</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="36.92024" y="226.927877" transform="rotate(-0 36.92024 226.927877)">150</text>
      </g>
     </g>
     <g id="kernel-time-ytick_5">
      <g id="kernel-time-line2d_39">
-      <path d="M 43.92024 190.535956
-L 889.79976 190.535956
+      <path d="M 43.92024 190.894573
+L 889.79976 190.894573
 " clip-path="url(#kernel-time-p152239babe)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-time-line2d_40">
       <g>
-       <use xlink:href="#kernel-time-mb630600054" x="43.92024" y="190.535956" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mb630600054" x="43.92024" y="190.894573" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_37">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="36.92024" y="194.913612" transform="rotate(-0 36.92024 194.913612)">200</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="36.92024" y="195.272229" transform="rotate(-0 36.92024 195.272229)">200</text>
      </g>
     </g>
     <g id="kernel-time-ytick_6">
      <g id="kernel-time-line2d_41">
-      <path d="M 43.92024 158.790653
-L 889.79976 158.790653
+      <path d="M 43.92024 159.238924
+L 889.79976 159.238924
 " clip-path="url(#kernel-time-p152239babe)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-time-line2d_42">
       <g>
-       <use xlink:href="#kernel-time-mb630600054" x="43.92024" y="158.790653" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mb630600054" x="43.92024" y="159.238924" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_38">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="36.92024" y="163.16831" transform="rotate(-0 36.92024 163.16831)">250</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="36.92024" y="163.616581" transform="rotate(-0 36.92024 163.616581)">250</text>
      </g>
     </g>
     <g id="kernel-time-ytick_7">
      <g id="kernel-time-line2d_43">
-      <path d="M 43.92024 127.045351
-L 889.79976 127.045351
+      <path d="M 43.92024 127.583276
+L 889.79976 127.583276
 " clip-path="url(#kernel-time-p152239babe)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-time-line2d_44">
       <g>
-       <use xlink:href="#kernel-time-mb630600054" x="43.92024" y="127.045351" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mb630600054" x="43.92024" y="127.583276" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_39">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="36.92024" y="131.423007" transform="rotate(-0 36.92024 131.423007)">300</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="36.92024" y="131.960932" transform="rotate(-0 36.92024 131.960932)">300</text>
      </g>
     </g>
     <g id="kernel-time-ytick_8">
      <g id="kernel-time-line2d_45">
-      <path d="M 43.92024 95.300049
-L 889.79976 95.300049
+      <path d="M 43.92024 95.927628
+L 889.79976 95.927628
 " clip-path="url(#kernel-time-p152239babe)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-time-line2d_46">
       <g>
-       <use xlink:href="#kernel-time-mb630600054" x="43.92024" y="95.300049" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mb630600054" x="43.92024" y="95.927628" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_40">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="36.92024" y="99.677705" transform="rotate(-0 36.92024 99.677705)">350</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="36.92024" y="100.305284" transform="rotate(-0 36.92024 100.305284)">350</text>
      </g>
     </g>
     <g id="kernel-time-ytick_9">
      <g id="kernel-time-line2d_47">
-      <path d="M 43.92024 63.554746
-L 889.79976 63.554746
+      <path d="M 43.92024 64.27198
+L 889.79976 64.27198
 " clip-path="url(#kernel-time-p152239babe)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-time-line2d_48">
       <g>
-       <use xlink:href="#kernel-time-mb630600054" x="43.92024" y="63.554746" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-time-mb630600054" x="43.92024" y="64.27198" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-time-text_41">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="36.92024" y="67.932402" transform="rotate(-0 36.92024 67.932402)">400</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="36.92024" y="68.649636" transform="rotate(-0 36.92024 68.649636)">400</text>
      </g>
     </g>
     <g id="kernel-time-text_42">
@@ -1439,21 +1440,21 @@ L 889.79976 63.554746
     </g>
    </g>
    <g id="kernel-time-line2d_49">
-    <path d="M 65.425652 304.304771
-L 122.773416 300.67787
-L 180.12118 293.990722
-L 237.468944 286.770253
-L 294.816708 285.752816
-L 352.164472 278.583139
-L 409.512236 271.245213
-L 466.86 271.197595
-L 524.207764 264.094583
-L 581.555528 256.756657
-L 638.903292 256.629675
-L 696.251056 249.593329
-L 753.59882 242.255402
-L 810.946584 241.98398
-L 868.294348 235.00795
+    <path d="M 65.425652 312.847957
+L 122.773416 312.479169
+L 180.12118 312.479169
+L 237.468944 308.906829
+L 294.816708 308.906829
+L 352.164472 308.906829
+L 409.512236 312.124626
+L 466.86 305.036926
+L 524.207764 305.036926
+L 581.555528 304.517774
+L 638.903292 304.517774
+L 696.251056 301.167023
+L 753.59882 301.167023
+L 810.946584 301.167023
+L 868.294348 311.162294
 " clip-path="url(#kernel-time-p152239babe)" style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="kernel-time-m94619aaaa5" d="M 0 2.5
@@ -1469,39 +1470,39 @@ z
 " style="stroke: #2364d2; stroke-width: 2"/>
     </defs>
     <g clip-path="url(#kernel-time-p152239babe)">
-     <use xlink:href="#kernel-time-m94619aaaa5" x="65.425652" y="304.304771" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="122.773416" y="300.67787" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="180.12118" y="293.990722" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="237.468944" y="286.770253" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="294.816708" y="285.752816" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="352.164472" y="278.583139" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="409.512236" y="271.245213" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="466.86" y="271.197595" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="524.207764" y="264.094583" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="581.555528" y="256.756657" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="638.903292" y="256.629675" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="696.251056" y="249.593329" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="753.59882" y="242.255402" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="810.946584" y="241.98398" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m94619aaaa5" x="868.294348" y="235.00795" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="65.425652" y="312.847957" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="122.773416" y="312.479169" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="180.12118" y="312.479169" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="237.468944" y="308.906829" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="294.816708" y="308.906829" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="352.164472" y="308.906829" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="409.512236" y="312.124626" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="466.86" y="305.036926" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="524.207764" y="305.036926" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="581.555528" y="304.517774" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="638.903292" y="304.517774" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="696.251056" y="301.167023" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="753.59882" y="301.167023" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="810.946584" y="301.167023" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m94619aaaa5" x="868.294348" y="311.162294" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
     </g>
    </g>
    <g id="kernel-time-line2d_50">
-    <path d="M 65.425652 277.509812
-L 122.773416 269.25241
-L 180.12118 258.109411
-L 237.468944 228.506203
-L 294.816708 217.242767
-L 352.164472 187.794366
-L 409.512236 189.379639
-L 466.86 162.948135
-L 524.207764 149.387053
-L 581.555528 137.523922
-L 638.903292 127.671927
-L 696.251056 101.270478
-L 753.59882 87.905591
-L 810.946584 75.972994
-L 868.294348 66.082896
+    <path d="M 65.425652 277.616055
+L 122.773416 268.902159
+L 180.12118 258.247088
+L 237.468944 228.008061
+L 294.816708 217.181545
+L 352.164472 188.022958
+L 409.512236 189.085444
+L 466.86 162.927327
+L 524.207764 149.433602
+L 581.555528 137.063836
+L 638.903292 127.692119
+L 696.251056 101.402444
+L 753.59882 88.121613
+L 810.946584 75.783292
+L 868.294348 66.489715
 " clip-path="url(#kernel-time-p152239babe)" style="fill: none; stroke: #d85b43; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="kernel-time-mc06e842d91" d="M 0 2.5
@@ -1517,39 +1518,39 @@ z
 " style="stroke: #d85b43; stroke-width: 2"/>
     </defs>
     <g clip-path="url(#kernel-time-p152239babe)">
-     <use xlink:href="#kernel-time-mc06e842d91" x="65.425652" y="277.509812" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="122.773416" y="269.25241" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="180.12118" y="258.109411" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="237.468944" y="228.506203" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="294.816708" y="217.242767" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="352.164472" y="187.794366" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="409.512236" y="189.379639" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="466.86" y="162.948135" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="524.207764" y="149.387053" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="581.555528" y="137.523922" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="638.903292" y="127.671927" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="696.251056" y="101.270478" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="753.59882" y="87.905591" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="810.946584" y="75.972994" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-mc06e842d91" x="868.294348" y="66.082896" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="65.425652" y="277.616055" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="122.773416" y="268.902159" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="180.12118" y="258.247088" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="237.468944" y="228.008061" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="294.816708" y="217.181545" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="352.164472" y="188.022958" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="409.512236" y="189.085444" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="466.86" y="162.927327" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="524.207764" y="149.433602" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="581.555528" y="137.063836" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="638.903292" y="127.692119" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="696.251056" y="101.402444" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="753.59882" y="88.121613" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="810.946584" y="75.783292" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-mc06e842d91" x="868.294348" y="66.489715" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
     </g>
    </g>
    <g id="kernel-time-line2d_51">
-    <path d="M 65.425652 302.576239
-L 122.773416 297.189061
-L 180.12118 292.105051
-L 237.468944 286.617875
-L 294.816708 281.1307
-L 352.164472 275.643524
-L 409.512236 270.156349
-L 466.86 264.669173
-L 524.207764 259.181998
-L 581.555528 253.694822
-L 638.903292 248.207647
-L 696.251056 242.720471
-L 753.59882 237.233296
-L 810.946584 231.74612
-L 868.294348 226.258945
+    <path d="M 65.425652 302.59311
+L 122.773416 297.225895
+L 180.12118 292.157826
+L 237.468944 285.736477
+L 294.816708 280.329693
+L 352.164472 274.818444
+L 409.512236 270.258448
+L 466.86 263.875087
+L 524.207764 254.694949
+L 581.555528 248.425548
+L 638.903292 243.11373
+L 696.251056 236.738282
+L 753.59882 236.556262
+L 810.946584 231.00861
+L 868.294348 226.489766
 " clip-path="url(#kernel-time-p152239babe)" style="fill: none; stroke: #7856ad; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="kernel-time-m4a924cdd6e" d="M 0 2.5
@@ -1565,39 +1566,39 @@ z
 " style="stroke: #7856ad; stroke-width: 2"/>
     </defs>
     <g clip-path="url(#kernel-time-p152239babe)">
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="65.425652" y="302.576239" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="122.773416" y="297.189061" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="180.12118" y="292.105051" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="237.468944" y="286.617875" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="294.816708" y="281.1307" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="352.164472" y="275.643524" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="409.512236" y="270.156349" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="466.86" y="264.669173" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="524.207764" y="259.181998" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="581.555528" y="253.694822" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="638.903292" y="248.207647" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="696.251056" y="242.720471" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="753.59882" y="237.233296" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="810.946584" y="231.74612" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m4a924cdd6e" x="868.294348" y="226.258945" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="65.425652" y="302.59311" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="122.773416" y="297.225895" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="180.12118" y="292.157826" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="237.468944" y="285.736477" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="294.816708" y="280.329693" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="352.164472" y="274.818444" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="409.512236" y="270.258448" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="466.86" y="263.875087" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="524.207764" y="254.694949" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="581.555528" y="248.425548" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="638.903292" y="243.11373" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="696.251056" y="236.738282" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="753.59882" y="236.556262" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="810.946584" y="231.00861" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m4a924cdd6e" x="868.294348" y="226.489766" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
     </g>
    </g>
    <g id="kernel-time-line2d_52">
-    <path d="M 65.425652 300.575544
-L 122.773416 293.458092
-L 180.12118 286.399092
-L 237.468944 280.761874
-L 294.816708 274.038181
-L 352.164472 266.650079
-L 409.512236 260.932622
-L 466.86 252.874075
-L 524.207764 247.755231
-L 581.555528 239.024033
-L 638.903292 234.625836
-L 696.251056 225.12644
-L 753.59882 221.491153
-L 810.946584 211.199449
-L 868.294348 208.387034
+    <path d="M 65.425652 300.455233
+L 122.773416 293.345582
+L 180.12118 286.337302
+L 237.468944 275.076764
+L 294.816708 258.80833
+L 352.164472 254.869819
+L 409.512236 254.087669
+L 466.86 241.125504
+L 524.207764 222.325033
+L 581.555528 215.149192
+L 638.903292 203.925701
+L 696.251056 196.760091
+L 753.59882 191.193522
+L 810.946584 184.414721
+L 868.294348 185.654774
 " clip-path="url(#kernel-time-p152239babe)" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="kernel-time-m98abdd7638" d="M 0 2.5
@@ -1613,21 +1614,21 @@ z
 " style="stroke: #0d8d7b; stroke-width: 2"/>
     </defs>
     <g clip-path="url(#kernel-time-p152239babe)">
-     <use xlink:href="#kernel-time-m98abdd7638" x="65.425652" y="300.575544" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="122.773416" y="293.458092" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="180.12118" y="286.399092" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="237.468944" y="280.761874" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="294.816708" y="274.038181" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="352.164472" y="266.650079" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="409.512236" y="260.932622" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="466.86" y="252.874075" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="524.207764" y="247.755231" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="581.555528" y="239.024033" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="638.903292" y="234.625836" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="696.251056" y="225.12644" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="753.59882" y="221.491153" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="810.946584" y="211.199449" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-time-m98abdd7638" x="868.294348" y="208.387034" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="65.425652" y="300.455233" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="122.773416" y="293.345582" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="180.12118" y="286.337302" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="237.468944" y="275.076764" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="294.816708" y="258.80833" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="352.164472" y="254.869819" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="409.512236" y="254.087669" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="466.86" y="241.125504" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="524.207764" y="222.325033" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="581.555528" y="215.149192" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="638.903292" y="203.925701" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="696.251056" y="196.760091" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="753.59882" y="191.193522" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="810.946584" y="184.414721" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-time-m98abdd7638" x="868.294348" y="185.654774" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
     </g>
    </g>
    <g id="kernel-time-patch_4">
@@ -1701,7 +1702,7 @@ L 288.703365 377.032768
   </clipPath>
  </defs>
 </svg>
-</div><div class="chart-readout"></div><div class="chart-footer"><span>横轴：四卡总 batch size（16–128）<br>纵轴：平均每层耗时（μs）<br>统计范围：每档同一套 49 个 decode step 采样点（7 批请求 × 每批 7 个采样位置），排除 step001</span><span><a href="assets/kernel-time.png" download>完整图 PNG</a><a href="assets/kernel-time.svg" download>完整图 SVG</a></span></div><script type="application/json" class="chart-config">{"title": "各阶段耗时 · 哪个阶段最耗时？", "unit": "平均每层耗时（μs）", "series": [{"key": "router", "label": "Router", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [20.81, 26.5225, 37.055, 48.4275, 50.03, 61.3225, 72.88, 72.955, 84.1425, 95.7, 95.9, 106.9825, 118.54, 118.9675, 129.955], "color": "#2364d2", "dashed": false}, {"key": "routed", "label": "Routed", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [63.013029640427604, 76.01873663751215, 93.56936224489796, 140.19548712342078, 157.9358066083576, 204.31810252672497, 201.82124149659865, 243.45181608357626, 264.81101068999027, 283.49587220602524, 299.01311953352774, 340.59635811467444, 361.6465379008746, 380.44081025267246, 396.01807215743435], "color": "#d85b43", "dashed": false}, {"key": "shared", "label": "Shared", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [23.5325, 32.0175, 40.025, 48.6675, 57.31, 65.9525, 74.595, 83.2375, 91.88, 100.5225, 109.165, 117.8075, 126.45, 135.0925, 143.735], "color": "#7856ad", "dashed": false}, {"key": "reduce", "label": "Reduce", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [26.683666180758017, 37.89391156462585, 49.01209183673469, 57.890914723032076, 68.48097424684158, 80.11750121477162, 89.12270286686103, 101.81520651117589, 109.87757045675413, 123.62952380952382, 130.556842808552, 145.51873542274052, 151.24444484936834, 167.45425048590863, 171.88390549076772], "color": "#0d8d7b", "dashed": false}], "band": null, "labels": false, "initialBatch": 32}</script></figure><p class="reading-note">纵轴是平均每层微秒数：各阶段逐层独立取最大 rank，累加 42 层后取 49 点平均，再除以 42。各阶段的最慢 rank 可能不同，不能把它们相加当成完整 MoE 时间。</p><figure class="interactive-chart" id="chart-kernel-growth"><figcaption><div><span class="chart-kicker">4 CARD · 49 DECODE STEP SAMPLES / BATCH · 42 MoE LAYERS</span><h3>相对增长 · 是否超过 batch 的线性增长？</h3></div><span class="chart-unit">周期增长倍数（BS16 = 1）</span></figcaption><div class="chart-controls"></div><div class="chart-frame"><svg role="img" aria-label="相对增长 · 是否超过 batch 的线性增长？" xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="388.8pt" viewBox="0 0 892.8 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+</div><div class="chart-readout"></div><div class="chart-footer"><span>横轴：四卡总 batch size（16–128）<br>纵轴：平均每层耗时（μs）<br>统计范围：每档同一套 49 个 decode step 采样点（7 批请求 × 每批 7 个采样位置），排除 step001</span><span><a href="assets/kernel-time.png" download>完整图 PNG</a><a href="assets/kernel-time.svg" download>完整图 SVG</a></span></div><script type="application/json" class="chart-config">{"title": "各阶段耗时 · 哪个阶段最耗时？", "unit": "平均每层耗时（μs）", "series": [{"key": "router", "label": "Router", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [7.375, 7.9575, 7.9575, 13.6, 13.6, 13.6, 8.5175, 19.7125, 19.7125, 20.5325, 20.5325, 25.825, 25.825, 25.825, 10.0375], "color": "#2364d2", "dashed": false}, {"key": "routed", "label": "Routed", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [63.023681972789106, 76.78725461613217, 93.616907191448, 141.3793586005831, 158.47980685131196, 204.53570578231293, 202.85751336248785, 244.1741788143829, 265.48747691933914, 285.02548469387756, 299.82808309037904, 341.35254494655004, 362.3295772594753, 381.81791666666663, 396.49709426627794], "color": "#d85b43", "dashed": false}, {"key": "shared", "label": "Shared", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [23.5725, 32.05, 40.055, 50.1975, 58.7375, 67.4425, 74.645, 84.7275, 99.2275, 109.13, 117.52, 127.59, 127.8775, 136.64, 143.7775], "color": "#7856ad", "dashed": false}, {"key": "reduce", "label": "Reduce", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [26.94927113702624, 38.17894314868804, 49.24849975704567, 67.03448493683189, 92.73042759961126, 98.9512925170068, 100.18669703595724, 120.66039723032071, 150.35568270165209, 161.68990281827016, 179.4173724489796, 190.73543124392614, 199.52780976676385, 210.2349052478134, 208.27624635568512], "color": "#0d8d7b", "dashed": false}], "band": null, "labels": false, "initialBatch": 32}</script></figure><p class="reading-note">纵轴是平均每层微秒数：各阶段逐层独立取最大 rank，累加 42 层后取 49 点平均，再除以 42。各阶段的最慢 rank 可能不同，不能把它们相加当成完整 MoE 时间。</p><figure class="interactive-chart" id="chart-kernel-growth"><figcaption><div><span class="chart-kicker">4 CARD · 49 DECODE STEP SAMPLES / BATCH · 42 MoE LAYERS</span><h3>相对增长 · 是否超过 batch 的线性增长？</h3></div><span class="chart-unit">周期增长倍数（BS16 = 1）</span></figcaption><div class="chart-controls"></div><div class="chart-frame"><svg role="img" aria-label="相对增长 · 是否超过 batch 的线性增长？" xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="388.8pt" viewBox="0 0 892.8 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
@@ -2214,20 +2215,20 @@ L 889.79976 65.210182
    </g>
    <g id="kernel-growth-line2d_49">
     <path d="M 53.204465 285.977775
-L 111.402399 277.320297
-L 169.600332 261.357953
-L 227.798266 244.122562
-L 285.996199 241.693921
-L 344.194133 224.579772
-L 402.392066 207.064007
-L 460.59 206.950343
-L 518.787934 189.995325
-L 576.985867 172.47956
-L 635.183801 172.176453
-L 693.381734 155.380566
-L 751.579668 137.864802
-L 809.777601 137.216912
-L 867.975535 120.565
+L 111.402399 283.48679
+L 169.600332 283.48679
+L 227.798266 259.357373
+L 285.996199 259.357373
+L 344.194133 259.357373
+L 402.392066 281.092023
+L 460.59 233.218063
+L 518.787934 233.218063
+L 576.985867 229.711439
+L 635.183801 229.711439
+L 693.381734 207.078752
+L 751.579668 207.078752
+L 809.777601 207.078752
+L 867.975535 274.591941
 " clip-path="url(#kernel-growth-p1537c5a682)" style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="kernel-growth-m94619aaaa5" d="M 0 2.5
@@ -2244,38 +2245,38 @@ z
     </defs>
     <g clip-path="url(#kernel-growth-p1537c5a682)">
      <use xlink:href="#kernel-growth-m94619aaaa5" x="53.204465" y="285.977775" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m94619aaaa5" x="111.402399" y="277.320297" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m94619aaaa5" x="169.600332" y="261.357953" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m94619aaaa5" x="227.798266" y="244.122562" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m94619aaaa5" x="285.996199" y="241.693921" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m94619aaaa5" x="344.194133" y="224.579772" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m94619aaaa5" x="402.392066" y="207.064007" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m94619aaaa5" x="460.59" y="206.950343" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m94619aaaa5" x="518.787934" y="189.995325" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m94619aaaa5" x="576.985867" y="172.47956" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m94619aaaa5" x="635.183801" y="172.176453" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m94619aaaa5" x="693.381734" y="155.380566" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m94619aaaa5" x="751.579668" y="137.864802" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m94619aaaa5" x="809.777601" y="137.216912" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m94619aaaa5" x="867.975535" y="120.565" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="111.402399" y="283.48679" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="169.600332" y="283.48679" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="227.798266" y="259.357373" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="285.996199" y="259.357373" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="344.194133" y="259.357373" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="402.392066" y="281.092023" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="460.59" y="233.218063" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="518.787934" y="233.218063" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="576.985867" y="229.711439" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="635.183801" y="229.711439" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="693.381734" y="207.078752" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="751.579668" y="207.078752" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="809.777601" y="207.078752" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m94619aaaa5" x="867.975535" y="274.591941" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
     </g>
    </g>
    <g id="kernel-growth-line2d_50">
     <path d="M 53.204465 285.977775
-L 111.402399 279.468377
-L 169.600332 270.684231
-L 227.798266 247.347703
-L 285.996199 238.468615
-L 344.194133 215.254124
-L 402.392066 216.503811
-L 460.59 195.667572
-L 518.787934 184.977225
-L 576.985867 175.625391
-L 635.183801 167.858958
-L 693.381734 147.046411
-L 751.579668 136.510727
-L 809.777601 127.104132
-L 867.975535 119.307662
+L 111.402399 279.090227
+L 169.600332 270.668354
+L 227.798266 246.767131
+L 285.996199 238.209748
+L 344.194133 215.162516
+L 402.392066 216.002314
+L 460.59 195.326683
+L 518.787934 184.661111
+L 576.985867 174.883927
+L 635.183801 167.47643
+L 693.381734 146.696814
+L 751.579668 136.199515
+L 809.777601 126.447186
+L 867.975535 119.101451
 " clip-path="url(#kernel-growth-p1537c5a682)" style="fill: none; stroke: #d85b43; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="kernel-growth-mc06e842d91" d="M 0 2.5
@@ -2292,38 +2293,38 @@ z
     </defs>
     <g clip-path="url(#kernel-growth-p1537c5a682)">
      <use xlink:href="#kernel-growth-mc06e842d91" x="53.204465" y="285.977775" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="111.402399" y="279.468377" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="169.600332" y="270.684231" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="227.798266" y="247.347703" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="285.996199" y="238.468615" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="344.194133" y="215.254124" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="402.392066" y="216.503811" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="460.59" y="195.667572" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="518.787934" y="184.977225" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="576.985867" y="175.625391" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="635.183801" y="167.858958" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="693.381734" y="147.046411" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="751.579668" y="136.510727" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="809.777601" y="127.104132" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-mc06e842d91" x="867.975535" y="119.307662" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="111.402399" y="279.090227" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="169.600332" y="270.668354" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="227.798266" y="246.767131" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="285.996199" y="238.209748" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="344.194133" y="215.162516" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="402.392066" y="216.002314" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="460.59" y="195.326683" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="518.787934" y="184.661111" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="576.985867" y="174.883927" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="635.183801" y="167.47643" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="693.381734" y="146.696814" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="751.579668" y="136.199515" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="809.777601" y="126.447186" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-mc06e842d91" x="867.975535" y="119.101451" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
     </g>
    </g>
    <g id="kernel-growth-line2d_51">
     <path d="M 53.204465 285.977775
-L 111.402399 274.606189
-L 169.600332 263.874547
-L 227.798266 252.291879
-L 285.996199 240.709211
-L 344.194133 229.126544
-L 402.392066 217.543876
-L 460.59 205.961208
-L 518.787934 194.37854
-L 576.985867 182.795872
-L 635.183801 171.213204
-L 693.381734 159.630536
-L 751.579668 148.047868
-L 809.777601 136.4652
-L 867.975535 124.882533
+L 111.402399 274.63552
+L 169.600332 263.925433
+L 227.798266 250.355533
+L 285.996199 238.929657
+L 344.194133 227.283023
+L 402.392066 217.646621
+L 460.59 204.156997
+L 518.787934 184.75709
+L 576.985867 171.508292
+L 635.183801 160.283104
+L 693.381734 146.810203
+L 751.579668 146.42555
+L 809.777601 134.701986
+L 867.975535 125.152549
 " clip-path="url(#kernel-growth-p1537c5a682)" style="fill: none; stroke: #7856ad; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="kernel-growth-m4a924cdd6e" d="M 0 2.5
@@ -2340,38 +2341,38 @@ z
     </defs>
     <g clip-path="url(#kernel-growth-p1537c5a682)">
      <use xlink:href="#kernel-growth-m4a924cdd6e" x="53.204465" y="285.977775" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m4a924cdd6e" x="111.402399" y="274.606189" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m4a924cdd6e" x="169.600332" y="263.874547" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m4a924cdd6e" x="227.798266" y="252.291879" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m4a924cdd6e" x="285.996199" y="240.709211" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m4a924cdd6e" x="344.194133" y="229.126544" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m4a924cdd6e" x="402.392066" y="217.543876" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m4a924cdd6e" x="460.59" y="205.961208" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m4a924cdd6e" x="518.787934" y="194.37854" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m4a924cdd6e" x="576.985867" y="182.795872" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m4a924cdd6e" x="635.183801" y="171.213204" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m4a924cdd6e" x="693.381734" y="159.630536" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m4a924cdd6e" x="751.579668" y="148.047868" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m4a924cdd6e" x="809.777601" y="136.4652" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m4a924cdd6e" x="867.975535" y="124.882533" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="111.402399" y="274.63552" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="169.600332" y="263.925433" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="227.798266" y="250.355533" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="285.996199" y="238.929657" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="344.194133" y="227.283023" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="402.392066" y="217.646621" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="460.59" y="204.156997" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="518.787934" y="184.75709" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="576.985867" y="171.508292" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="635.183801" y="160.283104" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="693.381734" y="146.810203" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="751.579668" y="146.42555" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="809.777601" y="134.701986" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m4a924cdd6e" x="867.975535" y="125.152549" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
     </g>
    </g>
    <g id="kernel-growth-line2d_52">
     <path d="M 53.204465 285.977775
-L 111.402399 272.728049
-L 169.600332 259.587138
-L 227.798266 249.09299
-L 285.996199 236.57628
-L 344.194133 222.822719
-L 402.392066 212.1792
-L 460.59 197.177548
-L 518.787934 187.648398
-L 576.985867 171.394551
-L 635.183801 163.206944
-L 693.381734 145.523033
-L 751.579668 138.755645
-L 809.777601 119.596788
-L 867.975535 114.361245
+L 111.402399 272.835901
+L 169.600332 259.881406
+L 227.798266 239.0668
+L 285.996199 208.995319
+L 344.194133 201.715157
+L 402.392066 200.269387
+L 460.59 176.309399
+L 518.787934 141.557562
+L 576.985867 128.293336
+L 635.183801 107.54721
+L 693.381734 94.301898
+L 751.579668 84.012342
+L 809.777601 71.482028
+L 867.975535 73.77421
 " clip-path="url(#kernel-growth-p1537c5a682)" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="kernel-growth-m98abdd7638" d="M 0 2.5
@@ -2388,20 +2389,20 @@ z
     </defs>
     <g clip-path="url(#kernel-growth-p1537c5a682)">
      <use xlink:href="#kernel-growth-m98abdd7638" x="53.204465" y="285.977775" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="111.402399" y="272.728049" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="169.600332" y="259.587138" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="227.798266" y="249.09299" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="285.996199" y="236.57628" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="344.194133" y="222.822719" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="402.392066" y="212.1792" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="460.59" y="197.177548" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="518.787934" y="187.648398" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="576.985867" y="171.394551" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="635.183801" y="163.206944" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="693.381734" y="145.523033" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="751.579668" y="138.755645" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="809.777601" y="119.596788" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-growth-m98abdd7638" x="867.975535" y="114.361245" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="111.402399" y="272.835901" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="169.600332" y="259.881406" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="227.798266" y="239.0668" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="285.996199" y="208.995319" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="344.194133" y="201.715157" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="402.392066" y="200.269387" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="460.59" y="176.309399" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="518.787934" y="141.557562" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="576.985867" y="128.293336" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="635.183801" y="107.54721" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="693.381734" y="94.301898" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="751.579668" y="84.012342" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="809.777601" y="71.482028" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-growth-m98abdd7638" x="867.975535" y="73.77421" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
     </g>
    </g>
    <g id="kernel-growth-line2d_53">
@@ -2502,7 +2503,7 @@ L 350.684771 377.031397
   </clipPath>
  </defs>
 </svg>
-</div><div class="chart-readout"></div><div class="chart-footer"><span>横轴：四卡总 batch size（16–128）<br>纵轴：周期增长倍数（BS16 = 1）<br>统计范围：每档同一套 49 个 decode step 采样点（7 批请求 × 每批 7 个采样位置），排除 step001</span><span><a href="assets/kernel-growth.png" download>完整图 PNG</a><a href="assets/kernel-growth.svg" download>完整图 SVG</a></span></div><script type="application/json" class="chart-config">{"title": "相对增长 · 是否超过 batch 的线性增长？", "unit": "周期增长倍数（BS16 = 1）", "series": [{"key": "router", "label": "Router", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 1.2745074483421432, 1.780634310427679, 2.327126381547333, 2.404132628543969, 2.946780394041326, 3.502162421912542, 3.5057664584334454, 4.043368572801538, 4.598750600672753, 4.608361364728496, 5.140917827967323, 5.696299855838539, 5.716842864007688, 6.244834214320038], "color": "#2364d2", "dashed": false}, {"key": "routed", "label": "Routed", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 1.2063971066190478, 1.4849208612700344, 2.2248650465375315, 2.5063991925097016, 3.242473877111275, 3.2028493574782053, 3.863515489935809, 4.2024802203780105, 4.499003996851808, 4.74525857969045, 5.405173502341113, 5.739234249877285, 6.037494347178494, 6.284701345376337], "color": "#d85b43", "dashed": false}, {"key": "shared", "label": "Shared", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 1.3605651758206736, 1.700839264846489, 2.06809731222777, 2.4353553596090514, 2.8026134069903326, 3.1698714543716138, 3.537129501752895, 3.904387549134176, 4.271645596515457, 4.638903643896739, 5.006161691278019, 5.373419738659301, 5.740677786040582, 6.107935833421863], "color": "#7856ad", "dashed": false}, {"key": "reduce", "label": "Reduce", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 1.4201163853545622, 1.8367825284847115, 2.169526268649623, 2.5664005007012203, 3.0024922614473994, 3.3399721860982026, 3.8156378445701113, 4.117783879937325, 4.633153591865681, 4.892762558343592, 5.453476086718407, 5.668053401088975, 6.275533854739285, 6.44154009147048], "color": "#0d8d7b", "dashed": false}, {"key": "linear", "label": "线性参考 BS / 16", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0], "color": "#8492a6", "dashed": true}], "band": null, "labels": false, "initialBatch": 32}</script></figure><p class="reading-note">纵轴 = 当前 batch 的阶段平均 cycles ÷ BS16 的阶段平均 cycles；虚线 = 总 batch ÷ 16。曲线低于虚线，表示相对 BS16 的增长小于线性。</p><figure class="interactive-chart" id="chart-kernel-per-token"><figcaption><div><span class="chart-kicker">4 CARD · 49 DECODE STEP SAMPLES / BATCH · 42 MoE LAYERS</span><h3>单 token 成本 · batch 增大后是否更高效？</h3></div><span class="chart-unit">单 token 周期比（BS16 = 1）</span></figcaption><div class="chart-controls"></div><div class="chart-frame"><svg role="img" aria-label="单 token 成本 · batch 增大后是否更高效？" xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="388.8pt" viewBox="0 0 892.8 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+</div><div class="chart-readout"></div><div class="chart-footer"><span>横轴：四卡总 batch size（16–128）<br>纵轴：周期增长倍数（BS16 = 1）<br>统计范围：每档同一套 49 个 decode step 采样点（7 批请求 × 每批 7 个采样位置），排除 step001</span><span><a href="assets/kernel-growth.png" download>完整图 PNG</a><a href="assets/kernel-growth.svg" download>完整图 SVG</a></span></div><script type="application/json" class="chart-config">{"title": "相对增长 · 是否超过 batch 的线性增长？", "unit": "周期增长倍数（BS16 = 1）", "series": [{"key": "router", "label": "Router", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 1.0789830508474576, 1.0789830508474576, 1.8440677966101695, 1.8440677966101695, 1.8440677966101695, 1.154915254237288, 2.6728813559322036, 2.6728813559322036, 2.7840677966101697, 2.7840677966101697, 3.5016949152542374, 3.5016949152542374, 3.5016949152542374, 1.3610169491525423], "color": "#2364d2", "dashed": false}, {"key": "routed", "label": "Routed", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 1.218387314300132, 1.4854242764151375, 2.2432735469442195, 2.5146072379544036, 3.2453785526307803, 3.218750587280396, 3.8743242408434138, 4.212503436945577, 4.52251401016112, 4.757387599471446, 5.416258369257627, 5.749102018760399, 6.0583245014393015, 6.291239766624047], "color": "#d85b43", "dashed": false}, {"key": "shared", "label": "Shared", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 1.3596351680984198, 1.6992257927669954, 2.1294941139039136, 2.4917806766359103, 2.8610669212005515, 3.166613638773995, 3.594336621062679, 4.209460176052604, 4.629547141796585, 4.985470357407997, 5.412663060769965, 5.42485947608442, 5.796585003711953, 6.099374270866476], "color": "#7856ad", "dashed": false}, {"key": "reduce", "label": "Reduce", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 1.4166966874377946, 1.8274520118424278, 2.487432205345681, 3.440925252787514, 3.6717613628167958, 3.7176032155581518, 4.477315791466528, 5.579211472442195, 5.999787600790457, 6.657596472153706, 7.0775729062991335, 7.4038295415206195, 7.80113510969752, 7.728455634168506], "color": "#0d8d7b", "dashed": false}, {"key": "linear", "label": "线性参考 BS / 16", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0], "color": "#8492a6", "dashed": true}], "band": null, "labels": false, "initialBatch": 32}</script></figure><p class="reading-note">纵轴 = 当前 batch 的阶段平均 cycles ÷ BS16 的阶段平均 cycles；虚线 = 总 batch ÷ 16。曲线低于虚线，表示相对 BS16 的增长小于线性。</p><figure class="interactive-chart" id="chart-kernel-per-token"><figcaption><div><span class="chart-kicker">4 CARD · 49 DECODE STEP SAMPLES / BATCH · 42 MoE LAYERS</span><h3>单 token 成本 · batch 增大后是否更高效？</h3></div><span class="chart-unit">单 token 周期比（BS16 = 1）</span></figcaption><div class="chart-controls"></div><div class="chart-frame"><svg role="img" aria-label="单 token 成本 · batch 增大后是否更高效？" xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="388.8pt" viewBox="0 0 892.8 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
@@ -2891,77 +2892,77 @@ L -3.5 0
     </g>
     <g id="kernel-per-token-ytick_2">
      <g id="kernel-per-token-line2d_33">
-      <path d="M 40.542896 265.517689
-L 889.79976 265.517689
+      <path d="M 40.542896 273.472758
+L 889.79976 273.472758
 " clip-path="url(#kernel-per-token-p9c64e69e44)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-per-token-line2d_34">
       <g>
-       <use xlink:href="#kernel-per-token-mb630600054" x="40.542896" y="265.517689" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-per-token-mb630600054" x="40.542896" y="273.472758" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-per-token-text_34">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="33.542896" y="269.895345" transform="rotate(-0 33.542896 269.895345)">0.2</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="33.542896" y="277.850414" transform="rotate(-0 33.542896 277.850414)">0.2</text>
      </g>
     </g>
     <g id="kernel-per-token-ytick_3">
      <g id="kernel-per-token-line2d_35">
-      <path d="M 40.542896 213.518213
-L 889.79976 213.518213
+      <path d="M 40.542896 229.42835
+L 889.79976 229.42835
 " clip-path="url(#kernel-per-token-p9c64e69e44)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-per-token-line2d_36">
       <g>
-       <use xlink:href="#kernel-per-token-mb630600054" x="40.542896" y="213.518213" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-per-token-mb630600054" x="40.542896" y="229.42835" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-per-token-text_35">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="33.542896" y="217.895869" transform="rotate(-0 33.542896 217.895869)">0.4</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="33.542896" y="233.806007" transform="rotate(-0 33.542896 233.806007)">0.4</text>
      </g>
     </g>
     <g id="kernel-per-token-ytick_4">
      <g id="kernel-per-token-line2d_37">
-      <path d="M 40.542896 161.518736
-L 889.79976 161.518736
+      <path d="M 40.542896 185.383943
+L 889.79976 185.383943
 " clip-path="url(#kernel-per-token-p9c64e69e44)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-per-token-line2d_38">
       <g>
-       <use xlink:href="#kernel-per-token-mb630600054" x="40.542896" y="161.518736" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-per-token-mb630600054" x="40.542896" y="185.383943" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-per-token-text_36">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="33.542896" y="165.896392" transform="rotate(-0 33.542896 165.896392)">0.6</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="33.542896" y="189.761599" transform="rotate(-0 33.542896 189.761599)">0.6</text>
      </g>
     </g>
     <g id="kernel-per-token-ytick_5">
      <g id="kernel-per-token-line2d_39">
-      <path d="M 40.542896 109.51926
-L 889.79976 109.51926
+      <path d="M 40.542896 141.339535
+L 889.79976 141.339535
 " clip-path="url(#kernel-per-token-p9c64e69e44)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-per-token-line2d_40">
       <g>
-       <use xlink:href="#kernel-per-token-mb630600054" x="40.542896" y="109.51926" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-per-token-mb630600054" x="40.542896" y="141.339535" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-per-token-text_37">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="33.542896" y="113.896916" transform="rotate(-0 33.542896 113.896916)">0.8</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="33.542896" y="145.717191" transform="rotate(-0 33.542896 145.717191)">0.8</text>
      </g>
     </g>
     <g id="kernel-per-token-ytick_6">
      <g id="kernel-per-token-line2d_41">
-      <path d="M 40.542896 57.519783
-L 889.79976 57.519783
+      <path d="M 40.542896 97.295128
+L 889.79976 97.295128
 " clip-path="url(#kernel-per-token-p9c64e69e44)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-per-token-line2d_42">
       <g>
-       <use xlink:href="#kernel-per-token-mb630600054" x="40.542896" y="57.519783" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-per-token-mb630600054" x="40.542896" y="97.295128" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-per-token-text_38">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="33.542896" y="61.897439" transform="rotate(-0 33.542896 61.897439)">1.0</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="33.542896" y="101.672784" transform="rotate(-0 33.542896 101.672784)">1.0</text>
      </g>
     </g>
     <g id="kernel-per-token-text_39">
@@ -2969,21 +2970,21 @@ L 889.79976 57.519783
     </g>
    </g>
    <g id="kernel-per-token-line2d_43">
-    <path d="M 62.134172 57.519783
-L 119.710909 96.604765
-L 177.287645 86.037036
-L 234.864382 75.498458
-L 292.441119 109.161102
-L 350.017855 98.615683
-L 407.594592 89.8789
-L 465.171328 114.963809
-L 522.748065 107.264117
-L 580.324801 100.123871
-L 637.901538 117.823517
-L 695.478274 111.882523
-L 753.055011 105.942444
-L 810.631747 119.335275
-L 868.208484 114.562097
+    <path d="M 62.134172 97.295128
+L 119.710909 159.106601
+L 177.287645 198.709242
+L 234.864382 155.075418
+L 292.441119 182.149043
+L 350.017855 201.487346
+L 407.594592 253.932718
+L 465.171328 186.711081
+L 522.748065 199.79169
+L 580.324801 206.042059
+L 637.901538 215.331651
+L 695.478274 198.878644
+L 753.055011 207.352824
+L 810.631747 214.697113
+L 868.208484 280.051425
 " clip-path="url(#kernel-per-token-p9c64e69e44)" style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="kernel-per-token-m94619aaaa5" d="M 0 2.5
@@ -2999,39 +3000,39 @@ z
 " style="stroke: #2364d2; stroke-width: 2"/>
     </defs>
     <g clip-path="url(#kernel-per-token-p9c64e69e44)">
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="62.134172" y="57.519783" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="119.710909" y="96.604765" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="177.287645" y="86.037036" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="234.864382" y="75.498458" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="292.441119" y="109.161102" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="350.017855" y="98.615683" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="407.594592" y="89.8789" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="465.171328" y="114.963809" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="522.748065" y="107.264117" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="580.324801" y="100.123871" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="637.901538" y="117.823517" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="695.478274" y="111.882523" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="753.055011" y="105.942444" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="810.631747" y="119.335275" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m94619aaaa5" x="868.208484" y="114.562097" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="62.134172" y="97.295128" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="119.710909" y="159.106601" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="177.287645" y="198.709242" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="234.864382" y="155.075418" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="292.441119" y="182.149043" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="350.017855" y="201.487346" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="407.594592" y="253.932718" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="465.171328" y="186.711081" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="522.748065" y="199.79169" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="580.324801" y="206.042059" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="637.901538" y="215.331651" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="695.478274" y="198.878644" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="753.055011" y="207.352824" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="810.631747" y="214.697113" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m94619aaaa5" x="868.208484" y="280.051425" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
     </g>
    </g>
    <g id="kernel-per-token-line2d_44">
-    <path d="M 62.134172 57.519783
-L 119.710909 108.410439
-L 177.287645 124.479397
-L 234.864382 86.13353
-L 292.441119 100.298089
-L 350.017855 76.650103
-L 407.594592 109.334053
-L 465.171328 94.294074
-L 522.748065 98.990394
-L 580.324801 104.839118
-L 637.901538 111.891364
-L 695.478274 101.312402
-L 753.055011 104.347754
-L 810.631747 108.219469
-L 868.208484 113.266428
+    <path d="M 62.134172 97.295128
+L 119.710909 138.640007
+L 177.287645 153.955585
+L 234.864382 119.909857
+L 292.441119 132.926522
+L 350.017855 113.316057
+L 407.594592 140.307212
+L 465.171328 127.914592
+L 522.748065 131.979947
+L 580.324801 136.434029
+L 637.901538 142.903567
+L 695.478274 134.012634
+L 753.055011 136.648742
+L 810.631747 139.626956
+L 868.208484 144.33346
 " clip-path="url(#kernel-per-token-p9c64e69e44)" style="fill: none; stroke: #d85b43; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="kernel-per-token-mc06e842d91" d="M 0 2.5
@@ -3047,39 +3048,39 @@ z
 " style="stroke: #d85b43; stroke-width: 2"/>
     </defs>
     <g clip-path="url(#kernel-per-token-p9c64e69e44)">
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="62.134172" y="57.519783" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="119.710909" y="108.410439" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="177.287645" y="124.479397" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="234.864382" y="86.13353" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="292.441119" y="100.298089" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="350.017855" y="76.650103" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="407.594592" y="109.334053" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="465.171328" y="94.294074" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="522.748065" y="98.990394" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="580.324801" y="104.839118" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="637.901538" y="111.891364" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="695.478274" y="101.312402" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="753.055011" y="104.347754" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="810.631747" y="108.219469" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-mc06e842d91" x="868.208484" y="113.266428" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="62.134172" y="97.295128" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="119.710909" y="138.640007" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="177.287645" y="153.955585" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="234.864382" y="119.909857" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="292.441119" y="132.926522" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="350.017855" y="113.316057" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="407.594592" y="140.307212" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="465.171328" y="127.914592" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="522.748065" y="131.979947" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="580.324801" y="136.434029" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="637.901538" y="142.903567" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="695.478274" y="134.012634" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="753.055011" y="136.648742" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="810.631747" y="139.626956" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-mc06e842d91" x="868.208484" y="144.33346" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
     </g>
    </g>
    <g id="kernel-per-token-line2d_45">
-    <path d="M 62.134172 57.519783
-L 119.710909 81.688243
-L 177.287645 96.410287
-L 234.864382 102.43721
-L 292.441119 106.455159
-L 350.017855 109.325123
-L 407.594592 111.477595
-L 465.171328 113.151741
-L 522.748065 114.491057
-L 580.324801 115.586861
-L 637.901538 116.500031
-L 695.478274 117.272714
-L 753.055011 117.935013
-L 810.631747 118.509006
-L 868.208484 119.011249
+    <path d="M 62.134172 97.295128
+L 119.710909 117.902747
+L 177.287645 130.413682
+L 234.864382 129.932552
+L 292.441119 134.602159
+L 350.017855 137.497169
+L 407.594592 143.177638
+L 465.171328 141.616691
+L 522.748065 132.113986
+L 580.324801 132.148383
+L 637.901538 134.532092
+L 695.478274 134.134444
+L 753.055011 146.849507
+L 810.631747 147.312397
+L 868.208484 149.615086
 " clip-path="url(#kernel-per-token-p9c64e69e44)" style="fill: none; stroke: #7856ad; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="kernel-per-token-m4a924cdd6e" d="M 0 2.5
@@ -3095,39 +3096,39 @@ z
 " style="stroke: #7856ad; stroke-width: 2"/>
     </defs>
     <g clip-path="url(#kernel-per-token-p9c64e69e44)">
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="62.134172" y="57.519783" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="119.710909" y="81.688243" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="177.287645" y="96.410287" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="234.864382" y="102.43721" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="292.441119" y="106.455159" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="350.017855" y="109.325123" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="407.594592" y="111.477595" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="465.171328" y="113.151741" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="522.748065" y="114.491057" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="580.324801" y="115.586861" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="637.901538" y="116.500031" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="695.478274" y="117.272714" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="753.055011" y="117.935013" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="810.631747" y="118.509006" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="868.208484" y="119.011249" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="62.134172" y="97.295128" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="119.710909" y="117.902747" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="177.287645" y="130.413682" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="234.864382" y="129.932552" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="292.441119" y="134.602159" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="350.017855" y="137.497169" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="407.594592" y="143.177638" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="465.171328" y="141.616691" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="522.748065" y="132.113986" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="580.324801" y="132.148383" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="637.901538" y="134.532092" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="695.478274" y="134.134444" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="753.055011" y="146.849507" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="810.631747" y="147.312397" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m4a924cdd6e" x="868.208484" y="149.615086" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
     </g>
    </g>
    <g id="kernel-per-token-line2d_46">
-    <path d="M 62.134172 57.519783
-L 119.710909 71.366137
-L 177.287645 78.737841
-L 234.864382 91.888705
-L 292.441119 95.098028
-L 350.017855 94.477129
-L 407.594592 100.421159
-L 465.171328 97.06031
-L 522.748065 103.39456
-L 580.324801 98.497564
-L 637.901538 105.499589
-L 695.478274 99.380318
-L 753.055011 106.991587
-L 810.631747 99.967516
-L 868.208484 108.16922
+    <path d="M 62.134172 97.295128
+L 119.710909 109.525278
+L 177.287645 116.294562
+L 234.864382 98.40221
+L 292.441119 64.927975
+L 350.017855 86.487803
+L 407.594592 112.842626
+L 465.171328 98.405253
+L 522.748065 71.784101
+L 580.324801 77.283447
+L 637.901538 73.158922
+L 695.478274 77.726776
+L 753.055011 84.590533
+L 810.631747 88.452916
+L 868.208484 104.770134
 " clip-path="url(#kernel-per-token-p9c64e69e44)" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="kernel-per-token-m98abdd7638" d="M 0 2.5
@@ -3143,39 +3144,39 @@ z
 " style="stroke: #0d8d7b; stroke-width: 2"/>
     </defs>
     <g clip-path="url(#kernel-per-token-p9c64e69e44)">
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="62.134172" y="57.519783" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="119.710909" y="71.366137" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="177.287645" y="78.737841" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="234.864382" y="91.888705" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="292.441119" y="95.098028" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="350.017855" y="94.477129" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="407.594592" y="100.421159" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="465.171328" y="97.06031" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="522.748065" y="103.39456" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="580.324801" y="98.497564" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="637.901538" y="105.499589" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="695.478274" y="99.380318" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="753.055011" y="106.991587" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="810.631747" y="99.967516" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m98abdd7638" x="868.208484" y="108.16922" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="62.134172" y="97.295128" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="119.710909" y="109.525278" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="177.287645" y="116.294562" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="234.864382" y="98.40221" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="292.441119" y="64.927975" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="350.017855" y="86.487803" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="407.594592" y="112.842626" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="465.171328" y="98.405253" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="522.748065" y="71.784101" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="580.324801" y="77.283447" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="637.901538" y="73.158922" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="695.478274" y="77.726776" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="753.055011" y="84.590533" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="810.631747" y="88.452916" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m98abdd7638" x="868.208484" y="104.770134" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
     </g>
    </g>
    <g id="kernel-per-token-line2d_47">
-    <path d="M 62.134172 57.519783
-L 119.710909 57.519783
-L 177.287645 57.519783
-L 234.864382 57.519783
-L 292.441119 57.519783
-L 350.017855 57.519783
-L 407.594592 57.519783
-L 465.171328 57.519783
-L 522.748065 57.519783
-L 580.324801 57.519783
-L 637.901538 57.519783
-L 695.478274 57.519783
-L 753.055011 57.519783
-L 810.631747 57.519783
-L 868.208484 57.519783
+    <path d="M 62.134172 97.295128
+L 119.710909 97.295128
+L 177.287645 97.295128
+L 234.864382 97.295128
+L 292.441119 97.295128
+L 350.017855 97.295128
+L 407.594592 97.295128
+L 465.171328 97.295128
+L 522.748065 97.295128
+L 580.324801 97.295128
+L 637.901538 97.295128
+L 695.478274 97.295128
+L 753.055011 97.295128
+L 810.631747 97.295128
+L 868.208484 97.295128
 " clip-path="url(#kernel-per-token-p9c64e69e44)" style="fill: none; stroke-dasharray: 9.25,4; stroke-dashoffset: 0; stroke: #8492a6; stroke-width: 2.5"/>
     <defs>
      <path id="kernel-per-token-m9e669cf5c4" d="M 0 2.5
@@ -3191,21 +3192,21 @@ z
 " style="stroke: #8492a6; stroke-width: 2"/>
     </defs>
     <g clip-path="url(#kernel-per-token-p9c64e69e44)">
-     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="62.134172" y="57.519783" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="119.710909" y="57.519783" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="177.287645" y="57.519783" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="234.864382" y="57.519783" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="292.441119" y="57.519783" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="350.017855" y="57.519783" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="407.594592" y="57.519783" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="465.171328" y="57.519783" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="522.748065" y="57.519783" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="580.324801" y="57.519783" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="637.901538" y="57.519783" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="695.478274" y="57.519783" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="753.055011" y="57.519783" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="810.631747" y="57.519783" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
-     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="868.208484" y="57.519783" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="62.134172" y="97.295128" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="119.710909" y="97.295128" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="177.287645" y="97.295128" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="234.864382" y="97.295128" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="292.441119" y="97.295128" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="350.017855" y="97.295128" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="407.594592" y="97.295128" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="465.171328" y="97.295128" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="522.748065" y="97.295128" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="580.324801" y="97.295128" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="637.901538" y="97.295128" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="695.478274" y="97.295128" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="753.055011" y="97.295128" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="810.631747" y="97.295128" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
+     <use xlink:href="#kernel-per-token-m9e669cf5c4" x="868.208484" y="97.295128" style="fill: #ffffff; stroke: #8492a6; stroke-width: 2"/>
     </g>
    </g>
    <g id="kernel-per-token-patch_4">
@@ -3291,7 +3292,7 @@ L 359.847427 377.032768
   </clipPath>
  </defs>
 </svg>
-</div><div class="chart-readout"></div><div class="chart-footer"><span>横轴：四卡总 batch size（16–128）<br>纵轴：单 token 周期比（BS16 = 1）<br>统计范围：每档同一套 49 个 decode step 采样点（7 批请求 × 每批 7 个采样位置），排除 step001</span><span><a href="assets/kernel-per-token.png" download>完整图 PNG</a><a href="assets/kernel-per-token.svg" download>完整图 SVG</a></span></div><script type="application/json" class="chart-config">{"title": "单 token 成本 · batch 增大后是否更高效？", "unit": "单 token 周期比（BS16 = 1）", "series": [{"key": "router", "label": "Router", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 0.8496716322280955, 0.8903171552138395, 0.9308505526189332, 0.8013775428479897, 0.8419372554403789, 0.8755406054781355, 0.7790592129852101, 0.8086737145603076, 0.8361364728495915, 0.7680602274547493, 0.7909104350718958, 0.8137571222626485, 0.7622457152010251, 0.7806042767900048], "color": "#2364d2", "dashed": false}, {"key": "routed", "label": "Routed", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 0.8042647377460318, 0.7424604306350172, 0.8899460186150125, 0.8354663975032338, 0.9264211077460786, 0.8007123393695513, 0.8585589977635131, 0.8404960440756021, 0.8180007267003288, 0.7908764299484083, 0.8315651542063252, 0.8198906071253264, 0.8049992462904658, 0.7855876681720422], "color": "#d85b43", "dashed": false}, {"key": "shared", "label": "Shared", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 0.9070434505471158, 0.8504196324232445, 0.8272389248911081, 0.8117851198696838, 0.8007466877115236, 0.7924678635929034, 0.78602877816731, 0.7808775098268352, 0.7766628357300831, 0.7731506073161231, 0.77017872173508, 0.767631391237043, 0.7654237048054109, 0.7634919791777329], "color": "#7856ad", "dashed": false}, {"key": "reduce", "label": "Reduce", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 0.9467442569030414, 0.9183912642423557, 0.8678105074598491, 0.8554668335670734, 0.8578549318421141, 0.8349930465245506, 0.8479195210155803, 0.823556775987465, 0.8423915621573965, 0.8154604263905987, 0.8389963210336011, 0.8097219144412822, 0.8367378472985714, 0.80519251143381], "color": "#0d8d7b", "dashed": false}, {"key": "reference", "label": "BS16 单 token 成本 = 1", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], "color": "#8492a6", "dashed": true}], "band": null, "labels": false, "initialBatch": 32}</script></figure><p class="reading-note">纵轴 = 周期增长倍数 ÷ batch 增长倍数。低于 1 表示每 token 的周期成本下降；高于 1 表示上升。参考线 1 对应 BS16 的单 token 成本。</p><details class="data-details"><summary>查看逐 kernel 耗时与增长明细</summary><div class="table-scroll" tabindex="0"><table><caption>行：四卡总 batch；列：49 点平均的单层阶段耗时（μs）、Routed 周期倍数及 batch 倍数。Shared 仅 EP0，逐阶段独立取最大 rank。</caption><thead><tr><th scope="col">总 batch</th><th scope="col">Router · μs/层</th><th scope="col">Routed · μs/层</th><th scope="col">Shared · μs/层</th><th scope="col">Reduce · μs/层</th><th scope="col">Routed / BS16</th><th scope="col">线性参考</th></tr></thead><tbody><tr><td>16</td><td>20.810</td><td>63.013</td><td>23.532</td><td>26.684</td><td>1.000×</td><td>1.00×</td></tr><tr><td>24</td><td>26.523</td><td>76.019</td><td>32.017</td><td>37.894</td><td>1.206×</td><td>1.50×</td></tr><tr><td>32</td><td>37.055</td><td>93.569</td><td>40.025</td><td>49.012</td><td>1.485×</td><td>2.00×</td></tr><tr><td>40</td><td>48.428</td><td>140.195</td><td>48.667</td><td>57.891</td><td>2.225×</td><td>2.50×</td></tr><tr><td>48</td><td>50.030</td><td>157.936</td><td>57.310</td><td>68.481</td><td>2.506×</td><td>3.00×</td></tr><tr><td>56</td><td>61.322</td><td>204.318</td><td>65.953</td><td>80.118</td><td>3.242×</td><td>3.50×</td></tr><tr><td>64</td><td>72.880</td><td>201.821</td><td>74.595</td><td>89.123</td><td>3.203×</td><td>4.00×</td></tr><tr><td>72</td><td>72.955</td><td>243.452</td><td>83.237</td><td>101.815</td><td>3.864×</td><td>4.50×</td></tr><tr><td>80</td><td>84.142</td><td>264.811</td><td>91.880</td><td>109.878</td><td>4.202×</td><td>5.00×</td></tr><tr><td>88</td><td>95.700</td><td>283.496</td><td>100.522</td><td>123.630</td><td>4.499×</td><td>5.50×</td></tr><tr><td>96</td><td>95.900</td><td>299.013</td><td>109.165</td><td>130.557</td><td>4.745×</td><td>6.00×</td></tr><tr><td>104</td><td>106.983</td><td>340.596</td><td>117.808</td><td>145.519</td><td>5.405×</td><td>6.50×</td></tr><tr><td>112</td><td>118.540</td><td>361.647</td><td>126.450</td><td>151.244</td><td>5.739×</td><td>7.00×</td></tr><tr><td>120</td><td>118.968</td><td>380.441</td><td>135.093</td><td>167.454</td><td>6.037×</td><td>7.50×</td></tr><tr><td>128</td><td>129.955</td><td>396.018</td><td>143.735</td><td>171.884</td><td>6.285×</td><td>8.00×</td></tr></tbody></table></div></details>
+</div><div class="chart-readout"></div><div class="chart-footer"><span>横轴：四卡总 batch size（16–128）<br>纵轴：单 token 周期比（BS16 = 1）<br>统计范围：每档同一套 49 个 decode step 采样点（7 批请求 × 每批 7 个采样位置），排除 step001</span><span><a href="assets/kernel-per-token.png" download>完整图 PNG</a><a href="assets/kernel-per-token.svg" download>完整图 SVG</a></span></div><script type="application/json" class="chart-config">{"title": "单 token 成本 · batch 增大后是否更高效？", "unit": "单 token 周期比（BS16 = 1）", "series": [{"key": "router", "label": "Router", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 0.7193220338983051, 0.5394915254237288, 0.7376271186440678, 0.6146892655367232, 0.5268765133171913, 0.288728813559322, 0.5939736346516008, 0.5345762711864407, 0.5061941448382127, 0.4640112994350283, 0.5387222946544981, 0.5002421307506053, 0.4668926553672316, 0.1701271186440678], "color": "#2364d2", "dashed": false}, {"key": "routed", "label": "Routed", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 0.8122582095334213, 0.7427121382075688, 0.8973094187776878, 0.8382024126514679, 0.9272510150373658, 0.804687646820099, 0.8609609424096475, 0.8425006873891154, 0.8222752745747491, 0.792897933245241, 0.8332705183473272, 0.8213002883943428, 0.8077766001919069, 0.7864049708280059], "color": "#d85b43", "dashed": false}, {"key": "shared", "label": "Shared", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 0.9064234453989465, 0.8496128963834977, 0.8517976455615655, 0.8305935588786367, 0.8174476917715862, 0.7916534096934987, 0.7987414713472619, 0.8418920352105207, 0.8417358439630154, 0.8309117262346661, 0.8327173939646101, 0.7749799251549172, 0.772878000494927, 0.7624217838583095], "color": "#7856ad", "dashed": false}, {"key": "reduce", "label": "Reduce", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1.0, 0.9444644582918631, 0.9137260059212139, 0.9949728821382724, 1.1469750842625046, 1.049074675090513, 0.9294008038895379, 0.9949590647703395, 1.115842294488439, 1.0908704728709921, 1.1095994120256176, 1.0888573701998667, 1.0576899345029456, 1.0401513479596693, 0.9660569542710632], "color": "#0d8d7b", "dashed": false}, {"key": "reference", "label": "BS16 单 token 成本 = 1", "x": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "y": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], "color": "#8492a6", "dashed": true}], "band": null, "labels": false, "initialBatch": 32}</script></figure><p class="reading-note">纵轴 = 周期增长倍数 ÷ batch 增长倍数。低于 1 表示每 token 的周期成本下降；高于 1 表示上升。参考线 1 对应 BS16 的单 token 成本。</p><details class="data-details"><summary>查看逐 kernel 耗时与增长明细</summary><div class="table-scroll" tabindex="0"><table><caption>行：四卡总 batch；列：49 点平均的单层阶段耗时（μs）、Routed 周期倍数及 batch 倍数。Shared 仅 EP0，逐阶段独立取最大 rank。</caption><thead><tr><th scope="col">总 batch</th><th scope="col">Router · μs/层</th><th scope="col">Routed · μs/层</th><th scope="col">Shared · μs/层</th><th scope="col">Reduce · μs/层</th><th scope="col">Routed / BS16</th><th scope="col">线性参考</th></tr></thead><tbody><tr><td>16</td><td>7.375</td><td>63.024</td><td>23.573</td><td>26.949</td><td>1.000×</td><td>1.00×</td></tr><tr><td>24</td><td>7.957</td><td>76.787</td><td>32.050</td><td>38.179</td><td>1.218×</td><td>1.50×</td></tr><tr><td>32</td><td>7.957</td><td>93.617</td><td>40.055</td><td>49.248</td><td>1.485×</td><td>2.00×</td></tr><tr><td>40</td><td>13.600</td><td>141.379</td><td>50.197</td><td>67.034</td><td>2.243×</td><td>2.50×</td></tr><tr><td>48</td><td>13.600</td><td>158.480</td><td>58.737</td><td>92.730</td><td>2.515×</td><td>3.00×</td></tr><tr><td>56</td><td>13.600</td><td>204.536</td><td>67.442</td><td>98.951</td><td>3.245×</td><td>3.50×</td></tr><tr><td>64</td><td>8.518</td><td>202.858</td><td>74.645</td><td>100.187</td><td>3.219×</td><td>4.00×</td></tr><tr><td>72</td><td>19.712</td><td>244.174</td><td>84.728</td><td>120.660</td><td>3.874×</td><td>4.50×</td></tr><tr><td>80</td><td>19.712</td><td>265.487</td><td>99.228</td><td>150.356</td><td>4.213×</td><td>5.00×</td></tr><tr><td>88</td><td>20.532</td><td>285.025</td><td>109.130</td><td>161.690</td><td>4.523×</td><td>5.50×</td></tr><tr><td>96</td><td>20.532</td><td>299.828</td><td>117.520</td><td>179.417</td><td>4.757×</td><td>6.00×</td></tr><tr><td>104</td><td>25.825</td><td>341.353</td><td>127.590</td><td>190.735</td><td>5.416×</td><td>6.50×</td></tr><tr><td>112</td><td>25.825</td><td>362.330</td><td>127.877</td><td>199.528</td><td>5.749×</td><td>7.00×</td></tr><tr><td>120</td><td>25.825</td><td>381.818</td><td>136.640</td><td>210.235</td><td>6.058×</td><td>7.50×</td></tr><tr><td>128</td><td>10.037</td><td>396.497</td><td>143.778</td><td>208.276</td><td>6.291×</td><td>8.00×</td></tr></tbody></table></div></details>
   <p class="reading-note">49 点平均下，当前全部档位的 Routed 相对 BS16 均未超过线性参考。相对 BS16 次线性不代表任意相邻两档均次线性；仅凭曲线不能唯一归因于编译器或 kernel 调度。</p>
   <div class="links"><a href="data/zeus-49-stages.csv" download>49 点逐 kernel 周期 CSV ↓</a></div>
 </section>
@@ -3306,31 +3307,32 @@ L 359.847427 377.032768
     <div><dt>统计与选择</dt><dd>同一 batch 的 49 个点按总 token / 总时间汇总。train 3 批、validation 2 批、test 2 批；只用 train 选择 batch，随后报告 holdout。同一请求的多个 step 存在关联，不视作 49 个独立同分布样本。</dd></div>
     <div><dt>采样口径修订</dt><dd>2026-11-03 按维护者要求，在查看早期路由分布后排除 step001；不宣称已证明旧采集损坏。原始 56 点数据和数值资格留作历史归档，不参与当前性能曲线。</dd></div>
   </dl>
-  <div class="table-scroll" tabindex="0"><table><caption>行：执行平台；列：只用 train 选择的四卡总 batch，以及该档在 validation / test 上的单卡吞吐。每批均保留七步。</caption><thead><tr><th scope="col">平台</th><th scope="col">train 选择总 batch</th><th scope="col">validation · tokens/s/card</th><th scope="col">test · tokens/s/card</th></tr></thead><tbody><tr><td>H200</td><td>128</td><td>1638.62</td><td>1633.30</td></tr><tr><td>Zeus</td><td>128</td><td>980.65</td><td>979.61</td></tr></tbody></table></div>
+  <div class="table-scroll" tabindex="0"><table><caption>行：执行平台；列：只用 train 选择的四卡总 batch，以及该档在 validation / test 上的单卡吞吐。每批均保留七步。</caption><thead><tr><th scope="col">平台</th><th scope="col">train 选择总 batch</th><th scope="col">validation · tokens/s/card</th><th scope="col">test · tokens/s/card</th></tr></thead><tbody><tr><td>H200</td><td>128</td><td>1638.62</td><td>1633.30</td></tr><tr><td>Zeus</td><td>32</td><td>1135.54</td><td>1131.78</td></tr></tbody></table></div>
 </section>
 
 <section id="protocol">
   <div class="section-head"><div><span class="section-num">04 / MEASUREMENT & VALIDATION</span><h2>测量边界与验证记录</h2></div></div>
   <div class="grid2">
-    <div class="mini"><h3>Zeus <span>TP4 × EP4</span></h3><p>4 card / 16 rank / 32 core，400 MHz。每个 launch 取最慢 core，rank 内累加阶段，逐层取最慢 rank，最后累加 42 层。</p><code>tokens/s/card = 总 BS × 400,000,000 ÷ cycles ÷ 4</code></div>
+    <div class="mini"><h3>Zeus <span>TP4 × EP4</span></h3><p>4 card / 16 rank / 32 core，400 MHz。每个 launch 取最慢 core；每层先取最慢本地 Router，再加最慢 rank 的 Shared + Routed + Reduce，最后累加 42 层。gather 依赖作为阶段边界，真实通信耗时未计入。</p><code>cycles = Σ层 [max_owner(Router) + max_rank(Shared + Routed + Reduce)]<br>tokens/s/card = 总 BS × 400,000,000 ÷ cycles ÷ 4</code></div>
     <div class="mini"><h3>H200 <span>MoE TP1 × EP4</span></h3><p>4 张 H200 NVL，每卡 72 个完整 Routed 专家；独立 FP8 Shared 跨四卡 TP4。各层先取每轮重复均值，再取轮次中位数，取最慢 EP 后累加 42 层。</p><code>tokens/s/card = 总 BS × 1,000 ÷ ms ÷ 4</code></div>
   </div>
-  <p class="quality">激活采集拓扑为 TP4/EP1，与执行拓扑分开记录。当前 Zeus 统计纳入 493,920 个时序 case；H200 保留 2,940 个 rank case / 123,480 个层卡点。本轮没有 VCS/RTL 或整模型性能结论。</p>
-  <details><summary>查看时序资格、数值验证与解析误差</summary><p>本轮直接重测保留的 49 个 decode step 采样点，共 493,920 个时序 case，176 个并行 worker，宿主耗时 2.16 小时，零失败。全部新旧输入、Router IDs、权重已对齐；Router/Shared/Reduce cycles 不变。H200 复用同输入的已完成测量，本轮未重新测量 H200。</p><p>当前源码独立数值资格：65 项 kernel 回归通过；train00/step017 上新旧合计 30 个完整模式 case 通过原有实现参考、Reduce exact 和 Graph 门禁，15 对保存 tensor 完全一致。15 对完整/时序模式的逐 launch/core cycles、Router IDs、输入/权重和去除构建日期后的 zbin 内容一致。历史 step001 资格单独保留。</p><p>时序模式只用于周期评估，保持真实 Router；Routed/Shared 的 PE 数值乘加被省略，其输出及下游 Reduce 不计为数值 PASS。</p><p>本轮源码 <code>b6148f989e6a</code> 的 <a href="https://github.com/DarronTam/torch_zeus/actions/runs/41608043994">完整 CI 已通过</a>。</p><p>历史 train00/step001 的完整数值基线要求实现参考、Reduce exact、两次 Graph replay 和 changed-input Graph 门禁通过；其中 <b>6270</b> 个 case 超出局部解析数学预算。该诊断与实现参考及 Graph 门禁分开记录，阈值未放宽。</p><p>端到端影响由算法团队持续进行真实推理评估。维护者已向算法团队确认，目前真实推理任务未观察到相应问题；该反馈不替代组件精度记录。采样口径修订后 80 项 CPU 检查通过，最新 PR CI 以 <a href="https://github.com/DarronTam/torch_zeus/pull/643/checks">GitHub checks</a> 为准。</p></details>
-  <details><summary>查看冻结工具链与源码版本</summary><div class="table-scroll" tabindex="0"><table><caption>行：工具链或 kernel 组件；列：冻结 commit 或文件指纹，与本轮测量绑定。</caption><thead><tr><th scope="col">组件</th><th scope="col">冻结版本 / SHA256</th></tr></thead><tbody><tr><td>triton_shared</td><td><code>4ec41039673c0c6afea9537f789b94d3e6137d6a</code></td></tr><tr><td>triton</td><td><code>5321c2ebe470d2527078491642b136a13ab72c49</code></td></tr><tr><td>cyclesim</td><td><code>b39990784ba2e1324c258c1db5fb02c13f93953b</code></td></tr><tr><td>cyclesim_binary_sha256</td><td><code>efdf5ee46eac45b7c6bc0f15641eb1e194bca7680d160eb3ab4ea5bc8a025ea6</code></td></tr><tr><td>routed_sha256</td><td><code>740faf3ba64c139c9c44df110fb67194b9a3f3afa12828e366f5b20f9013ed58</code></td></tr></tbody></table></div><p class="quality">本轮性能 kernel 源码：<a href="https://github.com/DarronTam/torch_zeus/commit/b6148f989e6a5974040ef3ab1e896d236f21db27"><code>b6148f989e6a</code></a>。更新编译器或 kernel 后需建立新版本记录。</p></details>
+  <p class="quality">激活采集拓扑为 TP4/EP1，与执行拓扑分开记录。当前 Zeus 统计纳入 493,920 个时序 case；H200 保留 2,940 个 rank case / 123,480 个层卡点。Zeus 使用捕获的 H1 输出和 CPU collective double，不计 H1、真实通信、host/JIT，也没有新增 VCS/RTL 或整模型性能结论。</p>
+  <details><summary>查看时序资格、数值验证与解析误差</summary><p>本轮 49 个 decode step 采样点共 493,920 个时序 case、672 个 shard 全部完成，192 workers，宿主耗时 3.41 小时，零失败。全量唯一覆盖、输入/权重与资格 hash 审计通过；H200 沿用同输入的原测量。</p><p>独立数值资格：361 项 MoE 回归通过；train00/step017、全部 15 档、layer/rank (3,0)/(5,15)/(44,4) 的 45 项完整模式通过实现参考、完整/本地 Router 逐位比较、Reduce exact 和 changed-input Graph；45 对完整/时序模式的逐 launch/core cycles、输入/权重、Router 结果与语义 zbin 一致。</p><p>当前完整模式中仍有 <b>18</b> 项解析 SiLU 数学预算超限：layer5/rank15 的 BS112/120/128，以及 layer44/rank4 的全部 15 档。原阈值不变，单列诊断，不与实现参考或 Graph 门禁混淆。</p><p>时序模式保持真实 Router，仅省略已资格 Routed/Shared 的 PE 数值乘加；时序输出及下游 Reduce 不计为数值 PASS，493,920 个时序 case 不代表全矩阵数值验收。</p><p>测量源码 <code>1648b5c5aad4</code>；整理后的 PR head <code>f4ce26eabcc9</code> 与其保留代码、测试及 benchmark 脚本逐文件一致。PR head 的 <a href="https://github.com/DarronTam/torch_zeus/actions/runs/41805749655">CI 尚在运行 / 排队</a>（发布时快照，实时状态见 GitHub），旧 SHA 的 CI 不继承为新 SHA 的 PASS。</p><p>历史 train00/step001 的完整数值基线要求实现参考、Reduce exact、两次 Graph replay 和 changed-input Graph 门禁通过；其中 <b>6270</b> 个 case 超出局部解析数学预算。该诊断与实现参考及 Graph 门禁分开记录，阈值未放宽。</p><p>端到端影响由算法团队持续进行真实推理评估。维护者已向算法团队确认，目前真实推理任务未观察到相应问题；该反馈不替代组件精度记录。采样口径修订后 80 项 CPU 检查通过，最新 PR CI 以 <a href="https://github.com/DarronTam/torch_zeus/pull/643/checks">GitHub checks</a> 为准。</p></details>
+  <details><summary>查看冻结工具链与源码版本</summary><div class="table-scroll" tabindex="0"><table><caption>行：工具链或 kernel 组件；列：冻结 commit 或文件指纹，与本轮测量绑定。</caption><thead><tr><th scope="col">组件</th><th scope="col">冻结版本 / SHA256</th></tr></thead><tbody><tr><td>torch_zeus_measured</td><td><code>1648b5c5aad4654f14d66bb9ccbd96b02af72ae7</code></td></tr><tr><td>torch_zeus_pr_head</td><td><code>f4ce26eabcc964650064c75635ebc750a38ccfa8</code></td></tr><tr><td>sglang</td><td><code>49542794a358528c3d95c848cbdf0df33310e2ff</code></td></tr><tr><td>triton_shared</td><td><code>d78b531acacedeb002d72d72017f1abf1ed208c7</code></td></tr><tr><td>triton</td><td><code>5321c2ebe470d2527078491642b136a13ab72c49</code></td></tr><tr><td>cyclesim</td><td><code>b39990784ba2e1324c258c1db5fb02c13f93953b</code></td></tr><tr><td>cyclesim_binary_sha256</td><td><code>efdf5ee46eac45b7c6bc0f15641eb1e194bca7680d160eb3ab4ea5bc8a025ea6</code></td></tr></tbody></table></div><p class="quality">本轮性能 kernel 源码：<a href="https://github.com/DarronTam/torch_zeus/commit/1648b5c5aad4654f14d66bb9ccbd96b02af72ae7"><code>1648b5c5aad4</code></a>。更新编译器或 kernel 后需建立新版本记录。</p></details>
   <div class="links"><a href="data/benchmark.json" download>完整数据与来源 JSON ↓</a><a href="https://github.com/Xuanwen-Wang/notes/tree/master/models/glm53-flash">页面与生成脚本 ↗</a></div>
 </section>
 
 <section id="history">
   <div class="section-head"><div><span class="section-num">05 / CHANGELOG</span><h2>版本记录</h2></div></div>
+  <div class="timeline"><div><time>2026-11-04</time><p><b>统一本地 Router 与 direct transport · 完整 49 点复测</b><br>测量源码 1648b5c5，PR 整理后为代码等价的 f4ce26ea；编译器 d78b531a。493,920 个时序 case / 672 个 shard 零失败，输入/权重身份全部匹配。15 档吞吐提高 2.1%–17.1%，BS32 为当前最高 1,134.6 tokens/s/card；BS128 为 1,086.6。<a href="versions/20261104-1648b5c5/data/benchmark.json">本轮固定数据快照</a> · <a href="data/flow-revision.json">完整流程对照 JSON</a> · <a href="data/flow-comparison.csv">对照 CSV</a>。</p><p>Router 从 accurate 改为 calibrated；206,288 / 493,920 条 rank-case 记录的 Router IDs 与历史不同。流程、sigmoid 与编译器同时变化，不能把收益全部归因于 Routed 调度。H200 沿用原有同输入测量。</p></div></div>
+  <details class="data-details"><summary>查看本轮完整流程与上一版：相同 49 个采样点</summary><div class="table-scroll" tabindex="0"><table><caption>行：四卡总 batch；列：旧/新版单卡吞吐、吞吐变化及四阶段 cycles 变化（负值为周期降低）。同一组输入/权重，流程、sigmoid 和编译器同时变化；不是固定路由的 Routed 单独优化 A/B。</caption><thead><tr><th scope="col">总 batch</th><th scope="col">旧版 tokens/s/card</th><th scope="col">新版 tokens/s/card</th><th scope="col">MoE 吞吐变化</th><th scope="col">Router cycles 变化</th><th scope="col">Routed cycles 变化</th><th scope="col">Shared cycles 变化</th><th scope="col">Reduce cycles 变化</th></tr></thead><tbody><tr><td>16</td><td>794.8</td><td>889.6</td><td>+11.93%</td><td>-64.56%</td><td>+0.02%</td><td>+0.17%</td><td>+1.00%</td></tr><tr><td>24</td><td>923.9</td><td>1036.5</td><td>+12.19%</td><td>-70.00%</td><td>+1.01%</td><td>+0.10%</td><td>+0.75%</td></tr><tr><td>32</td><td>969.1</td><td>1134.6</td><td>+17.07%</td><td>-78.53%</td><td>+0.05%</td><td>+0.07%</td><td>+0.48%</td></tr><tr><td>40</td><td>877.4</td><td>956.9</td><td>+9.05%</td><td>-71.92%</td><td>+0.84%</td><td>+3.14%</td><td>+15.79%</td></tr><tr><td>48</td><td>935.5</td><td>956.8</td><td>+2.28%</td><td>-72.82%</td><td>+0.34%</td><td>+2.49%</td><td>+35.41%</td></tr><tr><td>56</td><td>875.7</td><td>941.9</td><td>+7.55%</td><td>-77.82%</td><td>+0.11%</td><td>+2.26%</td><td>+23.51%</td></tr><tr><td>64</td><td>945.2</td><td>1072.7</td><td>+13.50%</td><td>-88.31%</td><td>+0.51%</td><td>+0.07%</td><td>+12.41%</td></tr><tr><td>72</td><td>923.6</td><td>991.6</td><td>+7.37%</td><td>-72.98%</td><td>+0.30%</td><td>+1.79%</td><td>+18.51%</td></tr><tr><td>80</td><td>939.4</td><td>961.1</td><td>+2.30%</td><td>-76.57%</td><td>+0.26%</td><td>+8.00%</td><td>+36.84%</td></tr><tr><td>88</td><td>934.3</td><td>982.0</td><td>+5.11%</td><td>-78.54%</td><td>+0.54%</td><td>+8.56%</td><td>+30.79%</td></tr><tr><td>96</td><td>977.6</td><td>997.8</td><td>+2.07%</td><td>-78.59%</td><td>+0.27%</td><td>+7.65%</td><td>+37.42%</td></tr><tr><td>104</td><td>936.5</td><td>974.8</td><td>+4.09%</td><td>-75.86%</td><td>+0.22%</td><td>+8.30%</td><td>+31.07%</td></tr><tr><td>112</td><td>952.8</td><td>1003.7</td><td>+5.35%</td><td>-78.21%</td><td>+0.19%</td><td>+1.13%</td><td>+31.92%</td></tr><tr><td>120</td><td>956.3</td><td>1021.1</td><td>+6.78%</td><td>-78.29%</td><td>+0.36%</td><td>+1.15%</td><td>+25.55%</td></tr><tr><td>128</td><td>980.4</td><td>1086.6</td><td>+10.83%</td><td>-92.28%</td><td>+0.12%</td><td>+0.03%</td><td>+21.17%</td></tr></tbody></table></div></details>
   <div class="timeline"><div><time>2026-11-03</time><p><b>Routed Up 调度更新 · 49 个 decode step 采样点全部重测</b><br>源码 b6148f98，493,920 个时序 case 零失败，完整 CI 通过。四卡归一化吞吐在本扫描内最高为 BS128：980.4 tokens/s/card，较旧版同档提升 3.93%；H200 同输入数据沿用原测量。<a href="versions/20261103-b6148f98/data/benchmark.json">本轮固定数据快照</a> · <a href="versions/20261103-e93a57a7/data/benchmark.json">旧版 49 点统计</a> · <a href="data/routed-revision.json">同输入 A/B 数据</a>。</p></div></div>
-  <details class="data-details"><summary>查看本轮 Routed 优化前后：相同 49 个采样点</summary><div class="table-scroll" tabindex="0"><table><caption>行：四卡总 batch；列：旧/新版的单卡吞吐及变化。双方采用相同 49 个采样点、完整 42 层与相同工具链；阶段降幅不可直接当作 MoE 吞吐提升。</caption><thead><tr><th scope="col">总 batch</th><th scope="col">旧版 tokens/s/card</th><th scope="col">新版 tokens/s/card</th><th scope="col">MoE 吞吐提升</th><th scope="col">Routed cycles 降幅</th></tr></thead><tbody><tr><td>16</td><td>794.8</td><td>794.8</td><td>0.00%</td><td>0.00%</td></tr><tr><td>24</td><td>923.9</td><td>923.9</td><td>0.00%</td><td>0.00%</td></tr><tr><td>32</td><td>969.1</td><td>969.1</td><td>0.00%</td><td>0.00%</td></tr><tr><td>40</td><td>866.3</td><td>877.4</td><td>1.28%</td><td>2.16%</td></tr><tr><td>48</td><td>934.7</td><td>935.5</td><td>0.09%</td><td>0.59%</td></tr><tr><td>56</td><td>872.5</td><td>875.7</td><td>0.37%</td><td>1.09%</td></tr><tr><td>64</td><td>908.8</td><td>945.2</td><td>4.01%</td><td>8.54%</td></tr><tr><td>72</td><td>890.3</td><td>923.6</td><td>3.74%</td><td>7.76%</td></tr><tr><td>80</td><td>904.6</td><td>939.4</td><td>3.84%</td><td>7.92%</td></tr><tr><td>88</td><td>900.2</td><td>934.3</td><td>3.80%</td><td>8.19%</td></tr><tr><td>96</td><td>940.2</td><td>977.6</td><td>3.99%</td><td>8.36%</td></tr><tr><td>104</td><td>903.0</td><td>936.5</td><td>3.70%</td><td>7.87%</td></tr><tr><td>112</td><td>917.7</td><td>952.8</td><td>3.82%</td><td>7.97%</td></tr><tr><td>120</td><td>921.0</td><td>956.3</td><td>3.83%</td><td>8.20%</td></tr><tr><td>128</td><td>943.4</td><td>980.4</td><td>3.93%</td><td>8.28%</td></tr></tbody></table></div></details>
   <div class="timeline"><div><time>2026-11-03</time><p><b>以 49 点总体对比作为主视图</b><br>移除单点对比区；增加 kernel 介绍、坐标与统计范围说明、侧边导航。指标和原始测量保持不变。</p></div><div><time>2026-11-03</time><p><b>统一排除 step001</b><br>双方全部 batch 采用 49 点统计，重算吞吐和 kernel 曲线。<a href="data/20261102-full56/benchmark.json">原 56 点归档</a>仅用于追溯。</p></div><div><time>2026-11-02</time><p><b>成对输入与 BS128 Routed</b><br>接入 bounded multi-window 与大 batch 静态展开；完成 15 档扫描，H200 使用 EP4 基线。</p></div></div>
   <details><summary>历史五档 A/B：仅保留优化证据</summary><p class="quality">BS16/24/32/40/48 的旧实验共 3,360 case，各档使用不同 decode step，不能用来选最佳 batch，不参与当前曲线。</p><div class="table-scroll" tabindex="0"><table><caption>行：四卡总 batch；列：42 层周期、时间降低百分比、42 层毫秒数与单卡吞吐。历史同 batch 前后输入相同，不同 batch 的 step 不同。</caption><thead><tr><th scope="col">总 BS</th><th scope="col">优化前 cycles</th><th scope="col">优化后 cycles</th><th scope="col">时间降低</th><th scope="col">优化后 ms</th><th scope="col">tokens/s/card</th></tr></thead><tbody><tr><td>16</td><td>1,993,815</td><td>1,993,815</td><td>0.00%</td><td>4.9845</td><td>802.5</td></tr><tr><td>24</td><td>2,610,111</td><td>2,610,111</td><td>0.00%</td><td>6.5253</td><td>919.5</td></tr><tr><td>32</td><td>3,268,861</td><td>3,268,861</td><td>0.00%</td><td>8.1722</td><td>978.9</td></tr><tr><td>40</td><td>5,774,106</td><td>5,226,322</td><td>9.49%</td><td>13.0658</td><td>765.4</td></tr><tr><td>48</td><td>6,595,107</td><td>5,417,135</td><td>17.86%</td><td>13.5428</td><td>886.1</td></tr></tbody></table></div><div class="table-scroll" tabindex="0"><table><caption>行：四卡总 batch，末行为 BS48 / BS16 倍数；列：各阶段单层平均耗时（μs）。独立最大 rank，不可相加作为 MoE 时间。</caption><thead><tr><th scope="col">总 BS</th><th scope="col">Router μs</th><th scope="col">Routed μs</th><th scope="col">Shared μs</th><th scope="col">Reduce μs</th></tr></thead><tbody><tr><td>16</td><td>20.810</td><td>63.004</td><td>23.532</td><td>26.946</td></tr><tr><td>24</td><td>26.523</td><td>78.824</td><td>32.017</td><td>39.302</td></tr><tr><td>32</td><td>37.055</td><td>95.851</td><td>40.025</td><td>50.819</td></tr><tr><td>40</td><td>48.428</td><td>192.608</td><td>48.667</td><td>58.826</td></tr><tr><td>48</td><td>50.030</td><td>181.296</td><td>57.310</td><td>71.110</td></tr><tr><td>48 / 16</td><td>2.404×</td><td>2.878×</td><td>2.435×</td><td>2.639×</td></tr></tbody></table></div><div class="table-scroll" tabindex="0"><table><caption>行：四卡总 batch；列：超出局部解析预算的 case 数 / 该阶段总 case 数。与实现参考/Graph 门禁分开记录。</caption><thead><tr><th scope="col">总 BS</th><th scope="col">Routed 解析预算超限 / 672</th><th scope="col">Shared 解析预算超限 / 168</th></tr></thead><tbody><tr><td>16</td><td>173</td><td>0</td></tr><tr><td>24</td><td>229</td><td>1</td></tr><tr><td>32</td><td>273</td><td>2</td></tr><tr><td>40</td><td>346</td><td>0</td></tr><tr><td>48</td><td>362</td><td>1</td></tr></tbody></table></div></details>
 </section>
 <footer class="footer">GLM-5.3-Flash · 持续更新的性能记录。静态 HTML 支持离线阅读；曲线可筛选，PNG / SVG 保留完整序列。每卡 batch 为总 batch ÷ 4，不是专家实际收到的 token 数。</footer>
 </main>
-<script type="application/json" id="benchmark-data">{"updated": "2026-11-03", "protocol": {"cards": 4, "layers": 42, "frequency_mhz": 400, "batches": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "pair": {"group": "train00", "step": 17}, "zeus_ranks": 16, "zeus_cores": 32, "aggregation": "sum_layer(max_rank(sum_stage(sum_launch(max_core(cycles)))))", "sampling_policy": {"effective_date": "2026-11-03", "excluded_steps": [1], "included_steps": [17, 33, 49, 65, 81, 97, 113], "points_per_batch": 49, "request_groups": 7, "reason": "User-directed protocol revision after inspecting early-step routing; not a capture-corruption finding", "scope": "all batches, both platforms, all splits; historical raw and numerical records retained"}}, "h200": {"complete": true, "pairs": 49, "rows": [{"batch_size": 16, "batch_per_card": 4.0, "mean_ms": 10.23278759359097, "tokens_s_card": 390.9003253918113, "p10": 373.3968432032077, "p90": 420.0975199490263, "paired_ms": 9.053205326199533, "paired_tokens_s_card": 441.8324621915064, "mean_active_experts": 78.28036929057338}, {"batch_size": 24, "batch_per_card": 6.0, "mean_ms": 12.028417087533848, "tokens_s_card": 498.818751988435, "p10": 475.3619915427574, "p90": 547.6495978131537, "paired_ms": 10.769461303949356, "paired_tokens_s_card": 557.1309307550687, "mean_active_experts": 100.32896015549076}, {"batch_size": 32, "batch_per_card": 8.0, "mean_ms": 13.29528272091126, "tokens_s_card": 601.7171780346827, "p10": 569.6471729695039, "p90": 668.0825807970674, "paired_ms": 11.6655893822511, "paired_tokens_s_card": 685.7776095026795, "mean_active_experts": 117.8265306122449}, {"batch_size": 40, "batch_per_card": 10.0, "mean_ms": 14.232735785598658, "tokens_s_card": 702.6056093951005, "p10": 665.2762194976868, "p90": 781.0270695117313, "paired_ms": 12.165311997135479, "paired_tokens_s_card": 822.009332958716, "mean_active_experts": 131.66909620991254}, {"batch_size": 48, "batch_per_card": 12.0, "mean_ms": 15.043765555332307, "tokens_s_card": 797.6726276318873, "p10": 754.4019895266308, "p90": 893.0389047430751, "paired_ms": 12.773119991024336, "paired_tokens_s_card": 939.4728937356256, "mean_active_experts": 142.91350826044703}, {"batch_size": 56, "batch_per_card": 14.0, "mean_ms": 15.751678912716658, "tokens_s_card": 888.7941455369249, "p10": 837.5898511729962, "p90": 994.0887270424912, "paired_ms": 13.548799986640613, "paired_tokens_s_card": 1033.3018432484264, "mean_active_experts": 152.01506316812439}, {"batch_size": 64, "batch_per_card": 16.0, "mean_ms": 16.37547145388564, "tokens_s_card": 977.0711057117963, "p10": 920.8268318839378, "p90": 1105.8821157162142, "paired_ms": 14.073578680555025, "paired_tokens_s_card": 1136.8821223919858, "mean_active_experts": 160.290573372206}, {"batch_size": 72, "batch_per_card": 18.0, "mean_ms": 17.109083434959658, "tokens_s_card": 1052.072723148915, "p10": 991.4268967856484, "p90": 1195.244414549979, "paired_ms": 14.783701305588087, "paired_tokens_s_card": 1217.5570669299295, "mean_active_experts": 167.1793002915452}, {"batch_size": 80, "batch_per_card": 20.0, "mean_ms": 17.572458673293898, "tokens_s_card": 1138.1446598816253, "p10": 1073.3950191843114, "p90": 1285.1953990916236, "paired_ms": 15.330549359321594, "paired_tokens_s_card": 1304.5846910788746, "mean_active_experts": 173.15597667638485}, {"batch_size": 88, "batch_per_card": 22.0, "mean_ms": 17.959556792058102, "tokens_s_card": 1224.9745500250108, "p10": 1157.010568994701, "p90": 1382.8095404845026, "paired_ms": 15.582623978455858, "paired_tokens_s_card": 1411.8289724770773, "mean_active_experts": 178.2930029154519}, {"batch_size": 96, "batch_per_card": 24.0, "mean_ms": 18.3007253369912, "tokens_s_card": 1311.423430386602, "p10": 1233.1884888149486, "p90": 1482.4216884001303, "paired_ms": 15.767519921064379, "paired_tokens_s_card": 1522.1163581938822, "mean_active_experts": 183.06268221574345}, {"batch_size": 104, "batch_per_card": 26.0, "mean_ms": 18.64971863635543, "tokens_s_card": 1394.1229091422356, "p10": 1316.6774341248808, "p90": 1589.7615246781124, "paired_ms": 16.061962683995564, "paired_tokens_s_card": 1618.7311919175904, "mean_active_experts": 187.18415937803692}, {"batch_size": 112, "batch_per_card": 28.0, "mean_ms": 18.947759228093283, "tokens_s_card": 1477.7472978696726, "p10": 1394.9672734977537, "p90": 1685.2381729072029, "paired_ms": 16.37532805403074, "paired_tokens_s_card": 1709.8894084816752, "mean_active_experts": 190.87172011661806}, {"batch_size": 120, "batch_per_card": 30.0, "mean_ms": 19.278208654348543, "tokens_s_card": 1556.1611837432295, "p10": 1471.9410283841019, "p90": 1774.6114576158366, "paired_ms": 16.778506636619568, "paired_tokens_s_card": 1788.001795971767, "mean_active_experts": 194.4854227405248}, {"batch_size": 128, "batch_per_card": 32.0, "mean_ms": 19.56351564267055, "tokens_s_card": 1635.6978257120554, "p10": 1546.147403505315, "p90": 1864.9471452319328, "paired_ms": 17.014047960440315, "paired_tokens_s_card": 1880.798741980968, "mean_active_experts": 197.48104956268222}], "selection": {"selected_batch_size": 128, "selection_split": "train", "holdout": {"validation": 1638.623255834377, "test": 1633.3006027710092}}, "plan_sha256": "49dd4d22873ede4db25601ba6c0779b7ad1cf1becf971c6dac54bef15e39c9c3", "summary_sha256": "92685dd56b521ff9618882aaccf81cdbf5c303dd0a8247b8e3299aeaed376d03"}, "zeus_population": {"complete": true, "cases": 493920, "measured_cases": 493920, "excluded_cases": 0, "pairs": 49, "rows": [{"batch_size": 16, "cycles": 2013094.2857142857, "milliseconds": 5.032735714285714, "tokens_s_card": 794.7963547232903, "p10": 785.6268007878039, "p90": 803.6751376263092, "stages": {"router": 349608, "routed": 1058618.8979591837, "shared": 395346, "reduce": 448285.5918367347}}, {"batch_size": 24, "cycles": 2597740.8775510206, "milliseconds": 6.494352193877551, "tokens_s_card": 923.8796758907542, "p10": 913.9531343100545, "p90": 932.6148448426316, "stages": {"router": 445578, "routed": 1277114.775510204, "shared": 537894, "reduce": 636617.7142857143}}, {"batch_size": 32, "cycles": 3301892.4285714286, "milliseconds": 8.254731071428571, "tokens_s_card": 969.141202878159, "p10": 961.4796717125884, "p90": 977.0434052000005, "stages": {"router": 622524, "routed": 1571965.2857142857, "shared": 672420, "reduce": 823403.1428571428}}, {"batch_size": 40, "cycles": 4558787.0612244895, "milliseconds": 11.396967653061225, "tokens_s_card": 877.4263737875926, "p10": 869.4922565017386, "p90": 883.9401737037623, "stages": {"router": 813582, "routed": 2355284.1836734693, "shared": 817614, "reduce": 972567.3673469388}}, {"batch_size": 48, "cycles": 5130965.714285715, "milliseconds": 12.827414285714285, "tokens_s_card": 935.4964089188446, "p10": 926.7606692109703, "p90": 941.7225227771988, "stages": {"router": 840504, "routed": 2653321.551020408, "shared": 962808, "reduce": 1150480.3673469387}}, {"batch_size": 56, "cycles": 6394650.1632653065, "milliseconds": 15.986625408163265, "tokens_s_card": 875.7320349078278, "p10": 868.0445012280555, "p90": 882.5344249168771, "stages": {"router": 1030218, "routed": 3432544.1224489794, "shared": 1108002, "reduce": 1345974.0204081633}}, {"batch_size": 64, "cycles": 6771207.571428572, "milliseconds": 16.92801892857143, "tokens_s_card": 945.1785272401189, "p10": 937.0693397815004, "p90": 954.4600845990586, "stages": {"router": 1224384, "routed": 3390596.8571428573, "shared": 1253196, "reduce": 1497261.4081632653}}, {"batch_size": 72, "cycles": 7795730.653061224, "milliseconds": 19.48932663265306, "tokens_s_card": 923.5824479354873, "p10": 916.6815354169358, "p90": 931.0593156734163, "stages": {"router": 1225644, "routed": 4089990.5102040814, "shared": 1398390, "reduce": 1710495.469387755}}, {"batch_size": 80, "cycles": 8515863.959183674, "milliseconds": 21.289659897959183, "tokens_s_card": 939.4231798844843, "p10": 931.5876903609243, "p90": 948.2029894507696, "stages": {"router": 1413594, "routed": 4448824.979591837, "shared": 1543584, "reduce": 1845943.1836734693}}, {"batch_size": 88, "cycles": 9418657.57142857, "milliseconds": 23.546643928571427, "tokens_s_card": 934.3157380192625, "p10": 924.955968565444, "p90": 943.0802166564885, "stages": {"router": 1607760, "routed": 4762730.653061224, "shared": 1688778, "reduce": 2076976}}, {"batch_size": 96, "cycles": 9819582.285714285, "milliseconds": 24.548955714285714, "tokens_s_card": 977.6383272398726, "p10": 967.8583745034166, "p90": 985.6006819623278, "stages": {"router": 1611120, "routed": 5023420.408163265, "shared": 1833972, "reduce": 2193354.9591836734}}, {"batch_size": 104, "cycles": 11105681.06122449, "milliseconds": 27.764202653061226, "tokens_s_card": 936.4576510585761, "p10": 927.0674861874428, "p90": 944.7254602284784, "stages": {"router": 1797306, "routed": 5722018.816326531, "shared": 1979166, "reduce": 2444714.7551020407}}, {"batch_size": 112, "cycles": 11754947.673469387, "milliseconds": 29.38736918367347, "tokens_s_card": 952.7902897669302, "p10": 944.3991714237671, "p90": 960.8743331539866, "stages": {"router": 1991472, "routed": 6075661.8367346935, "shared": 2124360, "reduce": 2540906.673469388}}, {"batch_size": 120, "cycles": 12548993.612244898, "milliseconds": 31.372484030612245, "tokens_s_card": 956.2519808991528, "p10": 946.7842589506948, "p90": 965.6047198817225, "stages": {"router": 1998654, "routed": 6391405.6122448975, "shared": 2269554, "reduce": 2813231.4081632653}}, {"batch_size": 128, "cycles": 13055837.653061224, "milliseconds": 32.63959413265306, "tokens_s_card": 980.4043478588111, "p10": 971.4401163355856, "p90": 987.9294090767886, "stages": {"router": 2183244, "routed": 6653103.6122448975, "shared": 2414748, "reduce": 2887649.612244898}}], "source_commit": "b6148f989e6a5974040ef3ab1e896d236f21db27", "measurement_mode": "timing_only", "numerical_validation": "separate_full_mode", "evidence_type": "qualified_retained_campaign", "qualification_sha256": "b616fcd9f179770a63e134c8b91f94ffcd03f6a1c3c7d581ac9de55ed4e17ef5", "simulator_source": "b39990784ba2e1324c258c1db5fb02c13f93953b", "binary_sha256": "efdf5ee46eac45b7c6bc0f15641eb1e194bca7680d160eb3ab4ea5bc8a025ea6", "host_seconds": 7778.152662277222, "host_seconds_scope": "retained_49_point_campaign", "workers": 176, "complete_mode_cases": 30, "mode_comparison_cases": 15, "regression_tests": 65, "selected_batch_size": 128, "selection_split": "train", "holdout": {"validation": 980.6502492608266, "test": 979.6099384555135}}, "toolchain": {"triton_shared": "4ec41039673c0c6afea9537f789b94d3e6137d6a", "triton": "5321c2ebe470d2527078491642b136a13ab72c49", "cyclesim": "b39990784ba2e1324c258c1db5fb02c13f93953b", "cyclesim_binary_sha256": "efdf5ee46eac45b7c6bc0f15641eb1e194bca7680d160eb3ab4ea5bc8a025ea6", "routed_sha256": "740faf3ba64c139c9c44df110fb67194b9a3f3afa12828e366f5b20f9013ed58"}}</script>
+<script type="application/json" id="benchmark-data">{"updated": "2026-11-04", "protocol": {"cards": 4, "layers": 42, "frequency_mhz": 400, "batches": [16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128], "pair": {"group": "train00", "step": 17}, "zeus_ranks": 16, "zeus_cores": 32, "aggregation": "sum_layer(max_owner(router_cycles) + max_rank(shared + routed + reduce))", "sampling_policy": {"effective_date": "2026-11-03", "excluded_steps": [1], "included_steps": [17, 33, 49, 65, 81, 97, 113], "points_per_batch": 49, "request_groups": 7, "reason": "User-directed protocol revision after inspecting early-step routing; not a capture-corruption finding", "scope": "all batches, both platforms, all splits; historical raw and numerical records retained"}, "flow": "owner_router_direct_transport", "calibrated_sigmoid": true, "stage_aggregation": "sum_layer(max_rank(stage)); diagnostic only, do not sum stage maxima"}, "h200": {"complete": true, "pairs": 49, "rows": [{"batch_size": 16, "batch_per_card": 4.0, "mean_ms": 10.23278759359097, "tokens_s_card": 390.9003253918113, "p10": 373.3968432032077, "p90": 420.0975199490263, "paired_ms": 9.053205326199533, "paired_tokens_s_card": 441.8324621915064, "mean_active_experts": 78.28036929057338}, {"batch_size": 24, "batch_per_card": 6.0, "mean_ms": 12.028417087533848, "tokens_s_card": 498.818751988435, "p10": 475.3619915427574, "p90": 547.6495978131537, "paired_ms": 10.769461303949356, "paired_tokens_s_card": 557.1309307550687, "mean_active_experts": 100.32896015549076}, {"batch_size": 32, "batch_per_card": 8.0, "mean_ms": 13.29528272091126, "tokens_s_card": 601.7171780346827, "p10": 569.6471729695039, "p90": 668.0825807970674, "paired_ms": 11.6655893822511, "paired_tokens_s_card": 685.7776095026795, "mean_active_experts": 117.8265306122449}, {"batch_size": 40, "batch_per_card": 10.0, "mean_ms": 14.232735785598658, "tokens_s_card": 702.6056093951005, "p10": 665.2762194976868, "p90": 781.0270695117313, "paired_ms": 12.165311997135479, "paired_tokens_s_card": 822.009332958716, "mean_active_experts": 131.66909620991254}, {"batch_size": 48, "batch_per_card": 12.0, "mean_ms": 15.043765555332307, "tokens_s_card": 797.6726276318873, "p10": 754.4019895266308, "p90": 893.0389047430751, "paired_ms": 12.773119991024336, "paired_tokens_s_card": 939.4728937356256, "mean_active_experts": 142.91350826044703}, {"batch_size": 56, "batch_per_card": 14.0, "mean_ms": 15.751678912716658, "tokens_s_card": 888.7941455369249, "p10": 837.5898511729962, "p90": 994.0887270424912, "paired_ms": 13.548799986640613, "paired_tokens_s_card": 1033.3018432484264, "mean_active_experts": 152.01506316812439}, {"batch_size": 64, "batch_per_card": 16.0, "mean_ms": 16.37547145388564, "tokens_s_card": 977.0711057117963, "p10": 920.8268318839378, "p90": 1105.8821157162142, "paired_ms": 14.073578680555025, "paired_tokens_s_card": 1136.8821223919858, "mean_active_experts": 160.290573372206}, {"batch_size": 72, "batch_per_card": 18.0, "mean_ms": 17.109083434959658, "tokens_s_card": 1052.072723148915, "p10": 991.4268967856484, "p90": 1195.244414549979, "paired_ms": 14.783701305588087, "paired_tokens_s_card": 1217.5570669299295, "mean_active_experts": 167.1793002915452}, {"batch_size": 80, "batch_per_card": 20.0, "mean_ms": 17.572458673293898, "tokens_s_card": 1138.1446598816253, "p10": 1073.3950191843114, "p90": 1285.1953990916236, "paired_ms": 15.330549359321594, "paired_tokens_s_card": 1304.5846910788746, "mean_active_experts": 173.15597667638485}, {"batch_size": 88, "batch_per_card": 22.0, "mean_ms": 17.959556792058102, "tokens_s_card": 1224.9745500250108, "p10": 1157.010568994701, "p90": 1382.8095404845026, "paired_ms": 15.582623978455858, "paired_tokens_s_card": 1411.8289724770773, "mean_active_experts": 178.2930029154519}, {"batch_size": 96, "batch_per_card": 24.0, "mean_ms": 18.3007253369912, "tokens_s_card": 1311.423430386602, "p10": 1233.1884888149486, "p90": 1482.4216884001303, "paired_ms": 15.767519921064379, "paired_tokens_s_card": 1522.1163581938822, "mean_active_experts": 183.06268221574345}, {"batch_size": 104, "batch_per_card": 26.0, "mean_ms": 18.64971863635543, "tokens_s_card": 1394.1229091422356, "p10": 1316.6774341248808, "p90": 1589.7615246781124, "paired_ms": 16.061962683995564, "paired_tokens_s_card": 1618.7311919175904, "mean_active_experts": 187.18415937803692}, {"batch_size": 112, "batch_per_card": 28.0, "mean_ms": 18.947759228093283, "tokens_s_card": 1477.7472978696726, "p10": 1394.9672734977537, "p90": 1685.2381729072029, "paired_ms": 16.37532805403074, "paired_tokens_s_card": 1709.8894084816752, "mean_active_experts": 190.87172011661806}, {"batch_size": 120, "batch_per_card": 30.0, "mean_ms": 19.278208654348543, "tokens_s_card": 1556.1611837432295, "p10": 1471.9410283841019, "p90": 1774.6114576158366, "paired_ms": 16.778506636619568, "paired_tokens_s_card": 1788.001795971767, "mean_active_experts": 194.4854227405248}, {"batch_size": 128, "batch_per_card": 32.0, "mean_ms": 19.56351564267055, "tokens_s_card": 1635.6978257120554, "p10": 1546.147403505315, "p90": 1864.9471452319328, "paired_ms": 17.014047960440315, "paired_tokens_s_card": 1880.798741980968, "mean_active_experts": 197.48104956268222}], "selection": {"selected_batch_size": 128, "selection_split": "train", "holdout": {"validation": 1638.623255834377, "test": 1633.3006027710092}}, "plan_sha256": "49dd4d22873ede4db25601ba6c0779b7ad1cf1becf971c6dac54bef15e39c9c3", "summary_sha256": "92685dd56b521ff9618882aaccf81cdbf5c303dd0a8247b8e3299aeaed376d03"}, "zeus_population": {"complete": true, "cases": 493920, "measured_cases": 493920, "excluded_cases": 0, "pairs": 49, "rows": [{"batch_size": 16, "cycles": 1798473.1836734693, "milliseconds": 4.496182959183673, "tokens_s_card": 889.6435123552534, "p10": 878.2381050812611, "p90": 900.9254552028423, "stages": {"router": 123900, "routed": 1058797.857142857, "shared": 396018, "reduce": 452747.7551020408}}, {"batch_size": 24, "cycles": 2315501.3469387754, "milliseconds": 5.7887533673469385, "tokens_s_card": 1036.4925950800834, "p10": 1023.5326512667933, "p90": 1047.8395149126534, "stages": {"router": 133686, "routed": 1290025.8775510204, "shared": 538440, "reduce": 641406.2448979592}}, {"batch_size": 32, "cycles": 2820448.2448979593, "milliseconds": 7.051120612244898, "tokens_s_card": 1134.571430547832, "p10": 1123.6348384343557, "p90": 1145.5387847836776, "stages": {"router": 133686, "routed": 1572764.0408163266, "shared": 672924, "reduce": 827374.7959183673}}, {"batch_size": 40, "cycles": 4180368.897959184, "milliseconds": 10.45092224489796, "tokens_s_card": 956.8533537680757, "p10": 947.7786326584725, "p90": 964.464458691772, "stages": {"router": 228480, "routed": 2375173.224489796, "shared": 843318, "reduce": 1126179.3469387756}}, {"batch_size": 48, "cycles": 5016682, "milliseconds": 12.541705, "tokens_s_card": 956.8077067671421, "p10": 948.0427335293504, "p90": 964.6694641061777, "stages": {"router": 228480, "routed": 2662460.7551020407, "shared": 986790, "reduce": 1557871.1836734693}}, {"batch_size": 56, "cycles": 5945597.020408163, "milliseconds": 14.863992551020408, "tokens_s_card": 941.8734537134106, "p10": 932.8079208870653, "p90": 950.0613205933442, "stages": {"router": 228480, "routed": 3436199.8571428573, "shared": 1133034, "reduce": 1662381.7142857143}}, {"batch_size": 64, "cycles": 5966016.693877551, "milliseconds": 14.915041734693878, "tokens_s_card": 1072.7425564477237, "p10": 1061.4460923020408, "p90": 1086.4989127748793, "stages": {"router": 143094, "routed": 3408006.224489796, "shared": 1254036, "reduce": 1683136.5102040817}}, {"batch_size": 72, "cycles": 7260756.918367347, "milliseconds": 18.151892295918366, "tokens_s_card": 991.6321508831054, "p10": 983.0870905013891, "p90": 1000.5849641106591, "stages": {"router": 331170, "routed": 4102126.2040816327, "shared": 1423422, "reduce": 2027094.6734693877}}, {"batch_size": 80, "cycles": 8324047.571428572, "milliseconds": 20.81011892857143, "tokens_s_card": 961.070913080695, "p10": 951.5739916581775, "p90": 973.478561899101, "stages": {"router": 331170, "routed": 4460189.6122448975, "shared": 1667022, "reduce": 2525975.4693877553}}, {"batch_size": 88, "cycles": 8960911.612244898, "milliseconds": 22.402279030612245, "tokens_s_card": 982.042941699702, "p10": 971.0152851431187, "p90": 993.5225347291159, "stages": {"router": 344946, "routed": 4788428.142857143, "shared": 1833384, "reduce": 2716390.3673469387}}, {"batch_size": 96, "cycles": 9620763.897959184, "milliseconds": 24.05190974489796, "tokens_s_card": 997.8417620285237, "p10": 986.3445717430858, "p90": 1009.7785843946872, "stages": {"router": 344946, "routed": 5037111.795918368, "shared": 1974336, "reduce": 3014211.8571428573}}, {"batch_size": 104, "cycles": 10669386.653061224, "milliseconds": 26.67346663265306, "tokens_s_card": 974.7514396262007, "p10": 963.7064098050453, "p90": 986.1679712965255, "stages": {"router": 433860, "routed": 5734722.755102041, "shared": 2143512, "reduce": 3204355.2448979593}}, {"batch_size": 112, "cycles": 11158379.163265307, "milliseconds": 27.895947908163265, "tokens_s_card": 1003.7300073895781, "p10": 992.9838674358044, "p90": 1014.8806579384154, "stages": {"router": 433860, "routed": 6087136.897959184, "shared": 2148342, "reduce": 3352067.2040816327}}, {"batch_size": 120, "cycles": 11752317.204081632, "milliseconds": 29.38079301020408, "tokens_s_card": 1021.0752306644979, "p10": 1009.8818378096153, "p90": 1032.1142968070317, "stages": {"router": 433860, "routed": 6414541, "shared": 2295552, "reduce": 3531946.4081632653}}, {"batch_size": 128, "cycles": 11780130.408163264, "milliseconds": 29.450326020408163, "tokens_s_card": 1086.5754076143332, "p10": 1074.4847483366145, "p90": 1098.7331820260467, "stages": {"router": 168630, "routed": 6661151.183673469, "shared": 2415462, "reduce": 3499040.93877551}}], "source_commit": "1648b5c5aad4654f14d66bb9ccbd96b02af72ae7", "pr_head": "f4ce26eabcc964650064c75635ebc750a38ccfa8", "measurement_mode": "timing_only", "numerical_validation": "separate_full_mode", "evidence_type": "qualified_owner_router_campaign", "host_seconds": 12280.159271026962, "workers": 192, "host_seconds_scope": "retained_49_point_campaign", "selected_batch_size": 32, "selection_split": "train", "holdout": {"validation": 1135.542539793479, "test": 1131.7769026211827}}, "toolchain": {"torch_zeus_measured": "1648b5c5aad4654f14d66bb9ccbd96b02af72ae7", "torch_zeus_pr_head": "f4ce26eabcc964650064c75635ebc750a38ccfa8", "sglang": "49542794a358528c3d95c848cbdf0df33310e2ff", "triton_shared": "d78b531acacedeb002d72d72017f1abf1ed208c7", "triton": "5321c2ebe470d2527078491642b136a13ab72c49", "cyclesim": "b39990784ba2e1324c258c1db5fb02c13f93953b", "cyclesim_binary_sha256": "efdf5ee46eac45b7c6bc0f15641eb1e194bca7680d160eb3ab4ea5bc8a025ea6"}}</script>
 <script>/* Self-contained SVG charts: the frozen payload also drives the static exports. */
 (() => {
   'use strict';
