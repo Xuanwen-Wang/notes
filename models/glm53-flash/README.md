@@ -66,3 +66,30 @@ PYTHONDONTWRITEBYTECODE=1 python3 models/glm53-flash/scripts/import_revision.py 
 
 `versions/20261103-e93a57a7/` 保留旧版 49 点数据和四张图，
 `versions/20261103-b6148f98/` 保存新 Routed 的数据和四张图。固定页面入口展示新版本。
+
+2026-11-04 的统一本地 Router → raw-word gather → direct transport 测量使用
+`scripts/import_flow.py` 导入。当前版本目录为 `versions/20261104-1648b5c5/`；
+49 点 × 15 档 × 42 层 × 16 rank 的 493,920 个时序 case 已全部完成。
+测量源码保持 `1648b5c5`，整理后的 PR head 为代码等价的 `f4ce26ea`，不能重标旧回执。
+
+导入器核验 `summary/identity/complete` 与数值资格、逐模式比较、回归回执、
+源码记录和工具链文件的 hash 绑定；重算各档均值、分位数及 train/holdout 选择，
+并保留 H200 数据原样。私有原始日志审计由本轮 `export.py` 完成，公开导入器不代替它。
+导出数据只保留公开字段和 hash，不复制服务器路径。当前 CI 可以尚在执行，页面
+如实展示其发布时快照；数值、时序、CI 是独立证据。
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 python3 models/glm53-flash/scripts/import_flow.py \
+  --baseline PREVIOUS_PUBLIC_DATA --evidence AUDITED_CAMPAIGN_EXPORT \
+  --qualification NUMERIC_QUALIFICATION --numerical MODE_COMPARISON \
+  --regression REGRESSION_RECEIPT --source COMMITTED_SOURCE \
+  --equivalence SOURCE_EQUIVALENCE --toolchain TOOLCHAIN_MANIFEST \
+  --ci CURRENT_PR_CI --out NEW_EXPORT
+```
+
+将导出的 JSON / CSV 同步到 `data/` 后，重建四张图、HTML 与目录首页，并将这一轮
+导出和图表复制到独立版本目录。`flow-revision.json` / `flow-comparison.csv` 是完整方案
+对照；流程、sigmoid 和编译器同时变化，Router IDs 不保证相同，不能标成 Routed 单独
+优化 A/B。历史 `routed-revision.json` 与历史五档表保留原值，且只在版本记录中引用。
+当前临界路径为 `sum_layer(max_owner(Router) + max_rank(Shared + Routed + Reduce))`；
+阶段表仍逐阶段独立取最大 rank，用于诊断，不可相加代替完整 MoE 时间。

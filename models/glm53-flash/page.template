@@ -38,6 +38,7 @@
     <div class="metric sample"><small>每档使用同一套采样点</small><strong>7 × 7 <span>= 49 点</span></strong><span>7 批请求 × 7 个 decode 位置</span></div>
   </div>
   <p class="sample-strip"><b>采样数据</b>：49 个 decode step 采样点 = 7 批请求 × 每批 7 个采样位置。共 896 条不同请求，每批 128 条；保留 step 017 / 033 / 049 / 065 / 081 / 097 / 113，排除 step001。每个点重放完整 42 层 MoE；各 batch 使用同一父输入的嵌套前缀。<a href="#sampling">采样细节 ↓</a></p>
+  <p class="reading-note"><b>2026-11-04 完整复测</b>：当前曲线使用本地 Router → 一次 gather → direct transport 的统一流程，Router 为 calibrated sigmoid。四卡总 BS16–128 的 493,920 个时序 case 全部完成；最佳档位为 BS32，1,134.6 tokens/s/card。相对上一版扫描峰值提高 15.7%。</p>
   {{POPULATION_CHART}}
   <p class="reading-note">纵轴越高，单位卡的 MoE 组件吞吐越大。每个点按 <code>总 token ÷ 总时间 ÷ 4</code> 汇总 49 个样本；不直接平均样本吞吐。两条曲线分别采用 H200 CUDA event 测时和 Zeus CycleSim 400 MHz 周期换算。</p>
   <details class="data-details"><summary>查看 15 档吞吐与耗时明细</summary>{{POPULATION_TABLE}}{{DISTRIBUTION_TABLE}}<p class="quality">P10–P90 描述采样点之间的吞吐差异，不是置信区间。</p></details>
@@ -49,12 +50,12 @@
   <div class="section-head"><div><span class="section-num">02 / KERNEL BREAKDOWN</span><h2>四个阶段，各自在做什么？</h2></div><span class="scope-badge">Zeus · 16 rank / 32 core</span></div>
   <p class="quality">下列介绍对应本轮 Zeus 实现。Router 产生路由，Routed 与 Shared 形成专家输出，Reduce 完成本地加权归并；跨卡通信不计入这些窗口。</p>
   <div class="kernel-grid">
-    <article class="kernel-card router"><span class="kernel-tag">01 · 路由选择</span><h3>Router</h3><p>对输入做路由投影、评分和带 bias 的 Top-K 选择，为每个 token 产生 8 个 routed 专家 ID 与路由权重。</p><div class="kernel-focus">关注：投影、评分与 Top-K 的周期增长。</div></article>
+    <article class="kernel-card router"><span class="kernel-tag">01 · 路由选择</span><h3>Router</h3><p>每个 rank 只处理自己的本地 token，采用 calibrated sigmoid 与带 bias 的 Top-K，产生 8 个专家 ID 和路由权重，再进行一次 raw-word gather。</p><div class="kernel-focus">关注：本地 1–8 行特化、投影、评分与 Top-K 的周期增长。</div></article>
     <article class="kernel-card routed"><span class="kernel-tag">02 · 稀疏专家</span><h3>Routed</h3><p>按真实路由执行专家 Gate / Up、激活与 Down。本轮采用 per-tensor FP8，使用 M1 / M2 / M4 token 合并。</p><div class="kernel-focus">关注：活跃专家数、权重复用、窗口与尾部调度。</div></article>
     <article class="kernel-card shared"><span class="kernel-tag">03 · 共享专家</span><h3>Shared</h3><p>对全部 token 执行共享专家 FFN。本轮 Zeus 采用 BF16，仅在 EP0 上执行，并在其中按 TP4 分片。</p><div class="kernel-focus">关注：固定专家权重下，计算和数据搬运如何随 batch 增长。</div></article>
     <article class="kernel-card reduce"><span class="kernel-tag">04 · 本地归并</span><h3>Reduce</h3><p>读取有效的本地 routed 输出，应用路由权重并求和，在持有 Shared 的分支合入共享输出。</p><div class="kernel-focus">关注：有效行读取与加权求和；不含跨卡 AllReduce。</div></article>
   </div>
-  <p class="note">各阶段维持统一 JIT 入口；batch 维度是编译期常量，窗口和尾部可在 kernel 内特化。M 合并大小与窗口宽度是两个概念。</p>
+  <p class="note">BS16–128 的各阶段维持统一 JIT 入口；gather 后 Shared / Routed / Reduce 都直接读取 rank blocks。batch 维度是编译期常量，窗口和尾部在 kernel 内特化。M 合并大小与窗口宽度是两个概念。</p>
   {{KERNEL}}
   <p class="reading-note">{{ANALYSIS}}</p>
   <div class="links"><a href="data/zeus-49-stages.csv" download>49 点逐 kernel 周期 CSV ↓</a></div>
@@ -76,10 +77,10 @@
 <section id="protocol">
   <div class="section-head"><div><span class="section-num">04 / MEASUREMENT & VALIDATION</span><h2>测量边界与验证记录</h2></div></div>
   <div class="grid2">
-    <div class="mini"><h3>Zeus <span>TP4 × EP4</span></h3><p>4 card / 16 rank / 32 core，400 MHz。每个 launch 取最慢 core，rank 内累加阶段，逐层取最慢 rank，最后累加 42 层。</p><code>tokens/s/card = 总 BS × 400,000,000 ÷ cycles ÷ 4</code></div>
+    <div class="mini"><h3>Zeus <span>TP4 × EP4</span></h3><p>4 card / 16 rank / 32 core，400 MHz。每个 launch 取最慢 core；每层先取最慢本地 Router，再加最慢 rank 的 Shared + Routed + Reduce，最后累加 42 层。gather 依赖作为阶段边界，真实通信耗时未计入。</p><code>cycles = Σ层 [max_owner(Router) + max_rank(Shared + Routed + Reduce)]<br>tokens/s/card = 总 BS × 400,000,000 ÷ cycles ÷ 4</code></div>
     <div class="mini"><h3>H200 <span>MoE TP1 × EP4</span></h3><p>4 张 H200 NVL，每卡 72 个完整 Routed 专家；独立 FP8 Shared 跨四卡 TP4。各层先取每轮重复均值，再取轮次中位数，取最慢 EP 后累加 42 层。</p><code>tokens/s/card = 总 BS × 1,000 ÷ ms ÷ 4</code></div>
   </div>
-  <p class="quality">激活采集拓扑为 TP4/EP1，与执行拓扑分开记录。当前 Zeus 统计纳入 {{STATUS}}；H200 保留 2,940 个 rank case / 123,480 个层卡点。本轮没有 VCS/RTL 或整模型性能结论。</p>
+  <p class="quality">激活采集拓扑为 TP4/EP1，与执行拓扑分开记录。当前 Zeus 统计纳入 {{STATUS}}；H200 保留 2,940 个 rank case / 123,480 个层卡点。Zeus 使用捕获的 H1 输出和 CPU collective double，不计 H1、真实通信、host/JIT，也没有新增 VCS/RTL 或整模型性能结论。</p>
   <details><summary>查看时序资格、数值验证与解析误差</summary>{{EVIDENCE}}<p>历史 train00/step001 的完整数值基线要求实现参考、Reduce exact、两次 Graph replay 和 changed-input Graph 门禁通过；其中 <b>{{EXCEPTIONS}}</b> 个 case 超出局部解析数学预算。该诊断与实现参考及 Graph 门禁分开记录，阈值未放宽。</p><p>端到端影响由算法团队持续进行真实推理评估。维护者已向算法团队确认，目前真实推理任务未观察到相应问题；该反馈不替代组件精度记录。采样口径修订后 80 项 CPU 检查通过，最新 PR CI 以 <a href="https://github.com/DarronTam/torch_zeus/pull/643/checks">GitHub checks</a> 为准。</p></details>
   <details><summary>查看冻结工具链与源码版本</summary>{{TOOLCHAIN}}<p class="quality">本轮性能 kernel 源码：<a href="https://github.com/DarronTam/torch_zeus/commit/{{SOURCE}}"><code>{{SOURCE_SHORT}}</code></a>。更新编译器或 kernel 后需建立新版本记录。</p></details>
   <div class="links"><a href="data/benchmark.json" download>完整数据与来源 JSON ↓</a><a href="https://github.com/Xuanwen-Wang/notes/tree/master/models/glm53-flash">页面与生成脚本 ↗</a></div>
@@ -87,8 +88,9 @@
 
 <section id="history">
   <div class="section-head"><div><span class="section-num">05 / CHANGELOG</span><h2>版本记录</h2></div></div>
-  <div class="timeline"><div><time>2026-11-03</time><p><b>Routed Up 调度更新 · 49 个 decode step 采样点全部重测</b><br>源码 b6148f98，493,920 个时序 case 零失败，完整 CI 通过。四卡归一化吞吐在本扫描内最高为 BS128：980.4 tokens/s/card，较旧版同档提升 3.93%；H200 同输入数据沿用原测量。<a href="versions/20261103-b6148f98/data/benchmark.json">本轮固定数据快照</a> · <a href="versions/20261103-e93a57a7/data/benchmark.json">旧版 49 点统计</a> · <a href="data/routed-revision.json">同输入 A/B 数据</a>。</p></div></div>
+  <div class="timeline"><div><time>2026-11-04</time><p><b>统一本地 Router 与 direct transport · 完整 49 点复测</b><br>测量源码 1648b5c5，PR 整理后为代码等价的 f4ce26ea；编译器 d78b531a。493,920 个时序 case / 672 个 shard 零失败，输入/权重身份全部匹配。15 档吞吐提高 2.1%–17.1%，BS32 为当前最高 1,134.6 tokens/s/card；BS128 为 1,086.6。<a href="versions/20261104-1648b5c5/data/benchmark.json">本轮固定数据快照</a> · <a href="data/flow-revision.json">完整流程对照 JSON</a> · <a href="data/flow-comparison.csv">对照 CSV</a>。</p><p>Router 从 accurate 改为 calibrated；206,288 / 493,920 条 rank-case 记录的 Router IDs 与历史不同。流程、sigmoid 与编译器同时变化，不能把收益全部归因于 Routed 调度。H200 沿用原有同输入测量。</p></div></div>
   {{REVISION_TABLE}}
+  <div class="timeline"><div><time>2026-11-03</time><p><b>Routed Up 调度更新 · 49 个 decode step 采样点全部重测</b><br>源码 b6148f98，493,920 个时序 case 零失败，完整 CI 通过。四卡归一化吞吐在本扫描内最高为 BS128：980.4 tokens/s/card，较旧版同档提升 3.93%；H200 同输入数据沿用原测量。<a href="versions/20261103-b6148f98/data/benchmark.json">本轮固定数据快照</a> · <a href="versions/20261103-e93a57a7/data/benchmark.json">旧版 49 点统计</a> · <a href="data/routed-revision.json">同输入 A/B 数据</a>。</p></div></div>
   <div class="timeline"><div><time>2026-11-03</time><p><b>以 49 点总体对比作为主视图</b><br>移除单点对比区；增加 kernel 介绍、坐标与统计范围说明、侧边导航。指标和原始测量保持不变。</p></div><div><time>2026-11-03</time><p><b>统一排除 step001</b><br>双方全部 batch 采用 49 点统计，重算吞吐和 kernel 曲线。<a href="data/20261102-full56/benchmark.json">原 56 点归档</a>仅用于追溯。</p></div><div><time>2026-11-02</time><p><b>成对输入与 BS128 Routed</b><br>接入 bounded multi-window 与大 batch 静态展开；完成 15 档扫描，H200 使用 EP4 基线。</p></div></div>
   <details><summary>历史五档 A/B：仅保留优化证据</summary><p class="quality">BS16/24/32/40/48 的旧实验共 3,360 case，各档使用不同 decode step，不能用来选最佳 batch，不参与当前曲线。</p>{{HISTORY_TABLES}}</details>
 </section>

@@ -129,7 +129,31 @@ def build():
          for label, obj in [('H200', d['h200']['selection']), ('Zeus', f)]],
         '行：执行平台；列：只用 train 选择的四卡总 batch，以及该档在 validation / test 上的单卡吞吐。每批均保留七步。')
     assert f['measurement_mode'] == 'timing_only'
-    if f.get('evidence_type') == 'qualified_retained_campaign':
+    if f.get('evidence_type') == 'qualified_owner_router_campaign':
+        q = d['qualification']['current_full_mode']
+        assert q['source_commit'] == f['source_commit'] and q['passed']
+        eq = d['qualification']['source_equivalence']
+        ci = d['qualification']['current_ci']
+        assert eq['measured_source'] == f['source_commit'] and eq['pr_head'] == f['pr_head'] == ci['headSha']
+        ci_label = ('已通过' if ci['status'] == 'completed' and ci['conclusion'] == 'success'
+                    else '已结束：' + str(ci['conclusion']) if ci['status'] == 'completed' else '尚在运行 / 排队')
+        evidence = (f"<p>本轮 49 个 decode step 采样点共 {f['cases']:,} 个时序 case、672 个 shard 全部完成，"
+                    f"{f['workers']} workers，宿主耗时 {f['host_seconds']/3600:.2f} 小时，零失败。"
+                    "全量唯一覆盖、输入/权重与资格 hash 审计通过；H200 沿用同输入的原测量。</p>"
+                    f"<p>独立数值资格：{q['regression_unique_cases']} 项 MoE 回归通过；train00/step017、全部 15 档、"
+                    "layer/rank (3,0)/(5,15)/(44,4) 的 45 项完整模式通过实现参考、完整/本地 Router 逐位比较、"
+                    "Reduce exact 和 changed-input Graph；45 对完整/时序模式的逐 launch/core cycles、输入/权重、"
+                    "Router 结果与语义 zbin 一致。</p>"
+                    f"<p>当前完整模式中仍有 <b>{len(q['analytic_budget_exceptions'])}</b> 项解析 SiLU 数学预算超限："
+                    "layer5/rank15 的 BS112/120/128，以及 layer44/rank4 的全部 15 档。原阈值不变，单列诊断，"
+                    "不与实现参考或 Graph 门禁混淆。</p>"
+                    "<p>时序模式保持真实 Router，仅省略已资格 Routed/Shared 的 PE 数值乘加；"
+                    "时序输出及下游 Reduce 不计为数值 PASS，493,920 个时序 case 不代表全矩阵数值验收。</p>"
+                    f"<p>测量源码 <code>{f['source_commit'][:12]}</code>；整理后的 PR head "
+                    f"<code>{f['pr_head'][:12]}</code> 与其保留代码、测试及 benchmark 脚本逐文件一致。"
+                    f"PR head 的 <a href=\"{html.escape(ci['url'], quote=True)}\">CI {ci_label}</a>"
+                    "（发布时快照，实时状态见 GitHub），旧 SHA 的 CI 不继承为新 SHA 的 PASS。</p>")
+    elif f.get('evidence_type') == 'qualified_retained_campaign':
         q = d['qualification']['current_full_mode']
         assert q['source_commit'] == f['source_commit'] and q['passed']
         evidence = (f"<p>本轮直接重测保留的 49 个 decode step 采样点，共 {f['cases']:,} 个时序 case，"
@@ -203,7 +227,16 @@ def build():
          for r in history['analytic_exceptions']],
         '行：四卡总 batch；列：超出局部解析预算的 case 数 / 该阶段总 case 数。与实现参考/Graph 门禁分开记录。')
     revision = ''
-    if 'revision' in d:
+    if 'flow_revision' in d:
+        revision = '<details class="data-details"><summary>查看本轮完整流程与上一版：相同 49 个采样点</summary>' + table(
+            ['总 batch', '旧版 tokens/s/card', '新版 tokens/s/card', 'MoE 吞吐变化', 'Router cycles 变化',
+             'Routed cycles 变化', 'Shared cycles 变化', 'Reduce cycles 变化'],
+            [[r['batch_size'], f"{r['baseline']['tokens_s_card']:.1f}", f"{r['candidate']['tokens_s_card']:.1f}",
+              f"{r['throughput_increase_pct']:+.2f}%"] + [f"{r['stage_cycles_change_pct'][s]:+.2f}%" for s in stages]
+             for r in d['flow_revision']['rows']],
+            '行：四卡总 batch；列：旧/新版单卡吞吐、吞吐变化及四阶段 cycles 变化（负值为周期降低）。'
+            '同一组输入/权重，流程、sigmoid 和编译器同时变化；不是固定路由的 Routed 单独优化 A/B。') + '</details>'
+    elif 'revision' in d:
         revision = '<details class="data-details"><summary>查看本轮 Routed 优化前后：相同 49 个采样点</summary>' + table(
             ['总 batch', '旧版 tokens/s/card', '新版 tokens/s/card', 'MoE 吞吐提升', 'Routed cycles 降幅'],
             [[r['batch_size'], f"{r['baseline']['tokens_s_card']:.1f}", f"{r['candidate']['tokens_s_card']:.1f}",
