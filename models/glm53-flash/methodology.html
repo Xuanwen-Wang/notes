@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
+<title>TritonShared - GLM-5.3-Flash：MoE 测评口径与 PR #643 基线</title><meta name="description" content="GLM-5.3-Flash H200/Zeus MoE 测评方法、与真实推理的差异，以及 PR643 固定基线。">
+<style>/* Report layout; chart controls and table styling live in charts.css. */
+:root{--ink:#182f48;--muted:#64768a;--line:#e2e9f1;--blue:#2364d2;--bg:#f5f7fa}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.8 system-ui,-apple-system,"Noto Sans CJK SC",sans-serif}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid #dba855;outline-offset:4px}
+.skip-link{position:fixed;top:-60px;left:260px;padding:8px 18px;background:white;z-index:100}.skip-link:focus{top:12px}
+.sidebar{position:fixed;inset:0 auto 0 0;width:224px;padding:30px 18px;background:#fcfdff;border-right:1px solid var(--line);display:flex;flex-direction:column;z-index:20}
+.brand{display:flex;align-items:center;gap:12px;padding:0 10px;color:var(--ink);font-size:17px;font-weight:750;letter-spacing:.08em}
+.brand small{display:block;font-size:10px;font-weight:500;letter-spacing:.08em;color:var(--muted)}
+.brand-mark{display:grid;place-items:center;width:34px;height:38px;border-radius:9px;background:#172e48;color:white;font-size:19px}
+.sidebar-model{margin:34px 12px 18px;font-size:12px;font-weight:700}.sidebar-model span{display:block;font-size:10px;letter-spacing:.14em;color:#92a0b0;margin-top:3px}
+.side-nav{display:flex;flex-direction:column;gap:4px}.side-nav a{display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:8px;font-size:12px;color:#65758a;white-space:nowrap}
+.side-nav a span{font-size:10px;color:#98a5b5;font-variant-numeric:tabular-nums}.side-nav a:hover{background:#eff4fa;text-decoration:none}
+.side-nav a[aria-current="location"]{background:#eaf1fc;color:#225cc0;font-weight:700}.side-nav a[aria-current="location"] span{color:#6a8bc0}
+.side-nav .subnav{padding-left:39px;font-size:11px}
+.sidebar-foot{margin-top:auto;padding:22px 12px 0;font-size:11px;color:var(--muted);border-top:1px solid var(--line)}.sidebar-foot p{line-height:1.9;margin:10px 0}
+.status-dot{display:inline-block;width:6px;height:6px;margin-right:7px;border-radius:50%;background:#0d8d7b}
+main{max-width:1500px;margin:0 auto 0 224px;padding:28px 30px 45px;min-width:0}
+.page-header{padding:0 3px 16px}.eyebrow{display:flex;justify-content:space-between;gap:12px;font-size:10px;letter-spacing:.13em;font-weight:650;color:#7b8c9f}.eyebrow span{letter-spacing:0;font-weight:400}
+h1{font-size:27px;letter-spacing:-.035em;line-height:1.45;margin:12px 0 5px}h1 span{font-size:17px;letter-spacing:-.02em;font-weight:500;color:#536980;margin-left:12px}
+h2{font-size:22px;letter-spacing:-.025em;line-height:1.5;margin:5px 0 0}h3{font-size:18px;margin:0 0 10px}p{margin:12px 0}.lead{font-size:13px;color:var(--muted);margin:0}
+section{background:#fff;border:1px solid var(--line);border-radius:16px;padding:28px;margin:0 0 24px;box-shadow:0 4px 20px #17324b03;min-width:0}
+.section-head{display:flex;align-items:center;gap:12px;justify-content:space-between;margin-bottom:20px}.section-num{font-size:10px;letter-spacing:.12em;color:#91a0b1;font-weight:600}
+.scope-badge{font-size:10px;color:#647d96;background:#f5f8fc;border:1px solid #e5edf5;border-radius:6px;padding:5px 10px;white-space:nowrap}
+.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:0 0 18px}.metric{border:1px solid var(--line);border-radius:10px;padding:15px 17px;position:relative;overflow:hidden;background:#fbfcfe}
+.metric::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:var(--accent,#8294ab)}.h200{--accent:#0d8d7b}.zeus{--accent:#2364d2}.sample{--accent:#8192a8}
+.metric small{display:block;color:var(--muted);font-size:10px}.metric strong{display:block;font-size:27px;line-height:1.6;letter-spacing:-.035em;font-variant-numeric:tabular-nums}.metric span{font-size:10px;color:#6d7e92;letter-spacing:0}.metric strong span{font-weight:500}
+.sample-strip{font-size:12px;color:#63788e;line-height:1.9;padding:0 2px}.sample-strip b{color:#344c65}.sample-strip a{white-space:nowrap}
+.note{background:#f7f9fc;border:1px solid #e3eaf2;border-left:3px solid #9bb4d4;border-radius:8px;padding:12px 16px;font-size:12px;color:#526b85;margin:16px 0}
+.reading-note{font-size:12px;color:#5a718b;line-height:1.9;padding:0 3px}.quality{font-size:12px;color:var(--muted);line-height:1.9}
+.kernel-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:22px 0}.kernel-card{--accent:#2364d2;border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:10px;padding:17px 16px;background:#fcfdff;min-width:0}
+.routed{--accent:#d85b43}.shared{--accent:#7856ad}.reduce{--accent:#0d8d7b}.kernel-tag{color:var(--accent);font-size:10px;font-weight:650}.kernel-card h3{margin:7px 0 10px;font-size:20px}.kernel-card p{font-size:12px;line-height:1.9;color:#63758a;margin:0 0 14px}.kernel-focus{border-top:1px solid #e9edf4;padding-top:11px;font-size:11px;color:#78899d;line-height:1.8}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}.mini{background:#f6f9fc;border:1px solid #e7edf4;border-radius:10px;padding:18px}.mini h3{font-size:17px}.mini h3 span{font-size:11px;color:#6b7e93;margin-left:10px;font-weight:500}.mini p{font-size:12px;color:var(--muted)}
+code{font-family:ui-monospace,monospace;font-size:.88em;overflow-wrap:anywhere}
+details{border:1px solid var(--line);border-radius:9px;padding:13px 16px;margin:16px 0;font-size:12px}summary{cursor:pointer;font-size:12px;font-weight:650;color:#41607f}details[open]>summary{margin-bottom:14px}
+.links{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}.links a{font-size:11px;border:1px solid #dde6ef;background:#fafcff;border-radius:6px;padding:5px 11px}
+.sampling-flow{display:flex;align-items:center;justify-content:space-around;gap:15px;background:#f7faff;border:1px solid #e5edf6;border-radius:10px;padding:20px 14px;margin:22px 0}.sampling-flow div{display:flex;flex-direction:column;text-align:center}.sampling-flow strong{font-size:24px;font-weight:650;color:#355e8c}.sampling-flow span{font-size:10px;color:#788ba1}.sampling-flow b{color:#b6c6d8;font-weight:400}
+.method-list{margin:0}.method-list>div{display:grid;grid-template-columns:150px 1fr;gap:20px;padding:17px 2px;border-bottom:1px solid #edf1f6;font-size:12px}.method-list dt{font-weight:650;color:#405a75}.method-list dd{margin:0;color:#63788e}
+.timeline>div{display:grid;grid-template-columns:110px 1fr;gap:20px;padding:15px 0;border-bottom:1px solid #edf1f6}.timeline time{font-size:11px;color:#8799ac;padding-top:3px;font-variant-numeric:tabular-nums}.timeline p{font-size:12px;color:#708297;margin:0}.timeline b{color:#3c5773}
+.footer{font-size:11px;color:#8292a3;padding:0 5px}.table-scroll{overflow-x:auto;max-width:100%;border:1px solid var(--line)}table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,td{text-align:right;white-space:nowrap;border-bottom:1px solid #edf1f6}th:first-child,td:first-child{text-align:left}caption{text-align:left;caption-side:bottom;color:var(--muted);font-size:11px}tbody tr:last-child td{border-bottom:0}
+@media(min-width:1800px){main{margin-left:calc(224px + (100vw - 1800px)/2)}}
+@media(max-width:1250px){.kernel-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.metric strong{font-size:23px}.metric strong span{display:block;line-height:1.4;margin-bottom:5px}h1 span{display:block;margin:3px 0 0}}
+@media(max-width:1000px){html{scroll-padding-top:110px}.sidebar{position:sticky;inset:auto;top:0;width:100%;padding:10px 18px 6px;border-right:0;border-bottom:1px solid var(--line);background:#fcfdfff7;backdrop-filter:blur(12px)}.brand{font-size:12px;padding:0;gap:8px}.brand-mark{width:23px;height:25px;font-size:13px;border-radius:5px}.brand small,.sidebar-model,.sidebar-foot{display:none}.side-nav{flex-direction:row;overflow-x:auto;gap:4px;margin-top:8px;padding-bottom:3px}.side-nav a,.side-nav .subnav{padding:6px 10px;font-size:11px;gap:6px}.side-nav .subnav{display:none}main{margin:0;padding:22px}.skip-link{left:15px}.metrics{gap:10px}.metric strong span{display:inline}.page-header{padding-bottom:18px}}
+@media(max-width:640px){main{padding:18px 12px 32px}section{padding:20px 14px;border-radius:12px;margin-bottom:18px}h1{font-size:25px}h1 span{font-size:15px}.lead{font-size:12px}.section-head{display:block;margin-bottom:16px}h2{font-size:20px}.scope-badge{display:inline-block;margin-top:8px}.metrics{grid-template-columns:1fr 1fr;gap:9px}.metric{padding:12px}.metric strong{font-size:24px}.metric strong span{display:block;font-size:9px}.metric.sample{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;flex-wrap:wrap}.metric.sample strong{font-size:17px}.metric.sample strong span{display:inline}.metric.sample>span{font-size:9px}.sample-strip{font-size:11px}.kernel-grid,.grid2{grid-template-columns:1fr}.kernel-card{padding:17px}.kernel-card p{font-size:13px}.sampling-flow{gap:8px;flex-wrap:wrap}.sampling-flow div{width:40%}.sampling-flow b:nth-child(4){display:none}.sampling-flow strong{font-size:22px}.method-list>div{grid-template-columns:1fr;gap:4px;padding:14px 0}.timeline>div{grid-template-columns:1fr;gap:5px}.note{padding:11px 12px}.eyebrow{font-size:9px}details{padding:12px}.grid2{gap:10px}}
+@media print{.sidebar,.skip-link,.links{display:none}main{margin:0;padding:0;max-width:none}body{background:white;font-size:11px}section{box-shadow:none;padding:15px;break-inside:auto}.page-header{padding:0}.metrics{grid-template-columns:repeat(3,1fr)}.kernel-grid{grid-template-columns:repeat(2,1fr)}.table-scroll{overflow:visible}th,td{white-space:normal}details{border:0}details>*{display:block!important}.timeline{break-inside:avoid}}
+
+main { max-width:1400px; }
+.methodology { background:white; padding:32px; border:1px solid var(--line); border-radius:16px; }
+.methodology h1 { margin-top:0; }
+.methodology h2 { margin:40px 0 16px; padding-top:22px; border-top:1px solid var(--line); }
+.methodology blockquote { margin:20px 0; padding:8px 20px; border-left:4px solid var(--blue); background:#eef4fc; }
+.methodology pre { padding:18px; border-radius:10px; background:#f4f7fb; overflow-x:auto; line-height:1.7; }
+.methodology pre code { white-space:pre; overflow-wrap:normal; }
+.methodology table { font-size:14px; width:100%; }
+.methodology th,.methodology td { vertical-align:top; text-align:left; white-space:normal; padding:12px 14px; }
+.methodology th { background:#f4f7fb; }
+.methodology td code { overflow-wrap:anywhere; }
+.methodology p,.methodology li { overflow-wrap:anywhere; }
+.side-nav a { white-space:normal; font-size:11px; }
+@media print { .methodology { border:0; padding:0; } }
+</style></head><body>
+<aside class="sidebar"><a class="brand" href="../../">NOTES</a><p class="sidebar-model">GLM-5.3-Flash<span>MEASUREMENT PROTOCOL</span></p>
+<nav class="side-nav" aria-label="测评方法目录"><a href="#method-1">01 · 先对齐“测的是什么”</a><a href="#method-2">02 · 输入与 49 个采样点</a><a href="#method-3">03 · H200 实际怎么执行</a><a href="#method-4">04 · H200 计时窗口与重复方式</a><a href="#method-5">05 · Zeus 实际怎么执行</a><a href="#method-6">06 · 量化、Router 与 Shared 的差异</a><a href="#method-7">07 · 延迟与吞吐怎么汇总</a><a href="#method-8">08 · PR #643 固定基线</a><a href="#method-9">09 · 验证覆盖与未覆盖的部分</a><a href="#method-10">10 · 算法侧怎样与真实推理核对</a><a href="#method-11">11 · 后续优化的对比约定与入口</a></nav><div class="sidebar-foot"><a href="./">← 返回交互曲线</a><p>固定基线 · 2026-11-05</p></div></aside>
+<main><article class="methodology"><h1>GLM-5.3-Flash：MoE 测评口径与 PR #643 基线</h1>
+<p>更新：2026-11-05。面向算法侧复核与后续 kernel 优化；表格固定到本次合入基线。</p>
+<blockquote>
+<p><strong>当前曲线表示：固定输入下，42 层 MoE 组件计算的四卡等效吞吐。</strong>
+H200 用真实 GPU CUDA event 测时，Zeus 用 CycleSim 周期按 400 MHz 换算。
+它没有包含 Attention、H1、真实跨卡通信和在线调度，不能直接当成完整推理服务的 tokens/s/card。</p>
+</blockquote>
+<p><a href="./">返回交互曲线</a> · <a href="https://github.com/DarronTam/torch_zeus/pull/643">PR #643</a> · <a href="methodology.md">下载本文 Markdown</a></p>
+<h2 id="method-1">01 · 先对齐“测的是什么”</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>本 benchmark</th>
+<th>与真实推理对比时要核对</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>输入</td>
+<td>从真实 BS128 decode 中捕获的逐层 MoE 输入；小 batch 取前 B 行</td>
+<td>自己的请求、prompt、生成位置、有效 batch 是否相同</td>
+</tr>
+<tr>
+<td>层间关系</td>
+<td>一次 replay 遍历 42 份 MoE 权重，每层使用自己捕获的输入</td>
+<td><strong>上一层 replay 的输出没有传给下一层</strong>；不是完整模型 forward</td>
+</tr>
+<tr>
+<td>计时范围</td>
+<td>Router、Routed、Shared、本地 Reduce 等 MoE 计算</td>
+<td>端到端通常还包含 Attention、H1/mHC、通信、采样、调度等</td>
+</tr>
+<tr>
+<td>通信</td>
+<td>H200 输入提前复制到各卡，最终跨卡求和移出计时；Zeus 使用 CPU collective double</td>
+<td>真正 AllGather / AllReduce / All-to-All 的耗时及重叠</td>
+</tr>
+<tr>
+<td>批次</td>
+<td>四卡<strong>总 BS16～128，步长 8</strong></td>
+<td>图上 BS128 = 归一化 32/card；不是每卡 128</td>
+</tr>
+<tr>
+<td>单位</td>
+<td>总 token / 总 MoE 计算时间 / 4</td>
+<td>总吞吐、单卡吞吐、输出 token、输入 token 是否混用</td>
+</tr>
+<tr>
+<td>“最大”</td>
+<td>固定实现、固定输入分布、已测 15 档中的观测最佳</td>
+<td>不表示所有 batch、kernel/backend 或完整模型的理论上限</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>真实推理和本图不同，本身不足以判断哪边测错。</strong> 应先对齐计时边界和工作负载，再比较相同层、相同输入上的 MoE 时间。</p>
+<h2 id="method-2">02 · 输入与 49 个采样点</h2>
+<ul>
+<li>模型 snapshot：<code>eb9eb208eb0d988989d07a6a12d0fdeb5f52574a</code>。层号 <strong>3～44（从 0 开始）</strong>，共 42 层 MoE；hidden=4096，288 个 routed experts，Top-K=8，专家 intermediate=2048。</li>
+<li>896 条不同请求分为 7 批，每批 128 条。<code>train00/01/02</code>、<code>validation00/01</code>、<code>test00/01</code> 按 source group 隔离；seed=<code>20261102</code>。</li>
+<li>固定 4096-token 文档上下文，生成参数 <code>min_new_tokens=max_new_tokens=115</code>、temperature=1.0、top_p=0.95、top_k=-1。<code>ignore_eos=False</code>，但 min_new_tokens 限制了提前结束；不能当作自然 EOS 的在线请求分布。</li>
+<li>每批保留 decode 索引 <strong>17、33、49、65、81、97、113</strong>，索引从首个 decode forward 的 0 开始。因此每档是 <strong>7 批 × 7 个位置 = 49 点</strong>，不是 49 批请求或连续 49 步。</li>
+<li>采集使用 CUDA TP4 / MoE EP1，父 batch 为 128；当前 H200 <strong>测量</strong>使用 MoE EP4。采集布局与执行布局是两件事。</li>
+<li>同一个 <code>(group, step, layer)</code>，BS16 用 <code>hidden[:16]</code>，BS128 用全部 128 行。每个更小 batch 是父轨迹的逐层组件重放，<strong>没有重新运行对应小 batch 的 Attention 和前序层</strong>。</li>
+<li>原采集和 H200 测量包含 step001，共 56 点。2026-11-03 查看路由分布后，维护者明确要求双方统一排除 step001，形成当前 49 点统计；这是查看数据后的协议调整，不是证明 step001 的采集损坏，也不是随机删异常值。原始 56 点与数值记录保留，不回写。</li>
+<li>H200 当前结果是从原 56 点测量中保留 49 点后重算；Zeus 本轮直接重测 49 点。各 batch、平台、train/validation/test 使用同一过滤规则。</li>
+</ul>
+<p>请求、顺序、原始 step 和 split 预先冻结；除上述公开记录的 step001 修订外，不按吞吐或路由集中程度筛选。输入和权重有身份校验，<strong>同输入并不意味着两平台量化后结果或 Router IDs 完全相同</strong>。</p>
+<h2 id="method-3">03 · H200 实际怎么执行</h2>
+<p>实际测量：4 × NVIDIA H200 NVL，global TP=4；<strong>Routed MoE EP4×TP1，Shared 独立 TP4</strong>。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>部分</th>
+<th>实际行为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Routed</td>
+<td>每卡 72 个完整专家，每专家 I=2048；全局 288 个专家不重复计算。<code>w13=[72,4096,4096]</code>，<code>w2=[72,4096,2048]</code></td>
+</tr>
+<tr>
+<td>Router</td>
+<td>每卡拿到相同的全局 B 行 hidden，执行原 CUDA Router，再按 EP 分区过滤 routed assignments；不是每卡只算 B/4 行 Router</td>
+</tr>
+<tr>
+<td>Shared</td>
+<td>关闭 fused shared；在四卡分别计算 I=512 的 TP 分片，<code>gate_up=[1024,4096]</code>，<code>down=[4096,512]</code></td>
+</tr>
+<tr>
+<td>数据分发</td>
+<td><code>moe_a2a_backend=none</code>；全局输入已在每卡，局部 dispatcher 仍在 MoE 内执行</td>
+</tr>
+<tr>
+<td>调用</td>
+<td>生产 <code>moe.forward_normal(value, should_allreduce_fusion=True)</code>；省略末尾跨卡 sum，保留本地计算和合并</td>
+</tr>
+<tr>
+<td>backend</td>
+<td>Routed 为 SGLang Triton FP8 fused MoE 默认配置；没有完成所有 H200 kernel/backend 的调优</td>
+</tr>
+</tbody>
+</table></div>
+<p>这里 <code>ep_size=4</code> 与 <code>tp_size=4</code> <strong>不代表 16 张 H200</strong>。实际 world_size=4、moe_tp_size=1，四个不同 GPU UUID 及逐层权重形状均有回执。</p>
+<p>冻结环境：Torch <code>2.10.0+cu130</code>、CUDA <code>13.0</code>、Triton <code>3.6.0</code>；driver <code>595.71.05</code>，power limit 600W，未锁定 SM 时钟。SGLang 使用历史固定版本及 GLM loader/NSA 兼容变更，以归档的公共源码、MoE kernel/runner 文件 hash 为执行身份，不把后来的 Zeus SGLang SHA 当成 H200 测量 SHA。</p>
+<h2 id="method-4">04 · H200 计时窗口与重复方式</h2>
+<ol>
+<li>每档构建一个包含 <strong>42 层、42 份不同权重</strong>的 CUDA Graph。每层输入为该层自己的冻结 hidden，不把单层重复几百次当成完整 42 层。</li>
+<li>使用独立 reset graph 恢复输入，再 replay 测量 graph；<strong>输入恢复不计时</strong>。每个输入检查恢复 exact、Graph/eager 输出逐元素相等且有限。</li>
+<li>每个输入 warmup 3 次，测 7 轮，每轮重复 3 次完整序列。每层的 CUDA events 在 graph 内；每轮先对 3 次取均值，再对 7 轮取中位数。</li>
+<li>每层取四卡里最慢的结果，累加 42 层。batch 和采样点测量顺序按固定 seed 打乱。另记录整段 graph 时间用于检查层间未计区间；主值是逐层时间之和。</li>
+<li>每档每卡保留 CUDA profile，检查计时窗口没有 NCCL。采集、JIT、host 调度、模型装载、离线权重转换和输入恢复均不计入；<strong>kernel 内读取显存权重的成本仍在计时内</strong>。</li>
+</ol>
+<p>Engine 的 <code>disable_cuda_graph=True</code> 关闭的是生产服务自动 capture；benchmark 自己构造了上述 <code>torch.cuda.CUDAGraph</code>，两者不矛盾。</p>
+<p>原 56 点测量共有 3,360 个 rank case、141,120 个 layer/card 点。当前保留部分为 <strong>2,940 个 rank case、123,480 个 layer/card 点</strong>。不要把 7×3 次计时重复算作新增的请求样本。</p>
+<h2 id="method-5">05 · Zeus 实际怎么执行</h2>
+<p>4 card / <strong>EP4×TP4 = 16 logical ranks / 32 cores</strong>。同卡四个 TP rank 各取 I=512；每 rank 两核。Shared 仅在 EP0 的 ranks 0～3 上计算 TP4 分片。</p>
+<pre><code class="language-text">真实逐层 H1 输出
+  → 按 owner 分发本地 token
+  → 本地 Router（calibrated sigmoid）
+  → 一次 raw-word gather（CPU double，不计通信时间）
+  → Shared / Routed / Reduce 直接读取 transport rank blocks
+</code></pre>
+<p>所有 BS16～128 都走这条统一流程。B/4 行按卡内 TP4 分配，余数分给前面的 owner；各 owner Router 计算 1～8 行。Routed 保留 M1/M2/M4 合并与 bounded windows；不因大 batch 改回通用 Reduce。</p>
+<p>H1 由捕获结果替代，业务编排执行冻结 SGLang 函数；核算的只有 checkpoint-backed Router 和 FFN kernels。一次记录为了模拟 rendezvous 会依次执行 16 个 owner 的 Router，但统计按并行取最大值，<strong>不把它们串行求和</strong>。</p>
+<p>全量为 <strong>49 × 15 × 42 × 16 = 493,920 个时序 case</strong>，672 个 <code>(layer, rank)</code> shard，每 shard 735 个 case。实际在 <strong>H200 服务器的 CPU</strong> 上跑 CycleSim，192 workers；GPU 用于此前 H200 测量。CPU 宿主耗时不是 Zeus 延迟。</p>
+<p>CycleSim <code>timing_only</code> 保留真实 Router、路由分组、地址和时序；对已资格的 Routed/Shared PE 路径省略数值乘加。它可用于周期矩阵，<strong>其 Routed/Shared 输出和下游 Reduce 不计为数值 PASS</strong>。完整数值资格单独记录。</p>
+<h2 id="method-6">06 · 量化、Router 与 Shared 的差异</h2>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>部分</th>
+<th>H200 冻结实现</th>
+<th>Zeus 测量实现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Routed weight</td>
+<td>FP8 E4M3FN，128×128 block scales</td>
+<td>checkpoint 权重按 TP 切分后解量化、重定标为 per-tensor FP8；每 expert/TP-local Gate、Up、Down 各一个 scale</td>
+</tr>
+<tr>
+<td>Routed activation</td>
+<td>CUDA FP8 per-token group quantization，group K=128</td>
+<td>固定 scale=1 的 FP8 cast；hidden 和 SiLU×Up 输出均有 FP8 舍入，不执行动态 amax quantization</td>
+</tr>
+<tr>
+<td>Shared</td>
+<td>FP8 block-scaled linear，动态输入量化；TP4 横跨四卡</td>
+<td>checkpoint Shared 解量化为 BF16；BF16 activation/weight，TP4 放在 EP0 卡的四个 rank</td>
+</tr>
+<tr>
+<td>Router</td>
+<td>原 CUDA 实现，重复处理各卡已持有的全局 B 行</td>
+<td>BF16 Router，calibrated sigmoid，各 owner 仅处理本地行</td>
+</tr>
+<tr>
+<td>Routed 激活函数</td>
+<td>冻结 SGLang CUDA/EP 实现</td>
+<td>SiLU LUT；BF16→FP8 舍入在计算链中保留</td>
+</tr>
+</tbody>
+</table></div>
+<p>Zeus 固定 scale=1 <strong>仍是量化和舍入，不是“没有量化”</strong>。双方使用同一 checkpoint 来源与输入，不意味着数值路径等价。图中的 <code>Zeus/H200</code> 是这两套组件实现及测量口径的吞吐比值，不是消除软件/精度差异后的硬件加速比。</p>
+<p>本轮 Zeus calibrated Router 相对上一轮 accurate Router，有 206,288 / 493,920 条 rank-case 的 IDs 变化；这是 <strong>Zeus 新旧版本</strong>的比较计数，不是 H200/Zeus IDs 差异计数。流程、sigmoid、编译器同时改变，历史收益不能全部归因于 Routed 调度。</p>
+<h2 id="method-7">07 · 延迟与吞吐怎么汇总</h2>
+<p>令 B 为四卡总 batch，j 为一个 <code>(group, decode step)</code>，l 为层，r 为执行 rank，o 为 Router owner。</p>
+<p>H200（毫秒）：</p>
+<pre><code class="language-text">t[j,l,r] = median(7 轮中，每轮 3 次 CUDA event 时间的均值)
+T_H[j]   = Σ_l max_r t[j,l,r]
+</code></pre>
+<p>Zeus（cycles）：</p>
+<pre><code class="language-text">单 launch 周期 = max_core(cycles)
+每 rank 的 FFN = Shared（若有）+ Routed + Reduce
+C_Z[j]        = Σ_l { max_owner(Router) + max_rank(该 rank 的 FFN) }
+T_Z[j]        = C_Z[j] / 400000                  # ms，400 MHz
+</code></pre>
+<p>Router 后有 gather 依赖，所以 Router 与 FFN 分开取并行临界路径。各层瓶颈可以是不同 rank/EP；不是全程固定一个“最慢 EP”，也不是平均 EP。</p>
+<p>任一平台的主图：</p>
+<pre><code class="language-text">Q(B) = 49 × B × 1000 / Σ_j T[j] / 4           # tokens/s/card
+     = B × 1000 / mean_j(T[j]) / 4
+比值 = Q_Zeus(B) / Q_H200(B)
+</code></pre>
+<p>B 已经是四卡总 token 数，<strong>分子不再乘 4，也不乘 Top-K=8 或 42 层</strong>。比值使用双方同档汇总吞吐相除，不是 49 个逐点比值的平均。</p>
+<p>各 kernel 图另用 <code>mean_j(Σ_l max_rank(stage cycles))</code> 计算阶段等效吞吐，目的为诊断瓶颈；各 stage 的最大值可能来自不同 rank，<strong>不能相加替代整体 MoE 时间</strong>。P10/P90 是 49 个工作负载点的吞吐分布，不是计时误差置信区间。49 点也不等于 49 个互相独立的请求集合。</p>
+<h2 id="method-8">08 · PR #643 固定基线</h2>
+<p>PR 于北京时间 <strong>2026-11-05 01:56:02</strong> 合入，merge commit <code>1e2168f6baaf51fe58be97300c33a33059fa3755</code>。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>身份</th>
+<th>冻结值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Zeus 实际测量源码</td>
+<td><code>1648b5c5aad4654f14d66bb9ccbd96b02af72ae7</code></td>
+</tr>
+<tr>
+<td>提交整理后</td>
+<td><code>f4ce26eabcc964650064c75635ebc750a38ccfa8</code></td>
+</tr>
+<tr>
+<td>PR 最终 head</td>
+<td><code>765f65a0769383a3f6719d7617f1e6dee7f57b9a</code></td>
+</tr>
+<tr>
+<td>Zeus 编排 SGLang / #63</td>
+<td><code>49542794a358528c3d95c848cbdf0df33310e2ff</code></td>
+</tr>
+<tr>
+<td>triton_shared</td>
+<td><code>d78b531acacedeb002d72d72017f1abf1ed208c7</code></td>
+</tr>
+<tr>
+<td>Triton</td>
+<td><code>5321c2ebe470d2527078491642b136a13ab72c49</code></td>
+</tr>
+<tr>
+<td>CycleSim</td>
+<td><code>b39990784ba2e1324c258c1db5fb02c13f93953b</code></td>
+</tr>
+<tr>
+<td>CycleSim daemon SHA256</td>
+<td><code>efdf5ee46eac45b7c6bc0f15641eb1e194bca7680d160eb3ab4ea5bc8a025ea6</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>合入后核对：测量版到 merge 的 GLM MoE 目录内 <strong>21 个 Python 文件相同</strong>；最终 PR head 到 merge 的 MoE/benchmark 指定范围 <strong>71 个文件相同</strong>。整理后还有 H200 资格门禁修复，整体仓库另有主线改动；不宣称整个执行环境相同，<strong>没有在 merge SHA 上重新跑本轮全量测量</strong>。</p>
+<p>基线表使用固定版本数据生成，后续首页升级不会自动改写此表。H200 时间是 GPU 实测，Zeus 时间是周期换算；单位均为四卡 42 层 MoE 组件计算。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th style="text-align:right">总 BS（4 card）</th>
+<th style="text-align:right">H200 ms</th>
+<th style="text-align:right">H200 tokens/s/card</th>
+<th style="text-align:right">Zeus ms</th>
+<th style="text-align:right">Zeus tokens/s/card</th>
+<th style="text-align:right">Zeus/H200</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">16</td>
+<td style="text-align:right">10.2328</td>
+<td style="text-align:right">390.9</td>
+<td style="text-align:right">4.4962</td>
+<td style="text-align:right">889.6</td>
+<td style="text-align:right">2.276×</td>
+</tr>
+<tr>
+<td style="text-align:right">24</td>
+<td style="text-align:right">12.0284</td>
+<td style="text-align:right">498.8</td>
+<td style="text-align:right">5.7888</td>
+<td style="text-align:right">1,036.5</td>
+<td style="text-align:right">2.078×</td>
+</tr>
+<tr>
+<td style="text-align:right">32</td>
+<td style="text-align:right">13.2953</td>
+<td style="text-align:right">601.7</td>
+<td style="text-align:right">7.0511</td>
+<td style="text-align:right">1,134.6</td>
+<td style="text-align:right">1.886×</td>
+</tr>
+<tr>
+<td style="text-align:right">40</td>
+<td style="text-align:right">14.2327</td>
+<td style="text-align:right">702.6</td>
+<td style="text-align:right">10.4509</td>
+<td style="text-align:right">956.9</td>
+<td style="text-align:right">1.362×</td>
+</tr>
+<tr>
+<td style="text-align:right">48</td>
+<td style="text-align:right">15.0438</td>
+<td style="text-align:right">797.7</td>
+<td style="text-align:right">12.5417</td>
+<td style="text-align:right">956.8</td>
+<td style="text-align:right">1.199×</td>
+</tr>
+<tr>
+<td style="text-align:right">56</td>
+<td style="text-align:right">15.7517</td>
+<td style="text-align:right">888.8</td>
+<td style="text-align:right">14.8640</td>
+<td style="text-align:right">941.9</td>
+<td style="text-align:right">1.060×</td>
+</tr>
+<tr>
+<td style="text-align:right">64</td>
+<td style="text-align:right">16.3755</td>
+<td style="text-align:right">977.1</td>
+<td style="text-align:right">14.9150</td>
+<td style="text-align:right">1,072.7</td>
+<td style="text-align:right">1.098×</td>
+</tr>
+<tr>
+<td style="text-align:right">72</td>
+<td style="text-align:right">17.1091</td>
+<td style="text-align:right">1,052.1</td>
+<td style="text-align:right">18.1519</td>
+<td style="text-align:right">991.6</td>
+<td style="text-align:right">0.943×</td>
+</tr>
+<tr>
+<td style="text-align:right">80</td>
+<td style="text-align:right">17.5725</td>
+<td style="text-align:right">1,138.1</td>
+<td style="text-align:right">20.8101</td>
+<td style="text-align:right">961.1</td>
+<td style="text-align:right">0.844×</td>
+</tr>
+<tr>
+<td style="text-align:right">88</td>
+<td style="text-align:right">17.9596</td>
+<td style="text-align:right">1,225.0</td>
+<td style="text-align:right">22.4023</td>
+<td style="text-align:right">982.0</td>
+<td style="text-align:right">0.802×</td>
+</tr>
+<tr>
+<td style="text-align:right">96</td>
+<td style="text-align:right">18.3007</td>
+<td style="text-align:right">1,311.4</td>
+<td style="text-align:right">24.0519</td>
+<td style="text-align:right">997.8</td>
+<td style="text-align:right">0.761×</td>
+</tr>
+<tr>
+<td style="text-align:right">104</td>
+<td style="text-align:right">18.6497</td>
+<td style="text-align:right">1,394.1</td>
+<td style="text-align:right">26.6735</td>
+<td style="text-align:right">974.8</td>
+<td style="text-align:right">0.699×</td>
+</tr>
+<tr>
+<td style="text-align:right">112</td>
+<td style="text-align:right">18.9478</td>
+<td style="text-align:right">1,477.7</td>
+<td style="text-align:right">27.8959</td>
+<td style="text-align:right">1,003.7</td>
+<td style="text-align:right">0.679×</td>
+</tr>
+<tr>
+<td style="text-align:right">120</td>
+<td style="text-align:right">19.2782</td>
+<td style="text-align:right">1,556.2</td>
+<td style="text-align:right">29.3808</td>
+<td style="text-align:right">1,021.1</td>
+<td style="text-align:right">0.656×</td>
+</tr>
+<tr>
+<td style="text-align:right">128</td>
+<td style="text-align:right">19.5635</td>
+<td style="text-align:right">1,635.7</td>
+<td style="text-align:right">29.4503</td>
+<td style="text-align:right">1,086.6</td>
+<td style="text-align:right">0.664×</td>
+</tr>
+</tbody>
+</table></div>
+<p>Zeus 在这 15 档中观测最佳为 BS32；H200 为 BS128，仍位于扫描上界。选择 batch 使用 train，validation/test 只验证选择；公开主表汇总全部 49 点。</p>
+<p><a href="versions/20261104-1648b5c5/data/benchmark.json">固定版本 JSON</a> · <a href="versions/20261104-1648b5c5/data/h200-49-paired.csv">固定 H200 49 点 CSV</a> · <a href="versions/20261104-1648b5c5/data/zeus-49-paired.csv">固定 Zeus 49 点 CSV</a> · <a href="versions/20261104-1648b5c5/data/zeus-49-stages.csv">固定阶段 CSV</a></p>
+<h2 id="method-9">09 · 验证覆盖与未覆盖的部分</h2>
+<ul>
+<li>Zeus：361 项 MoE 回归；train00/step017、15 档、layer/rank <code>(3,0)/(5,15)/(44,4)</code> 的 45 项完整模式，通过实现参考、完整/本地 Router 逐位对照、Reduce exact、changed-input Graph；45 对完整/时序模式 cycles、输入/权重、Router 与语义 zbin 一致。</li>
+<li>493,920 时序 case 完成、672 shard 全部通过覆盖与身份审计，<strong>不等于 493,920 项完整数值通过</strong>。</li>
+<li>45 项完整模式中仍有 18 项解析 SiLU 预算超限：layer5/rank15 的 BS112/120/128，以及 layer44/rank4 的全部 15 档。原阈值不变。维护者反馈算法侧真实推理暂未发现相关问题，由 <a href="https://github.com/DarronTam/torch_zeus/issues/644">#644</a> 跟踪；该反馈不替代新版本端到端验收。</li>
+<li>H200：全部正式 case 有 Graph/eager 和输入恢复 exact；历史 EP4 smoke 在边界 batch、首尾样本的 layer3/24/44 做 48 项分区/归并参考核对。参考保留相同 FP8/激活实现，不等于独立解析数学参考。</li>
+<li>历史 H200 smoke 包含 step001，作为历史数值记录保留，不计入当前 49 点性能，也不重标为 step017。2026-11-05 回查旧 smoke/measurement 的 7 个执行源码 hash、6 个公共源码 hash、runtime 和模型元数据相同；脚本集仅 <code>plot.py</code> 不同。这是归档核对，不是本次重跑 GPU smoke。</li>
+<li>PR 最终 head <code>765f65a0</code> 的 <a href="https://github.com/DarronTam/torch_zeus/actions/runs/41834169767">CI</a> 成功；另有 85 项 benchmark CPU 检查。新资格门禁会拒绝源码、kernel/runner 或 runtime 变化后的旧 smoke。冻结数据里的旧 CI 字段是发布快照，不能用它覆盖最终 head 的回执。</li>
+<li>本轮未提供实卡 Zeus 通信、VCS/RTL 或完整模型速度/质量验收；H200 也未做新 backend 全面调优。</li>
+</ul>
+<h2 id="method-10">10 · 算法侧怎样与真实推理核对</h2>
+<p>建议先记录下表，再从共同的 BS16/32/64/128 和一个采样点开始逐层对照，而不是先比较最终两条吞吐曲线。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>对齐项</th>
+<th>需要提供或检查的内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>服务身份</td>
+<td>模型 snapshot、config/index、SGLang/Torch/CUDA/Triton、实际 MoE backend/kernel、启动参数、源码改动</td>
+</tr>
+<tr>
+<td>拓扑</td>
+<td>实际 GPU 数、global TP、MoE EP/TP、Shared 放置、是否 fused shared、通信 backend</td>
+</tr>
+<tr>
+<td>工作负载</td>
+<td>prompt、上下文长度、生成位置、有效 decode batch、动态 batching、自然 EOS 与固定长度规则</td>
+</tr>
+<tr>
+<td>计数</td>
+<td>输出 tokens 还是含 prompt tokens；总吞吐还是每卡；BS 是全局还是每卡</td>
+</tr>
+<tr>
+<td>时间</td>
+<td>单层 MoE、42 层 MoE、完整 decode step、TPOT、TTFT 或整个服务窗口；是否包括等待与通信</td>
+</tr>
+<tr>
+<td>执行</td>
+<td>Graph/eager、warmup、权重 cache、量化/激活函数、SM clocks、功率、并发 GPU 任务</td>
+</tr>
+<tr>
+<td>路由</td>
+<td>同层同输入的 Top-K IDs/weights、活跃 routed expert 数、每 expert token 数、各 EP 负载</td>
+</tr>
+</tbody>
+</table></div>
+<p>核对顺序：</p>
+<ol>
+<li>用归档输入复现同一层、同一 batch 的 <code>forward_normal</code> 计时；对上 backend、量化、Shared 和 rank 时延。</li>
+<li>扩展到 42 个独立冻结层输入，并复用上文的逐层 max 与 pooled throughput 公式。</li>
+<li>在真实 decode 上分别记录 MoE 计算、通信、Attention/H1、其余调度与端到端时间。若存在重叠，用 trace 的实际关键路径，不直接把模块时间相加。</li>
+<li>最后更换为真实业务请求、动态 batch/EOS 分布，单独报告服务吞吐。此时输入和边界都已改变，不与组件曲线逐点混称同口径。</li>
+</ol>
+<p>如果算法侧更换 H200 backend 或 quantization，应在 train 上选择配置，冻结后再测 holdout；不能保留旧 smoke 资格直接刷新性能。如果核对后仍有差异，优先提交 <code>(snapshot, source, batch, group, step, layer, rank, input hash, route hash, raw event/cycles)</code>，就能定位到具体测量点。</p>
+<h2 id="method-11">11 · 后续优化的对比约定与入口</h2>
+<p><strong>建议 baseline ID：<code>pr643-1648b5c5-owner-router-direct49</code>。</strong> 原始输入、版本和测试结果按此基线保留，不把持续更新的首页当作唯一历史凭据。</p>
+<ul>
+<li>固定输入、49 点规则、15 档、拓扑、统计公式与编译器/模拟器，再做单 kernel A/B；同时变更多项则注明“完整方案比较”。</li>
+<li>candidate 单独输出；保存 source/tool/binary/input hashes，原始数值门槛不变。先完整模式资格、再 full/timing 对照、再扩大周期矩阵。</li>
+<li>新 H200 正式扫描先跑当前源码的 <code>--smoke</code>，再传 <code>--qualification</code>。原有数据目录中的 56 点 plan 不直接冒充新的 49 点计划。</li>
+<li>核对唯一覆盖和失败数后，再生成 pooled throughput；同时给同档延迟、吞吐、变化百分比及最佳档位。固定基线表不随新结果覆盖。</li>
+<li>不把旧 EP1 曲线、step001 单点曲线、仅 train00/step017 曲线或未完成的连续输入矩阵混入这个 baseline。</li>
+</ul>
+<p>可复用入口（私有仓库，需要 torch_zeus 访问权限）：</p>
+<ul>
+<li><a href="https://github.com/DarronTam/torch_zeus/blob/765f65a0769383a3f6719d7617f1e6dee7f57b9a/sgl-kernel-zeus-triton/tests/cyclesim_performance/glm53_flash/moe/paired_benchmark/README.md">配对采集、H200 EP4 测量和命令说明</a></li>
+<li><a href="https://github.com/DarronTam/torch_zeus/blob/765f65a0769383a3f6719d7617f1e6dee7f57b9a/sgl-kernel-zeus-triton/tests/cyclesim_performance/glm53_flash/moe/paired_benchmark/benchmark_h200.py">H200 计时入口</a>、<a href="https://github.com/DarronTam/torch_zeus/blob/765f65a0769383a3f6719d7617f1e6dee7f57b9a/sgl-kernel-zeus-triton/tests/cyclesim_performance/glm53_flash/moe/paired_benchmark/summarize.py">H200 汇总</a></li>
+<li><a href="https://github.com/DarronTam/torch_zeus/blob/1648b5c5aad4654f14d66bb9ccbd96b02af72ae7/sgl-kernel-zeus-triton/tests/cyclesim_performance/glm53_flash/moe/paired_benchmark/flow_worker.py">Zeus 实测 flow worker</a>、<a href="https://github.com/DarronTam/torch_zeus/blob/1648b5c5aad4654f14d66bb9ccbd96b02af72ae7/sgl-kernel-zeus-triton/tests/cyclesim_performance/glm53_flash/moe/paired_benchmark/sglang_flow.py">冻结 SGLang 编排适配</a></li>
+<li><a href="https://github.com/Xuanwen-Wang/notes/tree/master/models/glm53-flash/scripts">Notes 采样与统计脚本</a></li>
+</ul>
+<p>原始 tensor、权重和日志在服务器保留；91 shared 交接包及 H200 路径、hash 清单见 <strong>PR #643 描述中的“合入基线与复现索引”</strong>。公开 Notes 只提供数值、身份及测量方法，不复制原始请求或模型文件。</p>
+</article></main></body></html>

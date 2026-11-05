@@ -2,6 +2,14 @@
   "updated": "2026-11-05",
   "articles": [
     {
+      "file": "models/glm53-flash/methodology.html",
+      "category": "compiler",
+      "title": "TritonShared - GLM-5.3-Flash：MoE 测评口径与 PR #643 基线",
+      "description": "给算法侧的测评说明：冻结逐层输入、H200 EP4/Zeus EP4×TP4、量化、计时与汇总公式、真实推理差异，以及合入基线。",
+      "date": "2026-11-05",
+      "tags": ["GLM-5.3-Flash", "MoE", "H200", "CycleSim", "测评方法", "PR643"]
+    },
+    {
       "file": "2026-11-03-zccl-allreduce-pblink.html",
       "category": "compiler",
       "title": "TritonShared - ZCCL AllReduce 全链路：PyTorch、Triton 与 PBLink",

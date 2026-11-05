@@ -146,6 +146,7 @@ select:focus-visible,input:focus-visible { outline:3px solid #dba855; outline-of
   <div class="sidebar-model">GLM-5.3-Flash<span>MoE / FFN</span></div>
   <nav class="side-nav" aria-label="页面目录">
     <a href="#overview" aria-current="location"><span>01</span>总体吞吐对比</a>
+    <a href="methodology.html" class="subnav">测评方法与 PR643 基线 ↗</a>
     <a href="#kernels"><span>02</span>Kernel 组成</a>
     <a href="#chart-kernel-throughput" class="subnav">各 kernel 吞吐率</a>
     <a href="#chart-kernel-time" class="subnav">各阶段耗时</a>
@@ -173,6 +174,7 @@ select:focus-visible,input:focus-visible { outline:3px solid #dba855; outline-of
   </div>
   <p class="sample-strip"><b>采样数据</b>：49 个 decode step 采样点 = 7 批请求 × 每批 7 个采样位置。共 896 条不同请求，每批 128 条；保留 step 017 / 033 / 049 / 065 / 081 / 097 / 113，排除 step001。每个点重放完整 42 层 MoE；各 batch 使用同一父输入的嵌套前缀。<a href="#sampling">采样细节 ↓</a></p>
   <p class="reading-note"><b>2026-11-04 完整复测</b>：当前曲线使用本地 Router → 一次 gather → direct transport 的统一流程，Router 为 calibrated sigmoid。四卡总 BS16–128 的 493,920 个时序 case 全部完成；最佳档位为 BS32，1,134.6 tokens/s/card。相对上一版扫描峰值提高 15.7%。</p>
+  <p class="reading-note"><a href="methodology.html"><b>算法侧核对：这份 MoE benchmark 怎么测？与真实推理有什么区别？ →</b></a> 包含输入来源、H200/Zeus 拓扑与量化、计时边界、汇总公式及 PR #643 固定基线。</p>
   <figure class="interactive-chart" id="chart-population-comparison"><figcaption><div><span class="chart-kicker">4 CARD · 49 DECODE STEP SAMPLES / BATCH · 42 MoE LAYERS</span><h3>49 个 decode step 采样点汇总 · H200 与 Zeus MoE 吞吐</h3></div><span class="chart-unit">tokens/s/card</span></figcaption><div class="chart-controls"></div><div class="chart-frame"><svg role="img" aria-label="49 个 decode step 采样点汇总 · H200 与 Zeus MoE 吞吐" xmlns:xlink="http://www.w3.org/1999/xlink" width="892.8pt" height="576pt" viewBox="0 0 892.8 576" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
