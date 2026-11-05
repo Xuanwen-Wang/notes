@@ -1,23 +1,24 @@
 {
-  "baseline_source": "b6148f989e6a5974040ef3ab1e896d236f21db27",
-  "source": "1648b5c5aad4654f14d66bb9ccbd96b02af72ae7",
+  "baseline_source": "1648b5c5aad4654f14d66bb9ccbd96b02af72ae7",
+  "source": "508bb2b7526ed329ca7df53217d4cda866fba8ab",
   "paired_cases": 493920,
-  "fixed_router_ab": false,
+  "fixed_router_ab": true,
+  "kind": "four_kernel_and_compiler",
   "rows": [
     {
       "batch_size": 16,
       "baseline": {
         "batch_size": 16,
-        "cycles": 2013094.2857142857,
-        "milliseconds": 5.032735714285714,
-        "tokens_s_card": 794.7963547232903,
-        "p10": 785.6268007878039,
-        "p90": 803.6751376263092,
+        "cycles": 1798473.1836734693,
+        "milliseconds": 4.496182959183673,
+        "tokens_s_card": 889.6435123552534,
+        "p10": 878.2381050812611,
+        "p90": 900.9254552028423,
         "stages": {
-          "router": 349608,
-          "routed": 1058618.8979591837,
-          "shared": 395346,
-          "reduce": 448285.5918367347
+          "router": 123900,
+          "routed": 1058797.857142857,
+          "shared": 396018,
+          "reduce": 452747.7551020408
         }
       },
       "candidate": {
@@ -34,28 +35,28 @@
           "reduce": 452747.7551020408
         }
       },
-      "throughput_increase_pct": 11.933516940321699,
+      "throughput_increase_pct": 0.0,
       "stage_cycles_change_pct": {
-        "router": -64.56030754444978,
-        "routed": 0.016904967785702496,
-        "shared": 0.16997769042812472,
-        "reduce": 0.9953840468134523
+        "router": 0.0,
+        "routed": 0.0,
+        "shared": 0.0,
+        "reduce": 0.0
       }
     },
     {
       "batch_size": 24,
       "baseline": {
         "batch_size": 24,
-        "cycles": 2597740.8775510206,
-        "milliseconds": 6.494352193877551,
-        "tokens_s_card": 923.8796758907542,
-        "p10": 913.9531343100545,
-        "p90": 932.6148448426316,
+        "cycles": 2315501.3469387754,
+        "milliseconds": 5.7887533673469385,
+        "tokens_s_card": 1036.4925950800834,
+        "p10": 1023.5326512667933,
+        "p90": 1047.8395149126534,
         "stages": {
-          "router": 445578,
-          "routed": 1277114.775510204,
-          "shared": 537894,
-          "reduce": 636617.7142857143
+          "router": 133686,
+          "routed": 1290025.8775510204,
+          "shared": 538440,
+          "reduce": 641406.2448979592
         }
       },
       "candidate": {
@@ -72,31 +73,17 @@
           "reduce": 641406.2448979592
         }
       },
-      "throughput_increase_pct": 12.189132646602928,
+      "throughput_increase_pct": 0.0,
       "stage_cycles_change_pct": {
-        "router": -69.9971722122726,
-        "routed": 1.010958630218517,
-        "shared": 0.10150698836572936,
-        "reduce": 0.7521830613239411
+        "router": 0.0,
+        "routed": 0.0,
+        "shared": 0.0,
+        "reduce": 0.0
       }
     },
     {
       "batch_size": 32,
       "baseline": {
-        "batch_size": 32,
-        "cycles": 3301892.4285714286,
-        "milliseconds": 8.254731071428571,
-        "tokens_s_card": 969.141202878159,
-        "p10": 961.4796717125884,
-        "p90": 977.0434052000005,
-        "stages": {
-          "router": 622524,
-          "routed": 1571965.2857142857,
-          "shared": 672420,
-          "reduce": 823403.1428571428
-        }
-      },
-      "candidate": {
         "batch_size": 32,
         "cycles": 2820448.2448979593,
         "milliseconds": 7.051120612244898,
@@ -110,31 +97,31 @@
           "reduce": 827374.7959183673
         }
       },
-      "throughput_increase_pct": 17.069775506229412,
+      "candidate": {
+        "batch_size": 32,
+        "cycles": 2816379.102040816,
+        "milliseconds": 7.0409477551020405,
+        "tokens_s_card": 1136.2106747920416,
+        "p10": 1125.4285430853124,
+        "p90": 1147.03114916229,
+        "stages": {
+          "router": 133686,
+          "routed": 1572764.0408163266,
+          "shared": 667968,
+          "reduce": 827374.7959183673
+        }
+      },
+      "throughput_increase_pct": 0.14448136098561548,
       "stage_cycles_change_pct": {
-        "router": -78.525165294832,
-        "routed": 0.05081251534622133,
-        "shared": 0.07495315427856752,
-        "reduce": 0.4823461138905971
+        "router": 0.0,
+        "routed": 0.0,
+        "shared": -0.7364873299213537,
+        "reduce": 0.0
       }
     },
     {
       "batch_size": 40,
       "baseline": {
-        "batch_size": 40,
-        "cycles": 4558787.0612244895,
-        "milliseconds": 11.396967653061225,
-        "tokens_s_card": 877.4263737875926,
-        "p10": 869.4922565017386,
-        "p90": 883.9401737037623,
-        "stages": {
-          "router": 813582,
-          "routed": 2355284.1836734693,
-          "shared": 817614,
-          "reduce": 972567.3673469388
-        }
-      },
-      "candidate": {
         "batch_size": 40,
         "cycles": 4180368.897959184,
         "milliseconds": 10.45092224489796,
@@ -148,31 +135,31 @@
           "reduce": 1126179.3469387756
         }
       },
-      "throughput_increase_pct": 9.052267216179066,
+      "candidate": {
+        "batch_size": 40,
+        "cycles": 3819552.2040816327,
+        "milliseconds": 9.548880510204082,
+        "tokens_s_card": 1047.2431809481589,
+        "p10": 1037.6673565170167,
+        "p90": 1057.325148142703,
+        "stages": {
+          "router": 135660,
+          "routed": 2262749.836734694,
+          "shared": 810894,
+          "reduce": 990758.775510204
+        }
+      },
+      "throughput_increase_pct": 9.446570555888133,
       "stage_cycles_change_pct": {
-        "router": -71.9167828196789,
-        "routed": 0.8444433565255149,
-        "shared": 3.143781784558475,
-        "reduce": 15.794482186963975
+        "router": -40.625,
+        "routed": -4.733271097700731,
+        "shared": -3.844812988694657,
+        "reduce": -12.024778450845952
       }
     },
     {
       "batch_size": 48,
       "baseline": {
-        "batch_size": 48,
-        "cycles": 5130965.714285715,
-        "milliseconds": 12.827414285714285,
-        "tokens_s_card": 935.4964089188446,
-        "p10": 926.7606692109703,
-        "p90": 941.7225227771988,
-        "stages": {
-          "router": 840504,
-          "routed": 2653321.551020408,
-          "shared": 962808,
-          "reduce": 1150480.3673469387
-        }
-      },
-      "candidate": {
         "batch_size": 48,
         "cycles": 5016682,
         "milliseconds": 12.541705,
@@ -186,31 +173,31 @@
           "reduce": 1557871.1836734693
         }
       },
-      "throughput_increase_pct": 2.27807372055302,
+      "candidate": {
+        "batch_size": 48,
+        "cycles": 4344367.12244898,
+        "milliseconds": 10.86091780612245,
+        "tokens_s_card": 1104.8789995662644,
+        "p10": 1093.336105434948,
+        "p90": 1114.5953196478238,
+        "stages": {
+          "router": 135660,
+          "routed": 2501331.7346938774,
+          "shared": 953442,
+          "reduce": 1159878.5714285714
+        }
+      },
+      "throughput_increase_pct": 15.475553943793475,
       "stage_cycles_change_pct": {
-        "router": -72.81631021387167,
-        "routed": 0.3444438944129491,
-        "shared": 2.490839295061953,
-        "reduce": 35.41049703142634
+        "router": -40.625,
+        "routed": -6.051883397694924,
+        "shared": -3.3794424345605423,
+        "reduce": -25.547209321019025
       }
     },
     {
       "batch_size": 56,
       "baseline": {
-        "batch_size": 56,
-        "cycles": 6394650.1632653065,
-        "milliseconds": 15.986625408163265,
-        "tokens_s_card": 875.7320349078278,
-        "p10": 868.0445012280555,
-        "p90": 882.5344249168771,
-        "stages": {
-          "router": 1030218,
-          "routed": 3432544.1224489794,
-          "shared": 1108002,
-          "reduce": 1345974.0204081633
-        }
-      },
-      "candidate": {
         "batch_size": 56,
         "cycles": 5945597.020408163,
         "milliseconds": 14.863992551020408,
@@ -224,31 +211,31 @@
           "reduce": 1662381.7142857143
         }
       },
-      "throughput_increase_pct": 7.552700617209274,
+      "candidate": {
+        "batch_size": 56,
+        "cycles": 4965856.530612245,
+        "milliseconds": 12.414641326530614,
+        "tokens_s_card": 1127.700723023017,
+        "p10": 1115.1547868963112,
+        "p90": 1140.7577280755797,
+        "stages": {
+          "router": 143094,
+          "routed": 2869242.448979592,
+          "shared": 1095948,
+          "reduce": 1331277.9387755103
+        }
+      },
+      "throughput_increase_pct": 19.729536762817503,
       "stage_cycles_change_pct": {
-        "router": -77.82216967670921,
-        "routed": 0.10650219089594071,
-        "shared": 2.2592016981918706,
-        "reduce": 23.507711819103406
+        "router": -37.37132352941176,
+        "routed": -16.49954693364899,
+        "shared": -3.2731586165993254,
+        "reduce": -19.917433683543095
       }
     },
     {
       "batch_size": 64,
       "baseline": {
-        "batch_size": 64,
-        "cycles": 6771207.571428572,
-        "milliseconds": 16.92801892857143,
-        "tokens_s_card": 945.1785272401189,
-        "p10": 937.0693397815004,
-        "p90": 954.4600845990586,
-        "stages": {
-          "router": 1224384,
-          "routed": 3390596.8571428573,
-          "shared": 1253196,
-          "reduce": 1497261.4081632653
-        }
-      },
-      "candidate": {
         "batch_size": 64,
         "cycles": 5966016.693877551,
         "milliseconds": 14.915041734693878,
@@ -262,31 +249,31 @@
           "reduce": 1683136.5102040817
         }
       },
-      "throughput_increase_pct": 13.496289381444825,
+      "candidate": {
+        "batch_size": 64,
+        "cycles": 5510127.8367346935,
+        "milliseconds": 13.775319591836734,
+        "tokens_s_card": 1161.4975531661432,
+        "p10": 1150.8503317779932,
+        "p90": 1174.1193873887,
+        "stages": {
+          "router": 143094,
+          "routed": 3122119.6530612246,
+          "shared": 1237992,
+          "reduce": 1511154.1224489796
+        }
+      },
+      "throughput_increase_pct": 8.273653001361536,
       "stage_cycles_change_pct": {
-        "router": -88.31298024149287,
-        "routed": 0.5134602573072966,
-        "shared": 0.06702862122125453,
-        "reduce": 12.414338673754699
+        "router": 0.0,
+        "routed": -8.388675154822256,
+        "shared": -1.279389108446649,
+        "reduce": -10.2179702426067
       }
     },
     {
       "batch_size": 72,
       "baseline": {
-        "batch_size": 72,
-        "cycles": 7795730.653061224,
-        "milliseconds": 19.48932663265306,
-        "tokens_s_card": 923.5824479354873,
-        "p10": 916.6815354169358,
-        "p90": 931.0593156734163,
-        "stages": {
-          "router": 1225644,
-          "routed": 4089990.5102040814,
-          "shared": 1398390,
-          "reduce": 1710495.469387755
-        }
-      },
-      "candidate": {
         "batch_size": 72,
         "cycles": 7260756.918367347,
         "milliseconds": 18.151892295918366,
@@ -300,31 +287,31 @@
           "reduce": 2027094.6734693877
         }
       },
-      "throughput_increase_pct": 7.368016044450787,
+      "candidate": {
+        "batch_size": 72,
+        "cycles": 6421500.918367347,
+        "milliseconds": 16.05375229591837,
+        "tokens_s_card": 1121.2331963398028,
+        "p10": 1112.828811368661,
+        "p90": 1130.9735500658965,
+        "stages": {
+          "router": 154560,
+          "routed": 3808978.285714286,
+          "shared": 1381002,
+          "reduce": 1678924.693877551
+        }
+      },
+      "throughput_increase_pct": 13.069467880935504,
       "stage_cycles_change_pct": {
-        "router": -72.97991912822972,
-        "routed": 0.29671692018047313,
-        "shared": 1.7900585673524594,
-        "reduce": 18.509210328101865
+        "router": -53.32910589727331,
+        "routed": -7.14624328416964,
+        "shared": -2.9801422206485517,
+        "reduce": -17.175812464444064
       }
     },
     {
       "batch_size": 80,
       "baseline": {
-        "batch_size": 80,
-        "cycles": 8515863.959183674,
-        "milliseconds": 21.289659897959183,
-        "tokens_s_card": 939.4231798844843,
-        "p10": 931.5876903609243,
-        "p90": 948.2029894507696,
-        "stages": {
-          "router": 1413594,
-          "routed": 4448824.979591837,
-          "shared": 1543584,
-          "reduce": 1845943.1836734693
-        }
-      },
-      "candidate": {
         "batch_size": 80,
         "cycles": 8324047.571428572,
         "milliseconds": 20.81011892857143,
@@ -338,31 +325,31 @@
           "reduce": 2525975.4693877553
         }
       },
-      "throughput_increase_pct": 2.3043643865454433,
+      "candidate": {
+        "batch_size": 80,
+        "cycles": 7027291.775510204,
+        "milliseconds": 17.56822943877551,
+        "tokens_s_card": 1138.4186476900875,
+        "p10": 1128.4648667681283,
+        "p90": 1149.4517901324643,
+        "stages": {
+          "router": 154560,
+          "routed": 4125964.551020408,
+          "shared": 1523550,
+          "reduce": 1857972.612244898
+        }
+      },
+      "throughput_increase_pct": 18.453137244670902,
       "stage_cycles_change_pct": {
-        "router": -76.57248120747542,
-        "routed": 0.25545245554037255,
-        "shared": 7.996843709185897,
-        "reduce": 36.8392858311601
+        "router": -53.32910589727331,
+        "routed": -7.493516874415295,
+        "shared": -8.606485097377236,
+        "reduce": -26.44534221485403
       }
     },
     {
       "batch_size": 88,
       "baseline": {
-        "batch_size": 88,
-        "cycles": 9418657.57142857,
-        "milliseconds": 23.546643928571427,
-        "tokens_s_card": 934.3157380192625,
-        "p10": 924.955968565444,
-        "p90": 943.0802166564885,
-        "stages": {
-          "router": 1607760,
-          "routed": 4762730.653061224,
-          "shared": 1688778,
-          "reduce": 2076976
-        }
-      },
-      "candidate": {
         "batch_size": 88,
         "cycles": 8960911.612244898,
         "milliseconds": 22.402279030612245,
@@ -376,31 +363,31 @@
           "reduce": 2716390.3673469387
         }
       },
-      "throughput_increase_pct": 5.108252139862324,
+      "candidate": {
+        "batch_size": 88,
+        "cycles": 7572251.918367347,
+        "milliseconds": 18.930629795918367,
+        "tokens_s_card": 1162.1377755083151,
+        "p10": 1150.6511889160047,
+        "p90": 1172.6088099175454,
+        "stages": {
+          "router": 164766,
+          "routed": 4415756.755102041,
+          "shared": 1666056,
+          "reduce": 2027287.612244898
+        }
+      },
+      "throughput_increase_pct": 18.33879417705586,
       "stage_cycles_change_pct": {
-        "router": -78.54493207941485,
-        "routed": 0.5395537070609135,
-        "shared": 8.562759581188285,
-        "reduce": 30.785833218435776
+        "router": -52.234262754170224,
+        "routed": -7.782749926215605,
+        "shared": -9.126729588564098,
+        "reduce": -25.368325679017843
       }
     },
     {
       "batch_size": 96,
       "baseline": {
-        "batch_size": 96,
-        "cycles": 9819582.285714285,
-        "milliseconds": 24.548955714285714,
-        "tokens_s_card": 977.6383272398726,
-        "p10": 967.8583745034166,
-        "p90": 985.6006819623278,
-        "stages": {
-          "router": 1611120,
-          "routed": 5023420.408163265,
-          "shared": 1833972,
-          "reduce": 2193354.9591836734
-        }
-      },
-      "candidate": {
         "batch_size": 96,
         "cycles": 9620763.897959184,
         "milliseconds": 24.05190974489796,
@@ -414,31 +401,31 @@
           "reduce": 3014211.8571428573
         }
       },
-      "throughput_increase_pct": 2.066555107929391,
+      "candidate": {
+        "batch_size": 96,
+        "cycles": 8129927.326530612,
+        "milliseconds": 20.32481831632653,
+        "tokens_s_card": 1180.8223634019532,
+        "p10": 1169.1307931347376,
+        "p90": 1190.5058362693217,
+        "stages": {
+          "router": 164766,
+          "routed": 4675864.8367346935,
+          "shared": 1808604,
+          "reduce": 2209617.102040816
+        }
+      },
+      "throughput_increase_pct": 18.337637122087003,
       "stage_cycles_change_pct": {
-        "router": -78.58967674661106,
-        "routed": 0.27255110348425315,
-        "shared": 7.653551962625382,
-        "reduce": 37.424717532482376
+        "router": -52.234262754170224,
+        "routed": -7.171708189530301,
+        "shared": -8.39431586113002,
+        "reduce": -26.69337104475161
       }
     },
     {
       "batch_size": 104,
       "baseline": {
-        "batch_size": 104,
-        "cycles": 11105681.06122449,
-        "milliseconds": 27.764202653061226,
-        "tokens_s_card": 936.4576510585761,
-        "p10": 927.0674861874428,
-        "p90": 944.7254602284784,
-        "stages": {
-          "router": 1797306,
-          "routed": 5722018.816326531,
-          "shared": 1979166,
-          "reduce": 2444714.7551020407
-        }
-      },
-      "candidate": {
         "batch_size": 104,
         "cycles": 10669386.653061224,
         "milliseconds": 26.67346663265306,
@@ -452,31 +439,31 @@
           "reduce": 3204355.2448979593
         }
       },
-      "throughput_increase_pct": 4.089217331326966,
+      "candidate": {
+        "batch_size": 104,
+        "cycles": 9020721.551020408,
+        "milliseconds": 22.55180387755102,
+        "tokens_s_card": 1152.9011222858962,
+        "p10": 1141.6716938711982,
+        "p90": 1161.4647364919274,
+        "stages": {
+          "router": 164766,
+          "routed": 5347777.489795919,
+          "shared": 1951110,
+          "reduce": 2375703.4285714286
+        }
+      },
+      "throughput_increase_pct": 18.276421600158145,
       "stage_cycles_change_pct": {
-        "router": -75.86053793844788,
-        "routed": 0.2220184725583607,
-        "shared": 8.30380069180654,
-        "reduce": 31.072765778116796
+        "router": -62.02323330106486,
+        "routed": -6.747410150941768,
+        "shared": -8.976016929226427,
+        "reduce": -25.86017320164259
       }
     },
     {
       "batch_size": 112,
       "baseline": {
-        "batch_size": 112,
-        "cycles": 11754947.673469387,
-        "milliseconds": 29.38736918367347,
-        "tokens_s_card": 952.7902897669302,
-        "p10": 944.3991714237671,
-        "p90": 960.8743331539866,
-        "stages": {
-          "router": 1991472,
-          "routed": 6075661.8367346935,
-          "shared": 2124360,
-          "reduce": 2540906.673469388
-        }
-      },
-      "candidate": {
         "batch_size": 112,
         "cycles": 11158379.163265307,
         "milliseconds": 27.895947908163265,
@@ -490,31 +477,31 @@
           "reduce": 3352067.2040816327
         }
       },
-      "throughput_increase_pct": 5.346372456745829,
+      "candidate": {
+        "batch_size": 112,
+        "cycles": 9615723.93877551,
+        "milliseconds": 24.039309846938774,
+        "tokens_s_card": 1164.7588960864277,
+        "p10": 1152.8114819797079,
+        "p90": 1173.33300050724,
+        "stages": {
+          "router": 164094,
+          "routed": 5648975.673469388,
+          "shared": 2093658,
+          "reduce": 2556243.0408163266
+        }
+      },
+      "throughput_increase_pct": 16.04304818141693,
       "stage_cycles_change_pct": {
-        "router": -78.21410494347899,
-        "routed": 0.1888693204600278,
-        "shared": 1.1289047054171553,
-        "reduce": 31.924058411192078
+        "router": -62.17812197483059,
+        "routed": -7.198149669291931,
+        "shared": -2.545404781920202,
+        "reduce": -23.74129499242359
       }
     },
     {
       "batch_size": 120,
       "baseline": {
-        "batch_size": 120,
-        "cycles": 12548993.612244898,
-        "milliseconds": 31.372484030612245,
-        "tokens_s_card": 956.2519808991528,
-        "p10": 946.7842589506948,
-        "p90": 965.6047198817225,
-        "stages": {
-          "router": 1998654,
-          "routed": 6391405.6122448975,
-          "shared": 2269554,
-          "reduce": 2813231.4081632653
-        }
-      },
-      "candidate": {
         "batch_size": 120,
         "cycles": 11752317.204081632,
         "milliseconds": 29.38079301020408,
@@ -528,31 +515,31 @@
           "reduce": 3531946.4081632653
         }
       },
-      "throughput_increase_pct": 6.778887893585583,
+      "candidate": {
+        "batch_size": 120,
+        "cycles": 10157528.857142856,
+        "milliseconds": 25.39382214285714,
+        "tokens_s_card": 1181.3897030242256,
+        "p10": 1169.9054877236977,
+        "p90": 1191.4317739785322,
+        "stages": {
+          "router": 168630,
+          "routed": 5940408.673469388,
+          "shared": 2236206,
+          "reduce": 2724379.8163265307
+        }
+      },
+      "throughput_increase_pct": 15.700554429804136,
       "stage_cycles_change_pct": {
-        "router": -78.29239077899426,
-        "routed": 0.3619765222031779,
-        "shared": 1.1455114088494867,
-        "reduce": 25.547667280923857
+        "router": -61.132623426911906,
+        "routed": -7.391523828916391,
+        "shared": -2.585260538641687,
+        "reduce": -22.864633222356765
       }
     },
     {
       "batch_size": 128,
       "baseline": {
-        "batch_size": 128,
-        "cycles": 13055837.653061224,
-        "milliseconds": 32.63959413265306,
-        "tokens_s_card": 980.4043478588111,
-        "p10": 971.4401163355856,
-        "p90": 987.9294090767886,
-        "stages": {
-          "router": 2183244,
-          "routed": 6653103.6122448975,
-          "shared": 2414748,
-          "reduce": 2887649.612244898
-        }
-      },
-      "candidate": {
         "batch_size": 128,
         "cycles": 11780130.408163264,
         "milliseconds": 29.450326020408163,
@@ -566,12 +553,26 @@
           "reduce": 3499040.93877551
         }
       },
-      "throughput_increase_pct": 10.82931343454343,
+      "candidate": {
+        "batch_size": 128,
+        "cycles": 10705460.979591837,
+        "milliseconds": 26.76365244897959,
+        "tokens_s_card": 1195.6514553087484,
+        "p10": 1184.4254483417042,
+        "p90": 1204.7054810769464,
+        "stages": {
+          "router": 168630,
+          "routed": 6193402.102040816,
+          "shared": 2378292,
+          "reduce": 2906873.9183673467
+        }
+      },
+      "throughput_increase_pct": 10.03851614255662,
       "stage_cycles_change_pct": {
-        "router": -92.27617252125737,
-        "routed": 0.12095965879383996,
-        "shared": 0.029568302779425792,
-        "reduce": 21.172628560544382
+        "router": 0.0,
+        "routed": -7.022045720552173,
+        "shared": -1.5388360487558872,
+        "reduce": -16.923695114450197
       }
     }
   ]

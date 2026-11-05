@@ -110,3 +110,9 @@ PYTHONDONTWRITEBYTECODE=1 python3 models/glm53-flash/scripts/import_flow.py \
 优化 A/B。历史 `routed-revision.json` 与历史五档表保留原值，且只在版本记录中引用。
 当前临界路径为 `sum_layer(max_owner(Router) + max_rank(Shared + Routed + Reduce))`；
 阶段表仍逐阶段独立取最大 rank，用于诊断，不可相加代替完整 MoE 时间。
+
+四阶段集成版复用 `import_flow.py --kernel-revision --pr-url PR_URL`。旧数据固定读取
+`versions/20261104-1648b5c5/data`；按维护者要求，不在新编译器上重测旧 kernel。
+导入器额外要求全矩阵 Router IDs 和路由权重 hashes 与 PR #643 一致，并核验新的回归节点集合。
+吞吐差异标注为 kernel + 编译器整体方案变化；H200 原测量和算法侧固定基线保持可追溯。
+页面的当前说明、解析预算异常列表与新版本记录由本轮数据生成，避免沿用旧数值文本。

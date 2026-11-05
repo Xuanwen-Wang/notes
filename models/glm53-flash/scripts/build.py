@@ -181,15 +181,25 @@ def build():
         assert eq['measured_source'] == f['source_commit'] and eq['pr_head'] == f['pr_head'] == ci['headSha']
         ci_label = ('已通过' if ci['status'] == 'completed' and ci['conclusion'] == 'success'
                     else '已结束：' + str(ci['conclusion']) if ci['status'] == 'completed' else '尚在运行 / 排队')
+        exception_groups = {}
+        for row in q['analytic_budget_exceptions']:
+            name = row['name']
+            match = re.search(r'bs(\d+).*layer(\d+)-rank(\d+)', name, re.IGNORECASE)
+            if match:
+                batch, layer, rank = map(int, match.groups())
+                exception_groups.setdefault((layer, rank), []).append(batch)
+        exception_text = '；'.join(f'layer{layer}/rank{rank} 的 BS' + '/'.join(map(str, sorted(batches)))
+                                  for (layer, rank), batches in sorted(exception_groups.items()))
+        exception_text = ('：' + exception_text + '。') if exception_text else '，详见完整数据中的逐 case 记录。'
         evidence = (f"<p>本轮 49 个 decode step 采样点共 {f['cases']:,} 个时序 case、672 个 shard 全部完成，"
-                    f"{f['workers']} workers，宿主耗时 {f['host_seconds']/3600:.2f} 小时，零失败。"
+                    f"并行上限 {f['workers']} workers，宿主耗时 {f['host_seconds']/3600:.2f} 小时，最终有效矩阵零失败。"
                     "全量唯一覆盖、输入/权重与资格 hash 审计通过；H200 沿用同输入的原测量。</p>"
                     f"<p>独立数值资格：{q['regression_unique_cases']} 项 MoE 回归通过；train00/step017、全部 15 档、"
                     "layer/rank (3,0)/(5,15)/(44,4) 的 45 项完整模式通过实现参考、完整/本地 Router 逐位比较、"
                     "Reduce exact 和 changed-input Graph；45 对完整/时序模式的逐 launch/core cycles、输入/权重、"
                     "Router 结果与语义 zbin 一致。</p>"
-                    f"<p>当前完整模式中仍有 <b>{len(q['analytic_budget_exceptions'])}</b> 项解析 SiLU 数学预算超限："
-                    "layer5/rank15 的 BS112/120/128，以及 layer44/rank4 的全部 15 档。原阈值不变，单列诊断，"
+                    f"<p>当前完整模式中有 <b>{len(q['analytic_budget_exceptions'])}</b> 项解析 SiLU 数学预算超限{exception_text}"
+                    "原阈值不变，单列诊断，"
                     "不与实现参考或 Graph 门禁混淆。</p>"
                     "<p>时序模式保持真实 Router，仅省略已资格 Routed/Shared 的 PE 数值乘加；"
                     "时序输出及下游 Reduce 不计为数值 PASS，493,920 个时序 case 不代表全矩阵数值验收。</p>"
@@ -197,6 +207,13 @@ def build():
                     f"<code>{f['pr_head'][:12]}</code> 与其保留代码、测试及 benchmark 脚本逐文件一致。"
                     f"PR head 的 <a href=\"{html.escape(ci['url'], quote=True)}\">CI {ci_label}</a>"
                     "（发布时快照，实时状态见 GitHub），旧 SHA 的 CI 不继承为新 SHA 的 PASS。</p>")
+        if ci.get('failure_note'):
+            evidence += '<p>' + html.escape(ci['failure_note']) + '</p>'
+        if d['provenance'].get('infrastructure_recovery'):
+            recovery = d['provenance']['infrastructure_recovery']
+            evidence += (f'<p>基础设施重试记录：共 {recovery["attempts"]} 次执行，初次因磁盘空间波动触发保护及临时 JIT 文件写入失败，'
+                         f'{recovery["first_attempt_incomplete_shards"]} 个未完成 shard 在相同冻结环境下补测。'
+                         '旧尝试保留；最终矩阵按唯一 case 去重，全量覆盖未删减。宿主耗时包含恢复过程。</p>')
     elif f.get('evidence_type') == 'qualified_retained_campaign':
         q = d['qualification']['current_full_mode']
         assert q['source_commit'] == f['source_commit'] and q['passed']
@@ -276,13 +293,13 @@ def build():
         '负值表示回落，BS16 无前一档。全部基于同一套 49 个采样点。') + '</details>'
     # Describe observed scaling only; adjacent drops cannot by themselves identify hardware saturation.
     i32, i40, i48 = (xs.index(bs) for bs in (32, 40, 48))
-    throughput += (f'<p class="reading-note"><b>当前优先关注：</b>Routed 在 BS32 → BS40 下降 '
-        f'{(1 - stage_rates["routed"][i40] / stage_rates["routed"][i32]) * 100:.1f}%，'
-        f'BS128 仍比 BS32 低 {(1 - stage_rates["routed"][-1] / stage_rates["routed"][i32]) * 100:.1f}%；'
-        f'Reduce 在 BS40 → BS48 下降 {(1 - stage_rates["reduce"][i48] / stage_rates["reduce"][i40]) * 100:.1f}%。'
-        f'Shared 从 BS32 到 BS128，batch 增至 4 倍，而吞吐只提高 '
-        f'{(stage_rates["shared"][-1] / stage_rates["shared"][i32] - 1) * 100:.1f}%，整体接近平台。'
-        'Router 有明显跳点，但绝对耗时较小，不能仅凭相对跌幅认定为主瓶颈；'
+    throughput += (f'<p class="reading-note"><b>关键档位变化：</b>Routed 在 BS32 → BS40 的吞吐变化为 '
+        f'{(stage_rates["routed"][i40] / stage_rates["routed"][i32] - 1) * 100:+.1f}%，'
+        f'BS128 相对 BS32 为 {(stage_rates["routed"][-1] / stage_rates["routed"][i32] - 1) * 100:+.1f}%；'
+        f'Reduce 在 BS40 → BS48 为 {(stage_rates["reduce"][i48] / stage_rates["reduce"][i40] - 1) * 100:+.1f}%。'
+        f'Shared 从 BS32 到 BS128，batch 增至 4 倍，吞吐变化为 '
+        f'{(stage_rates["shared"][-1] / stage_rates["shared"][i32] - 1) * 100:+.1f}%。'
+        'Router 的相对变化需结合绝对耗时判断，不能仅凭百分比认定主瓶颈；'
         '这些曲线不能单独区分 kernel 调度、编译器或硬件带宽原因。</p>')
     absolute = chart('kernel-time',
         [(s, s.title(), xs, [r['stages'][s] / 42 / 400 for r in kz]) for s in stages],
@@ -330,6 +347,10 @@ def build():
         '行：四卡总 batch；列：超出局部解析预算的 case 数 / 该阶段总 case 数。与实现参考/Graph 门禁分开记录。')
     revision = ''
     if 'flow_revision' in d:
+        revision_scope = ('双方使用相同采样点和 calibrated Router；旧版直接引用 PR #643 归档，新版使用新 kernel 与新编译器。'
+                          '这是整体方案对比，不能把全部提升归因于某一个 kernel。'
+                          if d['flow_revision'].get('kind') == 'four_kernel_and_compiler' else
+                          '同一组输入/权重，流程、sigmoid 和编译器同时变化；不是固定路由的 Routed 单独优化 A/B。')
         revision = '<details class="data-details"><summary>查看本轮完整流程与上一版：相同 49 个采样点</summary>' + table(
             ['总 batch', '旧版 tokens/s/card', '新版 tokens/s/card', 'MoE 吞吐变化', 'Router cycles 变化',
              'Routed cycles 变化', 'Shared cycles 变化', 'Reduce cycles 变化'],
@@ -337,7 +358,7 @@ def build():
               f"{r['throughput_increase_pct']:+.2f}%"] + [f"{r['stage_cycles_change_pct'][s]:+.2f}%" for s in stages]
              for r in d['flow_revision']['rows']],
             '行：四卡总 batch；列：旧/新版单卡吞吐、吞吐变化及四阶段 cycles 变化（负值为周期降低）。'
-            '同一组输入/权重，流程、sigmoid 和编译器同时变化；不是固定路由的 Routed 单独优化 A/B。') + '</details>'
+            + revision_scope) + '</details>'
     elif 'revision' in d:
         revision = '<details class="data-details"><summary>查看本轮 Routed 优化前后：相同 49 个采样点</summary>' + table(
             ['总 batch', '旧版 tokens/s/card', '新版 tokens/s/card', 'MoE 吞吐提升', 'Routed cycles 降幅'],
@@ -348,6 +369,26 @@ def build():
     status = f"{f['cases']:,} 个时序 case"
     source = f['source_commit']
     best_h, best_z = max(h, key=lambda r: r['tokens_s_card']), max(kz, key=lambda r: r['tokens_s_card'])
+    latest_update = ('<b>2026-11-04 完整复测</b>：当前曲线使用本地 Router → 一次 gather → direct transport 的统一流程，'
+                     'Router 为 calibrated sigmoid。四卡总 BS16–128 的 493,920 个时序 case 全部完成；'
+                     '最佳档位为 BS32，1,134.6 tokens/s/card。相对上一版扫描峰值提高 15.7%。')
+    current_history = ''
+    if d.get('flow_revision', {}).get('kind') == 'four_kernel_and_compiler':
+        changes = [r['throughput_increase_pct'] for r in d['flow_revision']['rows']]
+        old_peak = max(r['baseline']['tokens_s_card'] for r in d['flow_revision']['rows'])
+        latest_update = (f"<b>{html.escape(d['updated'])} 四阶段集成复测</b>：Router / Routed / Shared / Reduce "
+                         f"与编译器更新后，{f['cases']:,} 个时序 case 全部完成。扫描内最高为总 BS{best_z['batch_size']}，"
+                         f"{best_z['tokens_s_card']:,.1f} tokens/s/card；相对 PR #643 各同档吞吐变化 "
+                         f"{min(changes):+.1f}%～{max(changes):+.1f}%。旧版直接引用冻结结果，新版使用新编译器。")
+        version = f"versions/{d['updated'].replace('-', '')}-{source[:8]}"
+        current_history = (f'<div class="timeline"><div><time>{html.escape(d["updated"])}</time><p>'
+                           '<b>Router / Routed / Shared / Reduce 四阶段更新</b><br>'
+                           f'测量源码 <code>{source[:12]}</code>，编译器 <code>{d["toolchain"]["triton_shared"][:12]}</code>。'
+                           f'{f["cases"]:,} 个时序 case 完成；输入、权重与 Router IDs 全部匹配 PR #643。'
+                           f'扫描峰值由 {old_peak:,.1f} 提高到 {best_z["tokens_s_card"]:,.1f} tokens/s/card。'
+                           '比较同时包含 kernel 与编译器变化；H200 沿用原同输入测量。'
+                           f'<a href="{version}/data/benchmark.json">本轮固定快照</a> · '
+                           '<a href="data/flow-comparison.csv">与 PR #643 对照 CSV</a>。</p></div></div>')
     # Detailed historical exceptions remain downloadable without bloating every page load.
     page_data = {key: d[key] for key in ('updated', 'protocol', 'h200', 'zeus_population', 'toolchain')}
     replacements = dict(STYLE=(ROOT / 'assets/style.css').read_text() + '\n' + (ROOT / 'assets/charts.css').read_text(),
@@ -356,6 +397,9 @@ def build():
         STATUS=status, ANALYSIS=analysis, EXCEPTIONS=str(exceptions), SOURCE=source, KERNEL_THROUGHPUT=throughput,
         SOURCE_SHORT=source[:12], DATA=json.dumps(page_data, ensure_ascii=False).replace('<', '\\u003c'),
         REVISION_TABLE=revision, HISTORY_TABLES=historical,
+        LATEST_UPDATE=latest_update, CURRENT_HISTORY=current_history,
+        PR_URL=html.escape(d.get('publication', {}).get('pull_request_url',
+                           'https://github.com/DarronTam/torch_zeus/pull/643'), quote=True),
         H200_BEST=f"{best_h['tokens_s_card']:,.1f}", H200_BEST_BS=str(best_h['batch_size']), H200_BEST_CARD=f"{best_h['batch_size']/4:g}",
         ZEUS_BEST=f"{best_z['tokens_s_card']:,.1f}", ZEUS_BEST_BS=str(best_z['batch_size']), ZEUS_BEST_CARD=f"{best_z['batch_size']/4:g}",
         TOOLCHAIN=table(['组件', '冻结版本 / SHA256'], [[k, '<code>' + v + '</code>'] for k, v in d['toolchain'].items()],

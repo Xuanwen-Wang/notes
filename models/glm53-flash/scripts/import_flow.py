@@ -31,13 +31,15 @@ def export_flow(args):
     assert identity['files'] == q['files']
     assert q['evidence_sha256']['committed-source.json'] == digest(args.source)
     assert q['evidence_sha256']['qualification-comparison.json'] == digest(args.numerical)
-    assert q['evidence_sha256']['regression-v7/complete.json'] == digest(args.regression)
+    regression_key = 'regression/complete.json' if args.kernel_revision else 'regression-v7/complete.json'
+    assert q['evidence_sha256'][regression_key] == digest(args.regression)
     assert all(q['files'][path] == value for path, value in source['files'].items())
     assert source['torch_zeus'] == q['source_commit'] == equivalent['old_head']
     assert source['sglang'] == q['sglang_commit']
     assert ci['headSha'] == equivalent['clean_head']
     assert all(path.endswith('.md') for path in equivalent['documentation_edits'])
-    assert identity['compiler'] == toolchain['triton_shared']
+    compiler = identity.get('compiler') or identity['toolchain']['compiler']
+    assert compiler == toolchain['triton_shared']
     for suffix, value in toolchain['files'].items():
         assert [v for p, v in q['files'].items() if p.endswith('/triton/' + suffix)] == [value]
     assert [v for p, v in q['files'].items() if p.endswith('/zeus3-sim_daemon')] == [toolchain['simulator_sha256']]
@@ -52,7 +54,11 @@ def export_flow(args):
     assert complete['completed_shards'] == complete['total_shards'] == len(complete['rows']) == 672
     assert all(row['cases'] == 735 for row in complete['rows'])
     assert q['full_mode_cases'] == q['timing_comparison_cases'] == len(numerical) == 45
-    assert regression['count'] == regression['passed'] == q['regression_unique_cases'] == 361
+    assert regression['count'] == regression['passed'] == q['regression_unique_cases']
+    assert regression['count'] >= 361
+    if args.kernel_revision:
+        assert len(set(regression['collected_nodes'])) == regression['count']
+        assert {r['node'] for r in regression['rows']} == set(regression['collected_nodes'])
     for row in numerical:
         assert row['cycles_equal'] and row['input_weights_router_equal']
         gates = row['numerical']
@@ -97,8 +103,8 @@ def export_flow(args):
     d['zeus_population'] = dict(complete=True, cases=cases, measured_cases=cases, excluded_cases=0,
         pairs=49, rows=summary['rows'], source_commit=q['source_commit'], pr_head=equivalent['clean_head'],
         measurement_mode='timing_only', numerical_validation='separate_full_mode',
-        evidence_type='qualified_owner_router_campaign', host_seconds=complete['seconds'],
-        workers=complete['workers'], host_seconds_scope='retained_49_point_campaign', **selection(points))
+        evidence_type='qualified_owner_router_campaign', host_seconds=summary.get('host_seconds', complete['seconds']),
+        workers=complete['workers'], host_seconds_scope='retained_49_point_campaign_including_recovery', **selection(points))
     paired = [dict(r, batch_per_card=r['batch_size'] / 4) for r in points
               if r['group'] == PAIR['group'] and r['step'] == PAIR['step']]
     d['zeus'] = dict(complete=True, cases=10080, total=10080, rows=paired,
@@ -112,13 +118,24 @@ def export_flow(args):
         summary_sha256=digest(args.evidence / 'summary.json'), identity_sha256=summary['identity_sha256'],
         completion_sha256=summary['completion_sha256'], qualification_sha256=digest(args.qualification),
         source_equivalence_sha256=digest(args.equivalence), matched_inputs_weights_cases=cases,
-        router_id_changes_vs_accurate_baseline=summary['router_id_changes_vs_accurate_baseline'],
-        paired_input_proof='All retained activation and weight identities matched; Router IDs may differ',
         h200_paired_csv_sha256=digest(args.baseline / 'h200-49-paired.csv'))
-    # This comparison changes flow, compiler and sigmoid. Do not reuse the Routed-only label.
+    if summary.get('infrastructure_recovery'):
+        d['provenance']['infrastructure_recovery'] = summary['infrastructure_recovery']
+    if args.kernel_revision:
+        assert summary['router_id_changes_vs_pr643'] == summary['router_weight_changes_vs_pr643'] == 0
+        assert re.fullmatch(r'https://github.com/DarronTam/torch_zeus/pull/\d+', args.pr_url)
+        d['publication'] = dict(pull_request_url=args.pr_url)
+        d['provenance'].update(router_id_changes_vs_pr643=0, router_weight_changes_vs_pr643=0,
+            paired_input_proof='All retained activation, weight, Router ID and routing-weight identities matched the archived PR643 baseline')
+    else:
+        d['provenance'].update(router_id_changes_vs_accurate_baseline=summary['router_id_changes_vs_accurate_baseline'],
+            paired_input_proof='All retained activation and weight identities matched; Router IDs may differ')
+    # Kernel and compiler revisions are a whole-stack comparison, not a
+    # single-kernel attribution; the archived baseline is never relabeled.
     d.pop('revision', None)
     d['flow_revision'] = dict(baseline_source=baseline['zeus_population']['source_commit'],
-        source=q['source_commit'], paired_cases=cases, fixed_router_ab=False, rows=[])
+        source=q['source_commit'], paired_cases=cases, fixed_router_ab=bool(args.kernel_revision),
+        kind='four_kernel_and_compiler' if args.kernel_revision else 'owner_router_flow', rows=[])
     for old, new in zip(baseline['zeus_population']['rows'], summary['rows']):
         assert old['batch_size'] == new['batch_size']
         d['flow_revision']['rows'].append(dict(batch_size=new['batch_size'], baseline=old, candidate=new,
@@ -151,4 +168,7 @@ if __name__ == '__main__':
     for name in ('baseline', 'evidence', 'qualification', 'numerical', 'regression', 'source',
                  'equivalence', 'toolchain', 'ci', 'out'):
         parser.add_argument('--' + name, type=Path, required=True)
+    parser.add_argument('--kernel-revision', action='store_true',
+        help='Compare the four-kernel revision against archived PR643 with unchanged Router IDs')
+    parser.add_argument('--pr-url', default='https://github.com/DarronTam/torch_zeus/pull/643')
     export_flow(parser.parse_args())
