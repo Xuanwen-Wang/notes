@@ -45,8 +45,8 @@
       "file": "models/deepseek-v4-flash/index.html",
       "category": "compiler",
       "title": "TritonShared - DeepSeek V4 Flash：MoE 优化与验证",
-      "description": "从四 kernel 数据流、量化与 Graph ABI，到逐 EP 性能和 Viewer 观察，持续记录 DeepSeek V4 Flash 的模型优化。",
-      "date": "2026-10-28",
+      "description": "BS16/24/32 真实 step17、4K 上下文与 43 层整链慢 rank：四 kernel 优化、量化与 Graph ABI、Viewer 观察及 H200 对比。",
+      "date": "2026-11-05",
       "tags": ["DeepSeek V4", "MoE", "CycleSim", "交互图表"]
     },
     {

@@ -60,6 +60,10 @@ main{min-width:0}.eyebrow{font:11px var(--mono);letter-spacing:1.6px;color:var(-
   <div class="note-main"><h3><a href="./models/glm53-flash/index.html">TritonShared - GLM-5.3-Flash：AF分离最大MOE FFN吞吐评估</a></h3>
   <p>四阶段集成后的49个 decode step 采样点测评：四卡 Zeus/H200 吞吐与比值、各 kernel 吞吐和耗时增长，保留 PR643 固定基线。</p><div class="tags"><span>GLM-5.3-Flash</span><span>MoE</span><span>H200</span><span>CycleSim</span><span>Benchmark</span></div></div>
   <div class="note-meta"><time datetime="2026-11-05">2026-11-05</time><span aria-hidden="true" class="arrow">↗</span></div>
+</article><article class="note" data-search="TritonShared - DeepSeek V4 Flash：MoE 优化与验证 BS16/24/32 真实 step17、4K 上下文与 43 层整链慢 rank：四 kernel 优化、量化与 Graph ABI、Viewer 观察及 H200 对比。 DeepSeek V4 MoE CycleSim 交互图表">
+  <div class="note-main"><h3><a href="./models/deepseek-v4-flash/index.html">TritonShared - DeepSeek V4 Flash：MoE 优化与验证</a></h3>
+  <p>BS16/24/32 真实 step17、4K 上下文与 43 层整链慢 rank：四 kernel 优化、量化与 Graph ABI、Viewer 观察及 H200 对比。</p><div class="tags"><span>DeepSeek V4</span><span>MoE</span><span>CycleSim</span><span>交互图表</span></div></div>
+  <div class="note-meta"><time datetime="2026-11-05">2026-11-05</time><span aria-hidden="true" class="arrow">↗</span></div>
 </article><article class="note" data-search="TritonShared - ZCCL AllReduce 全链路：PyTorch、Triton 与 PBLink 沿着实际源码，从通信组与 PS1 互联，到双核 Triton、16 路分块、PBLink FIFO 和三层同步，逐步理解 AllReduce。 ZCCL AllReduce PBLink Triton 集合通信">
   <div class="note-main"><h3><a href="./2026-11-03-zccl-allreduce-pblink.html">TritonShared - ZCCL AllReduce 全链路：PyTorch、Triton 与 PBLink</a></h3>
   <p>沿着实际源码，从通信组与 PS1 互联，到双核 Triton、16 路分块、PBLink FIFO 和三层同步，逐步理解 AllReduce。</p><div class="tags"><span>ZCCL</span><span>AllReduce</span><span>PBLink</span><span>Triton</span><span>集合通信</span></div></div>
@@ -68,10 +72,6 @@ main{min-width:0}.eyebrow{font:11px var(--mono);letter-spacing:1.6px;color:var(-
   <div class="note-main"><h3><a href="./2026-10-30-sigmoid-silu-fitting.html">TritonShared - Sigmoid 与 SiLU：拟合算法、Lowering 与真实指令</a></h3>
   <p>对照 fast、balanced、accurate、cascade_add 与直接 SiLU 拟合，沿着系数、VP 配方和 12 组真实机器码，核对精度与代价。</p><div class="tags"><span>Sigmoid</span><span>SiLU</span><span>LUT</span><span>VP</span><span>数值精度</span></div></div>
   <div class="note-meta"><time datetime="2026-10-30">2026-10-30</time><span aria-hidden="true" class="arrow">↗</span></div>
-</article><article class="note" data-search="TritonShared - DeepSeek V4 Flash：MoE 优化与验证 从四 kernel 数据流、量化与 Graph ABI，到逐 EP 性能和 Viewer 观察，持续记录 DeepSeek V4 Flash 的模型优化。 DeepSeek V4 MoE CycleSim 交互图表">
-  <div class="note-main"><h3><a href="./models/deepseek-v4-flash/index.html">TritonShared - DeepSeek V4 Flash：MoE 优化与验证</a></h3>
-  <p>从四 kernel 数据流、量化与 Graph ABI，到逐 EP 性能和 Viewer 观察，持续记录 DeepSeek V4 Flash 的模型优化。</p><div class="tags"><span>DeepSeek V4</span><span>MoE</span><span>CycleSim</span><span>交互图表</span></div></div>
-  <div class="note-meta"><time datetime="2026-10-28">2026-10-28</time><span aria-hidden="true" class="arrow">↗</span></div>
 </article><article class="note" data-search="TritonShared - Gather C1 优化与 C2 性能回退分析 从父路径等待复用到 LD 时序对照，解释 C1 的收益，以及 C2 重叠更多却变慢的原因。 Gather InjectSync VCS">
   <div class="note-main"><h3><a href="./2026-09-14-gather-parent-acquire-first.html">TritonShared - Gather C1 优化与 C2 性能回退分析</a></h3>
   <p>从父路径等待复用到 LD 时序对照，解释 C1 的收益，以及 C2 重叠更多却变慢的原因。</p><div class="tags"><span>Gather</span><span>InjectSync</span><span>VCS</span></div></div>
