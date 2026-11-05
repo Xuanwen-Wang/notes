@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="沿着 GLM-5.3-Flash 一层 DSA Decode，理解 P1 投影与 Indexer、pooled keys、两次 AllGather、P2 稀疏 Attention、P3 投影，以及 KVCache 的存储与读取。">
+<meta name="theme-color" content="#f7f8f5">
+<link rel="icon" href="data:,">
+<title>TritonShared - GLM-5.3-Flash DSA：从 P1 到 KVCache 与 Attention</title>
+<style>
+:root{color-scheme:light;--bg:#f7f8f5;--paper:#fff;--ink:#243832;--muted:#68766e;--line:#dce3db;--soft:#edf1ea;--p1:#b65b30;--p1bg:#fbf0e7;--p2:#37715c;--p2bg:#eaf3ec;--p3:#655e99;--p3bg:#efedf7;--blue:#406781;--code:#f0f3ed;--shadow:0 8px 24px #263e3010;--sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;--mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace}
+:root[data-theme=dark]{color-scheme:dark;--bg:#131c19;--paper:#1b2722;--ink:#e1e9e1;--muted:#a7b6ac;--line:#36473d;--soft:#25362c;--p1:#edb387;--p1bg:#392b23;--p2:#9bc9aa;--p2bg:#243c30;--p3:#c1b9eb;--p3bg:#302c42;--blue:#a0c3df;--code:#25332b;--shadow:none}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:88px}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.85 var(--sans);-webkit-font-smoothing:antialiased}a{color:var(--blue);text-underline-offset:4px}button,input,select{font:inherit}button{cursor:pointer}button,a,input,select,summary{-webkit-tap-highlight-color:transparent}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--p1);outline-offset:4px}button{color:var(--ink)}button,.chip{border:1px solid var(--line);background:var(--paper);border-radius:6px;padding:6px 12px}button:hover{border-color:var(--muted)}[hidden]{display:none!important}h1,h2,h3,h4{line-height:1.45;letter-spacing:-.025em}h1{font-size:clamp(33px,4.2vw,56px);line-height:1.3;font-weight:650;margin:18px 0 20px}h2{font-size:27px;margin:0 0 18px}h3{font-size:19px;margin:26px 0 12px}h4{font-size:16px;margin:0 0 9px}p{margin:0 0 15px}strong{font-weight:650}code{font: .88em/1.7 var(--mono);overflow-wrap:anywhere}pre{white-space:pre;overflow:auto;padding:22px;background:var(--code);border-radius:7px;border:1px solid var(--line);font:12px/1.85 var(--mono)}.skip{position:fixed;left:15px;top:-70px;padding:10px;background:var(--ink);color:var(--bg);z-index:40}.skip:focus{top:12px}.topbar{background:var(--bg);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:25}.topinner{max-width:1330px;margin:auto;padding:14px 36px;display:flex;justify-content:space-between;align-items:center;gap:12px}.brand{font-size:13px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:.04em}.brand span{color:var(--p1);margin-right:9px}.actions{display:flex;gap:7px}.actions button{font-size:12px;padding:5px 11px}.hero{max-width:1260px;margin:auto;padding:64px 36px 36px}.eyebrow,.kicker{font:11px/1.6 var(--mono);letter-spacing:.12em;color:var(--p1)}.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 294px;gap:48px;align-items:center}.hero p{font-size:17px;color:var(--muted);max-width:740px}.metadata{display:flex;gap:9px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-top:23px}.metadata span{border:1px solid var(--line);padding:3px 9px;border-radius:4px}.cache-preview{display:grid;gap:10px}.cache-mini{padding:20px 22px;border:1px solid var(--line);border-radius:9px;background:var(--paper)}.cache-mini small{display:block;color:var(--muted);font-size:12px}.cache-mini b{font:500 36px/1.5 var(--mono);letter-spacing:-1px}.cache-mini b span{font-size:12px;color:var(--muted);margin-left:7px;letter-spacing:0}.cache-mini p{font-size:12px;margin:4px 0 0}.cache-mini:first-child{border-left:3px solid var(--p1)}.cache-mini:last-child{border-left:3px solid var(--p2)}.scope{margin-top:26px;padding:12px 16px;background:var(--soft);border-radius:6px;color:var(--muted);font-size:12px}.layout{max-width:1330px;padding:0 36px 76px;margin:auto;display:grid;grid-template-columns:190px minmax(0,1fr);gap:34px}.toc{align-self:start;position:sticky;top:83px;font-size:12px;max-height:calc(100vh - 105px);overflow:auto}.toc-label{font:10px var(--mono);letter-spacing:.14em;color:var(--muted);margin:0 0 14px}.toc a{display:block;padding:7px 10px;text-decoration:none;color:var(--muted);border-left:2px solid transparent}.toc a:hover,.toc a.active{color:var(--ink);border-left-color:var(--p1);background:var(--soft)}.toc hr{border:0;border-top:1px solid var(--line);margin:19px 0}.toc p{font-size:11px;line-height:1.9;color:var(--muted);padding:0 10px}main{min-width:0}.chapter,.stage{margin-bottom:24px;border:1px solid var(--line);border-radius:10px;background:var(--paper);box-shadow:var(--shadow);scroll-margin-top:86px}.chapter{padding:30px}.chapter>.kicker{margin-bottom:10px}.muted,.small{color:var(--muted)}.small{font-size:12px}.intro-note{padding:15px 17px;background:var(--soft);border-left:3px solid var(--p2);font-size:14px;border-radius:0 5px 5px 0;margin:20px 0}.pipeline{display:grid;grid-template-columns:1.3fr .78fr 1.3fr .78fr 1.3fr;gap:9px;margin-top:24px}.pipe-node{display:flex;flex-direction:column;text-decoration:none;color:var(--ink);padding:17px 13px;border-radius:7px;border:1px solid var(--line);min-width:0;transition:transform .15s,border-color .15s}.pipe-node:hover{transform:translateY(-3px);border-color:currentColor}.pipe-node b{font:600 20px var(--mono);margin:3px 0 11px}.pipe-node span{font-size:13px}.pipe-node small{font-size:10px;color:var(--muted);margin-top:8px}.pipe-node.p1{background:var(--p1bg);color:var(--p1)}.pipe-node.p2{background:var(--p2bg);color:var(--p2)}.pipe-node.p3{background:var(--p3bg);color:var(--p3)}.pipe-node.comm{border-style:dashed;justify-content:center}.pipe-node.comm b{font-size:16px}.pipe-caption{text-align:center;color:var(--muted);font-size:11px;margin:13px 0 0}.controls{display:grid;grid-template-columns:1fr 1.35fr 1.7fr;gap:14px;margin:22px 0 13px}.controls label{display:grid;gap:7px;font-size:12px;color:var(--muted)}select,input[type=number]{width:100%;min-width:0;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);padding:9px 11px}.control-foot{display:flex;flex-wrap:wrap;gap:13px 20px;align-items:center;justify-content:space-between}.control-foot label{font-size:12px}.presets{display:flex;gap:6px;flex-wrap:wrap}.presets button{font:11px var(--mono);padding:4px 9px}.validation{font-size:12px;color:var(--p1);margin-top:8px;min-height:1.8em}.metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:15px 0}.metric{background:var(--soft);border-radius:7px;padding:13px 16px;min-width:0}.metric small{font-size:11px;color:var(--muted)}.metric strong{display:block;font:500 25px/1.5 var(--mono)}.rank-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:16px 0}.rank{padding:13px 12px;border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--ink);text-align:left;min-width:0}.rank[aria-pressed=true]{border-color:var(--p2);box-shadow:inset 0 0 0 1px var(--p2);background:var(--p2bg)}.rank-name{font:600 12px var(--mono);display:block}.rank-count{display:block;font:500 24px/1.5 var(--mono);margin-top:6px}.rank-caption{display:block;font-size:10px;color:var(--muted)}.rank-bar{display:block;height:4px;background:var(--line);margin-top:11px;border-radius:5px;overflow:hidden}.rank-bar i{display:block;height:100%;background:var(--p2);width:25%}.dynamic-note{padding:12px 15px;background:var(--p2bg);border-radius:6px;color:var(--p2);font-size:13px}.stage>summary{list-style:none;display:flex;gap:16px;align-items:center;padding:24px 29px;cursor:pointer}.stage>summary::-webkit-details-marker{display:none}.stage>summary:after{content:"＋";margin-left:auto;font-size:22px;color:var(--muted)}.stage[open]>summary:after{content:"−"}.stage-no{font:500 27px var(--mono);min-width:46px}.stage-title{min-width:0}.stage-title strong{display:block;font-size:22px}.stage-title small{font-size:12px;color:var(--muted)}.stage[data-stage=p1] .stage-no{color:var(--p1)}.stage[data-stage=p2] .stage-no{color:var(--p2)}.stage[data-stage=p3] .stage-no{color:var(--p3)}.stage-body{border-top:1px solid var(--line);padding:26px 29px 30px}.stage-body>p:first-child{font-size:15px}.flow{list-style:none;padding:0;margin:24px 0 0}.flow>li{position:relative;margin:0 0 0 8px;padding:0 0 28px 24px;border-left:1px solid var(--line)}.flow>li:before{content:"";position:absolute;left:-4px;top:9px;width:7px;height:7px;background:var(--p1);border-radius:50%}.stage[data-stage=p2] .flow>li:before{background:var(--p2)}.stage[data-stage=p3] .flow>li:before{background:var(--p3)}.flow>li:last-child{border-left-color:transparent;padding-bottom:0}.flow h3{margin:0 0 10px;font-size:18px}.flow p{font-size:14px}.shape{display:block;border:1px solid var(--line);border-radius:6px;background:var(--code);padding:12px 14px;margin:12px 0;color:var(--ink);line-height:1.8}.sub-label{font:600 11px var(--mono);color:var(--muted);margin:18px 0 8px}.split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin:17px 0}.inset{padding:18px;border:1px solid var(--line);border-radius:7px;min-width:0}.inset p{font-size:13px}.inset h4{font-size:15px}.badge{display:inline-block;padding:2px 7px;border-radius:4px;font:10px/1.8 var(--mono);vertical-align:middle;margin-left:6px;background:var(--soft);color:var(--muted)}.badge.cache{background:var(--p2bg);color:var(--p2)}.badge.comm{background:var(--p3bg);color:var(--p3)}.comm-block{padding:22px 28px;background:var(--soft);border:1px dashed var(--line);border-radius:8px;margin:0 0 24px;scroll-margin-top:86px}.comm-block h2{font-size:20px;margin-bottom:12px}.comm-block p{font-size:14px}.wire{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:14px 0}.wire>div{padding:14px;background:var(--paper);border:1px solid var(--line);border-radius:6px;font-size:12px;min-width:0}.wire b{display:block;font-size:13px;margin-bottom:6px}.wire code{display:block}.table-wrap{overflow:auto;max-width:100%;margin:18px 0}table{width:100%;border-collapse:collapse;font-size:13px;min-width:540px}th,td{text-align:left;vertical-align:top;border-bottom:1px solid var(--line);padding:12px 13px}th{background:var(--soft);font-weight:600}td code{font-size:12px}.formula{text-align:center;font:14px/1.9 var(--mono);padding:19px 13px;background:var(--code);border-radius:6px;overflow:auto;margin:17px 0}.output-branch{padding:17px 18px;border:1px solid var(--line);border-left:3px solid var(--p3);border-radius:6px;margin:13px 0}.output-branch h4{color:var(--p3)}.output-branch p{font-size:13px}.cache-diagram{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0}.cache-card{border:1px solid var(--line);border-radius:8px;padding:22px;min-width:0}.cache-card h3{margin:0 0 5px}.cache-card .dimension{font:500 31px/1.7 var(--mono)}.cache-card .dimension span{font-size:12px;color:var(--muted)}.cache-card p{font-size:13px}.cache-card.indexer{border-top:3px solid var(--p1)}.cache-card.latent{border-top:3px solid var(--p2)}.group-example{display:grid;grid-template-columns:1fr auto 1fr;gap:13px;align-items:center;margin:16px 0}.token-group{border:1px solid var(--line);border-radius:6px;padding:11px 13px;font-size:12px}.token-group b{display:block;font-family:var(--mono);font-size:12px}.symbol-arrow{color:var(--muted)}.source-list{font-size:13px;padding-left:20px}.source-list li{margin:12px 0;overflow-wrap:anywhere}.source-list code{font-size:11px}.source-list small{display:block;color:var(--muted);font-size:11px}.plain-tools{display:flex;gap:7px;flex-wrap:wrap;margin:15px 0}.plain-tools button{font-size:12px}.copy-status{min-height:20px;font-size:12px;color:var(--p2)}.no-js{padding:12px 18px;background:var(--p1bg);color:var(--p1);font-size:13px}.footer{font-size:12px;color:var(--muted);padding:8px 0 0;display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--line)}.footer a{color:var(--muted)}.inline-list{padding-left:20px;font-size:14px}.inline-list li{margin:6px 0}.js-only{display:none}.has-js .js-only{display:block}.hljs{background:transparent;color:inherit}
+@media(max-width:1100px){.layout{grid-template-columns:156px minmax(0,1fr);gap:22px;padding-inline:24px}.hero{padding-inline:24px}.topinner{padding-inline:24px}.hero-grid{grid-template-columns:1fr 240px;gap:28px}.pipeline{gap:6px}.pipe-node{padding:14px 10px}.pipe-node span{font-size:11px}.chapter,.stage-body{padding:25px}.stage>summary{padding:22px 25px}.controls{grid-template-columns:.8fr 1fr 1.4fr}}
+@media(max-width:820px){.layout{display:block;max-width:760px}.toc{position:relative;top:0;max-height:none;display:flex;gap:3px;overflow:auto;padding:0 0 17px;margin-bottom:10px;white-space:nowrap}.toc a{border:1px solid var(--line);border-radius:5px;padding:5px 10px;flex-shrink:0}.toc-label,.toc hr,.toc p{display:none}.hero-grid{grid-template-columns:1fr}.cache-preview{grid-template-columns:1fr 1fr}.cache-mini{padding:15px 18px}.cache-mini b{font-size:29px}.hero{padding-top:40px;max-width:760px}.controls{grid-template-columns:1fr 1fr}.controls label:last-child{grid-column:1/-1}.hero h1 br{display:none}.pipeline{grid-template-columns:1fr 1fr 1fr}.pipe-node.comm{grid-row:2;grid-column:auto}.pipe-node[data-link=p1]{grid-column:1;grid-row:1}.pipe-node[data-link=p2]{grid-column:2;grid-row:1}.pipe-node[data-link=p3]{grid-column:3;grid-row:1}.pipeline .comm:last-of-type{grid-column:2}.topinner{max-width:760px}}
+@media(max-width:480px){body{font-size:15px}.hero,.layout{padding-inline:16px}.topinner{padding:12px 16px}.brand{font-size:11px}.actions button{font-size:11px;padding:4px 8px}.actions button.print{display:none}.hero{padding-top:30px}.hero h1{font-size:33px}.hero p{font-size:15px}.cache-preview{gap:8px}.cache-mini{padding:12px}.cache-mini small{font-size:10px}.cache-mini b{font-size:27px}.cache-mini p{font-size:11px}.chapter{padding:22px 18px}h2{font-size:23px}.stage>summary{padding:20px 18px;gap:12px}.stage-title strong{font-size:20px}.stage-title small{font-size:10px}.stage-body{padding:22px 18px}.stage-no{font-size:23px;min-width:37px}.pipe-node{padding:12px 10px}.pipe-node b{font-size:18px}.metric{padding:11px}.metric strong{font-size:21px}.rank-grid{grid-template-columns:1fr 1fr}.rank-count{font-size:23px}.split,.cache-diagram,.wire{grid-template-columns:1fr}.comm-block{padding:20px 18px}.flow>li{padding-left:18px;margin-left:4px}.shape{font-size:11px;padding:11px}.metadata{gap:6px}.scope{font-size:11px}.group-example{gap:8px}.token-group{padding:9px;font-size:11px}.formula{font-size:11px}.footer{display:block}.footer a{display:block;margin-top:7px}}
+@media(max-width:480px){.cache-mini b{display:block;line-height:1.4;margin:5px 0}.cache-mini b span{display:block;margin:0;font-size:11px;letter-spacing:0}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+@media print{.topbar,.toc,.controls,.control-foot,.presets,.js-only,.plain-tools,.copy-status{display:none!important}body{background:#fff;color:#111;font-size:11px}.hero{padding:10px 0 20px}.hero-grid{grid-template-columns:1fr}.cache-preview{display:none}.layout{display:block;padding:0}.chapter,.stage,.comm-block{box-shadow:none;break-inside:auto;border-color:#ccc}.stage>summary{padding:16px}.stage-body{padding:16px}.chapter{padding:18px}.stage:not([open])>.stage-body{display:block}.footer{padding-bottom:10px}a{color:inherit}pre{white-space:pre-wrap;font-size:9px}h1{font-size:30px}.scope{font-size:10px}.rank-grid{grid-template-columns:repeat(4,1fr)}.chapter,.stage{margin-bottom:14px}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+<header class="topbar"><div class="topinner"><a class="brand" href="./"><span>↖</span>技术笔记 / TRITONSHARED</a><div class="actions"><button id="expand-all" type="button">折叠阶段</button><button class="print" id="print-page" type="button">打印 / PDF</button><button id="theme" type="button" aria-label="切换深色模式">深色</button></div></div></header>
+<div class="hero"><div class="eyebrow">MODEL WALKTHROUGH / GLM-5.3-FLASH</div><div class="hero-grid"><div><h1>从一次 Decode，<br>看清 DSA 与 KVCache。</h1><p>跟着当前 token 走过 P1、P2、P3：先找值得关注的历史，再读取它们的 latent，最后完成 Attention 与输出投影。</p><div class="metadata"><span>2026-11-05</span><span>CP4 · 每 rank 双 core</span><span>GDG latent 路径</span><span>源码数据流说明</span></div></div><div class="cache-preview"><div class="cache-mini"><small>INDEXER CACHE · 帮助选择</small><b>128<span>维 / pooled key</span></b><p>每四个 token，一条检索摘要。</p></div><div class="cache-mini"><small>LATENT CACHE · 真正计算</small><b>512<span>维 / token</span></b><p>每个 token，一份共享 KV 表示。</p></div></div></div><div class="scope">适用：显式启用 <code>zeus_dsa_formal_pipeline</code> 的 CP4 decode 路径，<code>qk_rope_head_dim=0</code>。以下交互展示逻辑 shape 与分布示意；没有新增性能测量，不模拟模型的真实 TopK。</div></div>
+<div class="layout"><nav class="toc" aria-label="文章目录"><div class="toc-label">FOLLOW THE DATA</div><a href="#overview">01　一层 DSA 的全貌</a><a href="#explorer">02　调整输入，看 shape</a><a href="#p1">03　P1 · 投影与检索</a><a href="#ag1">AG1 · Query 与候选</a><a href="#p2">04　P2 · 稀疏 Attention</a><a href="#ag2">AG2 · 输出与 LSE</a><a href="#p3">05　P3 · 归并与投影</a><a href="#caches">06　两套 KV 历史</a><a href="#viewer">07　Viewer 看哪里</a><a href="#plain">08　纯文本流程</a><a href="#sources">源码与适用边界</a><hr><p>先区分 token、head 和特征维度，再核对 rank、core 与计算 tile。</p></nav>
+<main id="main">
+<noscript><div class="no-js">JavaScript 未启用。正文与流程仍可阅读；下方数字显示默认 B=4、S=65536、CP0 的均衡示意。</div></noscript>
+<section class="chapter" id="overview"><div class="kicker">01 / ONE ATTENTION LAYER</div><h2>三段计算，两次核心通信。</h2><p>DSA 在主 Attention 前增加了一个轻量 Indexer。它先给历史组打分，主 Attention 随后只读取选中的 token。MLA 的 latent 压缩和 DSA 的历史选择，分别减少每个 token 的缓存宽度和本次读取的历史数量。</p><div class="pipeline"><a class="pipe-node p1" data-link="p1" href="#p1"><b>P1</b><span>投影 · 写缓存<br>Indexer · 局部筛选</span><small>准备 Q，决定候选</small></a><a class="pipe-node comm" href="#ag1"><b>AG 1 →</b><span>Q + 分数 / 候选</span><small>CP4 AllGather</small></a><a class="pipe-node p2" data-link="p2" href="#p2"><b>P2</b><span>全局选组 · Gather<br>QK · Softmax · PV</span><small>只读选中的历史</small></a><a class="pipe-node comm" href="#ag2"><b>AG 2 →</b><span>partial O + LSE</span><small>CP4 AllGather</small></a><a class="pipe-node p3" data-link="p3" href="#p3"><b>P3</b><span>跨 CP 归并<br>V absorb · O 投影</span><small>返回 mHC / FFN</small></a></div><p class="pipe-caption">点击阶段查看细节。P3 后是否需要第三次 AllGather，取决于输出与 mHC 分片条件。</p><div class="intro-note"><strong>从 mHC 进入，再回到 mHC。</strong> Attention 前的 mHC Pre + Norm 产生 <code>X[B,4096]</code>，保留 residual 与组合系数。DSA 的输出交给 Attention 后的 mHC Post，再进入 FFN 前的 Pre/Norm。这里聚焦中间这一层 DSA。</div></section>
+
+<section class="chapter" id="explorer"><div class="kicker">02 / SHAPE EXPLORER</div><h2>把数字落到一个请求上。</h2><p class="small">B 是一个 Attention-DP 组中的当前 token 行数，每个请求 decode 一个新 token；S 是某个请求追加本步 token 后的长度。交互按满桶 B=R 展示，四个 CP 处理同一批 Query。</p><div class="controls"><label for="batch">当前行数 B = R<select id="batch"><option value="1">1 · 双 core 分 heads</option><option value="2">2</option><option value="4" selected>4 · 每 CP 可拥有完整 token</option><option value="6">6</option><option value="8">8 · 每 CP 可拥有完整 token</option></select></label><label for="context">历史长度 S<input id="context" type="number" min="1" max="1048576" step="1" value="65536" inputmode="numeric"></label><label for="distribution">选中组的分布示意<select id="distribution"><option value="balanced">尽量均衡分布</option><option value="concentrated">尽量集中到 CP0</option></select></label></div><div class="control-foot"><div class="presets" aria-label="历史长度预设"><button type="button" data-context="17">17</button><button type="button" data-context="4096">4K</button><button type="button" data-context="65536">64K</button><button type="button" data-context="200000">200K</button><button type="button" data-context="1048576">1M</button></div><label><input id="mhc-sharded" type="checkbox" checked> mHC 按 token 分片</label></div><div id="validation" class="validation" role="status" aria-live="polite"></div><div class="metric-grid"><div class="metric"><small>完整 pooled groups · 全请求</small><strong id="group-total">16,384</strong></div><div class="metric"><small>全局选中 groups · 最多512</small><strong id="selected-total">512</strong></div><div class="metric"><small>主 Attention token 数 · 含 tail</small><strong id="token-total">2,048</strong></div></div><p class="small">点击下方 rank，让 P1 扫描、P2 Attention 与对应 shape 切换到该 CP。数字表示一个请求；B 个请求可以有不同历史长度和选择分布。</p><div class="rank-grid" id="rank-grid"><button class="rank" type="button" data-rank="0" aria-pressed="true"><span class="rank-name">CP0</span><strong class="rank-count">512</strong><span class="rank-caption">token · 128 个选中组</span><span class="rank-bar"><i></i></span></button><button class="rank" type="button" data-rank="1" aria-pressed="false"><span class="rank-name">CP1</span><strong class="rank-count">512</strong><span class="rank-caption">token · 128 个选中组</span><span class="rank-bar"><i></i></span></button><button class="rank" type="button" data-rank="2" aria-pressed="false"><span class="rank-name">CP2</span><strong class="rank-count">512</strong><span class="rank-caption">token · 128 个选中组</span><span class="rank-bar"><i></i></span></button><button class="rank" type="button" data-rank="3" aria-pressed="false"><span class="rank-name">CP3</span><strong class="rank-count">512</strong><span class="rank-caption">token · 128 个选中组</span><span class="rank-bar"><i></i></span></button></div><div class="dynamic-note" id="rank-note" aria-live="polite">当前观察 CP0：4096 个完整历史组，选中128组，共512个 token；普通驻留512行路径。</div><p class="small" style="margin-top:12px">均衡模式取一份均衡选择示意；集中模式优先使用 CP0 实际拥有的组，再向其他 CP 分配。它们只用于理解计算规模，不代表模型相关性或测得的负载分布。</p></section>
+
+<details class="stage" id="p1" data-stage="p1" open><summary><span class="stage-no">P1</span><span class="stage-title"><strong>生成当前表示，检索历史。</strong><small>sgl_dsa_proj_indexer_topk1 · 四条逻辑支路融合为一次计算 launch</small></span></summary><div class="stage-body"><p>先把“当前 token 的固定维度投影”和“随历史增长的扫描”分开。它们融合在同一个 kernel，下面的顺序表达数据依赖，实际可能交错或重叠。</p><ol class="flow"><li><h3>从 hidden state 得到 Q 的压缩表示</h3><code class="shape" data-shape="qa">[4,4096] × [4096,1536] → [4,1536]</code><p>RMSNorm 保持 shape。这个1536维表示供主 Query 与 Indexer Query 两条支路使用。</p></li><li><h3>主 Query：先展开 heads，再吸收 K 投影</h3><code class="shape" data-shape="qmain">[4,1536] → [4,64,256] → [4,64,512]（完整逻辑）</code><p>每个 CP 只分工生成16个主 heads，每 core 8个。K absorption 按 head 将256维 Query 变成512维 latent Query，让后续直接与历史 latent 点积。</p><code class="shape" data-shape="qlocal">本 CP 输出 BF16 [4,16,512] · 每 core [4,8,512]</code><div class="formula">q<sub>h</sub><sup>T</sup>(W<sub>K,h</sub>c) = (W<sub>K,h</sub><sup>T</sup>q<sub>h</sub>)<sup>T</sup>c</div></li><li><h3>写入当前 token 的共享 KV latent <span class="badge cache">CACHE WRITE</span></h3><code class="shape" data-shape="latent">[4,4096] × [4096,512] → RMSNorm → c [4,512]</code><p><strong>每层、每 token 一份512维 c，由64个主 heads 共用。</strong> 量化为512个 FP8 值和4个 FP32 scales，物理每行528 bytes。对应 CP 的有效 writer 追加到 GDG pool，旧历史不重算。</p></li><li><h3>准备 Indexer Query 与 head 权重</h3><code class="shape" data-shape="qindex">[4,1536] × [1536,4096] → reshape [4,32,128]</code><p>另一套专用投影生成32个128维检索 heads，随后进行 Hadamard 旋转与 FP8 量化。另从 X 投影出 <code data-shape="headweights">[4,32]</code> head 权重，用于合并打分。每个 CP 都需要完整32个 Indexer heads。</p></li><li><h3>把四个检索 keys 汇成一个 pooled key <span class="badge cache">INDEXER WRITE</span></h3><p>X 经独立投影生成128维 Indexer key 和128维 pooling gate。当前值与该请求的 tail 结合，每凑齐四个 token，沿 token 轴做逐特征的加权汇聚。</p><div class="group-example"><div class="token-group"><b>4 × [128]</b>keys + gates + 位置偏置</div><span class="symbol-arrow">→</span><div class="token-group"><b>1 × [128]</b>一条 pooled key</div></div><p>128维宽度不变，历史条数约为 S/4。不是简单平均，也不把主 Attention 的四条512维 latent 合并。旋转、量化后的 pooled-key body 进入 LDG；未满组留在 tail。</p></li><li><h3>扫描本 CP 的 pooled-key 历史 <span class="badge cache">INDEXER READ</span></h3><code class="shape" data-shape="scan">[32,128] × [128,4096] → [32,4096]</code><p>每个 query head 对每个历史组打分，再经 ReLU、head 加权、scale 调整和 head 归约，变成每组一个分数。这里的历史组数随 S 增长。</p><code class="shape">典型 tile：[32,128] × [128,1024] → [32,1024] → [1024]</code><p>1024表示一次处理1024条 pooled keys，代表4096个原始 token。两个 core 按 LDG 页归属分摊扫描；它与存储 page size 是两个概念。</p></li><li><h3>做局部筛选，打包通信数据</h3><p>候选路径每请求、每 CP 保留最多512个组的 FP32 分数和 global group IDs（当前 IDs 以 FP32 精确整数保存）。部分长度改用 raw-score 传输，交给 P2 筛选。与本 CP 的16个主 Query heads 一起写入固定 payload。</p></li></ol></div></details>
+
+<section class="comm-block" id="ag1"><h2>第一次 AllGather <span class="badge comm">QUERY + SELECTION</span></h2><p>一次打包传输，完成两件事：凑齐主 Query 的 heads，以及让全局选择看到四个 CP 的分数信息。</p><div class="wire"><div><b>主 Query · BF16</b><code data-shape="ag1query">每 CP [4,16,512] → 每 rank 获得 [4,64,512]</code></div><div><b>候选 / raw scores</b><code>四份本地组分数或候选；候选路径最多4×512组</code></div></div><p class="small">pooled-key 历史、主 latent 历史、Indexer Query 留在本地。通信使用 BF16 view 作为字节 carrier，FP32 分数/IDs 不因此转成 BF16 数值。</p></section>
+
+<details class="stage" id="p2" data-stage="p2" open><summary><span class="stage-no">P2</span><span class="stage-title"><strong>只取选中的历史，做 Attention。</strong><small>sgl_dsa_topk2_gather_attn · TopK2 → Gather → QK → Softmax → PV</small></span></summary><div class="stage-body"><ol class="flow"><li><h3>全局选出最多512个四 token 组</h3><p>合并四个 CP 的候选或 raw scores，确定全局选择，再筛出本 CP 拥有的组。512是四个 CP 合计的组数，每个 CP 的数量由真实选择分布决定。</p><code class="shape" data-shape="localcount">CP0：选中128组 × 4 + tail 0 = 512个 token</code><p>尾部未满四个 token 的部分另外补入。最坏可有一个 CP 拥有几乎全部选中组，因此本地 Attention 不一定只算512个 token。</p></li><li><h3>组 ID → 物理 slot → Gather latent <span class="badge cache">KV READ</span></h3><p>通过 CP 归属、slot/page 表找到四 token 组的物理位置，从本 CP 的 GDG latent pool 读出 body 和 scales，准备本 core 的 LDG K/PV 工作区。</p><code class="shape" data-shape="selectedlatent">选中的主 latent Cᵣ：[512,512]</code><p>此处读取512维主 latent；128维 pooled key 已经完成检索工作。Gather、类型/scale 处理、DT 与 LW 是真实计算前的数据准备。量化 scale 可以融入 UScale 或 PV 概率，不要求完整物化反量化矩阵。</p></li><li><h3>QK：每个主 head 对选中的 token 打分</h3><code class="shape" data-shape="qk">[64,512] × [512,512] → scores [64,512]</code><p>数学 M 是主 heads，K 是512维 latent 特征，N 是本地 token 数。当前实现再乘1/16（来自原 QK head_dim=256）并 mask 无效填充。</p></li><li><h3>本地 Softmax：沿 token 轴归一化</h3><code class="shape" data-shape="softmax">scores [64,512] → probabilities [64,512]；LSE [64]</code><p>每个 head 独立归一化。保留 log-sum-exp，作为之后正确归并四个 CP 的依据。流式路径会在线更新 max、sum 和输出。</p></li><li><h3>PV：对历史 latent 加权求和</h3><code class="shape" data-shape="pv">[64,512] × [512,512] → Oᵣ [64,512]</code><p>同一份 latent 在 QK 中充当 K，在 PV 中充当 V。实现将512维输出拆成四个128维块，V up-projection 留到 P3。</p><code class="shape" data-shape="pvblock">每块：[64,512] × [512,128] → [64,128]，共四块</code></li><li><h3>写出本地输出和归一化统计</h3><code class="shape" data-shape="p2out">BF16 Oᵣ [4,64,512] + FP32 LSEᵣ [4,64]</code><p>空 shard 约定 O=0、LSE=−∞。因为各 CP 在各自历史子集上归一化，四份 O 不能直接相加或平均。</p></li></ol><div class="split"><div class="inset"><h4>两个 core 怎么分？</h4><p id="core-policy">普通 R=4：core0 处理请求行0/2，core1处理1/3；每个请求计算完整64个 heads。</p></div><div class="inset"><h4>实际用哪个计算块？</h4><p id="tile-policy">当前 CP0 有512个有效 token，普通驻留路径使用512行。有效长度与 padding 后的计算 tile 不相同。</p></div></div><p class="small">普通驻留路径按有效 token 数选256、512、640行；超过640行时按256行流式计算。部分合格配置另有640行预取调度。小块可显式转置后读取普通 weight，源码也保留 vcache 分支；实际 mode 要核对动态指令。</p></div></details>
+
+<section class="comm-block" id="ag2"><h2>第二次 AllGather <span class="badge comm">PARTIAL O + LSE</span></h2><p>收集四个 CP 的局部结果和 Softmax 统计，供 P3 归并。</p><div class="wire"><div><b>局部 Attention 输出</b><code data-shape="ag2out">BF16 [4 CP,4 tokens,64 heads,512]</code></div><div><b>log-sum-exp</b><code data-shape="ag2lse">FP32 [4 CP,4 tokens,64 heads]</code></div></div><p class="small">这里传的是结果和统计，不需要把各 CP 的历史 KVCache 集中到一起。</p></section>
+
+<details class="stage" id="p3" data-stage="p3" open><summary><span class="stage-no">P3</span><span class="stage-title"><strong>归并 partials，回到 hidden space。</strong><small>sgl_dsa_absorb_proj · LSE merge → V absorb → O projection</small></span></summary><div class="stage-body"><ol class="flow"><li><h3>按 LSE 正确归并四份局部结果</h3><p>LSE 记录每个 head 在该 CP 上的归一化分母。分数高的历史子集应在最终结果中获得更大的权重。按一个 token/head，非空侧的数学公式是：</p><div class="formula">m = maxᵣ LSEᵣ<br>wᵣ = exp(LSEᵣ − m)<br>O = Σᵣ(wᵣ · Oᵣ) / Σᵣ wᵣ</div><p>实现以 FP32 算术合并，并处理空侧和数值边界。逻辑上得到完整的512维 latent 结果；真正执行时，只做本 CP 输出区所需的 token 行。</p></li><li><h3>V absorb：每个 head 从512维回到256维</h3><code class="shape">每 head：[1,512] × W_VC,h [512,256] → [1,256]</code><code class="shape" data-shape="vabsorb">[4,64,512] → [4,64,256] → flatten [4,16384]</code><p>两个 core 各负责32个 heads 的投影片段。写出 BF16 中间结果并同步后，O projection 可读取完整输入。</p></li><li><h3>O projection：从16384维回到4096维</h3><code class="shape" data-shape="oproj">[4,16384] × [16384,4096] → [4,4096]（完整逻辑）</code><p>V/O 权重使用 BF16 LDG pack，FP32 累加后输出 BF16。这里不再读取历史 KV，LDG 流量主要来自模型投影权重。</p></li><li><h3>按“平坦输出的四分之一”分工</h3><code class="shape" data-shape="flatoutput">本 rank carrier：[4,1024] = 4096个元素 → 完整 token [1,4096]</code><p>每 rank 负责 <code>flatten([R,4096])</code> 中一段连续四分之一，不应一律理解成“每个 token 的1024维”。R=4 时各 CP 拥有一个完整 token；R=1 时各 CP 拥有同一 token 的1024维片段。</p></li></ol><div class="output-branch" id="output-route"><h4 id="route-title">当前示意：直接交给本地 mHC</h4><p id="route-copy">B=R=4、mHC 按 token 分片，输出可解释为 [1,4096]，省去第三次输出 AllGather。</p></div><div class="split"><div class="inset"><h4>输出与 mHC 分片匹配</h4><p>当 mHC token_sharded、B=R 且 R 可被4整除，本 rank 直接返回 <code>[R/4,4096]</code>。R=4 的部分合格配置还可融合 P3 与后续 mHC Post/Pre。</p></div><div class="inset"><h4>不满足直接交接条件</h4><p>执行第三次 CP4 AllGather，将四份 <code>R×1024</code> 元素拼成完整 <code>[R,4096]</code>。R=1/2/6 或其他不匹配场景走这条交接路径。</p></div></div></div></details>
+
+<section class="chapter" id="caches"><div class="kicker">06 / TWO HISTORIES</div><h2>每条多宽，和一共多少条。</h2><p>这两个方向最容易混淆：128/512是固定特征宽度；G/S 是随历史增长的条数。两套 cache 都由各层各自维护。</p><div class="cache-diagram"><div class="cache-card indexer"><h3>Indexer K 历史</h3><div class="dimension">128 <span>维 / 每4个token</span></div><p>帮助判断“看哪些组”。FP8 body 分布在两个 core 的 LDG banks，另有 scale、有效性和页映射。</p><code class="shape" data-shape="indexcache">全请求逻辑 [16384,128]<br>当前 CP0 [4096,128]</code><p><strong>P1 写，P1 扫描。</strong> 所有32个 Indexer heads 共用这套 keys。</p></div><div class="cache-card latent"><h3>主 latent 历史</h3><div class="dimension">512 <span>维 / 每token</span></div><p>用于真正的 Attention。当前默认入口采用 CP-local GDG pool，每行512 bytes body + 16 bytes scales。</p><code class="shape" data-shape="maincache">全请求逻辑 [65536,512]<br>物理每token 528 bytes</code><p><strong>P1 追加，P2 选读。</strong> 64个主 heads 共用每个 token 的一份 latent。</p></div></div><div class="intro-note">另有一个数字：<strong>Top512 groups</strong>。它表示最多选择512个四 token 组，与 latent_dim=512 的含义完全独立。</div><div class="table-wrap"><table><thead><tr><th>位置</th><th>数据</th><th>生命周期 / 访问</th></tr></thead><tbody><tr><td>LDG 历史</td><td>128维 pooled-key body</td><td>长期保存；P1 更新与扫描</td></tr><tr><td>GDG 历史</td><td>512维 latent + scales</td><td>长期保存；P1 写入、P2 选读</td></tr><tr><td>tail buffers</td><td>未满组的 Indexer key/gate 状态</td><td>跨 decode step 保留，完成四 token 汇聚</td></tr><tr><td>P2 临时 LDG</td><td>选中 latent 的 K/PV 工作区</td><td>当前计算复用，不是永久历史副本</td></tr><tr><td>P3 LDG</td><td>BF16 V/O 投影权重</td><td>模型权重，不属于历史 KVCache</td></tr></tbody></table></div></section>
+
+<section class="chapter" id="viewer"><div class="kicker">07 / READING THE VIEWER</div><h2>先找业务段，再解释利用率。</h2><p>按下面五个窗口定位，能把“传了什么、谁在等、哪种 shape”联系起来。页面上的计算规模不等于已经测出的时间或带宽。</p><div class="table-wrap"><table><thead><tr><th>窗口</th><th>重点观察</th><th>需要分清</th></tr></thead><tbody><tr><td>P1 当前 token 投影</td><td>Q/KV/Indexer 投影与 K absorb</td><td>固定模型维度与 batch 行数</td></tr><tr><td>P1 历史扫描</td><td>反复出现的 Indexer PE，典型 M/K/N=32/128/1024</td><td>有效历史、tile、两核的 LDG 页归属</td></tr><tr><td>P2 数据准备</td><td>GDG Gather → scale/类型处理 → DT/LW → QK</td><td>GDG 读取、LDG 写入、WL1 供数是不同通路</td></tr><tr><td>P2 Attention</td><td>QK → Softmax → 四块 PV；流式路径按256行重复</td><td>M=64或32、有效 n_r 与 padding 后 tile</td></tr><tr><td>P3 输出</td><td>LSE merge、V/O PE、rank 内同步与输出交接</td><td>模型权重流量，以及是否存在第三次 AllGather</td></tr></tbody></table></div><p>单元 busy、有效字节除以 PE 时间、MC 实际返回带宽是不同指标。核对匹配的二进制与输入、core、动态 M/K/N、DF、minitile、mask、UScale 和 trace 来源，再讨论瓶颈。</p><p class="small">时间与带宽需要真实 trace 支持；小页管理不自动等于小 PE，decode 单 token 也不自动等于 M=1。</p><a href="./ldg-bandwidth-explained-2026-10-15.html">继续阅读：Zeus518 LDG 带宽的口径与供数路径 →</a></section>
+
+<section class="chapter" id="plain"><div class="kicker">08 / KEEP A TEXT COPY</div><h2>一份可复制的流程摘要。</h2><p class="small">适合贴进讨论或与 Viewer 并排阅读。上面的各阶段保留了更完整的 shape、数值与交接说明。</p><div class="plain-tools"><button id="copy-flow" type="button">复制流程</button><button id="download-flow" type="button">下载 TXT</button></div><div id="copy-status" class="copy-status" role="status" aria-live="polite"></div><details><summary>展开纯文本流程</summary><pre id="plain-source">GLM53Flash DSA Decode · CP4 · 默认 GDG latent 路径
+
+H0：mHC Pre + Norm（模型准备阶段）
+    产生 BF16 hidden：[B,4096]
+    保留 residual 和组合系数
+    |
+    v
+P1：投影 + 两套 cache 更新 + Indexer + 第一阶段选择
+    |
+    +-- 主 Query
+    |   X → Q压缩 [B,1536] → 主Q [B,64,256]
+    |   K absorption → latent Query [B,64,512]（完整逻辑）
+    |   每 CP 生成16 heads，每 core 8 heads
+    |
+    +-- 当前 token 的共享 KV latent
+    |   X → RMSNorm(c) [B,512]
+    |   每128维量化：FP8 body [B,512] + FP32 scales [B,4]
+    |   有效 owner writer 追加 GDG cache，528 bytes/token
+    |
+    +-- Indexer Query
+    |   Q压缩 [B,1536] → [B,32,128]
+    |   Hadamard旋转、量化；另有 [B,32] head权重
+    |
+    +-- Indexer Key 与 pooled key
+        X → key [B,128]；X → pooling gate [B,128]
+        tail + 当前值 → 每4个token逐特征加权汇聚
+        [4,128] → [128] pooled key → FP8 LDG历史
+    |
+    v
+    Indexer扫描（按一个请求、本CP）
+        [32,128] × [128,G_r] → [32,G_r]
+        ReLU + head加权 + scale → 沿32 heads归约 → [G_r]
+        局部最多512候选组，或按条件发送raw组分数
+    |
+    v
+第一次 CP4 AllGather
+    传：主Query的16 heads + Indexer候选/组分数 + padding
+    得：完整主Query [B,64,512] + 四CP筛选数据
+    历史 latent、pooled keys、Indexer Query 不随这次通信复制
+    |
+    v
+P2：TopK2 + Gather + QK + Softmax + PV
+    全局最多选512个四token组
+    本CP选中g_r组，n_r = 4*g_r + tail_r
+    |
+    v
+    组ID → slot/page映射 → GDG选读主latent [n_r,512]
+    准备本core临时LDG K/PV工作区
+    |
+    v
+    QK：[H,512] × [512,n_r] → [H,n_r]
+        H通常64；R=1双core分头时每core为32
+        乘1/16，mask填充
+    Softmax：沿本地token轴归一化，同时保留LSE [H]
+    PV：[H,n_r] × [n_r,512] → [H,512]
+        输出分成四块128维
+    |
+    v
+    BF16 partial O：[B,64,512]
+    FP32 LSE：      [B,64]
+    空shard：O=0，LSE=-inf
+    |
+    v
+第二次 CP4 AllGather
+    partial O：[4,B,64,512]
+    LSE：      [4,B,64]
+    |
+    v
+P3：按LSE归并 + V absorb + O projection
+    w_r = exp(LSE_r - max LSE)
+    O = sum(w_r*O_r)/sum(w_r)，空侧另处理
+    每head：[1,512] × [512,256] → [1,256]
+    逻辑 [B,64,256] → [B,16384] → O投影 → [B,4096]
+    实际每rank只输出flatten([R,4096])的一段四分之一
+    物理carrier：[R,1024]
+    |
+    +-- mHC token_sharded + B=R + R可被4整除
+    |   直接作为 [R/4,4096] 交给本地mHC
+    |   合格R=4配置可进一步融合P3与mHC Post/Pre
+    |
+    +-- 其他情况
+        第三次AllGather → 完整 [R,4096]
+    |
+    v
+H1：Attention后mHC Post → FFN前mHC Pre/Norm
+
+分清：
+    每4个token一个128维pooled key；每token一个512维共享latent。
+    Top512组与latent_dim=512是两个独立概念。
+    R为准备的Graph行数；CAP含padding，B为实际有效行数。
+    P2有效n_r与256/512/640驻留tile、256行流式tile不同。
+    这是源码数据流说明，不包含新增性能或数值验证。
+</pre></details></section>
+
+<section class="chapter" id="sources"><div class="kicker">SOURCE NOTES / SCOPE</div><h2>实现边界与源码索引。</h2><p>本文基于 2026-11-05 核对的 formal CP4 / 默认 GDG 实现。独立的 request-owned LDG 与 CP8 LDG 路径有不同的 ownership 和 rank 内归并机制，不直接套用本页分工。</p><ul class="source-list"><li><code>sglang / dsa_formal_pipeline_zeus.py</code><small>forward、_collectives、_finish_output：三个阶段、两次核心通信与条件输出交接。</small></li><li><code>glm53_flash/dsa/sgl_dsa_proj_indexer_topk1.py</code><small>投影权重形状、pooled-key 更新、分块扫描、候选/raw-score wire。</small></li><li><code>glm53_flash/dsa/sgl_dsa_topk2_gather_attn.py</code><small>全局选择、主 latent Gather、驻留/流式 Attention 与输出统计。</small></li><li><code>glm53_flash/dsa/sgl_dsa_absorb_proj.py</code><small>LSE merge、BF16 V/O projection、按平坦输出分配的 CP geometry。</small></li><li><code>sglang / glm5_next_mhc_zeus.py</code><small>P3 与 mHC Post/Pre 的条件融合。</small></li></ul><div class="intro-note"><strong>逻辑 shape 与物理执行。</strong> R 支持1/2/4/6/8，R=1使用CAP=2；其他行可能是padding。formal的KC=65536是准备容量，不等于有效历史。量化、scale融合、BF16舍入与Softmax近似以实际源码和二进制为准。</div><p class="small">源码快照：torch_zeus <code>8b0cadf812ce</code>；SGLang formal pipeline 文件与 <code>300B-1020@506248d60690</code> 一致。这些标识用于绑定说明，不代替设备、Graph、CycleSim 或 VCS 验收。</p></section>
+<footer class="footer"><span>技术笔记 · GLM-5.3-Flash DSA · 2026-11-05</span><a href="./">返回全部笔记 ↗</a></footer>
+</main></div>
+<script>
+(() => {
+  'use strict';
+  document.documentElement.classList.add('has-js');
+  const $ = id => document.getElementById(id);
+  const stages = [...document.querySelectorAll('details.stage')];
+  const format = value => value.toLocaleString('en-US');
+  let selectedRank = 0;
+  const state = {batch:4, context:65536, distribution:'balanced', tokenSharded:true};
+
+  // Group ownership follows CP4 stripes. These distributions illustrate scale;
+  // they never predict the model's learned scores or measured execution time.
+  function model() {
+    const groups = Math.floor(state.context / 4);
+    const available = Array.from({length:4}, (_, r) => Math.floor(groups / 4) + (r < groups % 4 ? 1 : 0));
+    const selected = Math.min(512, groups);
+    const counts = [0,0,0,0];
+    if (state.distribution === 'balanced') {
+      for (let i=0; i<selected; i++) counts[i % 4]++;
+    } else {
+      let remaining = selected;
+      for (let r=0; r<4; r++) {counts[r] = Math.min(remaining, available[r]); remaining -= counts[r];}
+    }
+    const tails = Array.from({length:4}, (_, r) => r === groups % 4 ? state.context % 4 : 0);
+    const tokens = counts.map((n,r) => 4*n + tails[r]);
+    return {groups, available, selected, counts, tails, tokens};
+  }
+  function pathText(n) {
+    if (n===0) return '空 shard，O=0、LSE=−∞';
+    if (n<=256) return '普通驻留256行路径';
+    if (n<=512) return '普通驻留512行路径';
+    if (n<=640) return '普通驻留640行路径';
+    return `流式路径，按256行推进，共${Math.ceil(n/256)}轮`;
+  }
+  function update() {
+    const {groups,available,selected,counts,tails,tokens} = model();
+    const b=state.batch, r=selectedRank, n=tokens[r], h=b===1 ? 32 : 64;
+    const nsum=tokens.reduce((a,v)=>a+v,0);
+    $('group-total').textContent=format(groups);
+    $('selected-total').textContent=format(selected);
+    $('token-total').textContent=format(nsum);
+    document.querySelectorAll('[data-rank]').forEach(button => {
+      const rank=Number(button.dataset.rank);
+      button.setAttribute('aria-pressed',String(rank===r));
+      button.querySelector('.rank-count').textContent=format(tokens[rank]);
+      button.querySelector('.rank-caption').textContent=`token · ${counts[rank]}组${tails[rank] ? ` + ${tails[rank]} tail` : ''}`;
+      button.querySelector('.rank-bar i').style.width=`${nsum ? tokens[rank]/nsum*100 : 0}%`;
+      button.setAttribute('aria-label',`CP${rank}，${tokens[rank]}个 token，${counts[rank]}个选中组${tails[rank] ? `，${tails[rank]}个 tail` : ''}`);
+    });
+    $('rank-note').textContent=`当前观察 CP${r}：${format(available[r])}个完整历史组，选中${counts[r]}组，共${n}个 token；${pathText(n)}。`;
+    const shapes={
+      qa:`[${b},4096] × [4096,1536] → [${b},1536]`,
+      qmain:`[${b},1536] → [${b},64,256] → [${b},64,512]（完整逻辑）`,
+      qlocal:`本 CP 输出 BF16 [${b},16,512] · 每 core [${b},8,512]`,
+      latent:`[${b},4096] × [4096,512] → RMSNorm → c [${b},512]`,
+      qindex:`[${b},1536] × [1536,4096] → reshape [${b},32,128]`,
+      headweights:`[${b},32]`, scan:`[32,128] × [128,${available[r]}] → [32,${available[r]}]`,
+      ag1query:`每 CP [${b},16,512] → 每 rank 获得 [${b},64,512]`,
+      localcount:`CP${r}：选中${counts[r]}组 × 4 + tail ${tails[r]} = ${n}个 token`,
+      selectedlatent:`选中的主 latent Cᵣ：[${n},512]`,
+      qk:`[${h},512] × [512,${n}] → scores [${h},${n}]`,
+      softmax:`scores [${h},${n}] → probabilities [${h},${n}]；LSE [${h}]`,
+      pv:`[${h},${n}] × [${n},512] → Oᵣ [${h},512]`,
+      pvblock:`每块：[${h},${n}] × [${n},128] → [${h},128]，共四块`,
+      p2out:`BF16 Oᵣ [${b},64,512] + FP32 LSEᵣ [${b},64]`,
+      ag2out:`BF16 [4 CP,${b} tokens,64 heads,512]`,
+      ag2lse:`FP32 [4 CP,${b} tokens,64 heads]`,
+      vabsorb:`[${b},64,512] → [${b},64,256] → flatten [${b},16384]`,
+      oproj:`[${b},16384] × [16384,4096] → [${b},4096]（完整逻辑）`,
+      flatoutput:`本 rank carrier：[${b},1024] = ${b*1024}个元素${b%4===0 ? ` → 完整 token [${b/4},4096]` : '，可能切开 token'}`,
+      indexcache:`全请求逻辑 [${groups},128]；当前 CP${r} [${available[r]},128]`,
+      maincache:`全请求逻辑 [${state.context},512]；物理每 token 528 bytes`
+    };
+    document.querySelectorAll('[data-shape]').forEach(node=>{node.textContent=shapes[node.dataset.shape];});
+    $('core-policy').textContent=b===1 ? 'R=1：core0计算 heads 0～31，core1计算32～63，两核处理同一请求。这里单核 PE 的 M=32。' : `普通 R=${b}：两个 core 按请求行交替分工，每个负责的请求计算完整64个 heads。这里主 QK/PV 的 M=64。`;
+    $('tile-policy').textContent=n ? `当前 CP${r} 有${n}个有效 token，${pathText(n)}。有效长度与 padding 后的计算 tile 不相同。` : `当前 CP${r} 没有有效 token，输出空 shard 的约定值。其他 CP 仍可有选中的历史。`;
+    const direct=state.tokenSharded && b%4===0;
+    $('route-title').textContent=direct ? '当前示意：直接交给本地 mHC' : '当前示意：需要第三次输出 AllGather';
+    $('route-copy').textContent=direct ? `B=R=${b}、mHC 按 token 分片，本 rank 输出对应${b/4}个完整 token，可解释为 [${b/4},4096]，省去第三次输出 AllGather。` : `每 rank 发送${b*1024}个 BF16 输出元素，收集后得到完整 [${b},4096]。${b%4 ? '平坦输出片段无法直接对应整 token。' : '当前关闭了 mHC token 分片。'}`;
+  }
+  $('batch').addEventListener('change',()=>{state.batch=Number($('batch').value);update();});
+  $('context').addEventListener('input',()=>{
+    const value=Number($('context').value);
+    if (!$('context').value || !Number.isInteger(value) || value<1 || value>1048576) {
+      $('validation').textContent='请输入1～1,048,576之间的整数；下方保留上一次有效结果。';
+      $('context').setAttribute('aria-invalid','true'); return;
+    }
+    $('validation').textContent='';$('context').removeAttribute('aria-invalid');state.context=value;update();
+  });
+  $('distribution').addEventListener('change',()=>{state.distribution=$('distribution').value;update();});
+  $('mhc-sharded').addEventListener('change',()=>{state.tokenSharded=$('mhc-sharded').checked;update();});
+  document.querySelectorAll('[data-context]').forEach(button=>button.addEventListener('click',()=>{$('context').value=button.dataset.context;$('context').dispatchEvent(new Event('input',{bubbles:true}));}));
+  document.querySelectorAll('[data-rank]').forEach(button=>button.addEventListener('click',()=>{selectedRank=Number(button.dataset.rank);update();}));
+  const expandLabel=()=>{$('expand-all').textContent=stages.every(stage=>stage.open) ? '折叠阶段' : '展开阶段';};
+  stages.forEach(stage=>stage.addEventListener('toggle',expandLabel));
+  $('expand-all').addEventListener('click',()=>{const open=!stages.every(stage=>stage.open);stages.forEach(stage=>{stage.open=open;});expandLabel();});
+  document.querySelectorAll('a[href^="#"]').forEach(link=>link.addEventListener('click',()=>{const target=document.getElementById(link.hash.slice(1));if(target && target.tagName==='DETAILS') target.open=true;}));
+  function setTheme(value) {document.documentElement.dataset.theme=value;$('theme').textContent=value==='dark' ? '浅色' : '深色';$('theme').setAttribute('aria-label',value==='dark' ? '切换浅色模式' : '切换深色模式');}
+  try {setTheme(localStorage.getItem('dsa-notes-theme')==='dark' ? 'dark' : 'light');} catch {setTheme('light');}
+  $('theme').addEventListener('click',()=>{const value=document.documentElement.dataset.theme==='dark' ? 'light' : 'dark';setTheme(value);try {localStorage.setItem('dsa-notes-theme',value);} catch {}});
+  $('copy-flow').addEventListener('click',async()=>{try {await navigator.clipboard.writeText($('plain-source').textContent);$('copy-status').textContent='流程已复制。';} catch {$('copy-status').textContent='浏览器未允许剪贴板访问，请展开文本手动复制，或下载 TXT。';}});
+  $('download-flow').addEventListener('click',()=>{const blob=new Blob([$('plain-source').textContent],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download='glm53flash-dsa-flow.txt';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+  let printState=[];
+  window.addEventListener('beforeprint',()=>{printState=stages.map(stage=>stage.open);stages.forEach(stage=>{stage.open=true;});});
+  window.addEventListener('afterprint',()=>{stages.forEach((stage,index)=>{stage.open=printState[index] ?? true;});});
+  $('print-page').addEventListener('click',()=>window.print());
+  if ('IntersectionObserver' in window) {
+    const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting) document.querySelectorAll('.toc a').forEach(link=>link.classList.toggle('active',link.hash===`#${entry.target.id}`));});},{rootMargin:'-12% 0px -65% 0px'});
+    document.querySelectorAll('main>section,main>details').forEach(section=>observer.observe(section));
+  }
+  update();
+})();
+</script>
+</body>
+</html>

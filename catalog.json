@@ -2,6 +2,14 @@
   "updated": "2026-11-05",
   "articles": [
     {
+      "file": "2026-11-05-glm53flash-dsa-kvcache.html",
+      "category": "compiler",
+      "title": "TritonShared - GLM-5.3-Flash DSA：从 P1 到 KVCache 与 Attention",
+      "description": "沿 P1、两次 AllGather、P2 与 P3 梳理 DSA Decode；交互查看 pooled keys、共享 latent、tensor shape 和 CP/core 分工。",
+      "date": "2026-11-05",
+      "tags": ["GLM-5.3-Flash", "DSA", "KVCache", "MLA", "Attention", "数据流"]
+    },
+    {
       "file": "models/glm53-flash/methodology.html",
       "category": "compiler",
       "title": "TritonShared - GLM-5.3-Flash：MoE 测评口径与 PR #643 基线",
