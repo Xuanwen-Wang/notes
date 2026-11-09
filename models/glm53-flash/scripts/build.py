@@ -181,6 +181,19 @@ def build():
         assert eq['measured_source'] == f['source_commit'] and eq['pr_head'] == f['pr_head'] == ci['headSha']
         ci_label = ('已通过' if ci['status'] == 'completed' and ci['conclusion'] == 'success'
                     else '已结束：' + str(ci['conclusion']) if ci['status'] == 'completed' else '尚在运行 / 排队')
+        if eq.get('reuse_type') == 'compact_router_sampled_equivalence':
+            assert eq['executable_changes'] and not eq['full_compact_matrix_rerun']
+            source_note = (f"<p>全量测量源码 <code>{f['source_commit'][:12]}</code> 使用原 Router 权重布局；"
+                f"rebase 后的 PR head 为 <code>{f['pr_head'][:12]}</code>，默认采用 compact 权重。"
+                f"{eq['router_probes']} 项 Router 对拍周期与逐位路由结果相同，"
+                f"{eq['compact_numerical_cases']} 项完整数值集成与下游 cycles 一致，三个 consumer kernel 源码不变。"
+                "按维护者要求沿用全量曲线，没有再重跑 compact 的全矩阵。"
+                f"额外 Router 回归 {eq['router_regression_passed']} 项通过；1 项可选 SGLang parameter-wrapper 检查"
+                "因未安装完整 SGLang 而跳过。实测源码与当前 PR 源码分别记录。</p>")
+        else:
+            assert not eq['executable_changes']
+            source_note = (f"<p>测量源码 <code>{f['source_commit'][:12]}</code>；整理后的 PR head "
+                f"<code>{f['pr_head'][:12]}</code> 与其保留代码、测试及 benchmark 脚本逐文件一致。</p>")
         exception_groups = {}
         for row in q['analytic_budget_exceptions']:
             name = row['name']
@@ -203,9 +216,7 @@ def build():
                     "不与实现参考或 Graph 门禁混淆。</p>"
                     "<p>时序模式保持真实 Router，仅省略已资格 Routed/Shared 的 PE 数值乘加；"
                     "时序输出及下游 Reduce 不计为数值 PASS，493,920 个时序 case 不代表全矩阵数值验收。</p>"
-                    f"<p>测量源码 <code>{f['source_commit'][:12]}</code>；整理后的 PR head "
-                    f"<code>{f['pr_head'][:12]}</code> 与其保留代码、测试及 benchmark 脚本逐文件一致。"
-                    f"PR head 的 <a href=\"{html.escape(ci['url'], quote=True)}\">CI {ci_label}</a>"
+                    + source_note + f"<p>PR head 的 <a href=\"{html.escape(ci['url'], quote=True)}\">CI {ci_label}</a>"
                     "（发布时快照，实时状态见 GitHub），旧 SHA 的 CI 不继承为新 SHA 的 PASS。</p>")
         if ci.get('failure_note'):
             evidence += '<p>' + html.escape(ci['failure_note']) + '</p>'
@@ -349,9 +360,9 @@ def build():
     if 'flow_revision' in d:
         revision_scope = ('双方使用相同采样点和 calibrated Router；旧版直接引用 PR #643 归档，新版使用新 kernel 与新编译器。'
                           '这是整体方案对比，不能把全部提升归因于某一个 kernel。'
-                          if d['flow_revision'].get('kind') == 'four_kernel_and_compiler' else
+                          if d['flow_revision'].get('kind') in ('four_kernel_and_compiler', 'automatic_pe_and_compiler') else
                           '同一组输入/权重，流程、sigmoid 和编译器同时变化；不是固定路由的 Routed 单独优化 A/B。')
-        revision = '<details class="data-details"><summary>查看本轮完整流程与上一版：相同 49 个采样点</summary>' + table(
+        revision = '<details class="data-details"><summary>查看本轮与固定基线 PR643：相同 49 个采样点</summary>' + table(
             ['总 batch', '旧版 tokens/s/card', '新版 tokens/s/card', 'MoE 吞吐变化', 'Router cycles 变化',
              'Routed cycles 变化', 'Shared cycles 变化', 'Reduce cycles 变化'],
             [[r['batch_size'], f"{r['baseline']['tokens_s_card']:.1f}", f"{r['candidate']['tokens_s_card']:.1f}",
@@ -389,6 +400,25 @@ def build():
                            '比较同时包含 kernel 与编译器变化；H200 沿用原同输入测量。'
                            f'<a href="{version}/data/benchmark.json">本轮固定快照</a> · '
                            '<a href="data/flow-comparison.csv">与 PR #643 对照 CSV</a>。</p></div></div>')
+    if d.get('flow_revision', {}).get('kind') == 'automatic_pe_and_compiler':
+        changes = [r['throughput_increase_pct'] for r in d['flow_revision']['rows']]
+        previous_changes = [r['throughput_change_pct'] for r in d['previous_revision']['rows']]
+        latest_update = (f"<b>{html.escape(d['updated'])} 自动 PE 配置复测</b>：移除 Routed / Shared 的手动 "
+            f"PE mode 与 minitile，由新编译器自动选择；{f['cases']:,} 个时序 case 全部完成。"
+            f"扫描最高为总 BS{best_z['batch_size']}，{best_z['tokens_s_card']:,.1f} tokens/s/card。"
+            f"相对 PR #643 同档吞吐变化 {min(changes):+.1f}%～{max(changes):+.1f}%。"
+            "compact Router 对拍无周期变化后沿用本轮全量数据；H200 保持原测量。")
+        version = f"versions/{d['updated'].replace('-', '')}-{source[:8]}"
+        current_history = (f'<div class="timeline"><div><time>{html.escape(d["updated"])}</time><p>'
+            '<b>自动 PE 配置与最新编译器 · 完整复测</b><br>'
+            f'测量源码 <code>{source[:12]}</code>，编译器 <code>{d["toolchain"]["triton_shared"][:12]}</code>。'
+            f'峰值为 {best_z["tokens_s_card"]:,.1f} tokens/s/card；对比 PR674 上一版各档变化'
+            f'{min(previous_changes):+.2f}%～{max(previous_changes):+.2f}%，'
+            'Router / Reduce cycles不变。PE配置方式与编译器同时变化，历史手动配置存在已报告的'
+            'CycleSim/VCS时序偏差，此处不作硬件性能归因。'
+            f'<a href="{version}/data/benchmark.json">本轮固定快照</a> · '
+            '<a href="data/flow-comparison.csv">与 PR643 对比</a> · '
+            '<a href="data/previous-revision-comparison.csv">与 PR674 上一版对比</a>。</p></div></div>')
     # Detailed historical exceptions remain downloadable without bloating every page load.
     page_data = {key: d[key] for key in ('updated', 'protocol', 'h200', 'zeus_population', 'toolchain')}
     replacements = dict(STYLE=(ROOT / 'assets/style.css').read_text() + '\n' + (ROOT / 'assets/charts.css').read_text(),

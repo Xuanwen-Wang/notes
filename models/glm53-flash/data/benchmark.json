@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "updated": "2026-11-05",
+  "updated": "2026-11-09",
   "protocol": {
     "cards": 4,
     "layers": 42,
@@ -242,13 +242,13 @@
         "batch_size": 16,
         "group": "train00",
         "step": 17,
-        "cycles": 1821825,
-        "milliseconds": 4.5545625,
-        "tokens_s_card": 878.2402261468583,
+        "cycles": 1898647,
+        "milliseconds": 4.7466175,
+        "tokens_s_card": 842.705358078674,
         "stages": {
           "router": 123900,
-          "routed": 1097508,
-          "shared": 396018,
+          "routed": 1156198,
+          "shared": 434280,
           "reduce": 465753
         },
         "split": "train",
@@ -258,13 +258,13 @@
         "batch_size": 24,
         "group": "train00",
         "step": 17,
-        "cycles": 2298480,
-        "milliseconds": 5.7462,
-        "tokens_s_card": 1044.1683199331733,
+        "cycles": 2520694,
+        "milliseconds": 6.301735,
+        "tokens_s_card": 952.1187419020317,
         "stages": {
           "router": 133686,
-          "routed": 1324979,
-          "shared": 538440,
+          "routed": 1511102,
+          "shared": 599550,
           "reduce": 658250
         },
         "split": "train",
@@ -274,13 +274,13 @@
         "batch_size": 32,
         "group": "train00",
         "step": 17,
-        "cycles": 2806737,
-        "milliseconds": 7.0168425,
-        "tokens_s_card": 1140.1139472633167,
+        "cycles": 2979996,
+        "milliseconds": 7.44999,
+        "tokens_s_card": 1073.826944734154,
         "stages": {
           "router": 133686,
-          "routed": 1623577,
-          "shared": 667968,
+          "routed": 1750776,
+          "shared": 753942,
           "reduce": 845696
         },
         "split": "train",
@@ -290,13 +290,13 @@
         "batch_size": 40,
         "group": "train00",
         "step": 17,
-        "cycles": 3793075,
-        "milliseconds": 9.4826875,
-        "tokens_s_card": 1054.5533636956823,
+        "cycles": 4061601,
+        "milliseconds": 10.1540025,
+        "tokens_s_card": 984.8333206536043,
         "stages": {
           "router": 135660,
-          "routed": 2318714,
-          "shared": 810894,
+          "routed": 2520893,
+          "shared": 919716,
           "reduce": 1014990
         },
         "split": "train",
@@ -306,13 +306,13 @@
         "batch_size": 48,
         "group": "train00",
         "step": 17,
-        "cycles": 4316058,
-        "milliseconds": 10.790145,
-        "tokens_s_card": 1112.1259260186032,
+        "cycles": 4617121,
+        "milliseconds": 11.5428025,
+        "tokens_s_card": 1039.6088818118476,
         "stages": {
           "router": 135660,
-          "routed": 2582632,
-          "shared": 953442,
+          "routed": 2803992,
+          "shared": 1085112,
           "reduce": 1196515
         },
         "split": "train",
@@ -322,13 +322,13 @@
         "batch_size": 56,
         "group": "train00",
         "step": 17,
-        "cycles": 4905765,
-        "milliseconds": 12.2644125,
-        "tokens_s_card": 1141.5141165547066,
+        "cycles": 5219950,
+        "milliseconds": 13.049875,
+        "tokens_s_card": 1072.8072107970384,
         "stages": {
           "router": 143094,
-          "routed": 2967842,
-          "shared": 1095948,
+          "routed": 3199207,
+          "shared": 1250466,
           "reduce": 1360987
         },
         "split": "train",
@@ -338,13 +338,13 @@
         "batch_size": 64,
         "group": "train00",
         "step": 17,
-        "cycles": 5421334,
-        "milliseconds": 13.553335,
-        "tokens_s_card": 1180.521251780466,
+        "cycles": 5778706,
+        "milliseconds": 14.446765,
+        "tokens_s_card": 1107.5143812472895,
         "stages": {
           "router": 143094,
-          "routed": 3220936,
-          "shared": 1237992,
+          "routed": 3474352,
+          "shared": 1415358,
           "reduce": 1547745
         },
         "split": "train",
@@ -354,13 +354,13 @@
         "batch_size": 72,
         "group": "train00",
         "step": 17,
-        "cycles": 6372112,
-        "milliseconds": 15.93028,
-        "tokens_s_card": 1129.9236422711967,
+        "cycles": 6786317,
+        "milliseconds": 16.9657925,
+        "tokens_s_card": 1060.9583961374042,
         "stages": {
           "router": 154560,
-          "routed": 3927162,
-          "shared": 1381002,
+          "routed": 4226846,
+          "shared": 1581216,
           "reduce": 1712870
         },
         "split": "train",
@@ -370,13 +370,13 @@
         "batch_size": 80,
         "group": "train00",
         "step": 17,
-        "cycles": 6955046,
-        "milliseconds": 17.387615,
-        "tokens_s_card": 1150.2440098886477,
+        "cycles": 7409863,
+        "milliseconds": 18.5246575,
+        "tokens_s_card": 1079.642093247878,
         "stages": {
           "router": 154560,
-          "routed": 4249045,
-          "shared": 1523550,
+          "routed": 4566516,
+          "shared": 1746612,
           "reduce": 1897196
         },
         "split": "train",
@@ -386,13 +386,13 @@
         "batch_size": 88,
         "group": "train00",
         "step": 17,
-        "cycles": 7454399,
-        "milliseconds": 18.6359975,
-        "tokens_s_card": 1180.5109976002088,
+        "cycles": 7943582,
+        "milliseconds": 19.858955,
+        "tokens_s_card": 1107.8125712052824,
         "stages": {
           "router": 164766,
-          "routed": 4558738,
-          "shared": 1666056,
+          "routed": 4901449,
+          "shared": 1911966,
           "reduce": 2064511
         },
         "split": "train",
@@ -402,13 +402,13 @@
         "batch_size": 96,
         "group": "train00",
         "step": 17,
-        "cycles": 8011587,
-        "milliseconds": 20.0289675,
-        "tokens_s_card": 1198.264463707378,
+        "cycles": 8537481,
+        "milliseconds": 21.3437025,
+        "tokens_s_card": 1124.4534541277455,
         "stages": {
           "router": 164766,
-          "routed": 4807463,
-          "shared": 1808604,
+          "routed": 5168927,
+          "shared": 2077362,
           "reduce": 2261442
         },
         "split": "train",
@@ -418,13 +418,13 @@
         "batch_size": 104,
         "group": "train00",
         "step": 17,
-        "cycles": 8897753,
-        "milliseconds": 22.2443825,
-        "tokens_s_card": 1168.8344237022538,
+        "cycles": 9481049,
+        "milliseconds": 23.7026225,
+        "tokens_s_card": 1096.925034350102,
         "stages": {
           "router": 164766,
-          "routed": 5497380,
-          "shared": 1951110,
+          "routed": 5902603,
+          "shared": 2242716,
           "reduce": 2418508
         },
         "split": "train",
@@ -434,13 +434,13 @@
         "batch_size": 112,
         "group": "train00",
         "step": 17,
-        "cycles": 9483657,
-        "milliseconds": 23.7091425,
-        "tokens_s_card": 1180.9790252852881,
+        "cycles": 10107662,
+        "milliseconds": 25.269155,
+        "tokens_s_card": 1108.07029360499,
         "stages": {
           "router": 164094,
-          "routed": 5829903,
-          "shared": 2093658,
+          "routed": 6267841,
+          "shared": 2408112,
           "reduce": 2624193
         },
         "split": "train",
@@ -450,13 +450,13 @@
         "batch_size": 120,
         "group": "train00",
         "step": 17,
-        "cycles": 10021419,
-        "milliseconds": 25.0535475,
-        "tokens_s_card": 1197.4352135161698,
+        "cycles": 10689283,
+        "milliseconds": 26.7232075,
+        "tokens_s_card": 1122.6197304346792,
         "stages": {
           "router": 168630,
-          "routed": 6143542,
-          "shared": 2236206,
+          "routed": 6608395,
+          "shared": 2573508,
           "reduce": 2777258
         },
         "split": "train",
@@ -466,30 +466,30 @@
         "batch_size": 128,
         "group": "train00",
         "step": 17,
-        "cycles": 10552872,
-        "milliseconds": 26.38218,
-        "tokens_s_card": 1212.939946585157,
+        "cycles": 11258951,
+        "milliseconds": 28.1473775,
+        "tokens_s_card": 1136.8732309075685,
         "stages": {
           "router": 168630,
-          "routed": 6426140,
-          "shared": 2378292,
+          "routed": 6915521,
+          "shared": 2738442,
           "reduce": 2982698
         },
         "split": "train",
         "batch_per_card": 32.0
       }
     ],
-    "source_commit": "508bb2b7526ed329ca7df53217d4cda866fba8ab",
+    "source_commit": "0d68686a8692a86736e3c5fb399cffe85144fe8a",
     "measurement_mode": "timing_only",
     "numerical_validation": "separate_full_mode",
     "matched_input_hashes": true
   },
   "toolchain": {
-    "torch_zeus_measured": "508bb2b7526ed329ca7df53217d4cda866fba8ab",
-    "torch_zeus_pr_head": "508bb2b7526ed329ca7df53217d4cda866fba8ab",
+    "torch_zeus_measured": "0d68686a8692a86736e3c5fb399cffe85144fe8a",
+    "torch_zeus_pr_head": "36a8375edefb3d76815f7eb12227cdbf4d512496",
     "sglang": "506248d6069029f6e9cb564fd43d7d751b5698cf",
-    "triton_shared": "27e77de18f4bc87901b0fb92c903ea3a60bad047",
-    "triton": "5321c2ebe470d2527078491642b136a13ab72c49",
+    "triton_shared": "4f8accf1c83af428337d73603ec5b9c1f9937621",
+    "triton": "69d8cb8706a4ab18ee6a19204989651a891eb9e6",
     "cyclesim": "b39990784ba2e1324c258c1db5fb02c13f93953b",
     "cyclesim_binary_sha256": "efdf5ee46eac45b7c6bc0f15641eb1e194bca7680d160eb3ab4ea5bc8a025ea6"
   },
@@ -56940,7 +56940,7 @@
     },
     "current_full_mode": {
       "passed": true,
-      "source_commit": "508bb2b7526ed329ca7df53217d4cda866fba8ab",
+      "source_commit": "0d68686a8692a86736e3c5fb399cffe85144fe8a",
       "sglang_commit": "506248d6069029f6e9cb564fd43d7d751b5698cf",
       "full_mode_cases": 45,
       "timing_comparison_cases": 45,
@@ -63237,26 +63237,36 @@
       ]
     },
     "current_ci": {
-      "attempt": 2,
-      "conclusion": "failure",
-      "headSha": "508bb2b7526ed329ca7df53217d4cda866fba8ab",
-      "status": "completed",
-      "url": "https://github.com/DarronTam/torch_zeus/actions/runs/42012609626",
-      "counts": {
-        "passed": 7992,
-        "failed": 73,
-        "skipped": 87,
-        "xfailed": 1
-      },
-      "failure_note": "73 个失败均在 Routed 编译阶段：2026-11-05 daily 包内编译器不支持 --enable-l2-stage-packing 与 --l2-stage-packing-preserve-prefix。本次独立测评使用支持这两个参数的 master 编译器 27e77de18，结果与 CI 分开记录。",
-      "daily_bundle": "2026-11-05-126cb34cb944e7527fba6ef98784c225"
+      "conclusion": null,
+      "headSha": "36a8375edefb3d76815f7eb12227cdbf4d512496",
+      "run_id": 42572402811,
+      "status": "queued",
+      "updatedAt": "2026-11-09T06:20:12Z",
+      "url": "https://github.com/DarronTam/torch_zeus/actions/runs/42572402811"
     },
     "source_equivalence": {
-      "measured_source": "508bb2b7526ed329ca7df53217d4cda866fba8ab",
-      "pr_head": "508bb2b7526ed329ca7df53217d4cda866fba8ab",
-      "identical_files": 853,
-      "proof_sha256": "2ebf1902c09d78f709c33d93c2801a51de029cbaae2db6a0437ac339d59bd7b4",
-      "executable_changes": false
+      "measured_source": "0d68686a8692a86736e3c5fb399cffe85144fe8a",
+      "pr_head": "36a8375edefb3d76815f7eb12227cdbf4d512496",
+      "executable_changes": true,
+      "reuse_type": "compact_router_sampled_equivalence",
+      "measured_router_layout": "ordinary",
+      "published_router_default": "compact",
+      "router_probes": 270,
+      "compact_numerical_cases": 45,
+      "router_regression_passed": 52,
+      "optional_skipped": [
+        "test_router_compact_sglang_parameter"
+      ],
+      "full_compact_matrix_rerun": false,
+      "consumer_sources_unchanged": true,
+      "probe_receipts_sha256": [
+        "efe822c68e6106f23f274a7cae85dc360e29e3377f7c54462386ba80f2d68a46",
+        "eaf388cb75dec68e4bc83febab35715732d7797eac037a6703c63577cbd41117",
+        "24587f82448158cfb3e6dc96c8bbb5d28990b722b25d1a28ec30bbd11c1904fb"
+      ],
+      "compact_qualification_sha256": "daa98faf8233b6906bb2704c04f4ae27587671f376a0dd5df7d5c62ce1e0ca8c",
+      "scope": "Full ordinary-layout measurements reused by maintainer instruction after compact Router sampling and numerical integration; not a full compact rerun",
+      "proof_sha256": "58b0b0feb2f27926ee6164565971a81832257dfe5377d61f0e7e49a510e1cfc6"
     }
   },
   "zeus_population": {
@@ -63268,255 +63278,249 @@
     "rows": [
       {
         "batch_size": 16,
-        "cycles": 1798473.1836734693,
-        "milliseconds": 4.496182959183673,
-        "tokens_s_card": 889.6435123552534,
-        "p10": 878.2381050812611,
-        "p90": 900.9254552028423,
+        "cycles": 1885050.5714285714,
+        "milliseconds": 4.712626428571428,
+        "tokens_s_card": 848.783594589429,
+        "p10": 837.6340125826399,
+        "p90": 860.8000740598271,
         "stages": {
           "router": 123900,
-          "routed": 1058797.857142857,
-          "shared": 396018,
+          "routed": 1122220.4081632653,
+          "shared": 434280,
           "reduce": 452747.7551020408
         }
       },
       {
         "batch_size": 24,
-        "cycles": 2315501.3469387754,
-        "milliseconds": 5.7887533673469385,
-        "tokens_s_card": 1036.4925950800834,
-        "p10": 1023.5326512667933,
-        "p90": 1047.8395149126534,
+        "cycles": 2546878.8163265307,
+        "milliseconds": 6.367197040816326,
+        "tokens_s_card": 942.3298763235307,
+        "p10": 929.454966592349,
+        "p90": 952.7649701981103,
         "stages": {
           "router": 133686,
-          "routed": 1290025.8775510204,
-          "shared": 538440,
+          "routed": 1482085.1020408163,
+          "shared": 599550,
           "reduce": 641406.2448979592
         }
       },
       {
         "batch_size": 32,
-        "cycles": 2816379.102040816,
-        "milliseconds": 7.0409477551020405,
-        "tokens_s_card": 1136.2106747920416,
-        "p10": 1125.4285430853124,
-        "p90": 1147.03114916229,
+        "cycles": 3009100.0816326533,
+        "milliseconds": 7.522750204081633,
+        "tokens_s_card": 1063.4408670992989,
+        "p10": 1050.1087561905713,
+        "p90": 1074.3456431790369,
         "stages": {
           "router": 133686,
-          "routed": 1572764.0408163266,
-          "shared": 667968,
+          "routed": 1707693.5714285714,
+          "shared": 753942,
           "reduce": 827374.7959183673
         }
       },
       {
         "batch_size": 40,
-        "cycles": 3819552.2040816327,
-        "milliseconds": 9.548880510204082,
-        "tokens_s_card": 1047.2431809481589,
-        "p10": 1037.6673565170167,
-        "p90": 1057.325148142703,
+        "cycles": 4097031.448979592,
+        "milliseconds": 10.24257862244898,
+        "tokens_s_card": 976.3166453106533,
+        "p10": 968.6135654586503,
+        "p90": 985.3024103116139,
         "stages": {
           "router": 135660,
-          "routed": 2262749.836734694,
-          "shared": 810894,
+          "routed": 2457180.5102040814,
+          "shared": 919716,
           "reduce": 990758.775510204
         }
       },
       {
         "batch_size": 48,
-        "cycles": 4344367.12244898,
-        "milliseconds": 10.86091780612245,
-        "tokens_s_card": 1104.8789995662644,
-        "p10": 1093.336105434948,
-        "p90": 1114.5953196478238,
+        "cycles": 4661247.346938776,
+        "milliseconds": 11.65311836734694,
+        "tokens_s_card": 1029.76727960003,
+        "p10": 1020.0415877103246,
+        "p90": 1039.797308243173,
         "stages": {
           "router": 135660,
-          "routed": 2501331.7346938774,
-          "shared": 953442,
+          "routed": 2711279.5918367347,
+          "shared": 1085112,
           "reduce": 1159878.5714285714
         }
       },
       {
         "batch_size": 56,
-        "cycles": 4965856.530612245,
-        "milliseconds": 12.414641326530614,
-        "tokens_s_card": 1127.700723023017,
-        "p10": 1115.1547868963112,
-        "p90": 1140.7577280755797,
+        "cycles": 5318239.816326531,
+        "milliseconds": 13.295599540816326,
+        "tokens_s_card": 1052.9799695772444,
+        "p10": 1039.4382566447812,
+        "p90": 1066.404353470006,
         "stages": {
           "router": 143094,
-          "routed": 2869242.448979592,
-          "shared": 1095948,
+          "routed": 3111714.3673469387,
+          "shared": 1250466,
           "reduce": 1331277.9387755103
         }
       },
       {
         "batch_size": 64,
-        "cycles": 5510127.8367346935,
-        "milliseconds": 13.775319591836734,
-        "tokens_s_card": 1161.4975531661432,
-        "p10": 1150.8503317779932,
-        "p90": 1174.1193873887,
+        "cycles": 5906088.428571428,
+        "milliseconds": 14.76522107142857,
+        "tokens_s_card": 1083.62752732235,
+        "p10": 1070.2312882511244,
+        "p90": 1096.4960150531672,
         "stages": {
           "router": 143094,
-          "routed": 3122119.6530612246,
-          "shared": 1237992,
+          "routed": 3387610.224489796,
+          "shared": 1415358,
           "reduce": 1511154.1224489796
         }
       },
       {
         "batch_size": 72,
-        "cycles": 6421500.918367347,
-        "milliseconds": 16.05375229591837,
-        "tokens_s_card": 1121.2331963398028,
-        "p10": 1112.828811368661,
-        "p90": 1130.9735500658965,
+        "cycles": 6877738.3877551025,
+        "milliseconds": 17.194345969387758,
+        "tokens_s_card": 1046.8557531671518,
+        "p10": 1035.9235855569314,
+        "p90": 1057.7147852043634,
         "stages": {
           "router": 154560,
-          "routed": 3808978.285714286,
-          "shared": 1381002,
+          "routed": 4121854.2040816327,
+          "shared": 1581216,
           "reduce": 1678924.693877551
         }
       },
       {
         "batch_size": 80,
-        "cycles": 7027291.775510204,
-        "milliseconds": 17.56822943877551,
-        "tokens_s_card": 1138.4186476900875,
-        "p10": 1128.4648667681283,
-        "p90": 1149.4517901324643,
+        "cycles": 7529334.775510204,
+        "milliseconds": 18.82333693877551,
+        "tokens_s_card": 1062.5108643091119,
+        "p10": 1051.026852359394,
+        "p90": 1075.3968718598874,
         "stages": {
           "router": 154560,
-          "routed": 4125964.551020408,
-          "shared": 1523550,
+          "routed": 4462534.469387755,
+          "shared": 1746612,
           "reduce": 1857972.612244898
         }
       },
       {
         "batch_size": 88,
-        "cycles": 7572251.918367347,
-        "milliseconds": 18.930629795918367,
-        "tokens_s_card": 1162.1377755083151,
-        "p10": 1150.6511889160047,
-        "p90": 1172.6088099175454,
+        "cycles": 8118510.653061224,
+        "milliseconds": 20.29627663265306,
+        "tokens_s_card": 1083.9426559946446,
+        "p10": 1070.4328275077967,
+        "p90": 1096.223862446186,
         "stages": {
           "router": 164766,
-          "routed": 4415756.755102041,
-          "shared": 1666056,
+          "routed": 4778307.857142857,
+          "shared": 1911966,
           "reduce": 2027287.612244898
         }
       },
       {
         "batch_size": 96,
-        "cycles": 8129927.326530612,
-        "milliseconds": 20.32481831632653,
-        "tokens_s_card": 1180.8223634019532,
-        "p10": 1169.1307931347376,
-        "p90": 1190.5058362693217,
+        "cycles": 8718836.959183674,
+        "milliseconds": 21.797092397959187,
+        "tokens_s_card": 1101.0642870077052,
+        "p10": 1087.5622497408588,
+        "p90": 1115.082695553685,
         "stages": {
           "router": 164766,
-          "routed": 4675864.8367346935,
-          "shared": 1808604,
+          "routed": 5061346.020408163,
+          "shared": 2077362,
           "reduce": 2209617.102040816
         }
       },
       {
         "batch_size": 104,
-        "cycles": 9020721.551020408,
-        "milliseconds": 22.55180387755102,
-        "tokens_s_card": 1152.9011222858962,
-        "p10": 1141.6716938711982,
-        "p90": 1161.4647364919274,
+        "cycles": 9670558.653061224,
+        "milliseconds": 24.17639663265306,
+        "tokens_s_card": 1075.4290804810817,
+        "p10": 1062.5359739203452,
+        "p90": 1088.236276527182,
         "stages": {
           "router": 164766,
-          "routed": 5347777.489795919,
-          "shared": 1951110,
+          "routed": 5780592.571428572,
+          "shared": 2242716,
           "reduce": 2375703.4285714286
         }
       },
       {
         "batch_size": 112,
-        "cycles": 9615723.93877551,
-        "milliseconds": 24.039309846938774,
-        "tokens_s_card": 1164.7588960864277,
-        "p10": 1152.8114819797079,
-        "p90": 1173.33300050724,
+        "cycles": 10317346.897959184,
+        "milliseconds": 25.79336724489796,
+        "tokens_s_card": 1085.550394958166,
+        "p10": 1071.818338492092,
+        "p90": 1098.8248555395949,
         "stages": {
           "router": 164094,
-          "routed": 5648975.673469388,
-          "shared": 2093658,
+          "routed": 6113958.87755102,
+          "shared": 2408112,
           "reduce": 2556243.0408163266
         }
       },
       {
         "batch_size": 120,
-        "cycles": 10157528.857142856,
-        "milliseconds": 25.39382214285714,
-        "tokens_s_card": 1181.3897030242256,
-        "p10": 1169.9054877236977,
-        "p90": 1191.4317739785322,
+        "cycles": 10903615.551020408,
+        "milliseconds": 27.25903887755102,
+        "tokens_s_card": 1100.5523758472011,
+        "p10": 1087.3065558097737,
+        "p90": 1113.4310217594048,
         "stages": {
           "router": 168630,
-          "routed": 5940408.673469388,
-          "shared": 2236206,
+          "routed": 6432093.591836735,
+          "shared": 2573508,
           "reduce": 2724379.8163265307
         }
       },
       {
         "batch_size": 128,
-        "cycles": 10705460.979591837,
-        "milliseconds": 26.76365244897959,
-        "tokens_s_card": 1195.6514553087484,
-        "p10": 1184.4254483417042,
-        "p90": 1204.7054810769464,
+        "cycles": 11493888.346938776,
+        "milliseconds": 28.73472086734694,
+        "tokens_s_card": 1113.6353176259179,
+        "p10": 1100.2491904435974,
+        "p90": 1128.0258758239388,
         "stages": {
           "router": 168630,
-          "routed": 6193402.102040816,
-          "shared": 2378292,
+          "routed": 6707570.591836735,
+          "shared": 2738442,
           "reduce": 2906873.9183673467
         }
       }
     ],
-    "source_commit": "508bb2b7526ed329ca7df53217d4cda866fba8ab",
-    "pr_head": "508bb2b7526ed329ca7df53217d4cda866fba8ab",
+    "source_commit": "0d68686a8692a86736e3c5fb399cffe85144fe8a",
+    "pr_head": "36a8375edefb3d76815f7eb12227cdbf4d512496",
     "measurement_mode": "timing_only",
     "numerical_validation": "separate_full_mode",
     "evidence_type": "qualified_owner_router_campaign",
-    "host_seconds": 10605.087811470032,
+    "host_seconds": 9805.725636377,
     "workers": 192,
     "host_seconds_scope": "retained_49_point_campaign_including_recovery",
     "selected_batch_size": 128,
     "selection_split": "train",
     "holdout": {
-      "validation": 1196.153118172265,
-      "test": 1194.7203892601704
+      "validation": 1114.2670403639752,
+      "test": 1112.7149370809689
     }
   },
   "provenance": {
     "previous_public_benchmark_sha256": "460f906bb8c5d60dedb4380b51eae38b908432c4f2d96ce6f8aae18beb993926",
-    "summary_sha256": "dd152e326385f44ff4730e3d4692ad2684ec51dd30fe411dc4660fbc1e01f43f",
-    "identity_sha256": "e100f082e37d3f8ab251234e9f9f386fcadcb986a498904d186e007f8098d996",
-    "completion_sha256": "b45766c6a768ff4101a44dee0eb08698c1304335b3910506947c466201adb4a3",
-    "qualification_sha256": "8c47a1e54f5d3d879e942dcc7454534292b5d706525a1450b120e41e782b506f",
-    "source_equivalence_sha256": "2ebf1902c09d78f709c33d93c2801a51de029cbaae2db6a0437ac339d59bd7b4",
+    "summary_sha256": "6ff08a894707bf732f02caedf0be63838ec2bf74fd573421ea57e33b15acb8f9",
+    "identity_sha256": "674372e6461ed463c2ddb777f6733a5e54e73fd3c39d9aa68fbca9cf524eb738",
+    "completion_sha256": "6ab14081b7720d9e8e4a8c75457267db1ee74fc3a72cd9996ac04c36192b952b",
+    "qualification_sha256": "47bc69cc80cd10ee3a3949afd14e2200ff4ff68e76744d41a27c17b7baf32914",
+    "source_equivalence_sha256": "58b0b0feb2f27926ee6164565971a81832257dfe5377d61f0e7e49a510e1cfc6",
     "matched_inputs_weights_cases": 493920,
     "h200_paired_csv_sha256": "76c0d7821a710058df2ca956e3797d69ad003576959f1f570b5814350e9c27ed",
-    "infrastructure_recovery": {
-      "attempts": 2,
-      "first_attempt_incomplete_shards": 48,
-      "reason": "Disk reserve guard and temporary JIT output write failures; unfinished shards rerun without changing kernels, toolchain, inputs, or thresholds",
-      "lifecycle_sha256": "d888020afbbbcd4b2c74f3bc96936ecf4c20eb285afa0abd279744ed81cf9648"
-    },
     "router_id_changes_vs_pr643": 0,
     "router_weight_changes_vs_pr643": 0,
     "paired_input_proof": "All retained activation, weight, Router ID and routing-weight identities matched the archived PR643 baseline"
   },
   "flow_revision": {
     "baseline_source": "1648b5c5aad4654f14d66bb9ccbd96b02af72ae7",
-    "source": "508bb2b7526ed329ca7df53217d4cda866fba8ab",
+    "source": "0d68686a8692a86736e3c5fb399cffe85144fe8a",
     "paired_cases": 493920,
     "fixed_router_ab": true,
-    "kind": "four_kernel_and_compiler",
+    "kind": "automatic_pe_and_compiler",
     "rows": [
       {
         "batch_size": 16,
@@ -63536,23 +63540,23 @@
         },
         "candidate": {
           "batch_size": 16,
-          "cycles": 1798473.1836734693,
-          "milliseconds": 4.496182959183673,
-          "tokens_s_card": 889.6435123552534,
-          "p10": 878.2381050812611,
-          "p90": 900.9254552028423,
+          "cycles": 1885050.5714285714,
+          "milliseconds": 4.712626428571428,
+          "tokens_s_card": 848.783594589429,
+          "p10": 837.6340125826399,
+          "p90": 860.8000740598271,
           "stages": {
             "router": 123900,
-            "routed": 1058797.857142857,
-            "shared": 396018,
+            "routed": 1122220.4081632653,
+            "shared": 434280,
             "reduce": 452747.7551020408
           }
         },
-        "throughput_increase_pct": 0.0,
+        "throughput_increase_pct": -4.592841649308655,
         "stage_cycles_change_pct": {
           "router": 0.0,
-          "routed": 0.0,
-          "shared": 0.0,
+          "routed": 5.990052831383008,
+          "shared": 9.661682044755548,
           "reduce": 0.0
         }
       },
@@ -63574,23 +63578,23 @@
         },
         "candidate": {
           "batch_size": 24,
-          "cycles": 2315501.3469387754,
-          "milliseconds": 5.7887533673469385,
-          "tokens_s_card": 1036.4925950800834,
-          "p10": 1023.5326512667933,
-          "p90": 1047.8395149126534,
+          "cycles": 2546878.8163265307,
+          "milliseconds": 6.367197040816326,
+          "tokens_s_card": 942.3298763235307,
+          "p10": 929.454966592349,
+          "p90": 952.7649701981103,
           "stages": {
             "router": 133686,
-            "routed": 1290025.8775510204,
-            "shared": 538440,
+            "routed": 1482085.1020408163,
+            "shared": 599550,
             "reduce": 641406.2448979592
           }
         },
-        "throughput_increase_pct": 0.0,
+        "throughput_increase_pct": -9.084745921342297,
         "stage_cycles_change_pct": {
           "router": 0.0,
-          "routed": 0.0,
-          "shared": 0.0,
+          "routed": 14.88801332066303,
+          "shared": 11.349453978159119,
           "reduce": 0.0
         }
       },
@@ -63612,23 +63616,23 @@
         },
         "candidate": {
           "batch_size": 32,
-          "cycles": 2816379.102040816,
-          "milliseconds": 7.0409477551020405,
-          "tokens_s_card": 1136.2106747920416,
-          "p10": 1125.4285430853124,
-          "p90": 1147.03114916229,
+          "cycles": 3009100.0816326533,
+          "milliseconds": 7.522750204081633,
+          "tokens_s_card": 1063.4408670992989,
+          "p10": 1050.1087561905713,
+          "p90": 1074.3456431790369,
           "stages": {
             "router": 133686,
-            "routed": 1572764.0408163266,
-            "shared": 667968,
+            "routed": 1707693.5714285714,
+            "shared": 753942,
             "reduce": 827374.7959183673
           }
         },
-        "throughput_increase_pct": 0.14448136098561548,
+        "throughput_increase_pct": -6.269377276156818,
         "stage_cycles_change_pct": {
           "router": 0.0,
-          "routed": 0.0,
-          "shared": -0.7364873299213537,
+          "routed": 8.57913374864616,
+          "shared": 12.039695418799145,
           "reduce": 0.0
         }
       },
@@ -63650,23 +63654,23 @@
         },
         "candidate": {
           "batch_size": 40,
-          "cycles": 3819552.2040816327,
-          "milliseconds": 9.548880510204082,
-          "tokens_s_card": 1047.2431809481589,
-          "p10": 1037.6673565170167,
-          "p90": 1057.325148142703,
+          "cycles": 4097031.448979592,
+          "milliseconds": 10.24257862244898,
+          "tokens_s_card": 976.3166453106533,
+          "p10": 968.6135654586503,
+          "p90": 985.3024103116139,
           "stages": {
             "router": 135660,
-            "routed": 2262749.836734694,
-            "shared": 810894,
+            "routed": 2457180.5102040814,
+            "shared": 919716,
             "reduce": 990758.775510204
           }
         },
-        "throughput_increase_pct": 9.446570555888133,
+        "throughput_increase_pct": 2.0340934654125675,
         "stage_cycles_change_pct": {
           "router": -40.625,
-          "routed": -4.733271097700731,
-          "shared": -3.844812988694657,
+          "routed": 3.452686518554926,
+          "shared": 9.059216096419153,
           "reduce": -12.024778450845952
         }
       },
@@ -63688,23 +63692,23 @@
         },
         "candidate": {
           "batch_size": 48,
-          "cycles": 4344367.12244898,
-          "milliseconds": 10.86091780612245,
-          "tokens_s_card": 1104.8789995662644,
-          "p10": 1093.336105434948,
-          "p90": 1114.5953196478238,
+          "cycles": 4661247.346938776,
+          "milliseconds": 11.65311836734694,
+          "tokens_s_card": 1029.76727960003,
+          "p10": 1020.0415877103246,
+          "p90": 1039.797308243173,
           "stages": {
             "router": 135660,
-            "routed": 2501331.7346938774,
-            "shared": 953442,
+            "routed": 2711279.5918367347,
+            "shared": 1085112,
             "reduce": 1159878.5714285714
           }
         },
-        "throughput_increase_pct": 15.475553943793475,
+        "throughput_increase_pct": 7.625311994967454,
         "stage_cycles_change_pct": {
           "router": -40.625,
-          "routed": -6.051883397694924,
-          "shared": -3.3794424345605423,
+          "routed": 1.8335983597558503,
+          "shared": 9.963822089806351,
           "reduce": -25.547209321019025
         }
       },
@@ -63726,23 +63730,23 @@
         },
         "candidate": {
           "batch_size": 56,
-          "cycles": 4965856.530612245,
-          "milliseconds": 12.414641326530614,
-          "tokens_s_card": 1127.700723023017,
-          "p10": 1115.1547868963112,
-          "p90": 1140.7577280755797,
+          "cycles": 5318239.816326531,
+          "milliseconds": 13.295599540816326,
+          "tokens_s_card": 1052.9799695772444,
+          "p10": 1039.4382566447812,
+          "p90": 1066.404353470006,
           "stages": {
             "router": 143094,
-            "routed": 2869242.448979592,
-            "shared": 1095948,
+            "routed": 3111714.3673469387,
+            "shared": 1250466,
             "reduce": 1331277.9387755103
           }
         },
-        "throughput_increase_pct": 19.729536762817503,
+        "throughput_increase_pct": 11.79633160121325,
         "stage_cycles_change_pct": {
           "router": -37.37132352941176,
-          "routed": -16.49954693364899,
-          "shared": -3.2731586165993254,
+          "routed": -9.443149504863868,
+          "shared": 10.364384475664457,
           "reduce": -19.917433683543095
         }
       },
@@ -63764,23 +63768,23 @@
         },
         "candidate": {
           "batch_size": 64,
-          "cycles": 5510127.8367346935,
-          "milliseconds": 13.775319591836734,
-          "tokens_s_card": 1161.4975531661432,
-          "p10": 1150.8503317779932,
-          "p90": 1174.1193873887,
+          "cycles": 5906088.428571428,
+          "milliseconds": 14.76522107142857,
+          "tokens_s_card": 1083.62752732235,
+          "p10": 1070.2312882511244,
+          "p90": 1096.4960150531672,
           "stages": {
             "router": 143094,
-            "routed": 3122119.6530612246,
-            "shared": 1237992,
+            "routed": 3387610.224489796,
+            "shared": 1415358,
             "reduce": 1511154.1224489796
           }
         },
-        "throughput_increase_pct": 8.273653001361536,
+        "throughput_increase_pct": 1.0146862179748695,
         "stage_cycles_change_pct": {
           "router": 0.0,
-          "routed": -8.388675154822256,
-          "shared": -1.279389108446649,
+          "routed": -0.5984730853316855,
+          "shared": 12.864223993569567,
           "reduce": -10.2179702426067
         }
       },
@@ -63802,23 +63806,23 @@
         },
         "candidate": {
           "batch_size": 72,
-          "cycles": 6421500.918367347,
-          "milliseconds": 16.05375229591837,
-          "tokens_s_card": 1121.2331963398028,
-          "p10": 1112.828811368661,
-          "p90": 1130.9735500658965,
+          "cycles": 6877738.3877551025,
+          "milliseconds": 17.194345969387758,
+          "tokens_s_card": 1046.8557531671518,
+          "p10": 1035.9235855569314,
+          "p90": 1057.7147852043634,
           "stages": {
             "router": 154560,
-            "routed": 3808978.285714286,
-            "shared": 1381002,
+            "routed": 4121854.2040816327,
+            "shared": 1581216,
             "reduce": 1678924.693877551
           }
         },
-        "throughput_increase_pct": 13.069467880935504,
+        "throughput_increase_pct": 5.568960449181337,
         "stage_cycles_change_pct": {
           "router": -53.32910589727331,
-          "routed": -7.14624328416964,
-          "shared": -2.9801422206485517,
+          "routed": 0.4809213324634021,
+          "shared": 11.085538933640194,
           "reduce": -17.175812464444064
         }
       },
@@ -63840,23 +63844,23 @@
         },
         "candidate": {
           "batch_size": 80,
-          "cycles": 7027291.775510204,
-          "milliseconds": 17.56822943877551,
-          "tokens_s_card": 1138.4186476900875,
-          "p10": 1128.4648667681283,
-          "p90": 1149.4517901324643,
+          "cycles": 7529334.775510204,
+          "milliseconds": 18.82333693877551,
+          "tokens_s_card": 1062.5108643091119,
+          "p10": 1051.026852359394,
+          "p90": 1075.3968718598874,
           "stages": {
             "router": 154560,
-            "routed": 4125964.551020408,
-            "shared": 1523550,
+            "routed": 4462534.469387755,
+            "shared": 1746612,
             "reduce": 1857972.612244898
           }
         },
-        "throughput_increase_pct": 18.453137244670902,
+        "throughput_increase_pct": 10.554887245859202,
         "stage_cycles_change_pct": {
           "router": -53.32910589727331,
-          "routed": -7.493516874415295,
-          "shared": -8.606485097377236,
+          "routed": 0.05257303717356443,
+          "shared": 4.774382101735908,
           "reduce": -26.44534221485403
         }
       },
@@ -63878,23 +63882,23 @@
         },
         "candidate": {
           "batch_size": 88,
-          "cycles": 7572251.918367347,
-          "milliseconds": 18.930629795918367,
-          "tokens_s_card": 1162.1377755083151,
-          "p10": 1150.6511889160047,
-          "p90": 1172.6088099175454,
+          "cycles": 8118510.653061224,
+          "milliseconds": 20.29627663265306,
+          "tokens_s_card": 1083.9426559946446,
+          "p10": 1070.4328275077967,
+          "p90": 1096.223862446186,
           "stages": {
             "router": 164766,
-            "routed": 4415756.755102041,
-            "shared": 1666056,
+            "routed": 4778307.857142857,
+            "shared": 1911966,
             "reduce": 2027287.612244898
           }
         },
-        "throughput_increase_pct": 18.33879417705586,
+        "throughput_increase_pct": 10.376299239886233,
         "stage_cycles_change_pct": {
           "router": -52.234262754170224,
-          "routed": -7.782749926215605,
-          "shared": -9.126729588564098,
+          "routed": -0.21134880617101892,
+          "shared": 4.2861724548703295,
           "reduce": -25.368325679017843
         }
       },
@@ -63916,23 +63920,23 @@
         },
         "candidate": {
           "batch_size": 96,
-          "cycles": 8129927.326530612,
-          "milliseconds": 20.32481831632653,
-          "tokens_s_card": 1180.8223634019532,
-          "p10": 1169.1307931347376,
-          "p90": 1190.5058362693217,
+          "cycles": 8718836.959183674,
+          "milliseconds": 21.797092397959187,
+          "tokens_s_card": 1101.0642870077052,
+          "p10": 1087.5622497408588,
+          "p90": 1115.082695553685,
           "stages": {
             "router": 164766,
-            "routed": 4675864.8367346935,
-            "shared": 1808604,
+            "routed": 5061346.020408163,
+            "shared": 2077362,
             "reduce": 2209617.102040816
           }
         },
-        "throughput_increase_pct": 18.337637122087003,
+        "throughput_increase_pct": 10.344578560165619,
         "stage_cycles_change_pct": {
           "router": -52.234262754170224,
-          "routed": -7.171708189530301,
-          "shared": -8.39431586113002,
+          "routed": 0.4811134926453686,
+          "shared": 5.218260721579315,
           "reduce": -26.69337104475161
         }
       },
@@ -63954,23 +63958,23 @@
         },
         "candidate": {
           "batch_size": 104,
-          "cycles": 9020721.551020408,
-          "milliseconds": 22.55180387755102,
-          "tokens_s_card": 1152.9011222858962,
-          "p10": 1141.6716938711982,
-          "p90": 1161.4647364919274,
+          "cycles": 9670558.653061224,
+          "milliseconds": 24.17639663265306,
+          "tokens_s_card": 1075.4290804810817,
+          "p10": 1062.5359739203452,
+          "p90": 1088.236276527182,
           "stages": {
             "router": 164766,
-            "routed": 5347777.489795919,
-            "shared": 1951110,
+            "routed": 5780592.571428572,
+            "shared": 2242716,
             "reduce": 2375703.4285714286
           }
         },
-        "throughput_increase_pct": 18.276421600158145,
+        "throughput_increase_pct": 10.328544976911136,
         "stage_cycles_change_pct": {
           "router": -62.02323330106486,
-          "routed": -6.747410150941768,
-          "shared": -8.976016929226427,
+          "routed": 0.7998610967848707,
+          "shared": 4.6281056509130725,
           "reduce": -25.86017320164259
         }
       },
@@ -63992,23 +63996,23 @@
         },
         "candidate": {
           "batch_size": 112,
-          "cycles": 9615723.93877551,
-          "milliseconds": 24.039309846938774,
-          "tokens_s_card": 1164.7588960864277,
-          "p10": 1152.8114819797079,
-          "p90": 1173.33300050724,
+          "cycles": 10317346.897959184,
+          "milliseconds": 25.79336724489796,
+          "tokens_s_card": 1085.550394958166,
+          "p10": 1071.818338492092,
+          "p90": 1098.8248555395949,
           "stages": {
             "router": 164094,
-            "routed": 5648975.673469388,
-            "shared": 2093658,
+            "routed": 6113958.87755102,
+            "shared": 2408112,
             "reduce": 2556243.0408163266
           }
         },
-        "throughput_increase_pct": 16.04304818141693,
+        "throughput_increase_pct": 8.151633105139489,
         "stage_cycles_change_pct": {
           "router": -62.17812197483059,
-          "routed": -7.198149669291931,
-          "shared": -2.545404781920202,
+          "routed": 0.4406337501762003,
+          "shared": 12.091650212117067,
           "reduce": -23.74129499242359
         }
       },
@@ -64030,23 +64034,23 @@
         },
         "candidate": {
           "batch_size": 120,
-          "cycles": 10157528.857142856,
-          "milliseconds": 25.39382214285714,
-          "tokens_s_card": 1181.3897030242256,
-          "p10": 1169.9054877236977,
-          "p90": 1191.4317739785322,
+          "cycles": 10903615.551020408,
+          "milliseconds": 27.25903887755102,
+          "tokens_s_card": 1100.5523758472011,
+          "p10": 1087.3065558097737,
+          "p90": 1113.4310217594048,
           "stages": {
             "router": 168630,
-            "routed": 5940408.673469388,
-            "shared": 2236206,
+            "routed": 6432093.591836735,
+            "shared": 2573508,
             "reduce": 2724379.8163265307
           }
         },
-        "throughput_increase_pct": 15.700554429804136,
+        "throughput_increase_pct": 7.783671838849804,
         "stage_cycles_change_pct": {
           "router": -61.132623426911906,
-          "routed": -7.391523828916391,
-          "shared": -2.585260538641687,
+          "routed": 0.2736375344196018,
+          "shared": 12.108460187353632,
           "reduce": -22.864633222356765
         }
       },
@@ -64068,23 +64072,23 @@
         },
         "candidate": {
           "batch_size": 128,
-          "cycles": 10705460.979591837,
-          "milliseconds": 26.76365244897959,
-          "tokens_s_card": 1195.6514553087484,
-          "p10": 1184.4254483417042,
-          "p90": 1204.7054810769464,
+          "cycles": 11493888.346938776,
+          "milliseconds": 28.73472086734694,
+          "tokens_s_card": 1113.6353176259179,
+          "p10": 1100.2491904435974,
+          "p90": 1128.0258758239388,
           "stages": {
             "router": 168630,
-            "routed": 6193402.102040816,
-            "shared": 2378292,
+            "routed": 6707570.591836735,
+            "shared": 2738442,
             "reduce": 2906873.9183673467
           }
         },
-        "throughput_increase_pct": 10.03851614255662,
+        "throughput_increase_pct": 2.490384912262722,
         "stage_cycles_change_pct": {
           "router": 0.0,
-          "routed": -7.022045720552173,
-          "shared": -1.5388360487558872,
+          "routed": 0.6968676567053356,
+          "shared": 13.371355045121813,
           "reduce": -16.923695114450197
         }
       }
@@ -64092,5 +64096,100 @@
   },
   "publication": {
     "pull_request_url": "https://github.com/DarronTam/torch_zeus/pull/674"
+  },
+  "previous_revision": {
+    "source": "508bb2b7526ed329ca7df53217d4cda866fba8ab",
+    "rows": [
+      {
+        "batch_size": 16,
+        "baseline_tokens_s_card": 889.6435123552534,
+        "candidate_tokens_s_card": 848.783594589429,
+        "throughput_change_pct": -4.592841649308655
+      },
+      {
+        "batch_size": 24,
+        "baseline_tokens_s_card": 1036.4925950800834,
+        "candidate_tokens_s_card": 942.3298763235307,
+        "throughput_change_pct": -9.084745921342297
+      },
+      {
+        "batch_size": 32,
+        "baseline_tokens_s_card": 1136.2106747920416,
+        "candidate_tokens_s_card": 1063.4408670992989,
+        "throughput_change_pct": -6.4046051764178
+      },
+      {
+        "batch_size": 40,
+        "baseline_tokens_s_card": 1047.2431809481589,
+        "candidate_tokens_s_card": 976.3166453106533,
+        "throughput_change_pct": -6.772690138052728
+      },
+      {
+        "batch_size": 48,
+        "baseline_tokens_s_card": 1104.8789995662644,
+        "candidate_tokens_s_card": 1029.76727960003,
+        "throughput_change_pct": -6.798185140247992
+      },
+      {
+        "batch_size": 56,
+        "baseline_tokens_s_card": 1127.700723023017,
+        "candidate_tokens_s_card": 1052.9799695772444,
+        "throughput_change_pct": -6.625938240552798
+      },
+      {
+        "batch_size": 64,
+        "baseline_tokens_s_card": 1161.4975531661432,
+        "candidate_tokens_s_card": 1083.62752732235,
+        "throughput_change_pct": -6.704278078892734
+      },
+      {
+        "batch_size": 72,
+        "baseline_tokens_s_card": 1121.2331963398028,
+        "candidate_tokens_s_card": 1046.8557531671518,
+        "throughput_change_pct": -6.63353916165269
+      },
+      {
+        "batch_size": 80,
+        "baseline_tokens_s_card": 1138.4186476900875,
+        "candidate_tokens_s_card": 1062.5108643091119,
+        "throughput_change_pct": -6.667826773129248
+      },
+      {
+        "batch_size": 88,
+        "baseline_tokens_s_card": 1162.1377755083151,
+        "candidate_tokens_s_card": 1083.9426559946446,
+        "throughput_change_pct": -6.72855845164041
+      },
+      {
+        "batch_size": 96,
+        "baseline_tokens_s_card": 1180.8223634019532,
+        "candidate_tokens_s_card": 1101.0642870077052,
+        "throughput_change_pct": -6.754451716553267
+      },
+      {
+        "batch_size": 104,
+        "baseline_tokens_s_card": 1152.9011222858962,
+        "candidate_tokens_s_card": 1075.4290804810817,
+        "throughput_change_pct": -6.719747279906196
+      },
+      {
+        "batch_size": 112,
+        "baseline_tokens_s_card": 1164.7588960864277,
+        "candidate_tokens_s_card": 1085.550394958166,
+        "throughput_change_pct": -6.800420361192449
+      },
+      {
+        "batch_size": 120,
+        "baseline_tokens_s_card": 1181.3897030242256,
+        "candidate_tokens_s_card": 1100.5523758472011,
+        "throughput_change_pct": -6.842562362791038
+      },
+      {
+        "batch_size": 128,
+        "baseline_tokens_s_card": 1195.6514553087484,
+        "candidate_tokens_s_card": 1113.6353176259179,
+        "throughput_change_pct": -6.859535637971669
+      }
+    ]
   }
 }

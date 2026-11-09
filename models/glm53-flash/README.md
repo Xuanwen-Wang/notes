@@ -111,6 +111,16 @@ PYTHONDONTWRITEBYTECODE=1 python3 models/glm53-flash/scripts/import_flow.py \
 当前临界路径为 `sum_layer(max_owner(Router) + max_rank(Shared + Routed + Reduce))`；
 阶段表仍逐阶段独立取最大 rank，用于诊断，不可相加代替完整 MoE 时间。
 
+2026-11-09 自动 PE 配置复测使用 `versions/20261109-0d68686a/`。四阶段曲线、
+kernel 表及 CSV 使用同一份全量汇总，H200 原始记录保持不变。`import_flow.py`
+新增 `--router-reuse`，校验 compact Router 的270项配对抽样、45项数值集成、
+consumer源码与工具链hash；`--equivalence` 对应最终源码身份回执。这种复用
+明确记录为 `compact_router_sampled_equivalence`，不是源码完全等价或compact全量复测。
+`--previous-baseline` 可另传上一版公开数据：固定 PR643 对照保存在 `flow-comparison.csv`，
+上一版 PR674 对照保存在 `previous-revision-comparison.csv`，两者不混用。
+本轮可选 SGLang parameter-wrapper 回归未覆盖；CI状态仍单独按发布时快照展示。
+五图拼接对比按维护者要求单独交付，图片不纳入 notes 页面或版本目录。
+
 四阶段集成版复用 `import_flow.py --kernel-revision --pr-url PR_URL`。旧数据固定读取
 `versions/20261104-1648b5c5/data`；按维护者要求，不在新编译器上重测旧 kernel。
 导入器额外要求全矩阵 Router IDs 和路由权重 hashes 与 PR #643 一致，并核验新的回归节点集合。

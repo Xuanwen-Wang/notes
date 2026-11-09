@@ -34,10 +34,21 @@ def export_flow(args):
     regression_key = 'regression/complete.json' if args.kernel_revision else 'regression-v7/complete.json'
     assert q['evidence_sha256'][regression_key] == digest(args.regression)
     assert all(q['files'][path] == value for path, value in source['files'].items())
-    assert source['torch_zeus'] == q['source_commit'] == equivalent['old_head']
+    assert source['torch_zeus'] == q['source_commit']
     assert source['sglang'] == q['sglang_commit']
-    assert ci['headSha'] == equivalent['clean_head']
-    assert all(path.endswith('.md') for path in equivalent['documentation_edits'])
+    if args.router_reuse:
+        from router_reuse import audit_reuse
+        assert args.kernel_revision
+        equivalence = audit_reuse(args.router_reuse, equivalent, q, toolchain)
+        equivalence['proof_sha256'] = digest(args.equivalence)
+    else:
+        assert source['torch_zeus'] == equivalent['old_head']
+        assert all(path.endswith('.md') for path in equivalent['documentation_edits'])
+        equivalence = dict(measured_source=equivalent['old_head'], pr_head=equivalent['clean_head'],
+            identical_files=len(equivalent['identical_files']), proof_sha256=digest(args.equivalence),
+            executable_changes=False)
+    pr_head = equivalence['pr_head']
+    assert ci['headSha'] == pr_head
     compiler = identity.get('compiler') or identity['toolchain']['compiler']
     assert compiler == toolchain['triton_shared']
     for suffix, value in toolchain['files'].items():
@@ -95,13 +106,11 @@ def export_flow(args):
     current['numerical_cases'] = numerical
     d['qualification']['current_full_mode'] = current
     d['qualification']['current_ci'] = ci
-    d['qualification']['source_equivalence'] = dict(measured_source=equivalent['old_head'],
-        pr_head=equivalent['clean_head'], identical_files=len(equivalent['identical_files']),
-        proof_sha256=digest(args.equivalence), executable_changes=False)
+    d['qualification']['source_equivalence'] = equivalence
     d['protocol'].update(aggregation=summary['aggregation'], flow=summary['flow'],
         calibrated_sigmoid=True, stage_aggregation=summary['stage_aggregation'])
     d['zeus_population'] = dict(complete=True, cases=cases, measured_cases=cases, excluded_cases=0,
-        pairs=49, rows=summary['rows'], source_commit=q['source_commit'], pr_head=equivalent['clean_head'],
+        pairs=49, rows=summary['rows'], source_commit=q['source_commit'], pr_head=pr_head,
         measurement_mode='timing_only', numerical_validation='separate_full_mode',
         evidence_type='qualified_owner_router_campaign', host_seconds=summary.get('host_seconds', complete['seconds']),
         workers=complete['workers'], host_seconds_scope='retained_49_point_campaign_including_recovery', **selection(points))
@@ -110,7 +119,7 @@ def export_flow(args):
     d['zeus'] = dict(complete=True, cases=10080, total=10080, rows=paired,
         source_commit=q['source_commit'], measurement_mode='timing_only',
         numerical_validation='separate_full_mode', matched_input_hashes=True)
-    d['toolchain'] = dict(torch_zeus_measured=q['source_commit'], torch_zeus_pr_head=equivalent['clean_head'],
+    d['toolchain'] = dict(torch_zeus_measured=q['source_commit'], torch_zeus_pr_head=pr_head,
         sglang=q['sglang_commit'], triton_shared=toolchain['triton_shared'], triton=toolchain['triton'],
         cyclesim=toolchain['simulator'], cyclesim_binary_sha256=toolchain['simulator_sha256'])
     d['updated'] = datetime.fromtimestamp(complete['updated_at'], ZoneInfo('Asia/Shanghai')).date().isoformat()
@@ -135,17 +144,30 @@ def export_flow(args):
     d.pop('revision', None)
     d['flow_revision'] = dict(baseline_source=baseline['zeus_population']['source_commit'],
         source=q['source_commit'], paired_cases=cases, fixed_router_ab=bool(args.kernel_revision),
-        kind='four_kernel_and_compiler' if args.kernel_revision else 'owner_router_flow', rows=[])
+        kind='automatic_pe_and_compiler' if args.router_reuse else
+             'four_kernel_and_compiler' if args.kernel_revision else 'owner_router_flow', rows=[])
     for old, new in zip(baseline['zeus_population']['rows'], summary['rows']):
         assert old['batch_size'] == new['batch_size']
         d['flow_revision']['rows'].append(dict(batch_size=new['batch_size'], baseline=old, candidate=new,
             throughput_increase_pct=(new['tokens_s_card'] / old['tokens_s_card'] - 1) * 100,
             stage_cycles_change_pct={s: (new['stages'][s] / old['stages'][s] - 1) * 100 for s in STAGES}))
+    if args.previous_baseline:
+        previous_data = read(args.previous_baseline / 'benchmark.json')
+        assert previous_data['h200'] == d['h200']
+        assert [r['batch_size'] for r in previous_data['zeus_population']['rows']] == BATCHES
+        d['previous_revision'] = dict(source=previous_data['zeus_population']['source_commit'], rows=[])
+        for old, new in zip(previous_data['zeus_population']['rows'], summary['rows']):
+            assert old['batch_size'] == new['batch_size']
+            d['previous_revision']['rows'].append(dict(batch_size=new['batch_size'],
+                baseline_tokens_s_card=old['tokens_s_card'], candidate_tokens_s_card=new['tokens_s_card'],
+                throughput_change_pct=(new['tokens_s_card'] / old['tokens_s_card'] - 1) * 100))
     encoded = json.dumps(d, ensure_ascii=False, indent=2) + '\n'
     assert not re.search(r'/data/wangxw|/mnt/disk|120\.209\.|172\.16\.|192\.168\.', encoded)
     args.out.mkdir(parents=True, exist_ok=True)
     (args.out / 'benchmark.json').write_text(encoded)
     (args.out / 'flow-revision.json').write_text(json.dumps(d['flow_revision'], indent=2) + '\n')
+    if args.previous_baseline:
+        write_csv(args.out / 'previous-revision-comparison.csv', d['previous_revision']['rows'])
     shutil.copy2(args.baseline / 'h200-49-paired.csv', args.out / 'h200-49-paired.csv')
     write_csv(args.out / 'zeus-49-paired.csv', [{k: v for k, v in r.items() if k != 'stages'} for r in points])
     write_csv(args.out / 'zeus-49-stages.csv', [dict(batch_size=r['batch_size'], group=r['group'], step=r['step'],
@@ -171,4 +193,8 @@ if __name__ == '__main__':
     parser.add_argument('--kernel-revision', action='store_true',
         help='Compare the four-kernel revision against archived PR643 with unchanged Router IDs')
     parser.add_argument('--pr-url', default='https://github.com/DarronTam/torch_zeus/pull/643')
+    parser.add_argument('--router-reuse', type=Path,
+        help='Audited compact Router evidence; explicitly retain the ordinary-layout measured identity')
+    parser.add_argument('--previous-baseline', type=Path,
+        help='Optional previous public revision, separate from the fixed PR643 comparison')
     export_flow(parser.parse_args())
