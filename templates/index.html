@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="编译、硬件与工具的技术笔记。TritonShared 编译与算子实践、Zeus518 硬件架构图解，以及日常工具手册。">
+<meta name="description" content="模型部署、编译、硬件与工具的技术笔记。模型数据流与性能方案、TritonShared 编译与算子实践、Zeus518 硬件架构图解，以及日常工具手册。">
 <meta name="theme-color" content="#f7f8f5">
 <title>技术笔记 · Xuanwen Wang</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23243832'/%3E%3Cpath d='M12 10h16v21H12zM16 16h8M16 21h8' stroke='%23f7f8f5' stroke-width='2' fill='none'/%3E%3C/svg%3E">
@@ -31,15 +31,16 @@ main{min-width:0}.eyebrow{font:11px var(--mono);letter-spacing:1.6px;color:var(-
   <p class="rail-label">THE NOTEBOOK</p>
   <nav class="nav-items" aria-label="按分类筛选">
     <button class="nav-item" data-filter="all" aria-pressed="true"><span class="nav-icon" aria-hidden="true">▦</span>全部笔记<span class="nav-count">{{TOTAL}}</span></button>
+    <button class="nav-item" data-filter="deployment" aria-pressed="false"><span class="nav-icon" aria-hidden="true">◇</span>模型部署<span class="nav-count">{{COUNT_DEPLOYMENT}}</span></button>
     <button class="nav-item" data-filter="compiler" aria-pressed="false"><span class="nav-icon" aria-hidden="true">⌘</span>TritonShared<span class="nav-count">{{COUNT_COMPILER}}</span></button>
     <button class="nav-item" data-filter="hardware" aria-pressed="false"><span class="nav-icon" aria-hidden="true">⊞</span>Zeus518硬件<span class="nav-count">{{COUNT_HARDWARE}}</span></button>
     <button class="nav-item" data-filter="tools" aria-pressed="false"><span class="nav-icon" aria-hidden="true">↗</span>工具<span class="nav-count">{{COUNT_TOOLS}}</span></button>
   </nav>
-  <div class="rail-note"><strong>沿着数据流，理解细节。</strong><p>编译管线、硬件架构，<br>以及解决实际问题的工具。<br>图解、源码与实践记录。</p></div>
-  <div class="rail-bottom">{{TOTAL}} NOTES / 3 TOPICS<br>持续整理，随时查阅。</div>
+  <div class="rail-note"><strong>沿着数据流，理解细节。</strong><p>模型部署、编译与硬件，<br>以及解决实际问题的工具。<br>图解、源码与实践记录。</p></div>
+  <div class="rail-bottom">{{TOTAL}} NOTES / {{TOPICS}} TOPICS<br>持续整理，随时查阅。</div>
 </div></aside>
 <main id="main">
-  <div class="intro"><div><div class="eyebrow">ENGINEERING NOTES</div><h1>技术笔记</h1><p>编译、硬件与工具。把实现细节，整理成可读的笔记。</p></div><div class="intro-number"><b>{{TOTAL}}</b><span>篇笔记 · 3 个主题</span></div></div>
+  <div class="intro"><div><div class="eyebrow">ENGINEERING NOTES</div><h1>技术笔记</h1><p>模型、编译、硬件与工具。把实现细节，整理成可读的笔记。</p></div><div class="intro-number"><b>{{TOTAL}}</b><span>篇笔记 · {{TOPICS}} 个主题</span></div></div>
   <a class="featured" href="./ldg-bandwidth-explained-2026-10-15.html">
     <div class="feature-copy"><div class="feature-label"><span>深入阅读</span><span>硬件架构图解</span></div><h2><small>Zeus518硬件</small>LDG 带宽：<br>从 RTL 到 2.14 TB/s</h2><p>沿着一次权重读取，理解并行 MC、credit 与稳态供数带宽。</p><span class="read-link">阅读图解<span aria-hidden="true">↗</span></span></div>
     <div class="feature-visual" aria-hidden="true"><div class="visual-label">WEIGHT DATA PATH</div><div class="bandwidth">2.14<span>TB/s</span></div><div class="visual-caption">设计稳态估算 · 每核 · 400 MHz</div><div class="visual-flow"><b>DRAM</b><span>→</span><b>WL1</b><span>→</span><b>PE</b></div><div class="visual-foot">256 MC · 15 credits · 23 cycles</div></div>
@@ -56,7 +57,7 @@ main{min-width:0}.eyebrow{font:11px var(--mono);letter-spacing:1.6px;color:var(-
   const search = document.querySelector('#search');
   const buttons = [...document.querySelectorAll('[data-filter]')];
   const sections = [...document.querySelectorAll('[data-category]')];
-  const labels = {all: '全部笔记', compiler: 'TritonShared', hardware: 'Zeus518硬件', tools: '工具'};
+  const labels = {all: '全部笔记', deployment: '模型部署', compiler: 'TritonShared', hardware: 'Zeus518硬件', tools: '工具'};
   let selected = 'all';
   function filter() {
     // Search terms are plain text; source links remain usable without JavaScript.

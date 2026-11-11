@@ -1,6 +1,15 @@
 {
-  "updated": "2026-11-09",
+  "updated": "2026-11-11",
   "articles": [
+    {
+      "file": "models/glm53-flash/routed-global-grouping.html",
+      "category": "deployment",
+      "model": "GLM5.3Flash",
+      "title": "GLM5.3Flash - 大 batch MoE 合组：NVIDIA GPU 调研与 Router/Routed ABI 设计",
+      "description": "GPU 如何用有限 shared memory 处理全局专家分组；拆解 Zeus 的 BS40 跳涨，设计 Router 索引 sidecar、全 batch M4 合组与双槽流水，附容量和离线组数交互图。",
+      "date": "2026-11-11",
+      "tags": ["GLM5.3Flash", "MoE", "NVIDIA", "Router", "Routed", "ABI", "SRAM", "方案设计"]
+    },
     {
       "file": "2026-11-05-glm53flash-dsa-kvcache.html",
       "category": "compiler",

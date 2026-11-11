@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="GLM5.3Flash 大 batch MoE 方案设计：调研 NVIDIA GPU 的全局专家索引、分块执行和流水机制，提出 Zeus Router/transport/Routed ABI 重构，分析 BS40 跳涨、M4 合组、SRAM 预算与验证门槛。">
+<meta name="theme-color" content="#f5f4ef">
+<title>GLM5.3Flash - 大 batch MoE 合组：NVIDIA GPU 调研与 Router/Routed ABI 设计</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%231d504e'/%3E%3Cpath d='M9 12h9v7H9zm13 0h9v7h-9zM9 23h9v7H9zm13 0h9v7h-9z' fill='%23ebd9a5'/%3E%3C/svg%3E">
+<style>
+:root{color-scheme:light;--bg:#f5f4ef;--paper:#fffefa;--ink:#223b40;--muted:#5e7071;--line:#d9dfd8;--teal:#146c65;--light:#e3eeea;--orange:#bd552f;--orange-bg:#fbede3;--navy:#233d4d;--mono:ui-monospace,SFMono-Regular,Consolas,monospace;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.85 var(--sans);-webkit-font-smoothing:antialiased}a{color:var(--teal);text-underline-offset:4px}a:hover{color:var(--orange)}button,input,select{font:inherit}button,select{cursor:pointer}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--orange);outline-offset:4px}[hidden]{display:none!important}.skip{position:fixed;top:-80px;left:20px;z-index:10;background:var(--ink);color:white;padding:8px 16px}.skip:focus{top:10px}.masthead{height:64px;display:flex;align-items:center;justify-content:space-between;max-width:1392px;margin:auto;padding:0 36px;border-bottom:1px solid var(--line);gap:16px}.masthead a{text-decoration:none;font-weight:650}.masthead .edition{font:11px var(--mono);color:var(--muted);letter-spacing:.5px}.shell{max-width:1392px;margin:auto;display:grid;grid-template-columns:196px minmax(0,1fr);gap:48px;padding:42px 36px 0}.rail{align-self:start;position:sticky;top:30px}.rail-label,.eyebrow,.kicker{font:11px var(--mono);letter-spacing:1.7px;text-transform:uppercase}.rail-label{color:var(--muted);margin:0 0 20px}.rail nav{display:grid;gap:5px}.rail nav a{padding:8px 10px;text-decoration:none;color:var(--muted);font-size:12px;border-left:2px solid transparent;line-height:1.65}.rail nav a:hover{color:var(--teal);border-color:var(--teal);background:var(--light)}.rail nav b{font:10px var(--mono);margin-right:10px;color:var(--teal)}.rail-note{font-size:11px;color:var(--muted);border-top:1px solid var(--line);padding-top:19px;margin:24px 10px 0}.rail-note strong{display:block;color:var(--ink);font-size:12px}main{min-width:0}.eyebrow{color:var(--orange);display:flex;gap:12px;align-items:center}.eyebrow:before{content:"";width:26px;height:2px;background:var(--orange)}h1{font-size:35px;line-height:1.5;letter-spacing:-1px;font-weight:660;margin:18px 0}.model-name{display:block;font:600 clamp(30px,4.3vw,57px)/1.15 var(--sans);letter-spacing:-2px;color:var(--teal);margin-bottom:13px}.title-separator{font-weight:400;color:var(--muted)}.lead{font-size:17px;color:var(--muted);max-width:800px;margin:20px 0}.meta{display:flex;gap:9px;flex-wrap:wrap;margin:22px 0 27px;font-size:11px}.tag{border:1px solid var(--line);padding:3px 10px;border-radius:4px;background:var(--paper)}.tag.proposed{background:var(--orange-bg);color:#994627;border-color:#e7cbb9}.tag.verified{background:var(--light);color:var(--teal);border-color:#bdd7ce}.hero-diagram{background:var(--navy);color:#f7f7ef;border-radius:12px;padding:25px 28px;position:relative;overflow:hidden}.hero-diagram:before{content:"";position:absolute;inset:0;background-image:linear-gradient(#ffffff06 1px,transparent 1px),linear-gradient(90deg,#ffffff06 1px,transparent 1px);background-size:24px 24px;pointer-events:none}.hero-diagram>*{position:relative}.diagram-top{display:flex;justify-content:space-between;gap:20px;font-size:12px;color:#c0d7d4}.diagram-top span:last-child{font:10px var(--mono);letter-spacing:1px}.architecture{display:grid;grid-template-columns:1.35fr 32px 1fr 32px .9fr;align-items:center;margin:23px 0 18px;gap:8px}.architecture .box{padding:18px;border:1px solid #7a959f;border-radius:7px;min-height:124px;background:#294857}.architecture .box strong{font-size:16px;display:block;margin-bottom:8px}.architecture .box small{font-size:11px;color:#c6dad5;line-height:1.8;display:block}.architecture .box.accent{border-color:#b6c88c;background:#37524e}.flow-arrow{text-align:center;color:#b9c9a1;font-size:24px}.tokens{display:flex;gap:4px;margin:12px 0 5px}.tokens i{display:block;width:13px;height:13px;border-radius:2px;background:#b7cfa9}.tokens i:nth-child(3n){background:#df9c76}.tokens i:nth-child(4n){background:#a1c5d9}.diagram-caption{font-size:12px;color:#d0ded9;border-top:1px solid #526974;padding-top:14px}.section{padding-top:52px;margin-top:14px;border-top:1px solid var(--line)}.hero+.section{margin-top:42px}.section-head{display:flex;gap:18px;align-items:baseline;margin-bottom:16px}.section-no{font:13px var(--mono);color:var(--orange);flex-shrink:0}.section h2{font-size:26px;font-weight:650;letter-spacing:-.6px;line-height:1.5;margin:0}.section h3{font-size:18px;font-weight:650;margin:27px 0 11px}p{margin:12px 0}strong{font-weight:650}.notice{padding:17px 21px;background:var(--light);border-left:3px solid var(--teal);margin:23px 0;font-size:14px}.notice.warm{background:var(--orange-bg);border-color:var(--orange)}.notice p{margin:0}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:22px 0}.card{border:1px solid var(--line);border-radius:8px;background:var(--paper);padding:21px}.card .kicker{font-size:10px;color:var(--teal)}.card h3{font-size:17px;margin:9px 0}.card p{font-size:13px;color:var(--muted);margin:0}.card .number{display:block;font:500 32px/1.4 var(--mono);color:var(--teal);margin:7px 0}.caption{font-size:12px;color:var(--muted);line-height:1.85}.citation{font-size:12px;margin-top:10px}.table-wrap{overflow:auto;margin:18px 0;border:1px solid var(--line);border-radius:7px;background:var(--paper)}table{border-collapse:collapse;min-width:610px;width:100%;font-size:13px}th{text-align:left;background:#eaf0eb;color:var(--ink);font-weight:600;white-space:nowrap}th,td{padding:12px 15px;border-bottom:1px solid var(--line);vertical-align:top}tbody tr:last-child td{border-bottom:0}td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}tr.emphasis td{background:#fcf0e8}.small-table table{min-width:480px}details{margin:18px 0;border:1px solid var(--line);border-radius:7px;background:var(--paper);padding:14px 18px}summary{cursor:pointer;font-size:13px;font-weight:600}details p,details li{font-size:13px}details pre{margin:14px 0 0}.evidence{display:inline-block;font:10px var(--mono);letter-spacing:.2px;padding:2px 7px;border-radius:3px;margin-right:7px;vertical-align:middle;background:var(--light);color:var(--teal)}.evidence.model{background:#e9edf4;color:#455e7a}.evidence.design{background:var(--orange-bg);color:#994627}code{font:12px/1.7 var(--mono);background:#e9ede7;padding:2px 5px;border-radius:3px;overflow-wrap:anywhere}pre{padding:20px;background:#233d45;color:#e8efe7;overflow:auto;border-radius:7px;font:12px/1.9 var(--mono)}pre code{font:inherit;background:transparent;padding:0;color:inherit;overflow-wrap:normal}.comparison{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0}.comparison>div{border:1px solid var(--line);border-radius:8px;background:var(--paper);padding:20px}.comparison h3{font-size:16px;margin:0 0 13px}.steps{display:grid;gap:8px;font-size:13px}.step{border:1px solid var(--line);padding:9px 12px;border-radius:4px;background:var(--bg)}.step.good{background:var(--light);border-color:#c0d7ce}.step.bad{background:var(--orange-bg);border-color:#e8d0c1}.step small{display:block;color:var(--muted);font-size:11px}.step-arrow{text-align:center;font-size:14px;color:var(--muted);line-height:1}.lab{background:var(--paper);border:1px solid var(--line);border-radius:9px;padding:23px;margin:24px 0}.lab-header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}.lab-header h3{margin:0;font-size:17px}.controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12px}.controls select{background:white;border:1px solid #a3b8b1;color:var(--ink);border-radius:5px;padding:6px 9px}.controls input[type=range]{accent-color:var(--teal);width:155px}.controls output{font:600 16px var(--mono);color:var(--teal)}.switch{display:flex;gap:6px;flex-wrap:wrap}.switch button{font-size:12px;padding:7px 12px;border:1px solid var(--line);border-radius:5px;background:white;color:var(--muted)}.switch button[aria-pressed=true]{color:white;background:var(--teal);border-color:var(--teal)}.demo-groups{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:20px 0}.token-group{display:flex;gap:5px;border:1px dashed #839c93;padding:10px;border-radius:6px}.token{display:grid;place-items:center;width:45px;height:39px;background:#deeee6;color:#216658;font:12px var(--mono);border-radius:4px}.token.owner-b{background:#e2eaf3;color:#3e5b79}.group-label{font-size:11px;color:var(--muted);margin:0 0 5px}.demo-explain{font-size:13px;min-height:48px}.plot-wrap{min-width:0;margin-top:18px}.plot{display:block;width:100%;height:auto;font-family:var(--sans);overflow:visible}.plot text{font-size:11px;fill:var(--muted)}.plot .grid{stroke:#dde3dd;stroke-width:1}.plot .series{fill:none;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round}.legend{display:flex;flex-wrap:wrap;gap:16px;font-size:11px;margin-bottom:5px}.legend span:before{content:"";display:inline-block;width:19px;height:3px;background:var(--legend);vertical-align:middle;margin-right:6px}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.metric{padding:13px 16px;background:var(--bg);border-radius:5px}.metric .value{font:500 26px var(--mono);color:var(--teal)}.metric p{font-size:11px;color:var(--muted);margin:5px 0 0}.metric .value.warm{color:var(--orange)}.memory-bars{display:grid;gap:15px;margin:21px 0}.memory-row{display:grid;grid-template-columns:170px minmax(0,1fr) 80px;align-items:center;gap:13px;font-size:12px}.bar-track{height:17px;border-radius:3px;background:#e7ebe5;overflow:hidden}.bar-fill{height:100%;background:var(--orange);width:31.25%;transition:width .2s}.bar-fill.new{background:var(--teal);width:6.25%}.memory-row output{font:12px var(--mono);text-align:right}.capacity{font-size:11px;text-align:right;color:var(--muted)}.formula{font:17px/1.8 var(--mono);background:var(--light);padding:18px 20px;border-radius:5px;overflow-wrap:anywhere;margin:18px 0}.timeline{display:grid;grid-template-columns:90px repeat(4,1fr);gap:6px;font-size:11px;margin:20px 0}.timeline .time{font:10px var(--mono);color:var(--muted);text-align:center}.timeline .row-name{align-self:center;color:var(--muted)}.timeline .cell{padding:10px 5px;text-align:center;background:var(--light);border:1px solid #c6d8cc;border-radius:4px}.timeline .pe{background:#284957;color:#eff5ef;border-color:#284957}.timeline .idle{background:transparent;border:1px dashed var(--line);color:var(--muted)}.checklist{padding-left:21px}.checklist li{padding:4px 0}.checklist li::marker{color:var(--teal)}.roadmap{counter-reset:phase;display:grid;gap:13px;margin:22px 0}.phase{display:grid;grid-template-columns:38px 1fr;gap:12px;padding:16px 19px;background:var(--paper);border:1px solid var(--line);border-radius:6px}.phase:before{counter-increment:phase;content:counter(phase,decimal-leading-zero);font:15px var(--mono);color:var(--orange);padding-top:3px}.phase h3{font-size:15px;margin:0}.phase p{font-size:13px;color:var(--muted);margin:5px 0 0}.sources{padding-left:23px}.sources li{font-size:13px;padding:7px 0}.sources small{display:block;color:var(--muted);font-size:11px;margin-top:3px}.footer{margin-top:42px;border-top:1px solid var(--line);padding:24px 0 35px;display:flex;justify-content:space-between;gap:20px;color:var(--muted);font-size:12px}.footer a{text-decoration:none}.sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+@media(max-width:1100px){.shell{grid-template-columns:166px minmax(0,1fr);gap:26px;padding:32px 28px 0}h1{font-size:29px}.architecture{grid-template-columns:1.2fr 20px 1fr 20px 1fr;gap:4px}.architecture .box{padding:12px}.architecture .box strong{font-size:14px}.cards{gap:10px}.card{padding:17px}}
+@media(max-width:850px){.shell{display:block;padding:25px 24px 0}.rail{position:static;margin-bottom:30px}.rail-label,.rail-note{display:none}.rail nav{display:flex;overflow:auto;gap:7px;padding-bottom:8px}.rail nav a{white-space:nowrap;border:1px solid var(--line);border-radius:4px;padding:6px 10px;background:var(--paper)}.rail nav b{margin-right:6px}.model-name{font-size:49px}.section{padding-top:36px}.hero+.section{margin-top:32px}.masthead{padding:0 24px}}
+@media(max-width:570px){body{font-size:14px}.shell{padding:22px 18px 0}.masthead{padding:0 18px;height:58px}.masthead .edition{font-size:9px}.masthead a{font-size:13px}.eyebrow{font-size:9px;letter-spacing:1px}.model-name{font-size:38px;letter-spacing:-1.4px}h1{font-size:24px;letter-spacing:-.6px;line-height:1.55}.lead{font-size:15px}.hero-diagram{padding:20px}.architecture{grid-template-columns:1fr;margin:17px 0;gap:7px}.architecture .box{min-height:0;display:flex;gap:12px;align-items:center;padding:12px}.architecture .box strong{min-width:88px;margin:0}.architecture .box small{font-size:11px}.tokens{display:none}.flow-arrow{transform:rotate(90deg);line-height:20px;font-size:22px}.diagram-top{font-size:11px}.diagram-top span:last-child{display:none}.diagram-caption{font-size:11px}.cards,.comparison{grid-template-columns:1fr;gap:12px}.card{padding:17px}.card .number{font-size:28px}.section-head{gap:11px}.section h2{font-size:22px}.section-no{font-size:11px}.lab{padding:16px}.lab-header{display:block}.lab-header .controls{margin-top:13px}.metrics{gap:7px}.metric{padding:11px 9px}.metric .value{font-size:21px}.metric p{font-size:10px}.memory-row{grid-template-columns:1fr 65px;gap:6px}.memory-row>span{grid-column:1/-1}.memory-row output{font-size:11px}.legend{font-size:10px;gap:9px}.notice{padding:15px 16px;font-size:13px}.timeline{font-size:9px;grid-template-columns:47px repeat(4,1fr);gap:3px}.timeline .cell{padding:9px 2px}.timeline .time{font-size:9px}.formula{font-size:14px;padding:14px}.phase{padding:14px;grid-template-columns:27px 1fr;gap:9px}.footer{display:block}.footer a{display:block;margin-bottom:10px}th,td{padding:10px 12px}.section h3{font-size:16px}.token{width:37px;height:35px}.token-group{padding:8px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}@media print{.rail,.skip,.controls,.switch{display:none!important}body{background:white;font-size:11px}.shell{display:block;padding:0}.masthead{padding:0}.section{padding-top:20px}.hero-diagram{-webkit-print-color-adjust:exact;print-color-adjust:exact}.card,.notice,.lab,.table-wrap,.phase{break-inside:avoid}a{color:inherit}.footer{margin-top:20px}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+<header class="masthead"><a href="../../index.html">← Xuanwen / Notes</a><span class="edition">模型部署 · DESIGN NOTE 01</span></header>
+<div class="shell">
+<aside class="rail" aria-label="文章目录">
+  <p class="rail-label">GLM5.3FLASH / ROUTED</p>
+  <nav>
+    <a href="#thesis"><b>01</b>问题与结论</a>
+    <a href="#baseline"><b>02</b>BS40 为什么掉速</a>
+    <a href="#gpu"><b>03</b>NVIDIA GPU 怎么做</a>
+    <a href="#separate"><b>04</b>拆开三种范围</a>
+    <a href="#abi"><b>05</b>Router / Routed ABI</a>
+    <a href="#model"><b>06</b>离线合组实验</a>
+    <a href="#sram"><b>07</b>SRAM 与编译流水</a>
+    <a href="#choices"><b>08</b>方案取舍</a>
+    <a href="#validation"><b>09</b>落地与验收</a>
+    <a href="#sources"><b>10</b>来源与证据边界</a>
+  </nav>
+  <p class="rail-note"><strong>全局决定谁一起算，<br>片上只留下正在算的。</strong>本文针对 GLM5.3Flash 当前物理专家布局。设计目标是 BS40 不再比 BS32 掉吞吐，并继续改善 BS128。</p>
+</aside>
+<main id="main">
+<div class="hero">
+  <div class="eyebrow">模型部署 / 调研与方案设计</div>
+  <h1><span class="model-name">GLM5.3Flash</span><span class="title-separator">- </span>大 batch MoE 合组：<br>NVIDIA GPU 调研与 Router/Routed ABI 设计</h1>
+  <p class="lead">SM 的 shared memory 也很有限，GPU 为什么能把大量 token 按专家合并？关键在于：<strong>全局路由索引、当前激活工作集、单次矩阵计算块，是三个独立的范围。</strong>Zeus 下一轮优化也应从这个边界入手。</p>
+  <div class="meta"><span class="tag">2026-11-11</span><span class="tag">BS40 → BS128</span><span class="tag verified">已完成源码调研与 host 布局验证</span><span class="tag proposed">设备实现与性能收益待验证</span></div>
+  <div class="hero-diagram" role="img" aria-label="推荐结构：外存保存全 batch 路由与激活，片上仅保存当前和下一 M4 组，PE 逐组执行。全局合组范围不随 SRAM 驻留窗口限制。">
+    <div class="diagram-top"><span>推荐架构 · 让合组范围超过片上驻留范围</span><span>GLOBAL PLAN / BOUNDED EXECUTION</span></div>
+    <div class="architecture">
+      <div class="box"><div><strong>全 batch 索引</strong><small>外存保存全部 owner 的路由<br>同一专家跨 owner / 窗口合组</small><div class="tokens" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div>
+      <div class="flow-arrow" aria-hidden="true">→</div>
+      <div class="box accent"><div><strong>双槽 M4</strong><small>当前组执行<br>下一组准备索引与激活</small><div class="tokens" aria-hidden="true"><i></i><i></i><i></i><i></i></div></div></div>
+      <div class="flow-arrow" aria-hidden="true">→</div>
+      <div class="box"><div><strong>PE 持续取任务</strong><small>Gate → Up → Down<br>保留原 token / slot 输出语义</small></div></div>
+    </div>
+    <div class="diagram-caption">大 batch 扩大合组机会；小 tile 控制 SRAM 占用；有界流水争取减少 PE 空档。三者分别设计、分别计费。</div>
+  </div>
+</div>
+
+<section class="section" id="thesis">
+  <div class="section-head"><span class="section-no">01</span><h2>要改的是数据组织边界</h2></div>
+  <p>当前 Routed 的窗口同时承担“识别专家”“缓存激活”“组成 M1/M2/M4”三件事。一旦扩大窗口，比较矩阵、FP8 cache 与在途中间值一起增长；容量紧张又迫使窗口缩小，导致同一专家跨窗口重复开组。继续只压 allocator 峰值或挪动几条指令，很难消除这一结构性损失。</p>
+  <div class="notice"><p><strong>建议路线：</strong>Router 生成可直接消费的专家索引，随现有一次 AllGather 传递；Routed 在全 batch 范围内合组，按需读取少量 hidden 行，用双槽 M4 执行。先保留现有权重、量化与 Reduce 数值语义，避免同时重做所有接口。</p></div>
+  <div class="cards">
+    <div class="card"><div class="kicker">GLOBAL SCOPE</div><h3>合组可以看见 BS128</h3><p>需要看见全部有效路由，不需要让 128 行激活同时占据片上 SRAM。</p></div>
+    <div class="card"><div class="kicker">LOCAL WORKING SET</div><h3>激活可以只驻留 M4 × 2</h3><p>当前组、下一组轮换；是否同时保留两组输出，由实际异步生命周期决定。</p></div>
+    <div class="card"><div class="kicker">HARDWARE TILE</div><h3>单次 PE 仍以 M≤4 起步</h3><p>利用更多满 M4 和更少尾组。M5～M8 进入算力拼接后的收益，需要独立评估。</p></div>
+  </div>
+  <p class="caption">“NVIDIA 怎么做”在本文指 NVIDIA 硬件、CUTLASS，以及运行于其上的 vLLM、DeepGEMM、DeepEP 等公开实现；它们来自不同项目，不是同一条通用 kernel，也不代表所有 GPU MoE 都采用同一种布局。</p>
+</section>
+
+<section class="section" id="baseline">
+  <div class="section-head"><span class="section-no">02</span><h2>BS40 的问题，先用同一口径看清</h2></div>
+  <p><span class="evidence">归档 CycleSim</span>自动 PE 配置的性能归档显示，BS40 的 Routed 阶段等效吞吐比 BS32 低 <strong>13.13%</strong>；到 BS128，也只比 BS32 高 <strong>1.84%</strong>。这正是需要解决的曲线，而不是只追求某一段 executor 更快。</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>总 BS · 4 card</th><th class="num">Routed C42 周期均值</th><th class="num">Routed 阶段等效<br>tokens/s/card</th><th class="num">MoE 组件整体<br>tokens/s/card</th></tr></thead>
+    <tbody><tr><td>32</td><td class="num">1,707,693.57</td><td class="num">1,873.87</td><td class="num">1,063.44</td></tr><tr class="emphasis"><td>40</td><td class="num">2,457,180.51</td><td class="num">1,627.88</td><td class="num">976.32</td></tr><tr><td>128</td><td class="num">6,707,570.59</td><td class="num">1,908.29</td><td class="num">1,113.64</td></tr></tbody>
+  </table></div>
+  <p class="caption">C42：42 层逐层 Routed 最慢 rank 周期之和，再对 49 个采样点取均值。整体 MoE 组件按每层 max_owner(Router) + max_rank(Shared + Routed + Reduce) 聚合；不含 H1、collective、host，不是服务端端到端吞吐。阶段最大值不能直接相加推导整体。</p>
+  <p class="citation">数据：<a href="./index.html">GLM-5.3-Flash 自动 PE 性能报告</a> · <a href="./versions/20261109-0d68686a/data/benchmark.json">固定版本 benchmark.json</a>。</p>
+  <details><summary>版本边界：最新源码检查 ≠ 本轮最新 master 重新测量</summary>
+    <p>源码分析使用 torch_zeus <code>5c05363f9a970bdf4d9a05c7ed6458663b406793</code>，已包含 <a href="https://github.com/DarronTam/torch_zeus/pull/674">PR #674</a>，以及后续 Router 集成变动。最新 Routed、transport 与 transport load 源码同自动 PE 归档一致；Router 已继续变化。</p>
+    <p>上表性能绑定 torch_zeus <code>0d68686a8692a86736e3c5fb399cffe85144fe8a</code>、compiler <code>4f8accf1c83af428337d73603ec5b9c1f9937621</code>、Triton <code>69d8cb8706a4ab18ee6a19204989651a891eb9e6</code>、CycleSim <code>b39990784ba2e1324c258c1db5fb02c13f93953b</code>，400 MHz，4 card / 16 rank / 32 core。不能把历史手动 PE 配置的单 fixture 周期拿来与此混比。</p>
+  </details>
+  <h3>容量在限制什么？</h3>
+  <p>当前每核 512 KiB 的软件管理 L2/SRAM，需要容纳激活、控制 metadata、临时值和输出。单看 <code>[T,4096]</code> FP8 hidden cache，T32 / T40 / T128 就分别是 <strong>128 / 160 / 512 KiB</strong>。BS128 光这一项已经占满，还没有放任何中间结果。</p>
+  <p>源码中的 BS40 走 <strong>24 + 16</strong> 窗口，BS128 走 <strong>4 × 32</strong>。每个窗口重新读取、识别与合组，边界上有等待和 SRAM 复用。更大的 batch 本应带来更多同专家 token，但窗口把这些机会切开了。</p>
+  <div class="notice warm"><p><strong>这里的 L2 主要不是专家权重缓存。</strong>权重走既有 weight memory 路径；更多 token 合并，是争取一次权重遍历服务更多行。Zeus 的软件管理 L2/SRAM，与 NVIDIA GPU 的硬件 L2 cache 也不是同一概念。</p></div>
+</section>
+
+<section class="section" id="gpu">
+  <div class="section-head"><span class="section-no">03</span><h2>NVIDIA GPU：全局排队，片上分块执行</h2></div>
+  <p>Hopper 每个 SM 的 shared memory 只有官方标注的 <strong>228 KB</strong>，单 thread block 最大 <strong>227 KB</strong>。大 batch 的全部激活同样放不进去。GPU 将完整数据与索引保存在 global memory，SM 消费当前 tile；Hopper 的 TMA 等异步搬运机制帮助把供数与计算重叠。<a href="https://docs.nvidia.com/cuda/hopper-tuning-guide/index.html">[Hopper Tuning Guide]</a></p>
+  <div class="comparison">
+    <div><h3>全局层：保存“谁属于谁”</h3><div class="steps">
+      <div class="step">TopK expert IDs / routing weights<small>整个参与批次的路由，位于设备显存</small></div><div class="step-arrow" aria-hidden="true">↓</div>
+      <div class="step">分组索引或 expert-major rows<small>按专家计数、定位有效范围，保留回写映射</small></div><div class="step-arrow" aria-hidden="true">↓</div>
+      <div class="step good">Grouped GEMM 任务集合<small>一个专家可对应多个计算 tile</small></div>
+    </div></div>
+    <div><h3>SM 层：只保留“正在计算什么”</h3><div class="steps">
+      <div class="step">从全局任务中领取一个 tile<small>tile 的 M 不等于整个 batch 的 token 数</small></div><div class="step-arrow" aria-hidden="true">↓</div>
+      <div class="step good">shared memory / registers 有界缓存<small>当前 tile 计算，下一 tile 供数</small></div><div class="step-arrow" aria-hidden="true">↓</div>
+      <div class="step">写回，再消费下一个 tile<small>全局索引的大小不要求适配单 SM 容量</small></div>
+    </div></div>
+  </div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>公开实现</th><th>可核对的机制</th><th>对 Zeus 的启发</th></tr></thead>
+    <tbody>
+      <tr><td><a href="https://github.com/vllm-project/vllm/blob/main/vllm/model_executor/layers/fused_moe/moe_align_block_size.py">vLLM · MoE alignment</a></td><td>产生 sorted_token_ids、每 block 的 expert_ids、padding 后数量及可选 scatter_idx。</td><td>先组织 token 引用；索引排序不要求全量 hidden 常驻片上，也不必先物理复制所有 hidden。</td></tr>
+      <tr><td><a href="https://docs.nvidia.com/cutlass/latest/media/docs/cpp/grouped_scheduler.html">CUTLASS · grouped scheduler</a></td><td>persistent thread block 遍历多个问题中的 tile，并计算下一个任务。</td><td>专家全集可以很大，执行槽位可以很小；调度单元和工作集分别定界。</td></tr>
+      <tr><td><a href="https://docs.nvidia.com/cutlass/latest/media/docs/cpp/efficient_gemm.html">CUTLASS · GEMM pipeline</a></td><td>shared-memory tile 和 register fragment 使用双缓冲，让加载与当前计算交叠。</td><td>流水依赖实际 producer / consumer 完成状态；提前 load 后立即等待仍会串行。</td></tr>
+      <tr><td><a href="https://github.com/deepseek-ai/DeepGEMM#interfaces">DeepGEMM · grouped GEMM</a></td><td>contiguous layout 把专家的 M 段拼接并对齐；masked layout 在 decode 中由设备 mask 指定有效部分。</td><td>动态路由数量可以留在设备侧，不必每轮回 CPU 再发起专家计算。</td></tr>
+      <tr><td><a href="https://github.com/deepseek-ai/DeepEP#example-use-in-model-training-and-inference">DeepEP · dispatch / combine</a></td><td>dispatch 可生成 expanded layout；无 CPU 同步模式使用固定容量与设备 expert 有效范围，combine 保留路由映射。</td><td>通信布局本身就是 GEMM 输入 ABI；布局准备、额外字节和通信都需要计费。</td></tr>
+    </tbody>
+  </table></div>
+  <p>这些实现共同提供了一个可迁移的设计原则：<strong>全局关系先明确，计算只搬当前需要的块。</strong>Zeus 的 VP/CT、DMA、PE 与 CUDA 的 warp、扫描、原子操作及 TMA 不同，照搬 GPU 上的 prefix-sum + scatter 未必划算。需要沿用原则，再选择适合 Zeus 的索引格式。</p>
+  <h3>一个容量算例：1 MiB 输入，不需要 1 MiB shared memory</h3>
+  <p>以 BF16 的 <code>[128,4096]</code> 输入为例，完整输入是 1 MiB。若某个专家有足够行，示意地选 <code>M_tile=64, N_tile=128, K_tile=128</code>，一次只搬 A、B 的一个 K 段：</p>
+  <div class="table-wrap small-table"><table><thead><tr><th>示意 tile</th><th>计算</th><th class="num">容量</th></tr></thead><tbody>
+    <tr><td>A：当前 64 行输入片段</td><td>64 × 128 × 2 bytes</td><td class="num">16 KiB</td></tr>
+    <tr><td>B：当前专家权重片段</td><td>128 × 128 × 2 bytes</td><td class="num">32 KiB</td></tr>
+    <tr><td>A + B 双缓冲</td><td>2 × (16 + 32) KiB</td><td class="num">96 KiB</td></tr>
+    <tr><td>C：FP32 累加结果</td><td>64 × 128 × 4 bytes，分散在寄存器等累加资源中</td><td class="num">32 KiB</td></tr>
+  </tbody></table></div>
+  <p>沿 K 维遍历 32 段，完成这一块输出；其它 M/N 块继续调度。<strong>当前 B tile 同时服务这 64 行 A</strong>，形成权重复用；整 batch 与完整权重仍留在 global memory。这是基于分块 GEMM 的容量推导，不是某个实际 CUTLASS 配置或 occupancy 保证；真实 kernel 还受 MMA 形状、布局、barrier、epilogue 与寄存器限额约束。</p>
+  <p class="citation">分块与流水机制依据：<a href="https://docs.nvidia.com/cutlass/latest/media/docs/cpp/efficient_gemm.html">CUTLASS · Efficient GEMM</a>；上表形状与容量为本文示意计算。</p>
+  <h3>大 batch 为什么有帮助，又为什么不会无限上涨？</h3>
+  <p>同一个专家积累更多 token，可以填满更多计算 tile，减少尾块与重复权重遍历，并摊薄调度成本。但合组之后仍有权重供数、激活搬运、FFN 计算、输出归并和通信。<strong>先消除人为窗口带来的损失，再测自然带宽与算力上限。</strong>GPU 的这个设计不构成“BS 越大吞吐必然线性增长”的保证。</p>
+</section>
+
+<section class="section" id="separate">
+  <div class="section-head"><span class="section-no">04</span><h2>把三个范围拆开，窗口就不必切断合组</h2></div>
+  <div class="table-wrap small-table"><table>
+    <thead><tr><th>范围</th><th>由什么决定</th><th>本轮建议</th></tr></thead>
+    <tbody><tr><td>路由可见范围</td><td>一次 MoE 批次内的有效 token / expert 关系</td><td>跨全部 16 个 owner，先支持 BS128</td></tr><tr><td>激活驻留范围</td><td>SRAM 峰值、搬运延迟与复用价值</td><td>当前 / 下一 M4；可选小 cache</td></tr><tr><td>一次 PE 的 M</td><td>硬件映射、padding 与算力拼接</td><td>M1 / M2 / M4，沿用自动 PE 搜索</td></tr></tbody>
+  </table></div>
+  <div class="lab" id="group-demo">
+    <div class="lab-header"><h3>一个窗口边界，怎样多出一组计算？</h3><span class="evidence design">示意 · 同一专家 E</span></div>
+    <p class="caption">假设同一专家在前一窗口命中 t2、t9，在后一窗口命中 t25、t33。token 的内容与输出位置都不变，只改变分组范围。</p>
+    <div class="switch" aria-label="合组方式"><button type="button" data-mode="window" aria-pressed="true">按窗口结束合组</button><button type="button" data-mode="global" aria-pressed="false">跨窗口保留引用</button></div>
+    <div class="demo-groups" id="demo-groups"><div><p class="group-label">窗口 A · M2</p><div class="token-group"><span class="token">t2</span><span class="token">t9</span></div></div><div><p class="group-label">窗口 B · M2</p><div class="token-group"><span class="token owner-b">t25</span><span class="token owner-b">t33</span></div></div></div>
+    <p class="demo-explain" id="demo-explain" aria-live="polite"><strong>两组 M2。</strong>窗口结束就提交尾组，同一专家需要两次 Gate / Up / Down 分组任务。</p>
+    <p class="caption">这是任务结构示意，不是两倍周期的结论。M2 与 M4 的指令、padding、供数和重叠成本不同。</p>
+  </div>
+  <p>源端 Router 可以提前输出关系，但不能只按自己的 owner 完成 M4 分组并清空余数。BS40 的每个 owner 只有 2 或 3 行，BS128 也只有 8 行。<strong>余数必须跨 owner 继续积累，到全 batch 结束才能确定尾组。</strong>若未来做流式通信，还需要明确每个源的完成标记，不能把“当前暂时无任务”当作结束。</p>
+</section>
+
+<section class="section" id="abi">
+  <div class="section-head"><span class="section-no">05</span><h2>第一版 ABI：Router 发布 expert slot mask</h2></div>
+  <p><span class="evidence design">待落地设计</span>第一版保留原来的 BF16 hidden、BF16 route weights 和 INT32 expert IDs，附带一段按目的 expert-core 排列的 metadata。现有一次 rank-major AllGather 同时传递这段数据；Routed 只读取自己负责的专家切片。</p>
+  <pre aria-label="建议的 owner transport 布局"><code>owner_block =
+    hidden_bf16[Q, H]
+  + router_weight_bf16[Q, K]
+  + router_id_i32[Q, K]
+  + route_mask_bf16[Q, EP * cores_per_rank, E_core_aligned]
+
+Current physical layout:
+    H = 4096, K = 8, EP = 4, cores_per_rank = 2
+    experts_per_EP = 72, E_core = 36, E_core_aligned = 40
+    Q = max(owner_token_counts) = ceil(BS / 16)
+
+mask[token, destination, expert_lane]:
+    bit k = original TopK slot k selects this physical expert</code></pre>
+  <p>这里的 EP4 × 72 是当前<strong>物理专家布局</strong>。目的核有 8 个，每个负责 36 个专家；BF16 一行从 36 项对齐到 40 项，行长 80 bytes。每个 token 的完整 sidecar 是 <code>8 × 40 × 2 = 640 bytes</code>。每个源 token 写自己的完整区域，padding 专家和无效行每轮清零。</p>
+  <p>TopK 为 8，因此 slot mask 在 0～255 之间，这些整数都能被 BF16 精确表示。这是<strong>metadata 编码</strong>，不涉及近似概率。先选 BF16，是为了绕开当前 INT32 ID 的逐字节重建及窄整数 layout 风险；UINT8 可以随后做 A/B，不能预先假定物理 DMA 或 SRAM 占用减半。</p>
+  <div class="notice warm"><p><strong>改 owner stride 会影响所有消费者。</strong>即使旧字段在 owner 内的偏移不变，新 owner block 变长后，Shared、Routed、Reduce 的跨 owner 寻址都要更新。transport format、Graph cache key 与各 rank 必须使用一致版本；mHC/Router 融合入口也必须正确生成 sidecar。</p></div>
+  <h3>接收端从“识别所有关系”变成“消费已有关系”</h3>
+  <p>当前 Routed 在各窗口读取 raw IDs，展开本核 36 个专家与 <code>GROUP_T × 8</code> 路由的比较，再构造 slot mask、bitmap 和 count。新接口让 Router 在已经拥有本地 IDs 的位置生成关系；接收端合并本核切片、提取下一个 M4。TP4 的同组 rank 仍计算各自权重分片，但不必各自重新识别同一套路由。</p>
+  <p>consumer 仍有真实成本：读取 16 个 owner 切片、构造有界 bitmap、定位有效行、生成 gather 描述符。BS128 的 bitmap 要使用多个精确整数段，例如 16-bit chunks，不能把 128-bit bitset 塞进一个 FP32。第一版不要求全局原子操作或动态 CSR scatter。</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>总 BS</th><th class="num">每 owner 容量 Q</th><th class="num">旧 gathered buffer</th><th class="num">sidecar 总量</th><th class="num">每核所需 sidecar</th></tr></thead>
+    <tbody><tr><td>32</td><td class="num">2</td><td class="num">257.50 KiB</td><td class="num">20 KiB</td><td class="num">2.50 KiB</td></tr><tr class="emphasis"><td>40</td><td class="num">3</td><td class="num">386.25 KiB</td><td class="num">30 KiB</td><td class="num">3.75 KiB</td></tr><tr><td>128</td><td class="num">8</td><td class="num">1,030 KiB</td><td class="num">80 KiB</td><td class="num">10 KiB</td></tr></tbody>
+  </table></div>
+  <p class="caption">包括 16 owner 的 Q padding；旧载荷每容量行 8,240 bytes，新添 640 bytes，单份 gathered buffer 增加 7.77%。这是逻辑 payload 增量，不是 collective 总链路字节数或通信延迟增长率。上表 buffer 在外存，单核不需要把完整 gathered buffer 或全部 8 个目的核的 sidecar 放入 SRAM。</p>
+  <h3>保持数值契约，才能判断优化是否成立</h3>
+  <ul class="checklist">
+    <li>沿用原 TopK、校准、logical → physical expert 映射、route weight 的 BF16 舍入；sidecar 依据映射后的物理 expert ID。</li>
+    <li>task 保留物理 owner / local row、逻辑输出 token 和原 slot mask。重复 expert slot 可共用专家计算，但仍分别写回原槽位。</li>
+    <li>输出先保持 unweighted BF16 partial；Reduce 保持 shared-first、原 slot 次序的 FP32 累加与原 BF16 输出舍入。不能先把重复 slot 的权重相加来改变舍入位置。</li>
+    <li>Graph replay 的地址稳定不等于路由内容稳定。每轮更新 mask、padding 和有效数量，覆盖 real → empty → restore 的状态变化。</li>
+  </ul>
+</section>
+
+<section class="section" id="model">
+  <div class="section-head"><span class="section-no">06</span><h2>离线结果：值得做，但不能把组数当周期</h2></div>
+  <p><span class="evidence model">Host 路由模型</span>使用 3 份归档真实路由、15 档 BS16～128，共 45 份 payload，验证 sidecar 编码 / 解码与独立 token-slot 枚举 oracle 一致。另有 119 次合成复用回放，覆盖空 owner、无效 ID、重复 expert、跨窗口边界与 padding。这里<strong>没有进行新方案的设备 GEMM 数值或 cycle 验证</strong>。</p>
+  <div class="lab">
+    <div class="lab-header"><h3>组数随 batch 的变化</h3><div class="controls"><label for="batch-size">总 BS</label><select id="batch-size"><option>16</option><option>24</option><option>32</option><option selected>40</option><option>48</option><option>56</option><option>64</option><option>72</option><option>80</option><option>88</option><option>96</option><option>104</option><option>112</option><option>120</option><option>128</option></select></div></div>
+    <div class="legend"><span style="--legend:#b7613e">当前窗口合组</span><span style="--legend:#146c65">全 batch 合组</span><span style="--legend:#8797a7">各 owner 单独 flush</span></div>
+    <div class="plot-wrap"><svg id="group-chart" class="plot" viewBox="0 0 760 280" role="img" aria-labelledby="chart-title chart-desc"><title id="chart-title">BS16 到 BS128 的分组数量对比</title><desc id="chart-desc">三个路由样本与八个目的专家核的组数总和。BS40 当前窗口 592 组，全 batch 462 组；BS128 分别为 1593 和 1049。完整数据见下方表格。</desc><g id="chart-content"></g></svg></div>
+    <div class="metrics" aria-live="polite"><div class="metric"><div class="value warm" id="window-count">592</div><p>当前窗口 · 组</p></div><div class="metric"><div class="value" id="global-count">462</div><p>全 batch · 组</p></div><div class="metric"><div class="value" id="group-saving">21.96%</div><p>少做的分组任务</p></div></div>
+    <p class="caption" id="group-note">BS40：各 owner 单独结束分组会产生 886 组。全 batch 合组减少窗口切割，但收益要扣除索引、gather 与流水成本。</p>
+  </div>
+  <div class="notice"><p>BS32 → BS40，模型中的全局组数只从 388 增至 462，增长 <strong>19.07%</strong>，小于 token 的 25% 增幅。每 token 组数下降约 <strong>4.74%</strong>。这提供了一条可检验的路径，但吸收额外搬运和调度的余量并不宽，仍不能保证最终吞吐不降。</p></div>
+  <p>统计单位是<strong>3 份路由 × 8 个目的 expert-core 的组数总和</strong>，没有乘 TP4，不是单核指令数。每专家按满 M4 加尾组计数，余数 1 / 2 / 3 分别用 M1 / M2 / M4。组数表达权重遍历的复用机会，实际权重字节、PE 时间和 padding 代价要读设备指令与 trace。</p>
+  <details><summary>展开完整数据与 host 验证边界</summary>
+    <div class="table-wrap"><table><thead><tr><th>BS</th><th class="num">窗口合组</th><th class="num">owner flush</th><th class="num">全局合组</th></tr></thead><tbody id="counts-table">
+      <tr><td>16</td><td class="num">239</td><td class="num">384</td><td class="num">239</td></tr>
+      <tr><td>24</td><td class="num">324</td><td class="num">540</td><td class="num">324</td></tr>
+      <tr><td>32</td><td class="num">388</td><td class="num">719</td><td class="num">388</td></tr>
+      <tr><td>40</td><td class="num">592</td><td class="num">886</td><td class="num">462</td></tr>
+      <tr><td>48</td><td class="num">676</td><td class="num">1080</td><td class="num">523</td></tr>
+      <tr><td>56</td><td class="num">734</td><td class="num">1209</td><td class="num">581</td></tr>
+      <tr><td>64</td><td class="num">787</td><td class="num">1374</td><td class="num">627</td></tr>
+      <tr><td>72</td><td class="num">943</td><td class="num">1520</td><td class="num">687</td></tr>
+      <tr><td>80</td><td class="num">1066</td><td class="num">1670</td><td class="num">745</td></tr>
+      <tr><td>88</td><td class="num">1141</td><td class="num">1810</td><td class="num">797</td></tr>
+      <tr><td>96</td><td class="num">1187</td><td class="num">1939</td><td class="num">849</td></tr>
+      <tr><td>104</td><td class="num">1329</td><td class="num">2012</td><td class="num">892</td></tr>
+      <tr><td>112</td><td class="num">1421</td><td class="num">2114</td><td class="num">942</td></tr>
+      <tr><td>120</td><td class="num">1522</td><td class="num">2277</td><td class="num">998</td></tr>
+      <tr><td>128</td><td class="num">1593</td><td class="num">2390</td><td class="num">1049</td></tr>
+    </tbody></table></div>
+    <p>输入为归档 train00 / step017 的 L3/R0、L5/R15、L44/R4，IDs 的 SHA256 对照既有记录核验；使用最新 transport layout 的 owner counts 与 padding。不同 BS 来自固定路由的扩展，适合比较分组结构，不代表真实推理全部 step 的专家分布。45 份 payload 产生 360 条 EP/core 统计。</p>
+    <p>额外合成回放覆盖 BS4/8、空 owner、所有 slot 命中同一专家、无效 ID、23/24 与 31/32 边界、非均匀 owner 和状态复用。通过范围仅是路由布局；不包含 compiler、DMA、设备 Graph、数值误差或通信性能。</p>
+  </details>
+</section>
+
+<section class="section" id="sram">
+  <div class="section-head"><span class="section-no">07</span><h2>SRAM 的目标：让激活工作集不再随 BS 增长</h2></div>
+  <p>全局 metadata 和激活 backing 留在外存。task slot 保存四个 token 引用及输出映射，只 gather 当前需要的 BF16 行，再沿用量化规则转换。这样扩大路由范围，主要增加 metadata；激活 slot 大小由 M/H/I 与流水深度决定。</p>
+  <div class="lab">
+    <div class="lab-header"><h3>逻辑容量计算器</h3><div class="controls"><label for="memory-batch">总 BS</label><input id="memory-batch" type="range" min="16" max="128" step="8" value="40"><output id="memory-bs" for="memory-batch">40</output></div></div>
+    <div class="memory-bars">
+      <div class="memory-row"><span>若整 batch 缓存 FP8 hidden</span><div class="bar-track"><div class="bar-fill" id="full-cache-bar"></div></div><output id="full-cache">160 KiB</output></div>
+      <div class="memory-row"><span>双槽 M4 · 仅 FP8 input</span><div class="bar-track"><div class="bar-fill new"></div></div><output>32 KiB</output></div>
+    </div>
+    <div class="capacity">条形满刻度 = 512 KiB / core</div>
+    <div class="metrics" aria-live="polite"><div class="metric"><div class="value" id="sidecar-total">30</div><p>新增外存 sidecar / KiB</p></div><div class="metric"><div class="value" id="sidecar-core">3.75</div><p>每核路由切片 / KiB</p></div><div class="metric"><div class="value warm">7.77%</div><p>gathered payload 增量</p></div></div>
+    <p class="caption">第一条是“假设整 batch 缓存”的容量，并非当前窗口实现的实际占用。第二条只计算 FP8 input，不是完整双槽流水峰值；两条都未包含其它 live buffer。容量按 KiB = 1,024 bytes 计算。</p>
+  </div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>M4 · H4096 · I512 的主要张量</th><th class="num">单组逻辑大小</th><th class="num">若两组同时保留</th></tr></thead>
+    <tbody><tr><td>BF16 input</td><td class="num">32 KiB</td><td class="num">64 KiB</td></tr><tr><td>FP8 input</td><td class="num">16 KiB</td><td class="num">32 KiB</td></tr><tr><td>Gate / Up FP32 各自</td><td class="num">各 8 KiB</td><td class="num">各 16 KiB</td></tr><tr><td>FP8 activation</td><td class="num">2 KiB</td><td class="num">4 KiB</td></tr><tr><td>Down FP32 output</td><td class="num">64 KiB</td><td class="num">128 KiB</td></tr><tr><td>Down BF16 output</td><td class="num">32 KiB</td><td class="num">64 KiB</td></tr></tbody>
+  </table></div>
+  <p class="caption">还缺 SiLU / scale / cast 临时值、descriptor、padding、VP/DT scratch、metadata 与异步延寿。不能把这张逻辑张量表相加就宣称完整流水装进 512 KiB；最终以编译器 peak-live 地址分配及硬件异步读写证明为准。</p>
+  <h3>编译器该优化什么？</h3>
+  <p>首先让 IR 表达明确的 slot 生命周期：<strong>acquire → load / prepare → publish → consume → release</strong>。release 必须晚于该物理地址的最后异步 reader 完成。SSA 文本中的最后一次 use，不一定是硬件真正用完；两代 slot 也不能因为指针形状相同就被错误合并。</p>
+  <div class="timeline" role="img" aria-label="示意流水：准备 A 后执行 A，同时准备 B；随后执行 B 并准备 C。时间格只表达依赖，不代表等长硬件周期。">
+    <div></div><div class="time">预热</div><div class="time">阶段 1</div><div class="time">阶段 2</div><div class="time">阶段 3</div>
+    <div class="row-name">规划 / LD</div><div class="cell">准备 A</div><div class="cell">准备 B</div><div class="cell">准备 C</div><div class="cell">准备 D</div>
+    <div class="row-name">PE</div><div class="cell idle">等待预热</div><div class="cell pe">执行 A</div><div class="cell pe">执行 B</div><div class="cell pe">执行 C</div>
+  </div>
+  <p class="caption">目标依赖示意，格子不代表等长 cycle。实际可能受共用 VP/DT、地址覆盖、输出 ST 或权重供数限制，必须以 trace 检验能重叠多少。</p>
+  <ul class="checklist">
+    <li><strong>metadata 批量读取：</strong>验证 16 个 owner 的 strided 切片能否批量生成描述符，是否出现不必要的 DT 重排或标量 LD。</li>
+    <li><strong>有界 slot 地址复用：</strong>围绕已证明的异步完成边界缩短 live range；让两个 slot 独立，在退出 drain 后才复用相应区域。</li>
+    <li><strong>通用调度规则：</strong>依据 memory effect、alias、依赖和资源可用性移动操作，不允许靠函数名判断是否开启重排。</li>
+    <li><strong>有限验证探针：</strong>先编译 metadata 输出、跨 owner 读取、动态四行 gather，再接完整 Gate/Up/Down。双缓冲编译显式开启，保留自动 PE 配置。</li>
+  </ul>
+  <p>新结构也可能增加 hidden 重读：同一 token 属于多个专家，按需 gather 会重复读 BF16。需要对比“纯按需读”与“小 FP8 cache”。若源端额外发送 FP8 hidden，同时为 Shared 保留 BF16，hidden 部分的载荷会增加约 50%；因此第一版仅改 metadata，不把这项流量变化藏在结果里。</p>
+</section>
+
+<section class="section" id="choices">
+  <div class="section-head"><span class="section-no">08</span><h2>先选择最能判断方向的一版</h2></div>
+  <div class="table-wrap"><table><thead><tr><th>候选</th><th>能解决什么</th><th>代价与顺序</th></tr></thead><tbody>
+    <tr><td>只附带 FP32 expert IDs</td><td>减少 INT32 字节重建</td><td>仍有 expert × route 比较与窗口限制；作为低改动对照</td></tr>
+    <tr class="emphasis"><td><strong>BF16 expert slot-mask</strong></td><td>生产端生成关系，消费端全局合组，无需先做动态 CSR scatter</td><td>增加 7.77% payload 和 Router VP/ST；优先验证</td></tr>
+    <tr><td>稀疏 CSR / sorted references</td><td>metadata 更紧凑，直接表达每专家 token 列表</td><td>prefix-sum、动态 scatter 和发布成本未知；dense sidecar 成本过高时继续推进</td></tr>
+    <tr><td>独立 receiver 全局 planner</td><td>现有 Router 改动少</td><td>容易重复串行 CT/VReg 规划瓶颈；planner、写回、读取与等待全部计费</td></tr>
+    <tr><td>expert-major hidden / AllToAll</td><td>提供连续专家输入，更大 BS 的长期方向</td><td>额外复制、TP/EP 通信拓扑、combine 映射和负载均衡一起变化；需要独立完整设计</td></tr>
+    <tr><td>只扩大 GROUP_T / 调 allocator</td><td>改善某些容量临界点</td><td>全局 hidden cache 仍随 T 增长；可作为配套，不承担架构解耦</td></tr>
+  </tbody></table></div>
+  <p>这与此前“跨窗口余数队列”的区别，是把路由关系生成移到分布式 Router producer，并提供便于直接读取的格式。若仍让 Routed 串行扫描所有 route、维护 36 个专家状态，再发布任务，结构上虽然省了尾组，也可能被 planning 时间抵消。<strong>本轮必须同时证明 relation 生成更便宜、全局合组有效、供数流水能持续。</strong></p>
+  <h3>更大 BS 的下一层：一个权重 tile 能否连续服务多个 M4？</h3>
+  <p>即使消除了窗口，若每个满 M4 都重新遍历权重，随着尾组比例下降，收益也会逐渐饱和。进一步优化可以探索“同专家连续调度 + 权重 tile 驻留”：保持 PE 的 M4 映射，让多个 M4 连续消费同一段权重，而不直接改成 M8。</p>
+  <p>这取决于 weight memory → WL1 → PE 路径能否显式保留或实际复用该 tile，不能靠共享 descriptor 就假定没有重读。应先用 IR/汇编探针对照权重路径字节与 cycle；若需要交换 M/K 循环次序，还要核算多个 M4 累加器的 SRAM 占用。它是后续硬件可行性研究项，本轮 sidecar 组数结果没有计入这项收益。</p>
+</section>
+
+<section class="section" id="validation">
+  <div class="section-head"><span class="section-no">09</span><h2>先过 BS40 不掉速，再追 25% 吞吐</h2></div>
+  <p>验收比较同一个候选、同一输入分布、同一工具链下的 BS32 与 BS40。硬门槛是：</p>
+  <div class="formula">C40_new ≤ (40 / 32) × C32_new<br><span class="caption">同时要求 BS32 自身不因改造回退，不能通过放慢 BS32 凑平曲线。</span></div>
+  <p>用归档 BS32 作为预算参照，BS40 的 Routed C42 要从 2,457,180.51 降到 <strong>≤ 2,134,616.96</strong>，需要约 <strong>13.13% cycle 降幅</strong>。若新 BS32 也变快，BS40 门槛还要收紧。目标“吞吐 +25%”对应 <strong>cycles × 0.8</strong>，不是 cycles −25%。</p>
+  <div class="roadmap">
+    <div class="phase"><div><h3>冻结配对基线：BS32 / 40 / 128</h3><p>最新 kernel 与 compiler、默认 PE 搜索、固定 route / 数值阈值。先记录完整 Routed、Router、通信和整体组件时间，以及 PE gap 分布。</p></div></div>
+    <div class="phase"><div><h3>独立验证 Router sidecar 与传输</h3><p>证明旧 IDs / weights 不变，sidecar 与 padding 正确；分别测新增 VP/ST、真实 AllGather 载荷及延迟。设备生成索引，不能用 host plan 上传替代。</p></div></div>
+    <div class="phase"><div><h3>先单槽贯通，再接双槽流水</h3><p>从完整全局合组 + 单槽 M4 开始；确认输出与 Reduce 语义后，叠加 next-task、metadata load 和四行 gather。检查 IR / 汇编的地址复用、DT、同步和 drain。</p></div></div>
+    <div class="phase"><div><h3>针对主导瓶颈做 A/B</h3><p>按需 BF16 gather 对小 FP8 cache；批量描述符对旧读取；通用 live-range / 调度优化对原分配。每个变量分别衡量，记录 LD 重读与等待来源。</p></div></div>
+    <div class="phase"><div><h3>扩大曲线与真实路由覆盖</h3><p>BS40 过线后，扩到 15 档 BS 和原 49 个采样点；关键 shape 做 VCS/RTL，检查 changed-input Graph。BS&gt;128 再测 metadata tile、尾组与通信扩展。</p></div></div>
+  </div>
+  <h3>正确性和 cycle 分开测，planning 必须入账</h3>
+  <p>正确性进程覆盖 full / tail、重复 expert、无效 ID、空 owner、跨边界、不同 rank/core 与 replay 状态变化；cycle 进程单独运行。必须报告旧阶段和新阶段的完整边界，不能只展示删掉 planner 后的 PE executor。</p>
+  <pre aria-label="整体组件计时边界"><code>Per-layer measurement, respecting actual dependencies:
+    max_owner(Router + metadata emission)
+  + collective
+  + max_rank(Shared + Routed + Reduce)
+
+Also report:
+    Routed cycles, planning cycles, PE busy / gaps,
+    activation LD bytes, weight-path bytes, DT / ST,
+    peak-live SRAM, output equivalence and replay coverage.</code></pre>
+  <p class="caption">有通信计算重叠时，使用实际依赖时间线核算，不能把已重叠时间重复相加。该组件边界仍不等于含 H1 / host 的服务端端到端吞吐。Routed +25% 也不自动等于整体 MoE +25%。</p>
+</section>
+
+<section class="section" id="sources">
+  <div class="section-head"><span class="section-no">10</span><h2>来源、快照与当前证据边界</h2></div>
+  <div class="cards">
+    <div class="card"><span class="evidence">已核对</span><h3>源码与历史性能</h3><p>最新主线接口、PR #674 合入，以及自动 PE 归档性能。归档与当前源码的对应关系已单独标注。</p></div>
+    <div class="card"><span class="evidence model">Host 模型</span><h3>路由布局与组数</h3><p>45 份真实 payload 往返、119 次合成回放。证明路由结构一致，不证明设备计算或提速。</p></div>
+    <div class="card"><span class="evidence design">待完成</span><h3>设备与整链收益</h3><p>新 ABI 编译、完整 SRAM 分配、数值、CycleSim、通信、Graph、VCS/RTL 与真实全模型验证。</p></div>
+  </div>
+  <p class="caption">公开资料查阅于 2026-11-11。以下 main / latest 链接会随项目更新；本文描述对应查阅时内容。本文不发布新的设备吞吐结果，也没有改动生产 kernel 或 compiler。</p>
+  <ol class="sources">
+    <li><a href="https://docs.nvidia.com/cuda/hopper-tuning-guide/index.html">NVIDIA · Hopper Tuning Guide</a><small>SM shared memory 容量、单 block 限制与异步搬运机制。</small></li>
+    <li><a href="https://github.com/vllm-project/vllm/blob/main/vllm/model_executor/layers/fused_moe/moe_align_block_size.py">vLLM · moe_align_block_size.py</a> / <a href="https://github.com/vllm-project/vllm/blob/main/csrc/moe/moe_align_sum_kernels.cu">CUDA alignment kernels</a><small>专家分组索引、padding、有效范围及 scatter 映射；实现有不同 shape 路径。</small></li>
+    <li><a href="https://docs.nvidia.com/cutlass/latest/media/docs/cpp/grouped_scheduler.html">CUTLASS · Grouped Kernel Scheduler</a> / <a href="https://docs.nvidia.com/cutlass/latest/media/docs/cpp/efficient_gemm.html">Efficient GEMM in CUDA</a><small>persistent tile 调度、shared memory 与 register fragment 双缓冲。</small></li>
+    <li><a href="https://github.com/deepseek-ai/DeepGEMM">DeepGEMM</a><small>contiguous / masked grouped GEMM 接口。其硬件与量化契约不直接等同于 Zeus。</small></li>
+    <li><a href="https://github.com/deepseek-ai/DeepEP">DeepEP</a><small>查阅版本为 V2.5 文档：EPBuffer、expanded layout、设备端接收计数与 dispatch / combine。新路由需要更新调度数据，Graph 容量不是有效行数。</small></li>
+    <li><a href="https://github.com/DarronTam/torch_zeus/tree/5c05363f9a970bdf4d9a05c7ed6458663b406793/sgl-kernel-zeus-triton/python/glm53_flash/moe">GLM5.3Flash MoE 源码快照</a> / <a href="https://github.com/DarronTam/torch_zeus/pull/674">PR #674</a><small>当前 transport、Router、Routed、Reduce 接口依据。源码仓库访问可能需要对应权限。</small></li>
+    <li><a href="./index.html">GLM-5.3-Flash 自动 PE 性能报告</a> / <a href="./methodology.html">测评口径与 PR #643 基线</a><small>已有组件指标与测评范围；本文的 host 合组分析不替代完整性能复测。</small></li>
+  </ol>
+  <noscript><p class="notice">JavaScript 未启用。正文、容量表和完整组数表仍可阅读；交互演示停留在 BS40 默认状态。</p></noscript>
+</section>
+<footer class="footer"><a href="../../index.html">← 返回 Notes · 模型部署</a><span>GLM5.3Flash · 方案版本 2026-11-11</span></footer>
+</main>
+</div>
+<script>
+(() => {
+  // The static table is the single source for both the plot and the reader.
+  const rows = [...document.querySelectorAll('#counts-table tr')].map(row => {
+    const [bs, windowed, owner, global] = [...row.cells].map(cell => Number(cell.textContent));
+    return {bs, windowed, owner, global};
+  });
+  const chart = document.querySelector('#chart-content');
+  const colors = {windowed: '#b7613e', global: '#146c65', owner: '#8797a7'};
+  const x = bs => 55 + (bs - 16) / 112 * 675;
+  const y = count => 238 - count / 2500 * 212;
+  const svg = (name, attributes, text) => {
+    const element = document.createElementNS('http://www.w3.org/2000/svg', name);
+    for (const [key, value] of Object.entries(attributes)) element.setAttribute(key, value);
+    if (text !== undefined) element.textContent = text;
+    return element;
+  };
+  function drawChart(selected) {
+    chart.replaceChildren();
+    for (const tick of [0, 500, 1000, 1500, 2000, 2500]) {
+      chart.append(svg('line', {x1: 55, x2: 730, y1: y(tick), y2: y(tick), class: 'grid'}));
+      chart.append(svg('text', {x: 45, y: y(tick) + 4, 'text-anchor': 'end'}, tick.toLocaleString('en-US')));
+    }
+    for (const bs of [16, 32, 48, 64, 80, 96, 112, 128]) {
+      chart.append(svg('text', {x: x(bs), y: 260, 'text-anchor': 'middle'}, bs));
+    }
+    chart.append(svg('text', {x: 55, y: 14}, '组数'));
+    chart.append(svg('text', {x: 730, y: 278, 'text-anchor': 'end'}, '总 batch size'));
+    for (const series of ['owner', 'windowed', 'global']) {
+      chart.append(svg('polyline', {points: rows.map(row => x(row.bs) + ',' + y(row[series])).join(' '), stroke: colors[series], class: 'series', ...(series === 'owner' ? {'stroke-dasharray': '5 5'} : {})}));
+    }
+    const row = rows.find(item => item.bs === selected);
+    chart.append(svg('line', {x1: x(selected), x2: x(selected), y1: 25, y2: 239, stroke: '#97aaa0', 'stroke-dasharray': '3 4'}));
+    for (const series of ['owner', 'windowed', 'global']) {
+      const dot = svg('circle', {cx: x(selected), cy: y(row[series]), r: 5, fill: colors[series], stroke: '#fffefa', 'stroke-width': 2});
+      dot.append(svg('title', {}, 'BS' + selected + ': ' + row[series] + ' groups'));
+      chart.append(dot);
+    }
+    document.querySelector('#window-count').textContent = row.windowed.toLocaleString('en-US');
+    document.querySelector('#global-count').textContent = row.global.toLocaleString('en-US');
+    document.querySelector('#group-saving').textContent = ((1 - row.global / row.windowed) * 100).toFixed(2) + '%';
+    document.querySelector('#group-note').textContent = 'BS' + selected + '：各 owner 单独结束分组会产生 ' + row.owner.toLocaleString('en-US') + ' 组。全 batch 合组减少窗口切割，但收益要扣除索引、gather 与流水成本。';
+  }
+  const batch = document.querySelector('#batch-size');
+  batch.addEventListener('change', () => drawChart(Number(batch.value)));
+  drawChart(Number(batch.value));
+
+  for (const button of document.querySelectorAll('[data-mode]')) {
+    button.addEventListener('click', () => {
+      const global = button.dataset.mode === 'global';
+      for (const sibling of document.querySelectorAll('[data-mode]')) sibling.setAttribute('aria-pressed', String(sibling === button));
+      document.querySelector('#demo-groups').innerHTML = global
+        ? '<div><p class="group-label">跨窗口引用 · M4</p><div class="token-group"><span class="token">t2</span><span class="token">t9</span><span class="token owner-b">t25</span><span class="token owner-b">t33</span></div></div>'
+        : '<div><p class="group-label">窗口 A · M2</p><div class="token-group"><span class="token">t2</span><span class="token">t9</span></div></div><div><p class="group-label">窗口 B · M2</p><div class="token-group"><span class="token owner-b">t25</span><span class="token owner-b">t33</span></div></div>';
+      document.querySelector('#demo-explain').innerHTML = global
+        ? '<strong>一组 M4。</strong>先保留 token 引用，再按全局专家组读取这四行激活。合组范围变大，单次驻留仍可保持四行。'
+        : '<strong>两组 M2。</strong>窗口结束就提交尾组，同一专家需要两次 Gate / Up / Down 分组任务。';
+    });
+  }
+  const memoryBatch = document.querySelector('#memory-batch');
+  function updateMemory() {
+    const bs = Number(memoryBatch.value);
+    const capacity = Math.ceil(bs / 16);
+    document.querySelector('#memory-bs').value = bs;
+    document.querySelector('#full-cache').value = (bs * 4) + ' KiB';
+    document.querySelector('#full-cache-bar').style.width = (bs / 128 * 100) + '%';
+    document.querySelector('#sidecar-total').textContent = (16 * capacity * 640 / 1024).toFixed(0);
+    document.querySelector('#sidecar-core').textContent = (16 * capacity * 40 * 2 / 1024).toFixed(2).replace(/\.00$/, '');
+  }
+  memoryBatch.addEventListener('input', updateMemory);
+  updateMemory();
+})();
+</script>
+</body>
+</html>

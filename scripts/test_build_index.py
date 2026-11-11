@@ -27,6 +27,25 @@ class CatalogPathsTest(unittest.TestCase):
         self.write_catalog([self.article])
         self.assertEqual(load_catalog(self.repo)["articles"][0], self.article)
 
+    def test_deployment_uses_explicit_model_identity(self):
+        for model in ("GLM5.3Flash", "ExampleModelV2"):
+            with self.subTest(model=model):
+                article = dict(self.article, category="deployment", model=model,
+                               title=f"{model} - Example")
+                (self.repo / article["file"]).write_text(f"<title>{article['title']}</title>")
+                self.write_catalog([article])
+                self.assertEqual(load_catalog(self.repo)["articles"][0], article)
+
+    def test_deployment_rejects_missing_or_mismatched_model(self):
+        for model in (None, "", " Model "):
+            with self.subTest(model=model):
+                self.write_catalog([dict(self.article, category="deployment", model=model)])
+                with self.assertRaisesRegex(ValueError, "Model identity"):
+                    load_catalog(self.repo)
+        self.write_catalog([dict(self.article, category="deployment", model="OtherModel")])
+        with self.assertRaisesRegex(ValueError, "Title must start"):
+            load_catalog(self.repo)
+
     def test_unsafe_paths(self):
         for name in ("../outside.html", "/outside.html", "models/../outside.html",
                      "models//example/index.html", "models\\outside.html", "templates/index.html"):

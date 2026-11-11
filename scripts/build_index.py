@@ -10,6 +10,7 @@ from pathlib import Path, PurePosixPath
 from urllib.parse import quote
 
 CATEGORIES = {
+    "deployment": (None, "模型部署", "按模型梳理数据流、并行策略与性能方案，保留可核对的验证边界。"),
     "compiler": ("TritonShared", "编译与算子", "从 IR 变换到 kernel 实现，沿着编译管线理解优化。"),
     "hardware": ("Zeus518硬件", "硬件与架构", "从 RTL、数据通路与时序，理解硬件的工作方式。"),
     "tools": ("工具", "工具与实践", "把日常使用、部署和定制的方法整理成手册。"),
@@ -35,7 +36,16 @@ def load_catalog(repo):
         if name in seen:
             raise ValueError(f"Duplicate article: {name}")
         seen.add(name)
-        prefix = CATEGORIES[article["category"]][0] + " - "
+        prefix_name = CATEGORIES[article["category"]][0]
+        if prefix_name is None:
+            # Model-specific notes carry an explicit identity instead of sharing
+            # a compiler prefix; new models need no generator special cases.
+            prefix_name = article.get("model")
+            if not isinstance(prefix_name, str) or not prefix_name.strip():
+                raise ValueError(f"Model identity is required: {name}")
+            if prefix_name != prefix_name.strip():
+                raise ValueError(f"Model identity must not have surrounding whitespace: {name}")
+        prefix = prefix_name + " - "
         if not article["title"].startswith(prefix):
             raise ValueError(f"Title must start with {prefix!r}: {name}")
         date.fromisoformat(article["date"])
@@ -78,6 +88,7 @@ def build_index(repo):
     replacements = {
         "ARTICLES": "\n".join(sections),
         "TOTAL": str(len(articles)),
+        "TOPICS": str(len(CATEGORIES)),
         "UPDATED": catalog["updated"],
         **{f"COUNT_{key.upper()}": str(value) for key, value in counts.items()},
     }
