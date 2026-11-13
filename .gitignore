@@ -1,0 +1,9 @@
+/dist/
+/output/
+.playwright-cli/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+.DS_Store
+AGENTS.local.md

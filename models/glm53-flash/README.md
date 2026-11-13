@@ -1,16 +1,19 @@
 # GLM-5.3-Flash AF分离最大MOE FFN吞吐评估
 
-固定地址：https://xuanwen-wang.github.io/notes/models/glm53-flash/
+正式页面：[2026-11-02-moe-ffn-throughput.html](../../articles/deployment/glm53-flash/2026-11-02-moe-ffn-throughput.html)。
+原固定地址 https://xuanwen-wang.github.io/notes/models/glm53-flash/ 由发布流程生成兼容跳转。
 
 算法侧测评说明源文件为 `methodology.template.md`，运行 `python3 models/glm53-flash/scripts/build_methodology.py`
-生成同目录 `methodology.md` / `methodology.html`（依赖 `markdown-it-py`）。其基线表固定读取
+生成同目录 `methodology.md` 与
+`articles/deployment/glm53-flash/2026-11-05-moe-benchmark-methodology.html`（依赖 `markdown-it-py`）。其基线表固定读取
 `versions/20261104-1648b5c5/data/benchmark.json`，不随主页的新测量自动覆盖。
 说明正文、源码/工具链身份或链接变化后重建 HTML 与根目录索引；服务器路径索引留在 PR 描述与 91 shared 归档。
 
 `page.template` 和 `assets/style.css` 维护正文与统一样式；`scripts/import_timing.py`
 从私有实验归档审计原始结果，再调用 `scripts/sampling_policy.py` 应用统一采样口径。
 `scripts/build.py` 使用 Matplotlib 生成 PNG/SVG 和可离线阅读的 HTML。
-不直接修改生成的 `index.html`。Python 构建依赖 Matplotlib 和 Noto Sans CJK 字体。
+不直接修改生成的正式 HTML。生成器按 catalog 中的稳定 ID 写入 `articles/`，并重定位资源与文章链接。
+Python 构建依赖见根目录 `requirements-models.txt`，另需 Noto Sans CJK 字体。
 
 页面按「49 点总体吞吐 → Kernel 组成（先介绍，再吞吐率、耗时与增长图）→ 采样协议 → 验证 → 历史」组织。
 删除单点性能区和重复的 H200 单独曲线；原始数据与历史导出图继续归档。

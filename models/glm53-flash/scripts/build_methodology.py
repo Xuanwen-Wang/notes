@@ -2,10 +2,14 @@
 import html
 import json
 from pathlib import Path
+import sys
 
 from markdown_it import MarkdownIt
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT.parents[1]))
+from scripts.site_utils import write_article
+
 TITLE = 'GLM5.3Flash - MoE 测评口径与 PR #643 基线'
 
 
@@ -56,7 +60,7 @@ main { max-width:1400px; }
 <nav class="side-nav" aria-label="测评方法目录">{''.join(navigation)}</nav><div class="sidebar-foot"><a href="./">← 返回交互曲线</a><p>固定基线 · 2026-11-05</p></div></aside>
 <main><article class="methodology">{body}</article></main></body></html>
 '''
-    (ROOT / 'methodology.html').write_text(page)
+    write_article(ROOT.parents[1], 'glm53-flash-moe-methodology', page, ROOT / 'methodology.html')
 
 
 if __name__ == '__main__':

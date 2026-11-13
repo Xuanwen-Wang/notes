@@ -5,6 +5,7 @@ import json
 import math
 from pathlib import Path
 import re
+import sys
 
 from sampling_policy import INCLUDED_STEPS, write_csv
 
@@ -13,6 +14,9 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT.parents[1]))
+from scripts.site_utils import write_article
+
 COLORS = {'zeus': '#2364d2', 'h200': '#0d8d7b', 'router': '#2364d2',
           'routed': '#d85b43', 'shared': '#7856ad', 'reduce': '#0d8d7b', 'reference': '#8492a6'}
 plt.rcParams.update({'font.family': 'Noto Sans CJK JP', 'font.size': 11,
@@ -441,7 +445,7 @@ def build():
     assert '{{' not in page
     page = page.replace('</body>', '<script>' + (ROOT / 'assets/charts.js').read_text()
                         + '\n' + (ROOT / 'assets/navigation.js').read_text() + '</script></body>')
-    (ROOT / 'index.html').write_text(page)
+    write_article(ROOT.parents[1], 'glm53-flash-moe-throughput', page, ROOT / 'index.html')
     print(status)
 
 

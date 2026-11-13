@@ -9,10 +9,14 @@ import json
 import math
 from pathlib import Path
 import re
+import sys
 from statistics import mean
 from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT.parents[1]))
+from scripts.site_utils import write_article
+
 STAGES = ('router', 'shared', 'routed', 'reduce')
 BUSINESS_KERNELS = dict(router='sgl_moe_router_replicated_kernel', shared='_bf16_shared_kernel',
                         routed='sgl_moe_quantized_fused_kernel', reduce='sgl_moe_sum_reduce_quantized_kernel')
@@ -323,8 +327,10 @@ def build(data_path, preview=False, output=None):
         page = page.replace('{{' + key + '}}', value)
     require('{{' not in page, 'Unresolved template value')
     require(all(f'id="{anchor}"' in page for anchor in ANCHORS), 'Stable anchor missing')
-    target = output or ROOT / 'index.html'
-    target.write_text(page)
+    if output is not None:
+        output.write_text(page)
+    else:
+        write_article(ROOT.parents[1], 'deepseek-v4-flash-moe', page, ROOT / 'index.html')
     print(f'Built {suffix}: 2064 cases / 129 complete critical chains; offline single HTML')
 
 

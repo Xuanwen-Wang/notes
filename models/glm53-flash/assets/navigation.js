@@ -1,7 +1,8 @@
 /* Track section position without changing hash history during normal scrolling. */
 (() => {
-  const links = [...document.querySelectorAll('.side-nav a')];
-  const targets = links.map(link => document.querySelector(link.getAttribute('href')));
+  // Cross-page links do not participate in section tracking.
+  const links = [...document.querySelectorAll('.side-nav a[href^="#"]')];
+  const targets = links.map(link => document.getElementById(decodeURIComponent(link.getAttribute('href').slice(1))));
   let scheduled = false;
   function update() {
     scheduled = false;

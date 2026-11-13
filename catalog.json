@@ -1,130 +1,199 @@
 {
   "updated": "2026-11-13",
+  "site_url": "https://xuanwen-wang.github.io/notes/",
+  "resources": [
+    "models/glm53-flash/assets",
+    "models/glm53-flash/data",
+    "models/glm53-flash/versions",
+    "models/glm53-flash/methodology.md",
+    "models/deepseek-v4-flash/assets",
+    "models/deepseek-v4-flash/data"
+  ],
   "articles": [
     {
-      "file": "models/glm53-flash/routed-global-grouping.html",
+      "id": "glm53-flash-routed-global-grouping",
+      "file": "articles/deployment/glm53-flash/2026-11-11-routed-global-grouping.html",
       "category": "deployment",
       "model": "GLM5.3Flash",
       "title": "GLM5.3Flash - 大 batch MoE 合组：NVIDIA GPU 调研与 Router/Routed ABI 设计",
       "description": "GPU 如何用有限 shared memory 处理全局专家分组；拆解 Zeus 的 BS40 跳涨，设计 Router 索引 sidecar、全 batch M4 合组与双槽流水，附容量和离线组数交互图。",
       "date": "2026-11-11",
-      "tags": ["GLM5.3Flash", "MoE", "NVIDIA", "Router", "Routed", "ABI", "SRAM", "方案设计"]
+      "tags": ["GLM5.3Flash", "MoE", "NVIDIA", "Router", "Routed", "ABI", "SRAM", "方案设计"],
+      "created": "2026-11-11",
+      "created_source": "git",
+      "aliases": ["models/glm53-flash/routed-global-grouping.html"]
     },
     {
-      "file": "2026-11-05-glm53flash-dsa-kvcache.html",
+      "id": "glm53-flash-dsa-kvcache",
+      "file": "articles/deployment/glm53-flash/2026-11-05-dsa-kvcache-attention.html",
       "category": "deployment",
       "model": "GLM5.3Flash",
       "title": "GLM5.3Flash - DSA：从 P1 到 KVCache 与 Attention",
       "description": "沿 P1、两次 AllGather、P2 与 P3 梳理 DSA Decode；交互查看 pooled keys、共享 latent、tensor shape 和 CP/core 分工。",
       "date": "2026-11-05",
-      "tags": ["GLM-5.3-Flash", "DSA", "KVCache", "MLA", "Attention", "数据流"]
+      "tags": ["GLM-5.3-Flash", "DSA", "KVCache", "MLA", "Attention", "数据流"],
+      "created": "2026-11-05",
+      "created_source": "filename",
+      "aliases": ["2026-11-05-glm53flash-dsa-kvcache.html"]
     },
     {
-      "file": "models/glm53-flash/methodology.html",
+      "id": "glm53-flash-moe-methodology",
+      "file": "articles/deployment/glm53-flash/2026-11-05-moe-benchmark-methodology.html",
       "category": "deployment",
       "model": "GLM5.3Flash",
       "title": "GLM5.3Flash - MoE 测评口径与 PR #643 基线",
       "description": "给算法侧的测评说明：冻结逐层输入、H200 EP4/Zeus EP4×TP4、量化、计时与汇总公式、真实推理差异，以及合入基线。",
       "date": "2026-11-05",
-      "tags": ["GLM-5.3-Flash", "MoE", "H200", "CycleSim", "测评方法", "PR643"]
+      "tags": ["GLM-5.3-Flash", "MoE", "H200", "CycleSim", "测评方法", "PR643"],
+      "created": "2026-11-05",
+      "created_source": "git",
+      "aliases": ["models/glm53-flash/methodology.html"]
     },
     {
-      "file": "2026-11-03-zccl-allreduce-pblink.html",
+      "id": "zccl-allreduce-pblink",
+      "file": "articles/hardware/2026-11-03-zccl-allreduce-pblink.html",
       "category": "hardware",
       "title": "Zeus518硬件 - ZCCL AllReduce 全链路：PyTorch、Triton 与 PBLink",
       "description": "沿着实际源码，从通信组与 PS1 互联，到双核 Triton、16 路分块、PBLink FIFO 和三层同步，逐步理解 AllReduce。",
       "date": "2026-11-03",
-      "tags": ["ZCCL", "AllReduce", "PBLink", "Triton", "集合通信"]
+      "tags": ["ZCCL", "AllReduce", "PBLink", "Triton", "集合通信"],
+      "created": "2026-11-03",
+      "created_source": "filename",
+      "aliases": ["2026-11-03-zccl-allreduce-pblink.html"]
     },
     {
-      "file": "models/glm53-flash/index.html",
+      "id": "glm53-flash-moe-throughput",
+      "file": "articles/deployment/glm53-flash/2026-11-02-moe-ffn-throughput.html",
       "category": "deployment",
       "model": "GLM5.3Flash",
       "title": "GLM5.3Flash - AF分离最大MOE FFN吞吐评估",
       "description": "自动 PE 配置与新编译器的49个 decode step 采样点复测：四卡 Zeus/H200 吞吐与比值、各 kernel 吞吐和耗时增长，保留 PR643 固定基线。",
       "date": "2026-11-09",
-      "tags": ["GLM-5.3-Flash", "MoE", "H200", "CycleSim", "Benchmark"]
+      "tags": ["GLM-5.3-Flash", "MoE", "H200", "CycleSim", "Benchmark"],
+      "created": "2026-11-02",
+      "created_source": "git",
+      "aliases": ["models/glm53-flash/index.html"]
     },
     {
-      "file": "2026-10-30-sigmoid-silu-fitting.html",
+      "id": "sigmoid-silu-fitting",
+      "file": "articles/compiler/2026-10-30-sigmoid-silu-fitting.html",
       "category": "compiler",
       "title": "TritonShared - Sigmoid 与 SiLU：拟合算法、Lowering 与真实指令",
       "description": "对照 fast、balanced、accurate、cascade_add 与直接 SiLU 拟合，沿着系数、VP 配方和 12 组真实机器码，核对精度与代价。",
       "date": "2026-10-30",
-      "tags": ["Sigmoid", "SiLU", "LUT", "VP", "数值精度"]
+      "tags": ["Sigmoid", "SiLU", "LUT", "VP", "数值精度"],
+      "created": "2026-10-30",
+      "created_source": "filename",
+      "aliases": ["2026-10-30-sigmoid-silu-fitting.html"]
     },
     {
-      "file": "models/deepseek-v4-flash/index.html",
+      "id": "deepseek-v4-flash-moe",
+      "file": "articles/deployment/deepseek-v4-flash/2026-10-28-moe-optimization.html",
       "category": "deployment",
       "model": "DeepSeek V4 Flash",
       "title": "DeepSeek V4 Flash - MoE 优化与验证",
       "description": "BS16/24/32 真实 step17、4K 上下文与 43 层整链慢 rank：四 kernel 优化、量化与 Graph ABI、Viewer 观察及 H200 对比。",
       "date": "2026-11-05",
-      "tags": ["DeepSeek V4", "MoE", "CycleSim", "交互图表"]
+      "tags": ["DeepSeek V4", "MoE", "CycleSim", "交互图表"],
+      "created": "2026-10-28",
+      "created_source": "git",
+      "aliases": ["models/deepseek-v4-flash/index.html"]
     },
     {
-      "file": "ldg-bandwidth-explained-2026-10-15.html",
+      "id": "ldg-bandwidth",
+      "file": "articles/hardware/2026-10-15-ldg-bandwidth-explained.html",
       "category": "hardware",
       "title": "Zeus518硬件 - LDG 带宽：从 RTL 到 2.14 TB/s",
       "description": "沿着 Weight DRAM → WL1 → PE 的供数路径，拆解并行读取、credit 周转与带宽公式。",
       "date": "2026-10-15",
-      "tags": ["RTL", "WL1", "带宽分析"]
+      "tags": ["RTL", "WL1", "带宽分析"],
+      "created": "2026-10-15",
+      "created_source": "filename",
+      "aliases": ["ldg-bandwidth-explained-2026-10-15.html"]
     },
     {
-      "file": "2026-09-14-gather-parent-acquire-first.html",
+      "id": "gather-parent-acquire-first",
+      "file": "articles/compiler/2026-09-14-gather-parent-acquire-first.html",
       "category": "compiler",
       "title": "TritonShared - Gather C1 优化与 C2 性能回退分析",
       "description": "从父路径等待复用到 LD 时序对照，解释 C1 的收益，以及 C2 重叠更多却变慢的原因。",
       "date": "2026-10-15",
-      "tags": ["Gather", "InjectSync", "VCS"]
+      "tags": ["Gather", "InjectSync", "VCS"],
+      "created": "2026-09-14",
+      "created_source": "filename",
+      "aliases": ["2026-09-14-gather-parent-acquire-first.html"]
     },
     {
-      "file": "2026-09-14-small-row-gather-lowering-explained.html",
+      "id": "small-row-gather-lowering",
+      "file": "articles/compiler/2026-09-14-small-row-gather-lowering-explained.html",
       "category": "compiler",
       "title": "TritonShared - 四行 Gather：周期收益与 LD 并行空间",
       "description": "对照 Triton、lowering 与搬运时间线，看清 mask 优化省下了什么，以及并行空间在哪里。",
       "date": "2026-10-15",
-      "tags": ["Gather", "Lowering", "数据搬运"]
+      "tags": ["Gather", "Lowering", "数据搬运"],
+      "created": "2026-09-14",
+      "created_source": "filename",
+      "aliases": ["2026-09-14-small-row-gather-lowering-explained.html"]
     },
     {
-      "file": "2026-09-08-device-fused-uscale-gemm.html",
+      "id": "device-fused-uscale-gemm",
+      "file": "articles/compiler/2026-09-08-device-fused-uscale-gemm.html",
       "category": "compiler",
       "title": "TritonShared - Device-Fused UScale GEMM",
       "description": "串起双侧 per-group 量化、WUS 页布局、编译器接口与 kernel 实现，说明融合的适用边界。",
       "date": "2026-09-09",
-      "tags": ["GEMM", "UScale", "量化"]
+      "tags": ["GEMM", "UScale", "量化"],
+      "created": "2026-09-08",
+      "created_source": "filename",
+      "aliases": ["2026-09-08-device-fused-uscale-gemm.html"]
     },
     {
-      "file": "ZeusV3_Deployment_Perf_Optimization.html",
-      "category": "compiler",
-      "title": "TritonShared - 模型部署性能优化的三个层次",
+      "id": "deployment-performance-layers",
+      "file": "articles/deployment/2026-09-07-performance-optimization-layers.html",
+      "category": "deployment",
+      "title": "模型部署 - 性能优化的三个层次",
       "description": "从模型部署到算子编译，再到 Block、layout 与微架构，建立性能优化的分层视角。",
       "date": "2026-09-07",
-      "tags": ["模型部署", "性能优化", "Layout"]
+      "tags": ["模型部署", "性能优化", "Layout"],
+      "created": "2026-09-07",
+      "created_source": "git",
+      "aliases": ["ZeusV3_Deployment_Perf_Optimization.html"]
     },
     {
-      "file": "2026-09-03-batch-scalar-dma-loads-explained.html",
+      "id": "batch-scalar-dma-loads",
+      "file": "articles/compiler/2026-09-03-batch-scalar-dma-loads-explained.html",
       "category": "compiler",
       "title": "TritonShared - 标量 DMA 批量化",
       "description": "用四条 load 的前后时序，解释 BatchScalarDmaLoadsPass 如何减少重复的数据搬运。",
       "date": "2026-09-07",
-      "tags": ["DMA", "Pass", "数据搬运"]
+      "tags": ["DMA", "Pass", "数据搬运"],
+      "created": "2026-09-03",
+      "created_source": "filename",
+      "aliases": ["2026-09-03-batch-scalar-dma-loads-explained.html"]
     },
     {
-      "file": "2026-09-01-moe-ffn-flow-visual-guide.html",
+      "id": "moe-ffn-flow",
+      "file": "articles/compiler/2026-09-01-moe-ffn-flow-visual-guide.html",
       "category": "compiler",
       "title": "TritonShared - MoE FFN：从 Dense 到真实算子",
       "description": "从 Dense FFN 出发，跟着 token 经过 Router、Experts 与加权合并，理解真实算子的数据流。",
       "date": "2026-09-07",
-      "tags": ["MoE", "数据流", "交互图解"]
+      "tags": ["MoE", "数据流", "交互图解"],
+      "created": "2026-09-01",
+      "created_source": "filename",
+      "aliases": ["2026-09-01-moe-ffn-flow-visual-guide.html"]
     },
     {
-      "file": "codex-switch-guide.html",
+      "id": "codex-switch-guide",
+      "file": "articles/tools/2026-09-07-codex-switch-guide.html",
       "category": "tools",
       "title": "工具 - Codex 账号切换器",
       "description": "账号切换器的部署、额度查看、日常使用与脚本定制说明。",
       "date": "2026-09-07",
-      "tags": ["Codex", "CLI", "使用手册"]
+      "tags": ["Codex", "CLI", "使用手册"],
+      "created": "2026-09-07",
+      "created_source": "git",
+      "aliases": ["codex-switch-guide.html"]
     }
   ]
 }

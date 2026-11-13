@@ -31,8 +31,8 @@ main{min-width:0}.eyebrow{font:11px var(--mono);letter-spacing:1.6px;color:var(-
   <p class="rail-label">THE NOTEBOOK</p>
   <nav class="nav-items" aria-label="按分类筛选">
     <button class="nav-item" data-filter="all" aria-pressed="true"><span class="nav-icon" aria-hidden="true">▦</span>全部笔记<span class="nav-count">15</span></button>
-    <button class="nav-item" data-filter="deployment" aria-pressed="false"><span class="nav-icon" aria-hidden="true">◇</span>模型部署<span class="nav-count">5</span></button>
-    <button class="nav-item" data-filter="compiler" aria-pressed="false"><span class="nav-icon" aria-hidden="true">⌘</span>TritonShared<span class="nav-count">7</span></button>
+    <button class="nav-item" data-filter="deployment" aria-pressed="false"><span class="nav-icon" aria-hidden="true">◇</span>模型部署<span class="nav-count">6</span></button>
+    <button class="nav-item" data-filter="compiler" aria-pressed="false"><span class="nav-icon" aria-hidden="true">⌘</span>TritonShared<span class="nav-count">6</span></button>
     <button class="nav-item" data-filter="hardware" aria-pressed="false"><span class="nav-icon" aria-hidden="true">⊞</span>Zeus518硬件<span class="nav-count">2</span></button>
     <button class="nav-item" data-filter="tools" aria-pressed="false"><span class="nav-icon" aria-hidden="true">↗</span>工具<span class="nav-count">1</span></button>
   </nav>
@@ -41,64 +41,64 @@ main{min-width:0}.eyebrow{font:11px var(--mono);letter-spacing:1.6px;color:var(-
 </div></aside>
 <main id="main">
   <div class="intro"><div><div class="eyebrow">ENGINEERING NOTES</div><h1>技术笔记</h1><p>模型、编译、硬件与工具。把实现细节，整理成可读的笔记。</p></div><div class="intro-number"><b>15</b><span>篇笔记 · 4 个主题</span></div></div>
-  <a class="featured" href="./ldg-bandwidth-explained-2026-10-15.html">
+  <a class="featured" href="./articles/hardware/2026-10-15-ldg-bandwidth-explained.html">
     <div class="feature-copy"><div class="feature-label"><span>深入阅读</span><span>硬件架构图解</span></div><h2><small>Zeus518硬件</small>LDG 带宽：<br>从 RTL 到 2.14 TB/s</h2><p>沿着一次权重读取，理解并行 MC、credit 与稳态供数带宽。</p><span class="read-link">阅读图解<span aria-hidden="true">↗</span></span></div>
     <div class="feature-visual" aria-hidden="true"><div class="visual-label">WEIGHT DATA PATH</div><div class="bandwidth">2.14<span>TB/s</span></div><div class="visual-caption">设计稳态估算 · 每核 · 400 MHz</div><div class="visual-flow"><b>DRAM</b><span>→</span><b>WL1</b><span>→</span><b>PE</b></div><div class="visual-foot">256 MC · 15 credits · 23 cycles</div></div>
   </a>
   <div class="toolbar"><div class="results-title">文章目录<span id="result-count" role="status" aria-live="polite">15 篇</span></div><label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><span class="sr-only">搜索笔记</span><input id="search" type="search" placeholder="搜索标题、关键词…" autocomplete="off"></label></div>
   <noscript><p>全部文章可直接阅读；分类筛选与搜索需要启用 JavaScript。</p></noscript>
   <div id="articles"><section class="category" data-category="deployment" aria-labelledby="heading-deployment">
-  <div class="section-heading"><div><span class="section-index">01</span><h2 id="heading-deployment">模型部署</h2><span class="section-count">05</span></div><p>按模型梳理数据流、并行策略与性能方案，保留可核对的验证边界。</p></div>
+  <div class="section-heading"><div><span class="section-index">01</span><h2 id="heading-deployment">模型部署</h2><span class="section-count">06</span></div><p>按模型梳理数据流、并行策略与性能方案，保留可核对的验证边界。</p></div>
   <div class="note-list"><article class="note" data-search="GLM5.3Flash - 大 batch MoE 合组：NVIDIA GPU 调研与 Router/Routed ABI 设计 GPU 如何用有限 shared memory 处理全局专家分组；拆解 Zeus 的 BS40 跳涨，设计 Router 索引 sidecar、全 batch M4 合组与双槽流水，附容量和离线组数交互图。 GLM5.3Flash MoE NVIDIA Router Routed ABI SRAM 方案设计">
-  <div class="note-main"><h3><a href="./models/glm53-flash/routed-global-grouping.html">GLM5.3Flash - 大 batch MoE 合组：NVIDIA GPU 调研与 Router/Routed ABI 设计</a></h3>
+  <div class="note-main"><h3><a href="./articles/deployment/glm53-flash/2026-11-11-routed-global-grouping.html">GLM5.3Flash - 大 batch MoE 合组：NVIDIA GPU 调研与 Router/Routed ABI 设计</a></h3>
   <p>GPU 如何用有限 shared memory 处理全局专家分组；拆解 Zeus 的 BS40 跳涨，设计 Router 索引 sidecar、全 batch M4 合组与双槽流水，附容量和离线组数交互图。</p><div class="tags"><span>GLM5.3Flash</span><span>MoE</span><span>NVIDIA</span><span>Router</span><span>Routed</span><span>ABI</span><span>SRAM</span><span>方案设计</span></div></div>
   <div class="note-meta"><time datetime="2026-11-11">2026-11-11</time><span aria-hidden="true" class="arrow">↗</span></div>
 </article><article class="note" data-search="GLM5.3Flash - AF分离最大MOE FFN吞吐评估 自动 PE 配置与新编译器的49个 decode step 采样点复测：四卡 Zeus/H200 吞吐与比值、各 kernel 吞吐和耗时增长，保留 PR643 固定基线。 GLM-5.3-Flash MoE H200 CycleSim Benchmark">
-  <div class="note-main"><h3><a href="./models/glm53-flash/index.html">GLM5.3Flash - AF分离最大MOE FFN吞吐评估</a></h3>
+  <div class="note-main"><h3><a href="./articles/deployment/glm53-flash/2026-11-02-moe-ffn-throughput.html">GLM5.3Flash - AF分离最大MOE FFN吞吐评估</a></h3>
   <p>自动 PE 配置与新编译器的49个 decode step 采样点复测：四卡 Zeus/H200 吞吐与比值、各 kernel 吞吐和耗时增长，保留 PR643 固定基线。</p><div class="tags"><span>GLM-5.3-Flash</span><span>MoE</span><span>H200</span><span>CycleSim</span><span>Benchmark</span></div></div>
   <div class="note-meta"><time datetime="2026-11-09">2026-11-09</time><span aria-hidden="true" class="arrow">↗</span></div>
 </article><article class="note" data-search="GLM5.3Flash - DSA：从 P1 到 KVCache 与 Attention 沿 P1、两次 AllGather、P2 与 P3 梳理 DSA Decode；交互查看 pooled keys、共享 latent、tensor shape 和 CP/core 分工。 GLM-5.3-Flash DSA KVCache MLA Attention 数据流">
-  <div class="note-main"><h3><a href="./2026-11-05-glm53flash-dsa-kvcache.html">GLM5.3Flash - DSA：从 P1 到 KVCache 与 Attention</a></h3>
+  <div class="note-main"><h3><a href="./articles/deployment/glm53-flash/2026-11-05-dsa-kvcache-attention.html">GLM5.3Flash - DSA：从 P1 到 KVCache 与 Attention</a></h3>
   <p>沿 P1、两次 AllGather、P2 与 P3 梳理 DSA Decode；交互查看 pooled keys、共享 latent、tensor shape 和 CP/core 分工。</p><div class="tags"><span>GLM-5.3-Flash</span><span>DSA</span><span>KVCache</span><span>MLA</span><span>Attention</span><span>数据流</span></div></div>
   <div class="note-meta"><time datetime="2026-11-05">2026-11-05</time><span aria-hidden="true" class="arrow">↗</span></div>
 </article><article class="note" data-search="GLM5.3Flash - MoE 测评口径与 PR #643 基线 给算法侧的测评说明：冻结逐层输入、H200 EP4/Zeus EP4×TP4、量化、计时与汇总公式、真实推理差异，以及合入基线。 GLM-5.3-Flash MoE H200 CycleSim 测评方法 PR643">
-  <div class="note-main"><h3><a href="./models/glm53-flash/methodology.html">GLM5.3Flash - MoE 测评口径与 PR #643 基线</a></h3>
+  <div class="note-main"><h3><a href="./articles/deployment/glm53-flash/2026-11-05-moe-benchmark-methodology.html">GLM5.3Flash - MoE 测评口径与 PR #643 基线</a></h3>
   <p>给算法侧的测评说明：冻结逐层输入、H200 EP4/Zeus EP4×TP4、量化、计时与汇总公式、真实推理差异，以及合入基线。</p><div class="tags"><span>GLM-5.3-Flash</span><span>MoE</span><span>H200</span><span>CycleSim</span><span>测评方法</span><span>PR643</span></div></div>
   <div class="note-meta"><time datetime="2026-11-05">2026-11-05</time><span aria-hidden="true" class="arrow">↗</span></div>
 </article><article class="note" data-search="DeepSeek V4 Flash - MoE 优化与验证 BS16/24/32 真实 step17、4K 上下文与 43 层整链慢 rank：四 kernel 优化、量化与 Graph ABI、Viewer 观察及 H200 对比。 DeepSeek V4 MoE CycleSim 交互图表">
-  <div class="note-main"><h3><a href="./models/deepseek-v4-flash/index.html">DeepSeek V4 Flash - MoE 优化与验证</a></h3>
+  <div class="note-main"><h3><a href="./articles/deployment/deepseek-v4-flash/2026-10-28-moe-optimization.html">DeepSeek V4 Flash - MoE 优化与验证</a></h3>
   <p>BS16/24/32 真实 step17、4K 上下文与 43 层整链慢 rank：四 kernel 优化、量化与 Graph ABI、Viewer 观察及 H200 对比。</p><div class="tags"><span>DeepSeek V4</span><span>MoE</span><span>CycleSim</span><span>交互图表</span></div></div>
   <div class="note-meta"><time datetime="2026-11-05">2026-11-05</time><span aria-hidden="true" class="arrow">↗</span></div>
+</article><article class="note" data-search="模型部署 - 性能优化的三个层次 从模型部署到算子编译，再到 Block、layout 与微架构，建立性能优化的分层视角。 模型部署 性能优化 Layout">
+  <div class="note-main"><h3><a href="./articles/deployment/2026-09-07-performance-optimization-layers.html">模型部署 - 性能优化的三个层次</a></h3>
+  <p>从模型部署到算子编译，再到 Block、layout 与微架构，建立性能优化的分层视角。</p><div class="tags"><span>模型部署</span><span>性能优化</span><span>Layout</span></div></div>
+  <div class="note-meta"><time datetime="2026-09-07">2026-09-07</time><span aria-hidden="true" class="arrow">↗</span></div>
 </article></div>
 </section>
 <section class="category" data-category="compiler" aria-labelledby="heading-compiler">
-  <div class="section-heading"><div><span class="section-index">02</span><h2 id="heading-compiler">编译与算子</h2><span class="section-count">07</span></div><p>从 IR 变换到 kernel 实现，沿着编译管线理解优化。</p></div>
+  <div class="section-heading"><div><span class="section-index">02</span><h2 id="heading-compiler">编译与算子</h2><span class="section-count">06</span></div><p>从 IR 变换到 kernel 实现，沿着编译管线理解优化。</p></div>
   <div class="note-list"><article class="note" data-search="TritonShared - Sigmoid 与 SiLU：拟合算法、Lowering 与真实指令 对照 fast、balanced、accurate、cascade_add 与直接 SiLU 拟合，沿着系数、VP 配方和 12 组真实机器码，核对精度与代价。 Sigmoid SiLU LUT VP 数值精度">
-  <div class="note-main"><h3><a href="./2026-10-30-sigmoid-silu-fitting.html">TritonShared - Sigmoid 与 SiLU：拟合算法、Lowering 与真实指令</a></h3>
+  <div class="note-main"><h3><a href="./articles/compiler/2026-10-30-sigmoid-silu-fitting.html">TritonShared - Sigmoid 与 SiLU：拟合算法、Lowering 与真实指令</a></h3>
   <p>对照 fast、balanced、accurate、cascade_add 与直接 SiLU 拟合，沿着系数、VP 配方和 12 组真实机器码，核对精度与代价。</p><div class="tags"><span>Sigmoid</span><span>SiLU</span><span>LUT</span><span>VP</span><span>数值精度</span></div></div>
   <div class="note-meta"><time datetime="2026-10-30">2026-10-30</time><span aria-hidden="true" class="arrow">↗</span></div>
 </article><article class="note" data-search="TritonShared - Gather C1 优化与 C2 性能回退分析 从父路径等待复用到 LD 时序对照，解释 C1 的收益，以及 C2 重叠更多却变慢的原因。 Gather InjectSync VCS">
-  <div class="note-main"><h3><a href="./2026-09-14-gather-parent-acquire-first.html">TritonShared - Gather C1 优化与 C2 性能回退分析</a></h3>
+  <div class="note-main"><h3><a href="./articles/compiler/2026-09-14-gather-parent-acquire-first.html">TritonShared - Gather C1 优化与 C2 性能回退分析</a></h3>
   <p>从父路径等待复用到 LD 时序对照，解释 C1 的收益，以及 C2 重叠更多却变慢的原因。</p><div class="tags"><span>Gather</span><span>InjectSync</span><span>VCS</span></div></div>
   <div class="note-meta"><time datetime="2026-10-15">2026-10-15</time><span aria-hidden="true" class="arrow">↗</span></div>
 </article><article class="note" data-search="TritonShared - 四行 Gather：周期收益与 LD 并行空间 对照 Triton、lowering 与搬运时间线，看清 mask 优化省下了什么，以及并行空间在哪里。 Gather Lowering 数据搬运">
-  <div class="note-main"><h3><a href="./2026-09-14-small-row-gather-lowering-explained.html">TritonShared - 四行 Gather：周期收益与 LD 并行空间</a></h3>
+  <div class="note-main"><h3><a href="./articles/compiler/2026-09-14-small-row-gather-lowering-explained.html">TritonShared - 四行 Gather：周期收益与 LD 并行空间</a></h3>
   <p>对照 Triton、lowering 与搬运时间线，看清 mask 优化省下了什么，以及并行空间在哪里。</p><div class="tags"><span>Gather</span><span>Lowering</span><span>数据搬运</span></div></div>
   <div class="note-meta"><time datetime="2026-10-15">2026-10-15</time><span aria-hidden="true" class="arrow">↗</span></div>
 </article><article class="note" data-search="TritonShared - Device-Fused UScale GEMM 串起双侧 per-group 量化、WUS 页布局、编译器接口与 kernel 实现，说明融合的适用边界。 GEMM UScale 量化">
-  <div class="note-main"><h3><a href="./2026-09-08-device-fused-uscale-gemm.html">TritonShared - Device-Fused UScale GEMM</a></h3>
+  <div class="note-main"><h3><a href="./articles/compiler/2026-09-08-device-fused-uscale-gemm.html">TritonShared - Device-Fused UScale GEMM</a></h3>
   <p>串起双侧 per-group 量化、WUS 页布局、编译器接口与 kernel 实现，说明融合的适用边界。</p><div class="tags"><span>GEMM</span><span>UScale</span><span>量化</span></div></div>
   <div class="note-meta"><time datetime="2026-09-09">2026-09-09</time><span aria-hidden="true" class="arrow">↗</span></div>
-</article><article class="note" data-search="TritonShared - 模型部署性能优化的三个层次 从模型部署到算子编译，再到 Block、layout 与微架构，建立性能优化的分层视角。 模型部署 性能优化 Layout">
-  <div class="note-main"><h3><a href="./ZeusV3_Deployment_Perf_Optimization.html">TritonShared - 模型部署性能优化的三个层次</a></h3>
-  <p>从模型部署到算子编译，再到 Block、layout 与微架构，建立性能优化的分层视角。</p><div class="tags"><span>模型部署</span><span>性能优化</span><span>Layout</span></div></div>
-  <div class="note-meta"><time datetime="2026-09-07">2026-09-07</time><span aria-hidden="true" class="arrow">↗</span></div>
 </article><article class="note" data-search="TritonShared - 标量 DMA 批量化 用四条 load 的前后时序，解释 BatchScalarDmaLoadsPass 如何减少重复的数据搬运。 DMA Pass 数据搬运">
-  <div class="note-main"><h3><a href="./2026-09-03-batch-scalar-dma-loads-explained.html">TritonShared - 标量 DMA 批量化</a></h3>
+  <div class="note-main"><h3><a href="./articles/compiler/2026-09-03-batch-scalar-dma-loads-explained.html">TritonShared - 标量 DMA 批量化</a></h3>
   <p>用四条 load 的前后时序，解释 BatchScalarDmaLoadsPass 如何减少重复的数据搬运。</p><div class="tags"><span>DMA</span><span>Pass</span><span>数据搬运</span></div></div>
   <div class="note-meta"><time datetime="2026-09-07">2026-09-07</time><span aria-hidden="true" class="arrow">↗</span></div>
 </article><article class="note" data-search="TritonShared - MoE FFN：从 Dense 到真实算子 从 Dense FFN 出发，跟着 token 经过 Router、Experts 与加权合并，理解真实算子的数据流。 MoE 数据流 交互图解">
-  <div class="note-main"><h3><a href="./2026-09-01-moe-ffn-flow-visual-guide.html">TritonShared - MoE FFN：从 Dense 到真实算子</a></h3>
+  <div class="note-main"><h3><a href="./articles/compiler/2026-09-01-moe-ffn-flow-visual-guide.html">TritonShared - MoE FFN：从 Dense 到真实算子</a></h3>
   <p>从 Dense FFN 出发，跟着 token 经过 Router、Experts 与加权合并，理解真实算子的数据流。</p><div class="tags"><span>MoE</span><span>数据流</span><span>交互图解</span></div></div>
   <div class="note-meta"><time datetime="2026-09-07">2026-09-07</time><span aria-hidden="true" class="arrow">↗</span></div>
 </article></div>
@@ -106,11 +106,11 @@ main{min-width:0}.eyebrow{font:11px var(--mono);letter-spacing:1.6px;color:var(-
 <section class="category" data-category="hardware" aria-labelledby="heading-hardware">
   <div class="section-heading"><div><span class="section-index">03</span><h2 id="heading-hardware">硬件与架构</h2><span class="section-count">02</span></div><p>从 RTL、数据通路与时序，理解硬件的工作方式。</p></div>
   <div class="note-list"><article class="note" data-search="Zeus518硬件 - ZCCL AllReduce 全链路：PyTorch、Triton 与 PBLink 沿着实际源码，从通信组与 PS1 互联，到双核 Triton、16 路分块、PBLink FIFO 和三层同步，逐步理解 AllReduce。 ZCCL AllReduce PBLink Triton 集合通信">
-  <div class="note-main"><h3><a href="./2026-11-03-zccl-allreduce-pblink.html">Zeus518硬件 - ZCCL AllReduce 全链路：PyTorch、Triton 与 PBLink</a></h3>
+  <div class="note-main"><h3><a href="./articles/hardware/2026-11-03-zccl-allreduce-pblink.html">Zeus518硬件 - ZCCL AllReduce 全链路：PyTorch、Triton 与 PBLink</a></h3>
   <p>沿着实际源码，从通信组与 PS1 互联，到双核 Triton、16 路分块、PBLink FIFO 和三层同步，逐步理解 AllReduce。</p><div class="tags"><span>ZCCL</span><span>AllReduce</span><span>PBLink</span><span>Triton</span><span>集合通信</span></div></div>
   <div class="note-meta"><time datetime="2026-11-03">2026-11-03</time><span aria-hidden="true" class="arrow">↗</span></div>
 </article><article class="note" data-search="Zeus518硬件 - LDG 带宽：从 RTL 到 2.14 TB/s 沿着 Weight DRAM → WL1 → PE 的供数路径，拆解并行读取、credit 周转与带宽公式。 RTL WL1 带宽分析">
-  <div class="note-main"><h3><a href="./ldg-bandwidth-explained-2026-10-15.html">Zeus518硬件 - LDG 带宽：从 RTL 到 2.14 TB/s</a></h3>
+  <div class="note-main"><h3><a href="./articles/hardware/2026-10-15-ldg-bandwidth-explained.html">Zeus518硬件 - LDG 带宽：从 RTL 到 2.14 TB/s</a></h3>
   <p>沿着 Weight DRAM → WL1 → PE 的供数路径，拆解并行读取、credit 周转与带宽公式。</p><div class="tags"><span>RTL</span><span>WL1</span><span>带宽分析</span></div></div>
   <div class="note-meta"><time datetime="2026-10-15">2026-10-15</time><span aria-hidden="true" class="arrow">↗</span></div>
 </article></div>
@@ -118,7 +118,7 @@ main{min-width:0}.eyebrow{font:11px var(--mono);letter-spacing:1.6px;color:var(-
 <section class="category" data-category="tools" aria-labelledby="heading-tools">
   <div class="section-heading"><div><span class="section-index">04</span><h2 id="heading-tools">工具与实践</h2><span class="section-count">01</span></div><p>把日常使用、部署和定制的方法整理成手册。</p></div>
   <div class="note-list"><article class="note" data-search="工具 - Codex 账号切换器 账号切换器的部署、额度查看、日常使用与脚本定制说明。 Codex CLI 使用手册">
-  <div class="note-main"><h3><a href="./codex-switch-guide.html">工具 - Codex 账号切换器</a></h3>
+  <div class="note-main"><h3><a href="./articles/tools/2026-09-07-codex-switch-guide.html">工具 - Codex 账号切换器</a></h3>
   <p>账号切换器的部署、额度查看、日常使用与脚本定制说明。</p><div class="tags"><span>Codex</span><span>CLI</span><span>使用手册</span></div></div>
   <div class="note-meta"><time datetime="2026-09-07">2026-09-07</time><span aria-hidden="true" class="arrow">↗</span></div>
 </article></div>

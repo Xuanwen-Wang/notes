@@ -64,8 +64,8 @@ main { max-width:1400px; }
 .side-nav a { white-space:normal; font-size:11px; }
 @media print { .methodology { border:0; padding:0; } }
 </style></head><body>
-<aside class="sidebar"><a class="brand" href="../../">NOTES</a><p class="sidebar-model">GLM-5.3-Flash<span>MEASUREMENT PROTOCOL</span></p>
-<nav class="side-nav" aria-label="测评方法目录"><a href="#method-1">01 · 先对齐“测的是什么”</a><a href="#method-2">02 · 输入与 49 个采样点</a><a href="#method-3">03 · H200 实际怎么执行</a><a href="#method-4">04 · H200 计时窗口与重复方式</a><a href="#method-5">05 · Zeus 实际怎么执行</a><a href="#method-6">06 · 量化、Router 与 Shared 的差异</a><a href="#method-7">07 · 延迟与吞吐怎么汇总</a><a href="#method-8">08 · PR #643 固定基线</a><a href="#method-9">09 · 验证覆盖与未覆盖的部分</a><a href="#method-10">10 · 算法侧怎样与真实推理核对</a><a href="#method-11">11 · 后续优化的对比约定与入口</a></nav><div class="sidebar-foot"><a href="./">← 返回交互曲线</a><p>固定基线 · 2026-11-05</p></div></aside>
+<aside class="sidebar"><a class="brand" href="../../../index.html">NOTES</a><p class="sidebar-model">GLM-5.3-Flash<span>MEASUREMENT PROTOCOL</span></p>
+<nav class="side-nav" aria-label="测评方法目录"><a href="#method-1">01 · 先对齐“测的是什么”</a><a href="#method-2">02 · 输入与 49 个采样点</a><a href="#method-3">03 · H200 实际怎么执行</a><a href="#method-4">04 · H200 计时窗口与重复方式</a><a href="#method-5">05 · Zeus 实际怎么执行</a><a href="#method-6">06 · 量化、Router 与 Shared 的差异</a><a href="#method-7">07 · 延迟与吞吐怎么汇总</a><a href="#method-8">08 · PR #643 固定基线</a><a href="#method-9">09 · 验证覆盖与未覆盖的部分</a><a href="#method-10">10 · 算法侧怎样与真实推理核对</a><a href="#method-11">11 · 后续优化的对比约定与入口</a></nav><div class="sidebar-foot"><a href="2026-11-02-moe-ffn-throughput.html">← 返回交互曲线</a><p>固定基线 · 2026-11-05</p></div></aside>
 <main><article class="methodology"><h1>GLM-5.3-Flash：MoE 测评口径与 PR #643 基线</h1>
 <p>更新：2026-11-05。面向算法侧复核与后续 kernel 优化；表格固定到本次合入基线。</p>
 <blockquote>
@@ -73,7 +73,7 @@ main { max-width:1400px; }
 H200 用真实 GPU CUDA event 测时，Zeus 用 CycleSim 周期按 400 MHz 换算。
 它没有包含 Attention、H1、真实跨卡通信和在线调度，不能直接当成完整推理服务的 tokens/s/card。</p>
 </blockquote>
-<p><a href="./">返回交互曲线</a> · <a href="https://github.com/DarronTam/torch_zeus/pull/643">PR #643</a> · <a href="methodology.md">下载本文 Markdown</a></p>
+<p><a href="2026-11-02-moe-ffn-throughput.html">返回交互曲线</a> · <a href="https://github.com/DarronTam/torch_zeus/pull/643">PR #643</a> · <a href="../../../models/glm53-flash/methodology.md">下载本文 Markdown</a></p>
 <h2 id="method-1">01 · 先对齐“测的是什么”</h2>
 <div class="table-scroll" tabindex="0"><table>
 <thead>
@@ -434,7 +434,7 @@ T_Z[j]        = C_Z[j] / 400000                  # ms，400 MHz
 </tbody>
 </table></div>
 <p>Zeus 在这 15 档中观测最佳为 BS32；H200 为 BS128，仍位于扫描上界。选择 batch 使用 train，validation/test 只验证选择；公开主表汇总全部 49 点。</p>
-<p><a href="versions/20261104-1648b5c5/data/benchmark.json">固定版本 JSON</a> · <a href="versions/20261104-1648b5c5/data/h200-49-paired.csv">固定 H200 49 点 CSV</a> · <a href="versions/20261104-1648b5c5/data/zeus-49-paired.csv">固定 Zeus 49 点 CSV</a> · <a href="versions/20261104-1648b5c5/data/zeus-49-stages.csv">固定阶段 CSV</a></p>
+<p><a href="../../../models/glm53-flash/versions/20261104-1648b5c5/data/benchmark.json">固定版本 JSON</a> · <a href="../../../models/glm53-flash/versions/20261104-1648b5c5/data/h200-49-paired.csv">固定 H200 49 点 CSV</a> · <a href="../../../models/glm53-flash/versions/20261104-1648b5c5/data/zeus-49-paired.csv">固定 Zeus 49 点 CSV</a> · <a href="../../../models/glm53-flash/versions/20261104-1648b5c5/data/zeus-49-stages.csv">固定阶段 CSV</a></p>
 <h2 id="method-9">09 · 验证覆盖与未覆盖的部分</h2>
 <ul>
 <li>Zeus：361 项 MoE 回归；train00/step017、15 档、layer/rank <code>(3,0)/(5,15)/(44,4)</code> 的 45 项完整模式，通过实现参考、完整/本地 Router 逐位对照、Reduce exact、changed-input Graph；45 对完整/时序模式 cycles、输入/权重、Router 与语义 zbin 一致。</li>

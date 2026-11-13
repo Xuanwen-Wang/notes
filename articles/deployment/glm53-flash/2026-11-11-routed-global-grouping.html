@@ -18,7 +18,7 @@
 </head>
 <body>
 <a class="skip" href="#main">跳到正文</a>
-<header class="masthead"><a href="../../index.html">← Xuanwen / Notes</a><span class="edition">模型部署 · DESIGN NOTE 01</span></header>
+<header class="masthead"><a href="../../../index.html">← Xuanwen / Notes</a><span class="edition">模型部署 · DESIGN NOTE 01</span></header>
 <div class="shell">
 <aside class="rail" aria-label="文章目录">
   <p class="rail-label">GLM5.3FLASH / ROUTED</p>
@@ -75,7 +75,7 @@
     <tbody><tr><td>32</td><td class="num">1,707,693.57</td><td class="num">1,873.87</td><td class="num">1,063.44</td></tr><tr class="emphasis"><td>40</td><td class="num">2,457,180.51</td><td class="num">1,627.88</td><td class="num">976.32</td></tr><tr><td>128</td><td class="num">6,707,570.59</td><td class="num">1,908.29</td><td class="num">1,113.64</td></tr></tbody>
   </table></div>
   <p class="caption">C42：42 层逐层 Routed 最慢 rank 周期之和，再对 49 个采样点取均值。整体 MoE 组件按每层 max_owner(Router) + max_rank(Shared + Routed + Reduce) 聚合；不含 H1、collective、host，不是服务端端到端吞吐。阶段最大值不能直接相加推导整体。</p>
-  <p class="citation">数据：<a href="./index.html">GLM-5.3-Flash 自动 PE 性能报告</a> · <a href="./versions/20261109-0d68686a/data/benchmark.json">固定版本 benchmark.json</a>。</p>
+  <p class="citation">数据：<a href="2026-11-02-moe-ffn-throughput.html">GLM-5.3-Flash 自动 PE 性能报告</a> · <a href="../../../models/glm53-flash/versions/20261109-0d68686a/data/benchmark.json">固定版本 benchmark.json</a>。</p>
   <details><summary>版本边界：最新源码检查 ≠ 本轮最新 master 重新测量</summary>
     <p>源码分析使用 torch_zeus <code>5c05363f9a970bdf4d9a05c7ed6458663b406793</code>，已包含 <a href="https://github.com/DarronTam/torch_zeus/pull/674">PR #674</a>，以及后续 Router 集成变动。最新 Routed、transport 与 transport load 源码同自动 PE 归档一致；Router 已继续变化。</p>
     <p>上表性能绑定 torch_zeus <code>0d68686a8692a86736e3c5fb399cffe85144fe8a</code>、compiler <code>4f8accf1c83af428337d73603ec5b9c1f9937621</code>、Triton <code>69d8cb8706a4ab18ee6a19204989651a891eb9e6</code>、CycleSim <code>b39990784ba2e1324c258c1db5fb02c13f93953b</code>，400 MHz，4 card / 16 rank / 32 core。不能把历史手动 PE 配置的单 fixture 周期拿来与此混比。</p>
@@ -306,11 +306,11 @@ Also report:
     <li><a href="https://github.com/deepseek-ai/DeepGEMM">DeepGEMM</a><small>contiguous / masked grouped GEMM 接口。其硬件与量化契约不直接等同于 Zeus。</small></li>
     <li><a href="https://github.com/deepseek-ai/DeepEP">DeepEP</a><small>查阅版本为 V2.5 文档：EPBuffer、expanded layout、设备端接收计数与 dispatch / combine。新路由需要更新调度数据，Graph 容量不是有效行数。</small></li>
     <li><a href="https://github.com/DarronTam/torch_zeus/tree/5c05363f9a970bdf4d9a05c7ed6458663b406793/sgl-kernel-zeus-triton/python/glm53_flash/moe">GLM5.3Flash MoE 源码快照</a> / <a href="https://github.com/DarronTam/torch_zeus/pull/674">PR #674</a><small>当前 transport、Router、Routed、Reduce 接口依据。源码仓库访问可能需要对应权限。</small></li>
-    <li><a href="./index.html">GLM-5.3-Flash 自动 PE 性能报告</a> / <a href="./methodology.html">测评口径与 PR #643 基线</a><small>已有组件指标与测评范围；本文的 host 合组分析不替代完整性能复测。</small></li>
+    <li><a href="2026-11-02-moe-ffn-throughput.html">GLM-5.3-Flash 自动 PE 性能报告</a> / <a href="2026-11-05-moe-benchmark-methodology.html">测评口径与 PR #643 基线</a><small>已有组件指标与测评范围；本文的 host 合组分析不替代完整性能复测。</small></li>
   </ol>
   <noscript><p class="notice">JavaScript 未启用。正文、容量表和完整组数表仍可阅读；交互演示停留在 BS40 默认状态。</p></noscript>
 </section>
-<footer class="footer"><a href="../../index.html">← 返回 Notes · 模型部署</a><span>GLM5.3Flash · 方案版本 2026-11-11</span></footer>
+<footer class="footer"><a href="../../../index.html">← 返回 Notes · 模型部署</a><span>GLM5.3Flash · 方案版本 2026-11-11</span></footer>
 </main>
 </div>
 <script>

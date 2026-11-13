@@ -1,0 +1,3 @@
+# Optional dependencies for regenerating model reports and figures.
+matplotlib==3.10.9
+markdown-it-py==4.2.0

@@ -1,7 +1,8 @@
 # DeepSeek V4 Flash 模型优化手册
 
-固定入口：<https://xuanwen-wang.github.io/notes/models/deepseek-v4-flash/>。
-当前章节为 MoE；后续 Attention、通信和整模型优化沿本模型目录扩展，不为每轮实验更换页面 URL。
+正式页面：[2026-10-28-moe-optimization.html](../../articles/deployment/deepseek-v4-flash/2026-10-28-moe-optimization.html)。
+原固定入口 <https://xuanwen-wang.github.io/notes/models/deepseek-v4-flash/> 由发布流程生成兼容跳转。
+当前章节为 MoE；后续 Attention、通信和整模型优化沿该模型扩展，创建日期和正式 URL 保持稳定。
 
 ## 文件结构
 
@@ -11,9 +12,9 @@
 - `data/2026-11-05.json`：仅在最终组合交付完成后写入的真实采集结果；草稿阶段不创建。
 - `data/2026-10-28.json`：历史 27 随机 batch / 108 EP 原件，只在历史折叠区展示。
 - `data/delivery-2026-10-28.json`：历史交付原件，与当前测量完全分开。
-- `scripts/build.py`：校验新 schema、重算所有聚合并生成可离线阅读的 `index.html`。
+- `scripts/build.py`：校验新 schema、重算所有聚合，按 catalog 的稳定 ID 生成正式 HTML。
 - `scripts/test_build.py`：覆盖跨 rank 拼接、慢核、重复 / 缺 case、计时 / 数值混淆与预览误发布等反例。
-- `index.html`：发布产物，不直接编辑；样式、脚本、图表数据全部内嵌。
+- `../../articles/deployment/deepseek-v4-flash/2026-10-28-moe-optimization.html`：发布产物，不直接编辑；样式、脚本、图表数据全部内嵌。
 
 ## 更新与发布
 
@@ -29,12 +30,12 @@ git diff --check
 最终 JSON 不存在时，默认构建明确失败。私有中间版只能显式生成带水印草稿；预览 JSON 放在任务私有目录，不写入 `data/2026-11-05.json`：
 
 ```bash
-python3 models/deepseek-v4-flash/scripts/build.py --data /absolute/private/preview.json --preview
+python3 models/deepseek-v4-flash/scripts/build.py --data /absolute/private/preview.json --preview --output /absolute/private/preview.html
 ```
 
 `status=preview` 必须加 `--preview`，`status=final` 必须不加。HTML 数据、图片、CSS 和脚本全部内嵌，无网络请求即可交互。正式生成前替换最终 2064 case、source/tool 身份、数值差集、mode 收据与 Viewer 图，不能将中间版性能继承给最终源码。
 
-测试使用系统配置的 `TMPDIR`。更改页面标题、摘要或内容更新日期时，由发布者同步根 `catalog.json` 并重建首页；本模型草稿不修改根目录文件。模型目录只保留一个 `index.html`，模板使用 `.template` 后缀。
+测试使用系统配置的 `TMPDIR`。更改页面标题、摘要或内容更新日期时，同步根 `catalog.json` 并重建首页；私有草稿使用明确的外部输出路径。模型源码目录维护 `.template`，正式文章集中在 `articles/`。
 
 ## 真实采集数据 schema v2
 

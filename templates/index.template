@@ -41,7 +41,7 @@ main{min-width:0}.eyebrow{font:11px var(--mono);letter-spacing:1.6px;color:var(-
 </div></aside>
 <main id="main">
   <div class="intro"><div><div class="eyebrow">ENGINEERING NOTES</div><h1>技术笔记</h1><p>模型、编译、硬件与工具。把实现细节，整理成可读的笔记。</p></div><div class="intro-number"><b>{{TOTAL}}</b><span>篇笔记 · {{TOPICS}} 个主题</span></div></div>
-  <a class="featured" href="./ldg-bandwidth-explained-2026-10-15.html">
+  <a class="featured" href="./articles/hardware/2026-10-15-ldg-bandwidth-explained.html">
     <div class="feature-copy"><div class="feature-label"><span>深入阅读</span><span>硬件架构图解</span></div><h2><small>Zeus518硬件</small>LDG 带宽：<br>从 RTL 到 2.14 TB/s</h2><p>沿着一次权重读取，理解并行 MC、credit 与稳态供数带宽。</p><span class="read-link">阅读图解<span aria-hidden="true">↗</span></span></div>
     <div class="feature-visual" aria-hidden="true"><div class="visual-label">WEIGHT DATA PATH</div><div class="bandwidth">2.14<span>TB/s</span></div><div class="visual-caption">设计稳态估算 · 每核 · 400 MHz</div><div class="visual-flow"><b>DRAM</b><span>→</span><b>WL1</b><span>→</span><b>PE</b></div><div class="visual-foot">256 MC · 15 credits · 23 cycles</div></div>
   </a>
