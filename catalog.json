@@ -2,6 +2,7 @@
   "updated": "2026-11-13",
   "site_url": "https://xuanwen-wang.github.io/notes/",
   "resources": [
+    "assets/hardware/20261113-ldg-mc",
     "models/glm53-flash/assets",
     "models/glm53-flash/data",
     "models/glm53-flash/versions",
@@ -10,6 +11,18 @@
     "models/deepseek-v4-flash/data"
   ],
   "articles": [
+    {
+      "id": "glm53-moe-ldg-mc-row-alignment",
+      "file": "articles/hardware/2026-11-13-glm53-moe-ldg-mc-row-alignment.html",
+      "category": "hardware",
+      "title": "Zeus518硬件 - GLM53 MoE 地址敏感性：LDG、MC 行冲突与权重分配研究",
+      "description": "从真实推理地址、权重 miniblock 排布和 MTK 读序，推导 LDG/MC 行冲突；结合 RTL、VCS 与 42 层回放，给出分配策略、代价和算法/编译器/硬件落地指引。",
+      "created": "2026-11-13",
+      "created_source": "article",
+      "date": "2026-11-13",
+      "tags": ["Zeus518", "LDG", "MC", "MTK", "权重布局", "GLM53", "MoE", "RTL", "VCS", "性能研究"],
+      "aliases": []
+    },
     {
       "id": "glm53-flash-routed-global-grouping",
       "file": "articles/deployment/glm53-flash/2026-11-11-routed-global-grouping.html",
