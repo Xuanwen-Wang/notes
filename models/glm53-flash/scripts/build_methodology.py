@@ -6,7 +6,7 @@ from pathlib import Path
 from markdown_it import MarkdownIt
 
 ROOT = Path(__file__).resolve().parents[1]
-TITLE = 'TritonShared - GLM-5.3-Flash：MoE 测评口径与 PR #643 基线'
+TITLE = 'GLM5.3Flash - MoE 测评口径与 PR #643 基线'
 
 
 def build_methodology():

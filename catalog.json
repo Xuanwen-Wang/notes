@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-11",
+  "updated": "2026-11-13",
   "articles": [
     {
       "file": "models/glm53-flash/routed-global-grouping.html",
@@ -12,32 +12,35 @@
     },
     {
       "file": "2026-11-05-glm53flash-dsa-kvcache.html",
-      "category": "compiler",
-      "title": "TritonShared - GLM-5.3-Flash DSA：从 P1 到 KVCache 与 Attention",
+      "category": "deployment",
+      "model": "GLM5.3Flash",
+      "title": "GLM5.3Flash - DSA：从 P1 到 KVCache 与 Attention",
       "description": "沿 P1、两次 AllGather、P2 与 P3 梳理 DSA Decode；交互查看 pooled keys、共享 latent、tensor shape 和 CP/core 分工。",
       "date": "2026-11-05",
       "tags": ["GLM-5.3-Flash", "DSA", "KVCache", "MLA", "Attention", "数据流"]
     },
     {
       "file": "models/glm53-flash/methodology.html",
-      "category": "compiler",
-      "title": "TritonShared - GLM-5.3-Flash：MoE 测评口径与 PR #643 基线",
+      "category": "deployment",
+      "model": "GLM5.3Flash",
+      "title": "GLM5.3Flash - MoE 测评口径与 PR #643 基线",
       "description": "给算法侧的测评说明：冻结逐层输入、H200 EP4/Zeus EP4×TP4、量化、计时与汇总公式、真实推理差异，以及合入基线。",
       "date": "2026-11-05",
       "tags": ["GLM-5.3-Flash", "MoE", "H200", "CycleSim", "测评方法", "PR643"]
     },
     {
       "file": "2026-11-03-zccl-allreduce-pblink.html",
-      "category": "compiler",
-      "title": "TritonShared - ZCCL AllReduce 全链路：PyTorch、Triton 与 PBLink",
+      "category": "hardware",
+      "title": "Zeus518硬件 - ZCCL AllReduce 全链路：PyTorch、Triton 与 PBLink",
       "description": "沿着实际源码，从通信组与 PS1 互联，到双核 Triton、16 路分块、PBLink FIFO 和三层同步，逐步理解 AllReduce。",
       "date": "2026-11-03",
       "tags": ["ZCCL", "AllReduce", "PBLink", "Triton", "集合通信"]
     },
     {
       "file": "models/glm53-flash/index.html",
-      "category": "compiler",
-      "title": "TritonShared - GLM-5.3-Flash：AF分离最大MOE FFN吞吐评估",
+      "category": "deployment",
+      "model": "GLM5.3Flash",
+      "title": "GLM5.3Flash - AF分离最大MOE FFN吞吐评估",
       "description": "自动 PE 配置与新编译器的49个 decode step 采样点复测：四卡 Zeus/H200 吞吐与比值、各 kernel 吞吐和耗时增长，保留 PR643 固定基线。",
       "date": "2026-11-09",
       "tags": ["GLM-5.3-Flash", "MoE", "H200", "CycleSim", "Benchmark"]
@@ -52,8 +55,9 @@
     },
     {
       "file": "models/deepseek-v4-flash/index.html",
-      "category": "compiler",
-      "title": "TritonShared - DeepSeek V4 Flash：MoE 优化与验证",
+      "category": "deployment",
+      "model": "DeepSeek V4 Flash",
+      "title": "DeepSeek V4 Flash - MoE 优化与验证",
       "description": "BS16/24/32 真实 step17、4K 上下文与 43 层整链慢 rank：四 kernel 优化、量化与 Graph ABI、Viewer 观察及 H200 对比。",
       "date": "2026-11-05",
       "tags": ["DeepSeek V4", "MoE", "CycleSim", "交互图表"]

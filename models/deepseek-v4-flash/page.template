@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="zh-CN">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="DeepSeek V4 Flash MoE：真实 decode 43层×16rank，Shared BF16、Routed INT4 G32与固定scale1 FP8、四stage数据流、逐rank计时及独立数值验证。"><link rel="icon" href="data:,"><title>TritonShared - DeepSeek V4 Flash：MoE 优化与验证</title><style>{{STYLE}}</style></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="DeepSeek V4 Flash MoE：真实 decode 43层×16rank，Shared BF16、Routed INT4 G32与固定scale1 FP8、四stage数据流、逐rank计时及独立数值验证。"><link rel="icon" href="data:,"><title>DeepSeek V4 Flash - MoE 优化与验证</title><style>{{STYLE}}</style></head>
 <body>
 <a class="skip" href="#main">跳至正文</a>
 <header class="topbar"><a href="../../index.html">← 技术笔记 / 模型优化</a><span>DEEPSEEK V4 FLASH · 持续维护的模型手册</span><button class="print-button" id="print-page" type="button">打印 / 保存 PDF</button></header>
