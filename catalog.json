@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-13",
+  "updated": "2026-11-14",
   "site_url": "https://xuanwen-wang.github.io/notes/",
   "resources": [
     "assets/hardware/20261113-ldg-mc",
@@ -19,7 +19,7 @@
       "description": "从真实推理地址、权重 miniblock 排布和 MTK 读序，推导 LDG/MC 行冲突；结合 RTL、VCS 与 42 层回放，给出分配策略、代价和算法/编译器/硬件落地指引。",
       "created": "2026-11-13",
       "created_source": "article",
-      "date": "2026-11-13",
+      "date": "2026-11-14",
       "tags": ["Zeus518", "LDG", "MC", "MTK", "权重布局", "GLM53", "MoE", "RTL", "VCS", "性能研究"],
       "aliases": []
     },

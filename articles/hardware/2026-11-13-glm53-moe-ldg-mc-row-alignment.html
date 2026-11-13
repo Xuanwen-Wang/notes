@@ -13,6 +13,9 @@
 @media(max-width:760px){.wrap{padding:0 18px}.top-tools .issue{display:none}.top-tools{gap:10px}.hero{padding:38px 0 28px}.hero h1{font-size:33px}.deck{font-size:16px}.hero-bottom,.grid2{grid-template-columns:1fr}.layout{display:block}.toc{position:relative;top:0;display:flex;flex-wrap:wrap;gap:5px;padding:12px 0 30px}.toc-title,.toc small{display:none}.toc a{font-size:11px;border:1px solid var(--line);border-radius:5px;padding:5px 8px}.metrics{grid-template-columns:1fr}.metric{border-right:0;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 20px}.metric b{font-size:32px}.metric span{max-width:180px;text-align:right;font-size:12px}.section{padding-top:30px}.section h2{font-size:25px}.controls{grid-template-columns:1fr}.range{grid-column:auto}.mini-stats{grid-template-columns:1fr 1fr}.mini-stats div:last-child{grid-column:1/-1}.lab-head{align-items:flex-start;flex-direction:column;gap:5px}.lab-body{padding:0 14px 17px}table{min-width:610px}.abstract{padding:23px}.source-list li{padding-left:35px}.top button{padding:5px 9px}.brand{letter-spacing:.06em;font-size:12px}.figure-image{min-width:640px}figure:has(.figure-image){overflow-x:auto}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 @media print{body{background:white;color:#152d36;font-size:10.5pt;line-height:1.65}.wrap{max-width:none;padding:0}.top,.toc,.top-tools,.preset-buttons,button,.controls{display:none}.hero{padding:0 0 18px}.hero h1{font-size:30pt;max-width:none}.deck{font-size:12pt}.layout{display:block}.hero-bottom{grid-template-columns:2fr 1fr}.abstract{background:#eef3ef;color:#17343e}.abstract strong{color:#17343e}.metric b{font-size:25pt}.section{padding-top:25px;break-before:auto}.section h2{font-size:20pt}.section h3{font-size:13pt}figure,.card,.callout,.metrics,.lab{break-inside:avoid}.section h2,.section h3{break-after:avoid}svg,.svg-scroll svg,.figure-image{min-width:0;max-width:100%}.svg-scroll,.table-scroll{overflow:visible}table{min-width:0;font-size:9pt}.print-only{display:block}.source-list li{font-size:9pt}.source-list li a{word-break:break-all}.source-list a[href^=https]:after{content:" (" attr(href) ")";font-size:8pt}.lab-head{background:#eef3ef}footer{padding:20px 0}pre{background:#edf2ef;color:#17343e;white-space:pre-wrap;font-size:9pt}details{display:block}details:not([open])>*:not(summary){display:none}.hero-bottom,.grid2{gap:15px}@page{size:A4;margin:15mm 13mm}}
+.read-demo{border:1px solid #afceca;border-radius:14px;background:#fff;padding:22px;margin:24px 0}.read-demo h4{font-size:18px;margin:0 0 8px}.read-controls{display:flex;align-items:end;gap:12px;flex-wrap:wrap;margin:16px 0}.read-controls label{font-size:12px;color:var(--muted);display:grid;gap:5px}.read-controls label:first-child{flex:1;min-width:220px}.read-controls select{max-width:100%;padding:7px;border:1px solid var(--line);border-radius:6px;background:white;color:var(--ink)}.read-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:15px 0}.read-actions button{font-size:13px}.read-actions button:disabled{opacity:.4;cursor:default}.read-actions .play{background:var(--teal);color:#fff;min-width:86px}.read-progress{display:flex;gap:12px;align-items:center;font-size:12px}.read-progress input{flex:1;min-width:0;accent-color:var(--teal)}.read-demo .read-count{font:12px/1.8 ui-monospace,monospace;color:var(--muted);margin:8px 0 16px}.read-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0}.read-cards>div{padding:12px;background:#f1f5f1;border-radius:8px;min-width:0}.read-cards small{display:block;font-size:11px;color:var(--muted)}.read-cards b{display:block;font:600 16px/1.8 ui-monospace,monospace;overflow-wrap:anywhere}.read-cards span{font-size:11px}.read-event{padding:13px 16px;border:1px solid #cbded6;border-radius:8px;background:#edf6f0;min-height:84px;font-size:13px}.read-event[data-switch="true"]{background:#fff2e5;border-color:#ddb58f}.read-event p{margin:4px 0}.read-history{display:flex;gap:6px;overflow-x:auto;padding:10px 0}.read-history span{flex-shrink:0;display:block;border:1px solid var(--line);border-top:3px solid var(--teal);border-radius:5px;padding:5px 8px;font:11px/1.7 ui-monospace,monospace}.read-history b{display:block}.read-history [aria-current="step"]{outline:2px solid #c8733b;outline-offset:-1px}.read-demo [hidden]{display:none}.read-legend{font-size:12px;color:var(--muted);margin:3px 0 12px}.read-static{font-size:13px}.read-demo figure{margin:12px 0}.read-demo .svg-scroll{border:1px solid var(--line);border-radius:8px;padding:10px 0}.read-demo .svg-scroll svg{min-width:680px}
+@media(max-width:760px){.read-demo{padding:15px}.read-cards{grid-template-columns:1fr}.read-controls label:first-child{flex-basis:100%}.read-controls select{width:100%}.read-controls{align-items:stretch}.read-event{min-height:0}}
+@media print{.read-controls,.read-actions,.read-progress,.read-history,.read-demo .read-interactive{display:none!important}.read-demo{break-inside:auto;padding:14px}.read-static{display:block!important}}
 </style>
 <style>@media print{.kicker{break-after:avoid}.abstract a{color:#117e83}}</style>
 </head>
@@ -23,7 +26,7 @@
 <div class="eyebrow">Memory locality · Hardware × Compiler × Inference</div>
 <h1>同一段 GEMM，<br>为什么换一个<span>权重起点</span>就慢了？</h1>
 <p class="deck">GLM53 Flash MoE 的一次性能退化，把权重排布、MTK 访问顺序和 MC 行状态之间的关系暴露了出来。本报告沿真实地址追到 RTL，再用 VCS 和 42 层算子回放验证分配策略的收益、代价与适用边界。</p>
-<div class="meta"><span>实验日期：2026-11-13</span><span>对象：Zeus518 · GLM53 Flash</span><span>读者：算法 / 编译器 / 硬件</span><span>计时口径：400 MHz</span></div>
+<div class="meta"><span>实验日期：2026-11-13</span><span>图解更新：2026-11-14</span><span>对象：Zeus518 · GLM53 Flash</span><span>读者：算法 / 编译器 / 硬件</span><span>计时口径：400 MHz</span></div>
 <div class="hero-bottom">
 <div class="abstract"><p><strong>核心结论：</strong>CycleSim PR #30 引入更完整的 WL1/MC 供数计时后，真实推理地址中已有的行冲突开始体现为额外等待。更新前后的权重地址相同；硬件并没有因模拟器更新而改变。<a class="cite" href="#ref1">[1]</a><a class="cite" href="#ref2">[2]</a></p><p>当前已验证的修复是<strong>对 Routed 与 Shared 大权重逐核请求 1 MiB LDG 基址对齐</strong>。它恢复了本次 42 层 MoE 主体回放性能，保持权重字节和数学语义。对源矩阵跨度更大、一个 MTK 组本身跨行的情况，还需要继续研究物理分块。<a class="cite" href="#ref8">[8]</a><a class="cite" href="#ref9">[9]</a></p></div>
 <aside class="status-card"><h2>结论到哪一层为止</h2><p><span class="badge">已验证</span>MC 控制器逐拍对照</p><p><span class="badge">已验证</span>4 组 VCS GEMM 微实验</p><p><span class="badge">已验证</span>42 层完整数值算子回放</p><p><span class="badge pending">待闭环</span>新整模推理、整模峰值、真机</p><p class="note">PR #741 当前保留 Draft。本报告不是完整 Routed VCS 或板卡性能验收。</p></aside>
@@ -53,9 +56,30 @@
 </section>
 <section class="section" id="layout"><div class="kicker">03 / LAYOUT & ACCESS ORDER</div><h2>权重怎样排，MTK 就沿着怎样的跨度取数</h2>
 <h3>3.1 三件容易混为一谈的事</h3>
-<div class="grid2"><div class="card"><h3>存储顺序：字节放在哪里</h3><p>本例 FP8 普通 KC 路径以 <strong>128 × 128 = 16 KiB</strong> miniblock 为基本单元。源权重按 K block 排行、C block 排列；相邻 K block 的物理跨度由<strong>源矩阵 C</strong>决定，而非本次 PE 只计算多少 C。</p></div><div class="card"><h3>访问顺序：先读哪个 block</h3><p>MTC、MTK 描述 PE 对 C、K miniblock 的分组。当前示例 MTC=16、MTK=2：在一个 C block 位置先读两个 K block，再走到下一个 C block。MTK 不修改权重字节，却改变访问局部性。</p></div></div>
+<p><strong>先统一维度：</strong>本文沿用硬件命名，<strong>C = CI（输入通道 / 归约维），K = CO（输出通道维）</strong>，这里的 K 不是常见 GEMM 记法中的归约维。以下实例取 FP8 权重 <code>W[CO, CI] = W[512, 4096]</code>：共有 512 个输出通道，每个输出通道有 4096 个输入权重。</p>
+<div class="grid2"><div class="card"><h3>存储顺序：字节放在哪里</h3><p><strong>本节的地址公式针对 dense 排布。</strong>FP8 普通 KC 路径以 <strong>128 × 128 = 16 KiB</strong> miniblock 为单元；先沿 C 方向排完同一 K 带，再排下一 K 带，因此间距由<strong>完整源 C pitch</strong>决定。blocked 则先把矩阵物理分成子块，再在各子块内排布；它有自己的块内 pitch，不能继续套用整张矩阵的 dense stride。</p></div><div class="card"><h3>访问顺序：先读哪个 block</h3><p><strong>由 minitile 的分组及 WL1 遍历规则控制。</strong>MTC、MTK 分别给出 C、K 方向一组的 miniblock 数。本例有效 MTC=16、MTK=2：在一个 C block 位置先读两个 K block，再走到下一个 C block。minitile 不重新排列已存好的权重，却决定读取时怎样在它们之间跳转。</p></div></div>
+<figure id="shapePacking"><div class="visual svg-scroll"><svg viewBox="0 0 980 562" role="img" aria-labelledby="shapePackingTitle shapePackingDesc">
+<title id="shapePackingTitle">从 W[512,4096] 的真实维度推导 dense 权重的 512 KiB 跨度</title>
+<desc id="shapePackingDesc">C 等于 CI，横向 4096 列分成 32 个 128 列块。K 等于 CO，纵向 512 行分成 4 个 128 行带。每格 128 乘 128 个 FP8 权重占 16 KiB；每条 K 带有 32 格，占 512 KiB。相同 C 位置相邻 K 带的首地址相差 512 KiB，而两个小格本身只占 32 KiB。</desc>
+<defs><pattern id="shapeCellGrid" width="20" height="44" patternUnits="userSpaceOnUse" x="164" y="100"><path d="M0 0H20V44H0Z" fill="none" stroke="#fff" stroke-width="1.5"/></pattern><marker id="shapeArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#c8733b"/></marker></defs>
+<text x="24" y="28" font-size="17" font-weight="700">① 真实矩阵 → 按 128 × 128 划成 miniblock</text>
+<text x="164" y="61" font-size="14">C = CI = 4096 个输入通道 → 32 个 C block</text>
+<g font-size="11"><text x="164" y="88">c0</text><text x="185" y="88">c1</text><text x="205" y="88">c2</text><text x="470" y="88">… 中间各列都在图中 …</text><text x="784" y="88">c31</text><text x="824" y="88">该 K 带的首地址</text></g>
+<rect x="164" y="100" width="640" height="44" fill="#c5e3d9"/><rect x="164" y="144" width="640" height="44" fill="#c5e3d9"/><rect x="164" y="188" width="640" height="44" fill="#d6dfef"/><rect x="164" y="232" width="640" height="44" fill="#d6dfef"/><rect x="164" y="100" width="640" height="176" fill="url(#shapeCellGrid)"/>
+<g font-size="13"><text x="24" y="118">k0 · CO 0–127</text><text x="24" y="162">k1 · CO 128–255</text><text x="24" y="206">k2 · CO 256–383</text><text x="24" y="250">k3 · CO 384–511</text><text x="824" y="126">base + 0 KiB</text><text x="824" y="170">base + 512 KiB</text><text x="824" y="214">base + 1024 KiB</text><text x="824" y="258">base + 1536 KiB</text></g>
+<rect x="164" y="100" width="20" height="44" fill="#117e83"/><rect x="164" y="144" width="20" height="44" fill="#c8733b"/>
+<path d="M164 289V297H804V289" stroke="#117e83" fill="none" stroke-width="2"/>
+<text x="230" y="319" font-size="14">一条 K 带 = 128 个 CO × 全部 4096 个 CI = 32 格 × 16 KiB = 512 KiB</text>
+<rect x="24" y="340" width="452" height="70" rx="8" fill="#edf5f0"/><text x="40" y="364" font-size="14" font-weight="700">看一格：miniblock(k0, c0)</text><text x="40" y="391" font-size="13">CO 0–127 × CI 0–127，128 × 128 × 1 B = 16 KiB</text>
+<rect x="490" y="340" width="466" height="70" rx="8" fill="#fff1e3"/><text x="506" y="364" font-size="14" font-weight="700">看上下两格：同一个 c0，不同 K 带</text><text x="506" y="391" font-size="13">两格共 32 KiB；首地址相差 512 KiB，之间还排着 c1…c31</text>
+<text x="24" y="444" font-size="17" font-weight="700">② dense 物理顺序：先排完整条 C，再接下一条 K 带</text>
+<rect x="164" y="460" width="320" height="34" rx="4" fill="#c5e3d9"/><rect x="484" y="460" width="320" height="34" rx="4" fill="#efd8c4"/>
+<text x="182" y="482" font-size="13">k0：#0，#1，#2，…，#31</text><text x="501" y="482" font-size="13">k1：#32，#33，…，#63</text><text x="822" y="482" font-size="13">再排 k2、k3 →</text>
+<path d="M164 503V518H484V503" stroke="#c8733b" stroke-width="2" fill="none" marker-end="url(#shapeArrow)"/><text x="202" y="543" font-size="14" font-weight="700">#0 → #32：跨过 32 个 miniblock = 512 KiB</text>
+</svg></div><figcaption><span class="figlabel">图 3a</span>先按矩阵维度辨认一个 miniblock，再看 dense 打包后的一维地址。整张 W 是 4 × 32 = 128 个 miniblock，共 2 MiB；图中的一条“K 带”是矩阵里的 128 个输出通道，不是硬件 MC row。格子按示意比例绘制，未展开 miniblock 内部的通道 / MC 交织。[3][5]</figcaption></figure>
+<div class="callout"><p><strong>blocked 从哪里改变这张图？</strong>例如把同一张 <code>W[512,4096]</code> 沿 C 先物理分成两个 <code>W_block[512,2048]</code>，各块分别打包：第一个子块内先排 k0 的 16 格，再排 k1 的 16 格，块内相邻 K 带间距就变成 <code>16 × 16 KiB = 256 KiB</code>。还需配套子块地址、SC 描述符和分块计算；只把计算 TC 调小、字节仍按原 dense 顺序放置，间距仍是 512 KiB。</p></div>
 <p>第三件事是<strong>分配起点</strong>：矩阵内部排布完全不变，整体平移 <code>0x88000</code> 也会改变这些访问落入哪些 MC row。修复 PR 只改这一层。<code>base_alignment_bytes</code> 与内部 packing 参数 <code>aligned_size</code> 含义不同；当前 Routed 使用 <code>aligned_size=0</code> 和整 expert PATCH，得到本例所分析的连续 miniblock 顺序。本文的“dense”是普通权重寻址/排布，不是要求把 runtime 参数改成 <code>-1</code>。<a class="cite" href="#ref9">[9]</a></p>
-<figure><div class="visual svg-scroll"><svg viewBox="0 0 980 286" role="img" aria-labelledby="layoutTitle"><title id="layoutTitle">FP8 miniblock 存储网格与 MTK2 的交错访问顺序</title><text x="18" y="25" font-size="14">存储网格：C4096 / K512 → 32 个 C block × 4 个 K block；每格 16 KiB</text><g font-size="14"><text x="18" y="74">K block 0</text><text x="18" y="119">K block 1</text><text x="18" y="164">K block 2</text><text x="18" y="209">K block 3</text><rect x="121" y="47" width="614" height="36" rx="6" fill="#dceee9"/><rect x="121" y="92" width="614" height="36" rx="6" fill="#dceee9"/><rect x="121" y="137" width="614" height="36" rx="6" fill="#e4eaf4"/><rect x="121" y="182" width="614" height="36" rx="6" fill="#e4eaf4"/><text x="139" y="71">0</text><text x="213" y="71">1</text><text x="289" y="71">2</text><text x="365" y="71">3</text><text x="470" y="71">…</text><text x="683" y="71">31</text><text x="139" y="116">32</text><text x="213" y="116">33</text><text x="289" y="116">34</text><text x="365" y="116">35</text><text x="470" y="116">…</text><text x="683" y="116">63</text><text x="139" y="161">64</text><text x="213" y="161">65</text><text x="289" y="161">66</text><text x="470" y="161">…</text><text x="683" y="161">95</text><text x="139" y="206">96</text><text x="213" y="206">97</text><text x="289" y="206">98</text><text x="470" y="206">…</text><text x="676" y="206">127</text></g><g stroke="#c8733b" stroke-width="2.3" fill="none"><path d="M146 78V94L222 78V94L298 78V94L374 78V94"/></g><g font-size="14"><text x="760" y="72">一条存储行：</text><text x="760" y="96">32 × 16 KiB</text><text x="760" y="121" font-weight="700">= 512 KiB</text><text x="760" y="167">MTK2 交错：</text><text x="760" y="192" fill="#c8733b">0,32,1,33,…</text><text x="18" y="258">相邻 K block 的间距 ΔK = C_storage × 128 × 1 byte = 512 KiB</text></g></svg></div><figcaption><span class="figlabel">图 3</span>数字为 miniblock 编号，不是元素索引。相邻 K block 相隔 512 KiB；两行合计 1 MiB。MTC 分组之后仍遵循“C block 内，K block 优先”的交错次序。[3][5]</figcaption></figure>
+<figure><div class="visual svg-scroll"><svg viewBox="0 0 980 286" role="img" aria-labelledby="layoutTitle"><title id="layoutTitle">FP8 miniblock 存储网格与 MTK2 的交错访问顺序</title><text x="18" y="25" font-size="14">存储网格：C4096 / K512 → 32 个 C block × 4 个 K block；每格 16 KiB</text><g font-size="14"><text x="18" y="74">K block 0</text><text x="18" y="119">K block 1</text><text x="18" y="164">K block 2</text><text x="18" y="209">K block 3</text><rect x="121" y="47" width="614" height="36" rx="6" fill="#dceee9"/><rect x="121" y="92" width="614" height="36" rx="6" fill="#dceee9"/><rect x="121" y="137" width="614" height="36" rx="6" fill="#e4eaf4"/><rect x="121" y="182" width="614" height="36" rx="6" fill="#e4eaf4"/><text x="139" y="71">0</text><text x="213" y="71">1</text><text x="289" y="71">2</text><text x="365" y="71">3</text><text x="470" y="71">…</text><text x="683" y="71">31</text><text x="139" y="116">32</text><text x="213" y="116">33</text><text x="289" y="116">34</text><text x="365" y="116">35</text><text x="470" y="116">…</text><text x="683" y="116">63</text><text x="139" y="161">64</text><text x="213" y="161">65</text><text x="289" y="161">66</text><text x="470" y="161">…</text><text x="683" y="161">95</text><text x="139" y="206">96</text><text x="213" y="206">97</text><text x="289" y="206">98</text><text x="470" y="206">…</text><text x="676" y="206">127</text></g><g stroke="#c8733b" stroke-width="2.3" fill="none"><path d="M146 78V94L222 78V94L298 78V94L374 78V94"/></g><g font-size="14"><text x="760" y="72">一条存储行：</text><text x="760" y="96">32 × 16 KiB</text><text x="760" y="121" font-weight="700">= 512 KiB</text><text x="760" y="167">MTK2 交错：</text><text x="760" y="192" fill="#c8733b">0,32,1,33,…</text><text x="18" y="258">相邻 K block 的间距 ΔK = C_storage × 128 × 1 byte = 512 KiB</text></g></svg></div><figcaption><span class="figlabel">图 3b</span>接着看读取顺序：数字为 miniblock 编号，不是元素索引。相邻 K block 相隔 512 KiB；两行合计 1 MiB。MTC 分组之后仍遵循“C block 内，K block 优先”的交错次序。[3][5]</figcaption></figure>
 <h3>3.2 把读序写成可核对的公式</h3>
 <div class="formula">FP8 · 普通 KC · 16 KiB 对齐起点 · 完整 128 元素 block
 miniblock_index = k_block × (C_storage / 128) + c_block
@@ -68,6 +92,30 @@ per_MC_word = base / 8 KiB + 2 × miniblock_index + {0, 1}</div>
             for k_block in k_group:
                 read miniblock(k_block, c_block)</code></pre>
 <p class="note">这是经本例 WL1 RTL 地址序列核对的说明性伪代码。硬件字段 MTK0=1 表示有效 MTK=2。BF16 的基本 C block 为 64、K block 为 128，仍是 16 KiB；不能把 FP8 的 128×128 元素几何直接套到 BF16/INT4、indexed、UScale 或 V-cache 路径。[3]</p>
+<p><strong>在图上执行这段循环：</strong>虚线框圈出一个 <code>MTC × MTK</code> 分组；框内先沿 K 方向读取，再推进一个 C block。读完当前 C 组就移到下一个 C 组；整条 C 遍历完后，再换到下一个 K 组。<strong>MTC 改变分组边界；在本例 MTW=1、无尾块的单次权重遍历中，仅改变 MTC 不改变展平后的 miniblock 次序。</strong>MTK 则直接改变同一 C 位置交错读取多少个 K 带。分组边界本身不等于 MC 换行，换行要看具体地址。</p>
+<div class="read-demo" id="readOrderDemo">
+<h4>跟着 minitile 读一遍：坐标 → 地址 → MC row</h4>
+<p class="note">每一步代表一个完整 miniblock；在观察的单个 MC 上，它对应两个连续 32-byte 请求。动画是读取顺序示意，播放速度不代表硬件周期，也不包含背压、PE 计算与请求重叠。</p>
+<div class="read-static" id="readStatic"><p><strong>静态示例：</strong>dense · C4096 / K512 · 有效 MTC16 / MTK2 · base=0x88000。前四步如下；MC 行切换会在这些地址之间反复发生。</p><div class="table-scroll"><table><thead><tr><th>读取次序</th><th>坐标 (k, c)</th><th>miniblock 编号</th><th>每核 LDG 地址</th><th>单 MC row</th></tr></thead><tbody><tr><td>1</td><td>(0, 0)</td><td>#0</td><td>0x088000</td><td>0</td></tr><tr><td>2</td><td>(1, 0)</td><td>#32</td><td>0x108000</td><td>1</td></tr><tr><td>3</td><td>(0, 1)</td><td>#1</td><td>0x08c000</td><td>0</td></tr><tr><td>4</td><td>(1, 1)</td><td>#33</td><td>0x10c000</td><td>1</td></tr></tbody></table></div></div>
+<div class="read-interactive" id="readInteractive" hidden>
+<div class="read-controls">
+<label>布局与地址场景<select id="readScenario"><option value="production">Dense · C4096 · 真实偏移 0x88000</option><option value="aligned">Dense · C4096 · 1 MiB 对齐起点</option><option value="wide">Dense · C8192 · 对齐仍跨行</option><option value="blocked">Blocked · C8192 拆分后的一个 C2048 子块</option></select></label>
+<label>有效 MTK<select id="readMtk"><option value="1">1</option><option value="2" selected>2</option><option value="4">4</option></select></label>
+<label>有效 MTC<select id="readMtc"><option value="4">4</option><option value="8">8</option><option value="16" selected>16</option></select></label>
+</div>
+<p class="note" id="readScenarioNote"></p>
+<div class="svg-scroll"><svg id="readGrid" viewBox="0 0 980 256" role="img" aria-labelledby="readGridTitle"><title id="readGridTitle">当前 minitile 分组与 miniblock 读取位置</title></svg></div>
+<div class="read-legend">虚线框：当前 MTC × MTK 分组 · 橙色：本次读取 · 浅绿：已经读取 · 箭头：从上一步跳到这一步。窄屏可横向滑动，推进时自动跟随当前格。</div>
+<div class="read-actions"><button type="button" id="readPlay" class="play" aria-pressed="false">播放</button><button type="button" id="readPrev">上一步</button><button type="button" id="readNext">下一步</button><button type="button" id="readReset">重头开始</button><label class="note">速度 <select id="readSpeed" aria-label="读取动画播放速度"><option value="1500">慢</option><option value="850" selected>标准</option><option value="350">快</option></select></label></div>
+<label class="read-progress" for="readStep">读取进度<input id="readStep" type="range" min="0" max="127" value="0"><output id="readStepLabel" for="readStep"></output></label>
+<p class="read-count" id="readCount"></p>
+<div class="read-cards"><div><small>① 当前 miniblock / 循环坐标</small><b id="readBlock"></b><span id="readGroup"></span></div><div><small>② 每核 LDG 字节地址</small><b id="readAddress"></b><span id="readDelta"></span></div><div><small>③ 单 MC 的两次请求</small><b id="readRow"></b><span id="readWords"></span></div></div>
+<div class="read-event" id="readEvent" role="status" aria-live="polite" aria-atomic="true"><strong id="readEventTitle"></strong><p id="readEventText"></p></div>
+<div class="read-history" id="readHistory" aria-label="最近八个 miniblock 的 row 序列"></div>
+<p class="note" id="readLoopState"></p>
+</div>
+<p class="note">建议依次看“真实偏移”的前四步 → 切到“对齐起点” → 切到“C8192” → 切到“blocked 子块”。blocked 只展示一个独立打包子块的地址流，不把它当作整张 C8192 GEMM 的性能结果。更完整的 MC 地址映射见下一节，实测周期在后文另列。<a class="cite" href="#ref3">[3]</a><a class="cite" href="#ref5">[5]</a></p>
+</div>
 </section>
 <section class="section" id="hardware"><div class="kicker">04 / HARDWARE MECHANISM</div><h2>LDG 是逻辑地址空间；真正等待发生在 MC 的行状态机里</h2>
 <p>LDG 权重空间按硬件通路分布到多个 MC。WL1 根据 PE 配置发起权重请求，经 hub 分发、地址映射和 MC 状态机取数，再经回包与 credit 机制向 PE 供数。算术指令和总字节数相同，不保证供数时间相同。<a class="cite" href="#ref3">[3]</a><a class="cite" href="#ref4">[4]</a></p>
@@ -152,7 +200,7 @@ stage = 本 rank 实际执行的 Shared、Routed、Reduce</div>
 <ol class="source-list">
 <li id="ref1"><b>原始受控报告：PR30 前后及真实地址重放</b><p>原实验 <code>colleague-REPORT.md</code> 与 <code>replay_ab_results.json</code>：冻结 kernel、输入、初始内存，对比 <code>3f24a0c84182d6b48e3509b6b24398c6bcfbbf4f</code> 与 <code>f53f23b0cd942a7ea9a44aea0c4febe112da951f</code>。28,063 / 27,984 / 50,639 cycles 为同一 Routed 双核最大值。原机器码 SHA256：<code>ad46b913827a052ab6a96d8db920a6fbf7ccb09b359a2ea3b7d908acfb4c3352</code>。</p><p><a href="https://github.com/DarronTam/Zeus3Simulator/pull/30">CycleSim PR #30：fix(sim): calibrate GLM5.3 execution timing</a>，合入 commit <code>5381df334970c8744e0fb0e8480599d2064fa6a7</code>。</p></li>
 <li id="ref2"><b>真实地址来源与加载链审计</b><p><code>address-provenance/address-audit.json</code> 及原执行 ABI：16 rank、42 层、两个 step；5,376 次旧/新地址比较零差异。公开 <code>evidence.json</code> 保存相位直方图、审计计数和原回执 SHA256。图 1 来自 rank0/layer3/core0 同一轮分配链，不是推测的分配顺序。</p></li>
-<li id="ref3"><b>CycleSim 普通 KC 权重时序入口</b><p>源码版本 <code>f53f23b0</code>，<a href="https://github.com/DarronTam/Zeus3Simulator/blob/f53f23b0cd942a7ea9a44aea0c4febe112da951f/simulator/include/zeus3/tensor/pe_engine.h#L900">pe_engine.h：weight_timing_supported / weight_timing</a>；<a href="https://github.com/DarronTam/Zeus3Simulator/blob/f53f23b0cd942a7ea9a44aea0c4febe112da951f/simulator/include/zeus3/tensor/wl1_weight_timing.h">wl1_weight_timing.h</a>；同目录 <code>wl1_mc_read_port.h</code>。普通 KC 的首末供数 handshake 区间进入 PE 时序；MC/FPGA PHY profile 明确限定 400 MHz AXI/MC、2 GHz FPGA divider、splicing=1、bank-map=e4、all-bank-active=1、ECC/refresh disabled。</p></li>
+<li id="ref3"><b>CycleSim 普通 KC 权重时序入口</b><p>源码版本 <code>f53f23b0</code>，<a href="https://github.com/DarronTam/Zeus3Simulator/blob/f53f23b0cd942a7ea9a44aea0c4febe112da951f/simulator/include/zeus3/tensor/pe_engine.h#L900">pe_engine.h：weight_timing_supported / weight_timing</a>；<a href="https://github.com/DarronTam/Zeus3Simulator/blob/f53f23b0cd942a7ea9a44aea0c4febe112da951f/simulator/include/zeus3/tensor/wl1_weight_timing.h">wl1_weight_timing.h</a>；<a href="https://github.com/DarronTam/Zeus3Simulator/blob/f53f23b0cd942a7ea9a44aea0c4febe112da951f/simulator/include/zeus3/tensor/wl1_int4_path.h#L41-L59">wl1_int4_path.h：普通 KC 复用的 miniblock 遍历与源 C pitch 寻址</a>；同目录 <code>wl1_mc_read_port.h</code>。普通 KC 的首末供数 handshake 区间进入 PE 时序；MC/FPGA PHY profile 明确限定 400 MHz AXI/MC、2 GHz FPGA divider、splicing=1、bank-map=e4、all-bank-active=1、ECC/refresh disabled。</p></li>
 <li id="ref4"><b>RTL：WL1 分发、地址映射与 row 状态</b><p>参考 RTL tag <code>tag_PN100_R1_20250928</code> 的本地参考副本，MC IP 为 <code>MC_2025_09_12</code>。核对 <code>wl1_518_weight_ctrl.v</code>、<code>wl1_518_hub_weight_req_distribute.v</code>、<code>gdg_axi2frame.v:112–137</code>、<code>mc_frame2frame_aux.v:149,322</code> 及 <code>frame2array_aux.v</code> 读状态路径。单 MC 列字段 7 bit、读事务 256 bit；每核 8×2×16 MC。7 个 MC 控制器源码 SHA256 随公开证据保存，并在本报告导出时重新核对。</p></li>
 <li id="ref5"><b>17 组布局实验与 64 个地址相位</b><p>实验回执 <code>results.json</code>、<code>additional-results.json</code>、<code>subrow-results.json</code>。实际 WL1 RTL 生成地址、GDG mapper RTL 映射、MC RTL 接收请求；64 相位仅做 WL1/mapper 序列统计。blocked 组合串接各 tile 的请求，在理想连续 producer 下测 CAS 区间，未计入额外 PE/累加开销。公开 JSON 包含所有 17 组结果、首批地址和 64 个相位。</p></li>
 <li id="ref6"><b>MC RTL 与 C++ 控制器逐拍对照</b><p>回执 <code>rtl-address-mc/comparison.json</code>：A/B/C 各 8,191 点，ready、FSM/counter、precharge、CAS 零差异。256 请求 / 组；CAS 区间分别 267 / 2,256 / 267。明确排除 PHY/数据回包、PE 和全芯片。profile 的 tRC17、tRAS12、tRCD6、tRP5 等字段随 JSON 归档。</p></li>
@@ -163,7 +211,7 @@ stage = 本 rank 实际执行的 Shared、Routed、Reduce</div>
 </ol>
 <p class="endnote">归档原则：每项结论都保留测量对象、版本、输入/地址条件与未覆盖范围。后续若引入 blocked packing、改变 MC 配置或重新测量整模，应追加新的证据版本，不覆盖本次历史基线。</p>
 </section>
-<noscript><p class="no-js">当前未启用 JavaScript。正文、静态图、数据下载和引用均可直接阅读；交互地址实验与逐层选择器需要 JavaScript。42 层数据可通过 CSV 下载核对。</p></noscript>
+<noscript><p class="no-js">当前未启用 JavaScript。正文、静态图、数据下载和引用均可直接阅读；逐步读取动画、交互地址实验与逐层选择器需要 JavaScript。42 层数据可通过 CSV 下载核对。</p></noscript>
 </main></div>
 <footer><div>ZEUS518 硬件研究 / GLM53 MoE 权重地址局部性</div><div>2026-11-13 · 本报告将 MC 控制器、VCS、CycleSim、CI 与真实推理作为独立证据层级。</div><p><a href="../../index.html">返回 Notes 目录</a> · <a href="#background">回到问题背景</a></p></footer>
 </div>
@@ -173,25 +221,133 @@ const DATA = {"layers":[{"layer":3,"baseline_cycles":72957,"aligned_cycles":4777
 const $ = id => document.getElementById(id);
 const fmt = value => Number(value).toLocaleString('en-US');
 const colors = ['#117e83','#d07942','#647ca9','#8f7e9e','#77964e'];
-function addressSequence(sc,tc,k,mtk,base){
-  const words=[];
+// Ordinary KC, FP8, full 128-element blocks, one W traversal. Grouping
+// changes the visit order; the source pitch alone determines dense offsets.
+function miniblockSequence(sc,tc,k,mtk,mtc,base){
+  const blocks=[];
   for(let kg=0;kg<k/128;kg+=mtk){
-    for(let cg=0;cg<tc/128;cg+=16){
-      for(let c=cg;c<Math.min(cg+16,tc/128);c++){
+    for(let cg=0;cg<tc/128;cg+=mtc){
+      for(let c=cg;c<Math.min(cg+mtc,tc/128);c++){
         for(let kb=kg;kb<Math.min(kg+mtk,k/128);kb++){
-          const w=base/8192+2*(kb*(sc/128)+c);
-          words.push(w,w+1);
+          const index=kb*(sc/128)+c,w=base/8192+2*index;
+          blocks.push({kb,c,kg,cg,index,byte:base+index*16384,words:[w,w+1]});
         }
       }
     }
   }
-  return words;
+  return blocks;
+}
+function addressSequence(sc,tc,k,mtk,base){
+  return miniblockSequence(sc,tc,k,mtk,16,base).flatMap(block=>block.words);
 }
 function mapRow(word){
   const a=word&0x1fffff;
   const shifted=(a+0x1a000)&0x1fffff;
   const mapped=(shifted&(1<<20))?shifted:a;
   return (mapped>>7)&8191;
+}
+const readScenarios={
+  production:{c:4096,base:0x88000,note:'Dense · W[CO,CI]=[512,4096] · 32 个 C block · K 带间距 512 KiB。minitile 不移动字节；真实起点使同组读取可能落入不同 row。'},
+  aligned:{c:4096,base:0,note:'Dense · W[512,4096] · 起点 0。对比 MTK2：第一组的两条 K 带共 1 MiB，落在同一行窗口；换到后一组才跨行。'},
+  wide:{c:8192,base:0,note:'Dense · W[512,8192] · 64 个 C block · K 带间距 1 MiB。MTK>1 时，即使从 0 开始，相邻 K 带也已落在不同 row。'},
+  blocked:{c:2048,base:0,note:'Blocked 示意 · 原 W[512,8192] 沿 C 分为 4 个 W_block[512,2048]。这里只播放起点对齐的一个子块，块内 SC=TC=2048，K 带间距 256 KiB；不模拟子块间调度和累加。'}
+};
+const readState={blocks:[],cursor:0,timer:null};
+const hexAddress=value=>'0x'+value.toString(16).padStart(6,'0');
+function readSvgElement(tag,attributes,text){
+  const element=document.createElementNS('http://www.w3.org/2000/svg',tag);
+  for(const [key,value] of Object.entries(attributes))element.setAttribute(key,value);
+  if(text!==undefined)element.textContent=text;
+  return element;
+}
+function drawReadGrid(scenario,mtk,mtc){
+  const svg=$('readGrid'),block=readState.blocks[readState.cursor];
+  const columns=scenario.c/128,x0=126,y0=55,cell=824/columns,rowHeight=37;
+  svg.replaceChildren(readSvgElement('title',{id:'readGridTitle'},`第 ${readState.cursor+1} 步：miniblock(${block.kb},${block.c})，当前 MTC${mtc} / MTK${mtk} 分组`));
+  svg.append(readSvgElement('text',{x:20,y:24,'font-size':14},`K = CO：4 个 K block；C = CI：${columns} 个 C block（每格 128 × 128 FP8）`));
+  const visited=new Set(readState.blocks.slice(0,readState.cursor).map(b=>b.index));
+  for(let c=0;c<columns;c+=Math.max(1,columns/8))svg.append(readSvgElement('text',{x:x0+c*cell,y:46,'font-size':11},`c${c}`));
+  svg.append(readSvgElement('text',{x:950,y:46,'font-size':11,'text-anchor':'end'},`c${columns-1}`));
+  for(let k=0;k<4;k++){
+    svg.append(readSvgElement('text',{x:14,y:y0+k*rowHeight+20,'font-size':12},`k${k} · CO ${k*128}…`));
+    for(let c=0;c<columns;c++){
+      const current=k===block.kb&&c===block.c,index=k*columns+c;
+      const tile=readSvgElement('rect',{x:x0+c*cell+1,y:y0+k*rowHeight+2,width:cell-2,height:rowHeight-4,rx:2,fill:current?'#c8733b':visited.has(index)?'#c5e3d9':'#edf0ed',stroke:current?'#914716':'#d8e0dc','stroke-width':current?2:1});
+      tile.append(readSvgElement('title',{},`miniblock(${k},${c}) · #${index} · ${hexAddress(scenario.base+index*16384)}`));svg.append(tile);
+    }
+  }
+  svg.append(readSvgElement('rect',{x:x0+block.cg*cell-2,y:y0+block.kg*rowHeight-1,width:Math.min(mtc,columns-block.cg)*cell+4,height:Math.min(mtk,4-block.kg)*rowHeight+2,rx:4,fill:'none',stroke:'#117e83','stroke-width':2,'stroke-dasharray':'6 4'}));
+  if(readState.cursor){
+    const previous=readState.blocks[readState.cursor-1],x1=x0+(previous.c+.5)*cell,y1=y0+(previous.kb+.5)*rowHeight,x2=x0+(block.c+.5)*cell,y2=y0+(block.kb+.5)*rowHeight;
+    const marker=readSvgElement('marker',{id:'readArrow',viewBox:'0 0 10 10',refX:8,refY:5,markerWidth:6,markerHeight:6,orient:'auto'});
+    marker.append(readSvgElement('path',{d:'M0 0L10 5L0 10Z',fill:'#984e25'}));const defs=readSvgElement('defs',{});defs.append(marker);svg.append(defs);
+    svg.append(readSvgElement('path',{d:`M${x1} ${y1}L${x2} ${y2}`,fill:'none',stroke:'#984e25','stroke-width':2,'marker-end':'url(#readArrow)'}));
+  }
+  svg.append(readSvgElement('text',{x:20,y:233,'font-size':13},`当前分组：k${block.kg}…k${Math.min(block.kg+mtk,4)-1} × c${block.cg}…c${Math.min(block.cg+mtc,columns)-1}；本次读 (k=${block.kb}, c=${block.c})，编号 #${block.index}`));
+  // Keep the active cell visible on narrow screens without moving the page.
+  const viewport=svg.parentElement,center=(x0+(block.c+.5)*cell)*svg.getBoundingClientRect().width/980;
+  if(center<viewport.scrollLeft+40||center>viewport.scrollLeft+viewport.clientWidth-40){
+    viewport.scrollLeft=Math.max(0,center-viewport.clientWidth/2);
+  }
+}
+function renderReadStep(){
+  const scenario=readScenarios[$('readScenario').value],mtk=Number($('readMtk').value),mtc=Number($('readMtc').value);
+  const blocks=readState.blocks,i=readState.cursor,b=blocks[i],previous=blocks[i-1],rows=b.words.map(mapRow);
+  const pastRows=blocks.slice(0,i+1).flatMap(block=>block.words.map(mapRow));
+  const switches=pastRows.slice(1).filter((row,n)=>row!==pastRows[n]).length;
+  const previousRow=previous?mapRow(previous.words[1]):null,changed=previousRow!==null&&previousRow!==rows[0];
+  $('readStep').value=i;$('readStepLabel').textContent=`${i+1} / ${blocks.length}`;
+  $('readStep').setAttribute('aria-valuetext',`第 ${i+1} 步，共 ${blocks.length} 步，miniblock ${b.index}`);
+  $('readPrev').disabled=i===0;$('readNext').disabled=i===blocks.length-1;
+  $('readCount').textContent=`已读 ${i+1} 个 miniblock · 单 MC ${2*(i+1)} / ${2*blocks.length} 次请求 · 已发生 ${switches} 次相邻请求 row 切换`;
+  $('readBlock').textContent=`#${b.index} · (k${b.kb}, c${b.c})`;
+  $('readGroup').textContent=`CO ${b.kb*128}–${b.kb*128+127}；CI ${b.c*128}–${b.c*128+127}${$('readScenario').value==='blocked'?'（当前子块坐标）':''}`;
+  $('readAddress').textContent=hexAddress(b.byte);
+  const delta=previous?(b.byte-previous.byte)/1024:0;
+  $('readDelta').textContent=previous?`相对上一步 ${delta>=0?'+':''}${delta} KiB；每格仍为 16 KiB`:'base + #0 × 16 KiB';
+  $('readRow').textContent=`row ${rows[0]} → ${rows[1]}`;
+  $('readWords').textContent=`word ${b.words[0]}、${b.words[1]} · 各 32 B`;
+  $('readEvent').dataset.switch=String(changed);
+  $('readEventTitle').textContent=previous?(changed?`切行：row ${previousRow} → row ${rows[0]}`:`仍在 row ${rows[0]}：这一跳没有换行`):`第一个 miniblock：落在 row ${rows[0]}`;
+  $('readEventText').textContent=previous?(changed?'观察到的地址需要切换已打开的 row：PRE → tRP 等待 → ACT → tRCD 等待 → RD。后文展开控制器的完整时序约束。':'对于这个相邻请求，row 相同，可继续列读取；不因这一跳追加 PRE/ACT。其他握手和时序约束仍然存在。'):'以这里作为地址序列的起点；计数只比较后续相邻请求，不把首个请求算作 row 切换。';
+  const history=$('readHistory');history.replaceChildren();
+  blocks.slice(Math.max(0,i-7),i+1).forEach((item,n,items)=>{
+    const row=mapRow(item.words[0]),tile=document.createElement('span'),label=document.createElement('b');
+    label.textContent=`#${item.index} · row ${row}`;tile.append(label,`(k${item.kb},c${item.c})`);tile.style.borderTopColor=colors[row%colors.length];
+    if(n===items.length-1)tile.setAttribute('aria-current','step');history.append(tile);
+  });
+  const transition=!previous?'进入首个 K 组和 C 组':b.kg!==previous.kg?'整条 C 已读完，进入下一个 K 组':b.cg!==previous.cg?'当前 C 组已读完，进入下一个 C 组':b.c!==previous.c?'同一 C 位置的 K blocks 已读完，C 前进一步':'C 位置不变，读取组内下一个 K block';
+  $('readLoopState').textContent=`循环状态：k_group=${b.kg/mtk}，c_group=${b.cg/mtc}，c_block=${b.c}，k_block=${b.kb}。${transition}。`;
+  drawReadGrid(scenario,mtk,mtc);
+}
+function pauseReadAnimation(){
+  if(readState.timer!==null)clearInterval(readState.timer);
+  readState.timer=null;$('readPlay').textContent='播放';$('readPlay').setAttribute('aria-pressed','false');
+}
+function configureReadAnimation(){
+  pauseReadAnimation();const s=readScenarios[$('readScenario').value];
+  readState.blocks=miniblockSequence(s.c,s.c,512,Number($('readMtk').value),Number($('readMtc').value),s.base);
+  readState.cursor=0;$('readStep').max=readState.blocks.length-1;$('readScenarioNote').textContent=s.note;renderReadStep();
+}
+function playReadAnimation(){
+  if(readState.cursor===readState.blocks.length-1){readState.cursor=0;renderReadStep();}
+  $('readPlay').textContent='暂停';$('readPlay').setAttribute('aria-pressed','true');
+  readState.timer=setInterval(()=>{
+    readState.cursor++;renderReadStep();
+    if(readState.cursor===readState.blocks.length-1)pauseReadAnimation();
+  },Number($('readSpeed').value));
+}
+function initializeReadAnimation(){
+  configureReadAnimation();$('readStatic').hidden=true;$('readInteractive').hidden=false;
+  for(const id of ['readScenario','readMtk','readMtc'])$(id).addEventListener('change',configureReadAnimation);
+  $('readPlay').addEventListener('click',()=>readState.timer===null?playReadAnimation():pauseReadAnimation());
+  for(const [id,delta] of [['readPrev',-1],['readNext',1]])$(id).addEventListener('click',()=>{pauseReadAnimation();readState.cursor=Math.max(0,Math.min(readState.blocks.length-1,readState.cursor+delta));renderReadStep();});
+  $('readReset').addEventListener('click',()=>{pauseReadAnimation();readState.cursor=0;renderReadStep();});
+  $('readStep').addEventListener('input',()=>{pauseReadAnimation();readState.cursor=Number($('readStep').value);renderReadStep();});
+  $('readSpeed').addEventListener('change',()=>{if(readState.timer!==null){pauseReadAnimation();playReadAnimation();}});
+  // Do not auto-play on load or continue advancing in a hidden/printed page.
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)pauseReadAnimation();});
+  window.addEventListener('beforeprint',pauseReadAnimation);
 }
 function updateLab(){
   const [sc,tc,k]=$('shapeSelect').value.split(',').map(Number);
@@ -248,7 +404,7 @@ function initialize(){
   document.querySelectorAll('[data-preset]').forEach(b=>b.addEventListener('click',()=>setPreset(b.dataset.preset)));
   $('layerSelect').addEventListener('change',updateLayer);
   $('printButton').addEventListener('click',()=>window.print());
-  updateLab();updateLayer();
+  updateLab();updateLayer();initializeReadAnimation();
   const links=[...document.querySelectorAll('.toc a')];
   if('IntersectionObserver' in window){
     const observer=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting)links.forEach(a=>a.classList.toggle('active',a.hash===`#${entry.target.id}`));}},{rootMargin:'-12% 0px -64% 0px'});
