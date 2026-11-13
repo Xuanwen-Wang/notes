@@ -15,7 +15,7 @@
       "id": "glm53-moe-ldg-mc-row-alignment",
       "file": "articles/hardware/2026-11-13-glm53-moe-ldg-mc-row-alignment.html",
       "category": "hardware",
-      "title": "Zeus518硬件 - GLM53 MoE 地址敏感性：LDG、MC 行冲突与权重分配研究",
+      "title": "Zeus518硬件 - 研究报告：GLM53 MoE 地址敏感性——LDG、MC 行冲突与权重分配",
       "description": "从真实推理地址、权重 miniblock 排布和 MTK 读序，推导 LDG/MC 行冲突；结合 RTL、VCS 与 42 层回放，给出分配策略、代价和算法/编译器/硬件落地指引。",
       "created": "2026-11-13",
       "created_source": "article",
