@@ -1,6 +1,15 @@
 # GLM-5.3-Flash：MoE 测评口径与 PR #643 基线
 
-更新：2026-11-05。面向算法侧复核与后续 kernel 优化；表格固定到本次合入基线。
+固定基线：2026-11-05。面向算法侧复核与后续 kernel 优化；下方 PR #643 表格保持历史值。
+
+> **当前主页已切换 Shared DP16 新流程，本文第 05～07 节仍描述 PR #643 固定基线。**
+> 新版在每个 rank 上用本地 BF16 token 执行融合 Router+Shared（完整 I2048，两个 core 各 I1024），
+> 一次 gather 传输 FP8 hidden、BF16 路由权重及 INT32 IDs；随后执行 Routed、owner-local Shared 注入的 Reduce。
+> 本次显式选择 `parity_masks` 全 batch 合组；SGLang 默认 IDs 模式未改。
+> 新版整体周期为 `Σ层[max_owner(Router+Shared) + max_rank(Routed+Reduce)]`，
+> 阶段只实测 Router+Shared、Routed、Reduce 三项，不能把融合 launch 拆成两个独立实测耗时。
+> 49 点采样、四卡归一化和排除通信等边界不变；H200 保留原测量。
+> 最新源码、资格和完整结果见[主页](./#protocol)；旧版本不换新编译器重测。
 
 > **当前曲线表示：固定输入下，42 层 MoE 组件计算的四卡等效吞吐。**
 > H200 用真实 GPU CUDA event 测时，Zeus 用 CycleSim 周期按 400 MHz 换算。

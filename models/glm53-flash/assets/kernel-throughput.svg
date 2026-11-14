@@ -369,7 +369,7 @@ L 0 3.5
      <g id="kernel-throughput-line2d_31">
       <path d="M 55.91024 317.517165
 L 889.79976 317.517165
-" clip-path="url(#kernel-throughput-p9e23a61372)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#kernel-throughput-p46a4d5626f)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-throughput-line2d_32">
       <defs>
@@ -387,226 +387,115 @@ L -3.5 0
     </g>
     <g id="kernel-throughput-ytick_2">
      <g id="kernel-throughput-line2d_33">
-      <path d="M 55.91024 284.445972
-L 889.79976 284.445972
-" clip-path="url(#kernel-throughput-p9e23a61372)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 55.91024 275.500645
+L 889.79976 275.500645
+" clip-path="url(#kernel-throughput-p46a4d5626f)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-throughput-line2d_34">
       <g>
-       <use xlink:href="#kernel-throughput-mb630600054" x="55.91024" y="284.445972" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-throughput-mb630600054" x="55.91024" y="275.500645" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-throughput-text_34">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="48.91024" y="288.823628" transform="rotate(-0 48.91024 288.823628)">10000</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="48.91024" y="279.878301" transform="rotate(-0 48.91024 279.878301)">2000</text>
      </g>
     </g>
     <g id="kernel-throughput-ytick_3">
      <g id="kernel-throughput-line2d_35">
-      <path d="M 55.91024 251.374779
-L 889.79976 251.374779
-" clip-path="url(#kernel-throughput-p9e23a61372)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 55.91024 233.484125
+L 889.79976 233.484125
+" clip-path="url(#kernel-throughput-p46a4d5626f)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-throughput-line2d_36">
       <g>
-       <use xlink:href="#kernel-throughput-mb630600054" x="55.91024" y="251.374779" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-throughput-mb630600054" x="55.91024" y="233.484125" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-throughput-text_35">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="48.91024" y="255.752435" transform="rotate(-0 48.91024 255.752435)">20000</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="48.91024" y="237.861781" transform="rotate(-0 48.91024 237.861781)">4000</text>
      </g>
     </g>
     <g id="kernel-throughput-ytick_4">
      <g id="kernel-throughput-line2d_37">
-      <path d="M 55.91024 218.303585
-L 889.79976 218.303585
-" clip-path="url(#kernel-throughput-p9e23a61372)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 55.91024 191.467605
+L 889.79976 191.467605
+" clip-path="url(#kernel-throughput-p46a4d5626f)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-throughput-line2d_38">
       <g>
-       <use xlink:href="#kernel-throughput-mb630600054" x="55.91024" y="218.303585" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-throughput-mb630600054" x="55.91024" y="191.467605" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-throughput-text_36">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="48.91024" y="222.681241" transform="rotate(-0 48.91024 222.681241)">30000</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="48.91024" y="195.845261" transform="rotate(-0 48.91024 195.845261)">6000</text>
      </g>
     </g>
     <g id="kernel-throughput-ytick_5">
      <g id="kernel-throughput-line2d_39">
-      <path d="M 55.91024 185.232392
-L 889.79976 185.232392
-" clip-path="url(#kernel-throughput-p9e23a61372)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 55.91024 149.451085
+L 889.79976 149.451085
+" clip-path="url(#kernel-throughput-p46a4d5626f)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-throughput-line2d_40">
       <g>
-       <use xlink:href="#kernel-throughput-mb630600054" x="55.91024" y="185.232392" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-throughput-mb630600054" x="55.91024" y="149.451085" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-throughput-text_37">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="48.91024" y="189.610048" transform="rotate(-0 48.91024 189.610048)">40000</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="48.91024" y="153.828741" transform="rotate(-0 48.91024 153.828741)">8000</text>
      </g>
     </g>
     <g id="kernel-throughput-ytick_6">
      <g id="kernel-throughput-line2d_41">
-      <path d="M 55.91024 152.161198
-L 889.79976 152.161198
-" clip-path="url(#kernel-throughput-p9e23a61372)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 55.91024 107.434564
+L 889.79976 107.434564
+" clip-path="url(#kernel-throughput-p46a4d5626f)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-throughput-line2d_42">
       <g>
-       <use xlink:href="#kernel-throughput-mb630600054" x="55.91024" y="152.161198" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-throughput-mb630600054" x="55.91024" y="107.434564" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-throughput-text_38">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="48.91024" y="156.538854" transform="rotate(-0 48.91024 156.538854)">50000</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="48.91024" y="111.812221" transform="rotate(-0 48.91024 111.812221)">10000</text>
      </g>
     </g>
     <g id="kernel-throughput-ytick_7">
      <g id="kernel-throughput-line2d_43">
-      <path d="M 55.91024 119.090005
-L 889.79976 119.090005
-" clip-path="url(#kernel-throughput-p9e23a61372)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
+      <path d="M 55.91024 65.418044
+L 889.79976 65.418044
+" clip-path="url(#kernel-throughput-p46a4d5626f)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="kernel-throughput-line2d_44">
       <g>
-       <use xlink:href="#kernel-throughput-mb630600054" x="55.91024" y="119.090005" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
+       <use xlink:href="#kernel-throughput-mb630600054" x="55.91024" y="65.418044" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="kernel-throughput-text_39">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="48.91024" y="123.467661" transform="rotate(-0 48.91024 123.467661)">60000</text>
+      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="48.91024" y="69.7957" transform="rotate(-0 48.91024 69.7957)">12000</text>
      </g>
     </g>
-    <g id="kernel-throughput-ytick_8">
-     <g id="kernel-throughput-line2d_45">
-      <path d="M 55.91024 86.018811
-L 889.79976 86.018811
-" clip-path="url(#kernel-throughput-p9e23a61372)" style="fill: none; stroke: #e3eaf2; stroke-width: 0.8; stroke-linecap: square"/>
-     </g>
-     <g id="kernel-throughput-line2d_46">
-      <g>
-       <use xlink:href="#kernel-throughput-mb630600054" x="55.91024" y="86.018811" style="fill: #49617c; stroke: #49617c; stroke-width: 0.8"/>
-      </g>
-     </g>
-     <g id="kernel-throughput-text_40">
-      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #49617c" x="48.91024" y="90.396468" transform="rotate(-0 48.91024 90.396468)">70000</text>
-     </g>
-    </g>
-    <g id="kernel-throughput-text_41">
+    <g id="kernel-throughput-text_40">
      <text style="font-size: 11px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #49617c" x="11.865553" y="185.844484" transform="rotate(-90 11.865553 185.844484)">tokens/s/card（阶段等效）</text>
     </g>
    </g>
-   <g id="kernel-throughput-line2d_47">
-    <path d="M 77.110821 274.810217
-L 133.645704 258.146054
-L 190.180586 238.355683
-L 246.715469 220.005169
-L 303.250352 200.50277
-L 359.785235 188.092673
-L 416.320117 169.60346
-L 472.855 163.458811
-L 529.389883 146.341216
-L 585.924765 140.886973
-L 642.459648 124.829683
-L 698.994531 108.772393
-L 755.529414 91.79449
-L 812.064296 82.176881
-L 868.599179 66.487529
-" clip-path="url(#kernel-throughput-p9e23a61372)" style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
-    <defs>
-     <path id="kernel-throughput-m94619aaaa5" d="M 0 2.5
-C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
-C 2.236584 1.29895 2.5 0.663008 2.5 0
-C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767
-C 1.29895 -2.236584 0.663008 -2.5 0 -2.5
-C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767
-C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0
-C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767
-C -1.29895 2.236584 -0.663008 2.5 0 2.5
-z
-" style="stroke: #2364d2; stroke-width: 2"/>
-    </defs>
-    <g clip-path="url(#kernel-throughput-p9e23a61372)">
-     <use xlink:href="#kernel-throughput-m94619aaaa5" x="77.110821" y="274.810217" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m94619aaaa5" x="133.645704" y="258.146054" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m94619aaaa5" x="190.180586" y="238.355683" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m94619aaaa5" x="246.715469" y="220.005169" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m94619aaaa5" x="303.250352" y="200.50277" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m94619aaaa5" x="359.785235" y="188.092673" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m94619aaaa5" x="416.320117" y="169.60346" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m94619aaaa5" x="472.855" y="163.458811" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m94619aaaa5" x="529.389883" y="146.341216" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m94619aaaa5" x="585.924765" y="140.886973" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m94619aaaa5" x="642.459648" y="124.829683" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m94619aaaa5" x="698.994531" y="108.772393" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m94619aaaa5" x="755.529414" y="91.79449" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m94619aaaa5" x="812.064296" y="82.176881" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m94619aaaa5" x="868.599179" y="66.487529" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
-    </g>
-   </g>
-   <g id="kernel-throughput-line2d_48">
-    <path d="M 77.110821 312.802057
-L 133.645704 312.161814
-L 190.180586 311.320045
-L 246.715469 312.133565
-L 303.250352 311.662302
-L 359.785235 311.565505
-L 416.320117 311.269232
-L 472.855 311.740333
-L 529.389883 311.588482
-L 585.924765 311.426589
-L 642.459648 311.244457
-L 698.994531 311.567249
-L 755.529414 311.458941
-L 812.064296 311.347256
-L 868.599179 311.206218
-" clip-path="url(#kernel-throughput-p9e23a61372)" style="fill: none; stroke: #d85b43; stroke-width: 2.5; stroke-linecap: square"/>
-    <defs>
-     <path id="kernel-throughput-mc06e842d91" d="M 0 2.5
-C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
-C 2.236584 1.29895 2.5 0.663008 2.5 0
-C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767
-C 1.29895 -2.236584 0.663008 -2.5 0 -2.5
-C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767
-C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0
-C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767
-C -1.29895 2.236584 -0.663008 2.5 0 2.5
-z
-" style="stroke: #d85b43; stroke-width: 2"/>
-    </defs>
-    <g clip-path="url(#kernel-throughput-p9e23a61372)">
-     <use xlink:href="#kernel-throughput-mc06e842d91" x="77.110821" y="312.802057" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-mc06e842d91" x="133.645704" y="312.161814" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-mc06e842d91" x="190.180586" y="311.320045" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-mc06e842d91" x="246.715469" y="312.133565" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-mc06e842d91" x="303.250352" y="311.662302" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-mc06e842d91" x="359.785235" y="311.565505" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-mc06e842d91" x="416.320117" y="311.269232" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-mc06e842d91" x="472.855" y="311.740333" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-mc06e842d91" x="529.389883" y="311.588482" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-mc06e842d91" x="585.924765" y="311.426589" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-mc06e842d91" x="642.459648" y="311.244457" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-mc06e842d91" x="698.994531" y="311.567249" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-mc06e842d91" x="755.529414" y="311.458941" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-mc06e842d91" x="812.064296" y="311.347256" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-mc06e842d91" x="868.599179" y="311.206218" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
-    </g>
-   </g>
-   <g id="kernel-throughput-line2d_49">
-    <path d="M 77.110821 305.332881
-L 133.645704 304.278759
-L 190.180586 303.480566
-L 246.715469 303.133946
-L 303.250352 302.888101
-L 359.785235 302.706792
-L 416.320117 302.562953
-L 472.855 302.458338
-L 529.389883 302.36958
-L 585.924765 302.295843
-L 642.459648 302.234155
-L 698.994531 302.181278
-L 755.529414 302.13593
-L 812.064296 302.096412
-L 868.599179 302.059059
-" clip-path="url(#kernel-throughput-p9e23a61372)" style="fill: none; stroke: #7856ad; stroke-width: 2.5; stroke-linecap: square"/>
+   <g id="kernel-throughput-line2d_45">
+    <path d="M 77.110821 217.176811
+L 133.645704 176.102157
+L 190.180586 128.963821
+L 246.715469 155.339434
+L 303.250352 122.903887
+L 359.785235 106.479619
+L 416.320117 76.331399
+L 472.855 158.703565
+L 529.389883 141.057609
+L 585.924765 127.681021
+L 642.459648 110.423189
+L 698.994531 113.85881
+L 755.529414 98.192783
+L 812.064296 84.732212
+L 868.599179 65.360206
+" clip-path="url(#kernel-throughput-p46a4d5626f)" style="fill: none; stroke: #7856ad; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="kernel-throughput-m4a924cdd6e" d="M 0 2.5
 C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
@@ -620,41 +509,89 @@ C -1.29895 2.236584 -0.663008 2.5 0 2.5
 z
 " style="stroke: #7856ad; stroke-width: 2"/>
     </defs>
-    <g clip-path="url(#kernel-throughput-p9e23a61372)">
-     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="77.110821" y="305.332881" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="133.645704" y="304.278759" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="190.180586" y="303.480566" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="246.715469" y="303.133946" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="303.250352" y="302.888101" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="359.785235" y="302.706792" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="416.320117" y="302.562953" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="472.855" y="302.458338" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="529.389883" y="302.36958" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="585.924765" y="302.295843" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="642.459648" y="302.234155" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="698.994531" y="302.181278" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="755.529414" y="302.13593" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="812.064296" y="302.096412" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="868.599179" y="302.059059" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+    <g clip-path="url(#kernel-throughput-p46a4d5626f)">
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="77.110821" y="217.176811" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="133.645704" y="176.102157" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="190.180586" y="128.963821" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="246.715469" y="155.339434" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="303.250352" y="122.903887" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="359.785235" y="106.479619" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="416.320117" y="76.331399" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="472.855" y="158.703565" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="529.389883" y="141.057609" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="585.924765" y="127.681021" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="642.459648" y="110.423189" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="698.994531" y="113.85881" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="755.529414" y="98.192783" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="812.064296" y="84.732212" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m4a924cdd6e" x="868.599179" y="65.360206" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
     </g>
    </g>
-   <g id="kernel-throughput-line2d_50">
-    <path d="M 77.110821 305.829883
-L 133.645704 305.142658
-L 190.180586 304.72637
-L 246.715469 304.1653
-L 303.250352 303.831101
-L 359.785235 303.605819
-L 416.320117 303.510941
-L 472.855 303.334719
-L 529.389883 303.277475
-L 585.924765 303.161703
-L 642.459648 303.148909
-L 698.994531 303.039752
-L 755.529414 303.027253
-L 812.064296 302.950389
-L 868.599179 302.954742
-" clip-path="url(#kernel-throughput-p9e23a61372)" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
+   <g id="kernel-throughput-line2d_46">
+    <path d="M 77.110821 289.128268
+L 133.645704 284.880632
+L 190.180586 280.583799
+L 246.715469 280.907179
+L 303.250352 277.727297
+L 359.785235 273.930591
+L 416.320117 273.037294
+L 472.855 272.228311
+L 529.389883 269.795473
+L 585.924765 271.287634
+L 642.459648 268.095958
+L 698.994531 268.356443
+L 755.529414 266.075906
+L 812.064296 267.747039
+L 868.599179 264.437738
+" clip-path="url(#kernel-throughput-p46a4d5626f)" style="fill: none; stroke: #d85b43; stroke-width: 2.5; stroke-linecap: square"/>
+    <defs>
+     <path id="kernel-throughput-mc06e842d91" d="M 0 2.5
+C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
+C 2.236584 1.29895 2.5 0.663008 2.5 0
+C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767
+C 1.29895 -2.236584 0.663008 -2.5 0 -2.5
+C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767
+C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0
+C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767
+C -1.29895 2.236584 -0.663008 2.5 0 2.5
+z
+" style="stroke: #d85b43; stroke-width: 2"/>
+    </defs>
+    <g clip-path="url(#kernel-throughput-p46a4d5626f)">
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="77.110821" y="289.128268" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="133.645704" y="284.880632" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="190.180586" y="280.583799" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="246.715469" y="280.907179" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="303.250352" y="277.727297" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="359.785235" y="273.930591" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="416.320117" y="273.037294" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="472.855" y="272.228311" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="529.389883" y="269.795473" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="585.924765" y="271.287634" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="642.459648" y="268.095958" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="698.994531" y="268.356443" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="755.529414" y="266.075906" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="812.064296" y="267.747039" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-mc06e842d91" x="868.599179" y="264.437738" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+    </g>
+   </g>
+   <g id="kernel-throughput-line2d_47">
+    <path d="M 77.110821 240.725024
+L 133.645704 236.173595
+L 190.180586 232.272295
+L 246.715469 236.511342
+L 303.250352 238.200665
+L 359.785235 235.620403
+L 416.320117 233.945011
+L 472.855 234.348127
+L 529.389883 234.984847
+L 585.924765 233.403825
+L 642.459648 232.622496
+L 698.994531 232.37581
+L 755.529414 232.340578
+L 812.064296 231.8161
+L 868.599179 231.454126
+" clip-path="url(#kernel-throughput-p46a4d5626f)" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
     <defs>
      <path id="kernel-throughput-m98abdd7638" d="M 0 2.5
 C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767
@@ -668,22 +605,22 @@ C -1.29895 2.236584 -0.663008 2.5 0 2.5
 z
 " style="stroke: #0d8d7b; stroke-width: 2"/>
     </defs>
-    <g clip-path="url(#kernel-throughput-p9e23a61372)">
-     <use xlink:href="#kernel-throughput-m98abdd7638" x="77.110821" y="305.829883" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m98abdd7638" x="133.645704" y="305.142658" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m98abdd7638" x="190.180586" y="304.72637" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m98abdd7638" x="246.715469" y="304.1653" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m98abdd7638" x="303.250352" y="303.831101" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m98abdd7638" x="359.785235" y="303.605819" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m98abdd7638" x="416.320117" y="303.510941" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m98abdd7638" x="472.855" y="303.334719" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m98abdd7638" x="529.389883" y="303.277475" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m98abdd7638" x="585.924765" y="303.161703" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m98abdd7638" x="642.459648" y="303.148909" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m98abdd7638" x="698.994531" y="303.039752" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m98abdd7638" x="755.529414" y="303.027253" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m98abdd7638" x="812.064296" y="302.950389" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     <use xlink:href="#kernel-throughput-m98abdd7638" x="868.599179" y="302.954742" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+    <g clip-path="url(#kernel-throughput-p46a4d5626f)">
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="77.110821" y="240.725024" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="133.645704" y="236.173595" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="190.180586" y="232.272295" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="246.715469" y="236.511342" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="303.250352" y="238.200665" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="359.785235" y="235.620403" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="416.320117" y="233.945011" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="472.855" y="234.348127" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="529.389883" y="234.984847" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="585.924765" y="233.403825" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="642.459648" y="232.622496" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="698.994531" y="232.37581" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="755.529414" y="232.340578" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="812.064296" y="231.8161" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
+     <use xlink:href="#kernel-throughput-m98abdd7638" x="868.599179" y="231.454126" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
     </g>
    </g>
    <g id="kernel-throughput-patch_4">
@@ -696,63 +633,51 @@ L 55.91024 54.171803
 L 889.79976 317.517165
 " style="fill: none; stroke: #b9c7d7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
-   <g id="kernel-throughput-text_42">
+   <g id="kernel-throughput-text_41">
     <text style="font-weight: 700; font-size: 14px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="55.91024" y="14.171803" transform="rotate(-0 55.91024 14.171803)">各个 kernel 的吞吐率 · 大 batch 是否进入平台期？</text>
    </g>
    <g id="kernel-throughput-legend_1">
-    <g id="kernel-throughput-line2d_51">
+    <g id="kernel-throughput-line2d_48">
      <path d="M 64.01024 377.032768
 L 73.01024 377.032768
 L 82.01024 377.032768
-" style="fill: none; stroke: #2364d2; stroke-width: 2.5; stroke-linecap: square"/>
+" style="fill: none; stroke: #7856ad; stroke-width: 2.5; stroke-linecap: square"/>
      <g>
-      <use xlink:href="#kernel-throughput-m94619aaaa5" x="73.01024" y="377.032768" style="fill: #ffffff; stroke: #2364d2; stroke-width: 2"/>
+      <use xlink:href="#kernel-throughput-m4a924cdd6e" x="73.01024" y="377.032768" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
+     </g>
+    </g>
+    <g id="kernel-throughput-text_42">
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="89.21024" y="380.182768" transform="rotate(-0 89.21024 380.182768)">Router + Shared</text>
+    </g>
+    <g id="kernel-throughput-line2d_49">
+     <path d="M 174.72149 377.032768
+L 183.72149 377.032768
+L 192.72149 377.032768
+" style="fill: none; stroke: #d85b43; stroke-width: 2.5; stroke-linecap: square"/>
+     <g>
+      <use xlink:href="#kernel-throughput-mc06e842d91" x="183.72149" y="377.032768" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
      </g>
     </g>
     <g id="kernel-throughput-text_43">
-     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="89.21024" y="380.182768" transform="rotate(-0 89.21024 380.182768)">Router</text>
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="199.92149" y="380.182768" transform="rotate(-0 199.92149 380.182768)">Routed</text>
     </g>
-    <g id="kernel-throughput-line2d_52">
-     <path d="M 135.721959 377.032768
-L 144.721959 377.032768
-L 153.721959 377.032768
-" style="fill: none; stroke: #d85b43; stroke-width: 2.5; stroke-linecap: square"/>
+    <g id="kernel-throughput-line2d_50">
+     <path d="M 248.52149 377.032768
+L 257.52149 377.032768
+L 266.52149 377.032768
+" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
      <g>
-      <use xlink:href="#kernel-throughput-mc06e842d91" x="144.721959" y="377.032768" style="fill: #ffffff; stroke: #d85b43; stroke-width: 2"/>
+      <use xlink:href="#kernel-throughput-m98abdd7638" x="257.52149" y="377.032768" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
      </g>
     </g>
     <g id="kernel-throughput-text_44">
-     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="160.921959" y="380.182768" transform="rotate(-0 160.921959 380.182768)">Routed</text>
-    </g>
-    <g id="kernel-throughput-line2d_53">
-     <path d="M 209.521959 377.032768
-L 218.521959 377.032768
-L 227.521959 377.032768
-" style="fill: none; stroke: #7856ad; stroke-width: 2.5; stroke-linecap: square"/>
-     <g>
-      <use xlink:href="#kernel-throughput-m4a924cdd6e" x="218.521959" y="377.032768" style="fill: #ffffff; stroke: #7856ad; stroke-width: 2"/>
-     </g>
-    </g>
-    <g id="kernel-throughput-text_45">
-     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="234.721959" y="380.182768" transform="rotate(-0 234.721959 380.182768)">Shared</text>
-    </g>
-    <g id="kernel-throughput-line2d_54">
-     <path d="M 282.693365 377.032768
-L 291.693365 377.032768
-L 300.693365 377.032768
-" style="fill: none; stroke: #0d8d7b; stroke-width: 2.5; stroke-linecap: square"/>
-     <g>
-      <use xlink:href="#kernel-throughput-m98abdd7638" x="291.693365" y="377.032768" style="fill: #ffffff; stroke: #0d8d7b; stroke-width: 2"/>
-     </g>
-    </g>
-    <g id="kernel-throughput-text_46">
-     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="307.893365" y="380.182768" transform="rotate(-0 307.893365 380.182768)">Reduce</text>
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #172b48" x="273.72149" y="380.182768" transform="rotate(-0 273.72149 380.182768)">Reduce</text>
     </g>
    </g>
   </g>
  </g>
  <defs>
-  <clipPath id="kernel-throughput-p9e23a61372">
+  <clipPath id="kernel-throughput-p46a4d5626f">
    <rect x="55.91024" y="54.171803" width="833.88952" height="263.345363"/>
   </clipPath>
  </defs>

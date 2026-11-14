@@ -1,0 +1,9 @@
+<div class="section-head"><div><span class="section-num">02 / KERNEL BREAKDOWN</span><h2>四个阶段，各自在做什么？</h2></div><span class="scope-badge">Zeus · 16 rank / 32 core</span></div>
+<p class="quality">下列介绍对应本轮 Zeus 实现。Router 产生路由，Routed 与 Shared 形成专家输出，Reduce 完成本地加权归并；跨卡通信不计入这些窗口。</p>
+<div class="kernel-grid">
+  <article class="kernel-card router"><span class="kernel-tag">01 · 路由选择</span><h3>Router</h3><p>每个 rank 只处理自己的本地 token，采用 calibrated sigmoid 与带 bias 的 Top-K，产生 8 个专家 ID 和路由权重，再进行一次 raw-word gather。</p><div class="kernel-focus">关注：本地 1–8 行特化、投影、评分与 Top-K 的周期增长。</div></article>
+  <article class="kernel-card routed"><span class="kernel-tag">02 · 稀疏专家</span><h3>Routed</h3><p>按真实路由执行专家 Gate / Up、激活与 Down。本轮采用 per-tensor FP8，使用 M1 / M2 / M4 token 合并。</p><div class="kernel-focus">关注：活跃专家数、权重复用、窗口与尾部调度。</div></article>
+  <article class="kernel-card shared"><span class="kernel-tag">03 · 共享专家</span><h3>Shared</h3><p>对全部 token 执行共享专家 FFN。本轮 Zeus 采用 BF16，仅在 EP0 上执行，并在其中按 TP4 分片。</p><div class="kernel-focus">关注：固定专家权重下，计算和数据搬运如何随 batch 增长。</div></article>
+  <article class="kernel-card reduce"><span class="kernel-tag">04 · 本地归并</span><h3>Reduce</h3><p>读取有效的本地 routed 输出，应用路由权重并求和，在持有 Shared 的分支合入共享输出。</p><div class="kernel-focus">关注：有效行读取与加权求和；不含跨卡 AllReduce。</div></article>
+</div>
+<p class="note">BS16–128 的各阶段维持统一 JIT 入口；gather 后 Shared / Routed / Reduce 都直接读取 rank blocks。batch 维度是编译期常量，窗口和尾部在 kernel 内特化。M 合并大小与窗口宽度是两个概念。</p>

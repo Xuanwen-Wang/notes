@@ -36,7 +36,8 @@ JSON 内嵌到 HTML；交互图和 Matplotlib 下载图使用相同序列，不�
 阶段吞吐图使用 `总 BS × 频率 ÷ 该阶段 42 层平均 cycles ÷ 4`，按模型输入 token 计数，
 不乘 Top-K 或层数。原始周期先对 49 点汇总，再求吞吐；不平均各样本的吞吐。
 它只计单个阶段的时间，不是端到端或流水线吞吐。图中可见曲线由 `initialVisible` 指定，
-此图默认显示 Routed / Shared / Reduce；Router 可勾选，避免数量级差异压扁其他曲线。
+旧 EP0 布局默认显示 Routed / Shared / Reduce；Router 可勾选。DP16 版本默认显示
+融合 Router+Shared、Routed、Reduce 三项；无法从一次融合 launch 拆出独立 Router/Shared 时间。
 `build.py` 同步生成 `data/kernel-throughput.csv`、峰值/回落表与相邻档变化；图表、表格和 CSV 共用一份计算结果。
 
 ```bash
@@ -111,7 +112,7 @@ PYTHONDONTWRITEBYTECODE=1 python3 models/glm53-flash/scripts/import_flow.py \
 导出和图表复制到独立版本目录。`flow-revision.json` / `flow-comparison.csv` 是完整方案
 对照；流程、sigmoid 和编译器同时变化，Router IDs 不保证相同，不能标成 Routed 单独
 优化 A/B。历史 `routed-revision.json` 与历史五档表保留原值，且只在版本记录中引用。
-当前临界路径为 `sum_layer(max_owner(Router) + max_rank(Shared + Routed + Reduce))`；
+上述历史 EP0 临界路径为 `sum_layer(max_owner(Router) + max_rank(Shared + Routed + Reduce))`；
 阶段表仍逐阶段独立取最大 rank，用于诊断，不可相加代替完整 MoE 时间。
 
 2026-11-09 自动 PE 配置复测使用 `versions/20261109-0d68686a/`。四阶段曲线、
@@ -129,3 +130,25 @@ consumer源码与工具链hash；`--equivalence` 对应最终源码身份回执�
 导入器额外要求全矩阵 Router IDs 和路由权重 hashes 与 PR #643 一致，并核验新的回归节点集合。
 吞吐差异标注为 kernel + 编译器整体方案变化；H200 原测量和算法侧固定基线保持可追溯。
 页面的当前说明、解析预算异常列表与新版本记录由本轮数据生成，避免沿用旧数值文本。
+
+Shared DP16 / FP8 transport / parity_masks 活动使用 `scripts/import_dp16.py`。
+它要求私有逐 case 审计的 `summary.json`、`identity.json`、`complete.json`、`qualification.json`，
+验证完整 493,920 case、72 对数值/时序资格与身份绑定，再重算 49 点 pooled-throughput、
+分位数及 train/holdout。原始输入和 checkpoint 权重对照上一版 Notes 的私有原始回执；
+新增每 rank Shared 权重对照旧 EP0 权重，不把布局变化误判为 checkpoint 变化。
+
+新版临界路径为 `sum_layer(max_owner(Router+Shared) + max_rank(Routed + Reduce))`。
+H200 对照与原样 CSV 保持不变；主图可切换旧 Notes 虚线。
+`dp16-comparison.csv` / `dp16-revision.json` 保存整体与三个阶段的旧新对照。
+其中融合阶段的旧值是 Router 和 Shared 的独立阶段成本之和，只用于组件成本对照；
+不是实测旧融合 kernel，也不是旧版 MoE 的临界路径。
+全流程、kernel、compiler 和 CycleSim 同时变化，不能把全部差值归因于某一个优化。
+
+```bash
+python3 models/glm53-flash/scripts/import_dp16.py \
+  --baseline PREVIOUS_PUBLIC_DATA --evidence AUDITED_DP16_EXPORT \
+  --ci MEASURED_SHA_CI --out NEW_EXPORT
+```
+
+`kernel-dp16.template` 与 `kernel-ep0.template` 分别维护新旧执行流程的说明，
+`scripts/dp16_report.py` 负责新流程的对照表和证据文案。不会覆盖历史版本的图表。

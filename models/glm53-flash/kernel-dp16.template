@@ -1,0 +1,8 @@
+<div class="section-head"><div><span class="section-num">02 / KERNEL BREAKDOWN</span><h2>四项计算，三个执行阶段</h2></div><span class="scope-badge">Zeus · 16 rank / 32 core</span></div>
+<p class="quality">当前测量流程：本地 BF16 token → Router+Shared → FP8 AllGather → Routed → Reduce。Router 与 Shared 在同一次 launch 中执行，以下按三个实际入口统计，不能再独立添加 Shared 时间。</p>
+<div class="kernel-grid" style="--kernel-columns:3">
+  <article class="kernel-card shared"><span class="kernel-tag">01 · 本地路由与共享专家</span><h3>Router + Shared</h3><p>每个 rank 只处理自己拥有的 token。Router 使用 calibrated sigmoid 和带 bias 的 Top-K；Shared 使用完整 I2048 BF16 权重，两个 core 各 I1024。两部分在同一 kernel 中融合调度。</p><div class="kernel-focus">关注：本地 token 分区与融合重叠。Shared 保持 BF16 输入，发给 Routed 的 hidden 才转换为 FP8。</div></article>
+  <article class="kernel-card routed"><span class="kernel-tag">02 · 全 batch 稀疏专家</span><h3>Routed</h3><p>读取 FP8 transport 与显式 parity sidecar，按真实路由进行全 batch M1 / M2 / M4 合组，执行 Gate / Up、SiLU 与 Down。BS&gt;32 使用每核私有 FP8 DRAM staging。</p><div class="kernel-focus">关注：跨窗口权重复用、尾组与专家分布；planning、staging、scatter 均计入耗时。</div></article>
+  <article class="kernel-card reduce"><span class="kernel-tag">03 · 本地加权归并</span><h3>Reduce</h3><p>在正确的 owner token 区间注入 Shared，按原 slot 顺序累加有效 Routed 输出与路由权重，保留 FP32 累加和最终 BF16 舍入。</p><div class="kernel-focus">关注：owner 边界、有效行访问与 VP 加权开销。跨卡 Reduce-Scatter 不在计时窗口内。</div></article>
+</div>
+<p class="note">BS16–128 使用统一入口，batch 是编译期常量。此次显式启用 PR730 的 parity_masks；SGLang 默认 IDs 与本次实验配置分开记录。M4 是一次 PE 的行数，不是合组范围上限。</p>

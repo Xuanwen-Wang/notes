@@ -33,7 +33,7 @@ section{background:#fff;border:1px solid var(--line);border-radius:16px;padding:
 .sample-strip{font-size:12px;color:#63788e;line-height:1.9;padding:0 2px}.sample-strip b{color:#344c65}.sample-strip a{white-space:nowrap}
 .note{background:#f7f9fc;border:1px solid #e3eaf2;border-left:3px solid #9bb4d4;border-radius:8px;padding:12px 16px;font-size:12px;color:#526b85;margin:16px 0}
 .reading-note{font-size:12px;color:#5a718b;line-height:1.9;padding:0 3px}.quality{font-size:12px;color:var(--muted);line-height:1.9}
-.kernel-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:22px 0}.kernel-card{--accent:#2364d2;border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:10px;padding:17px 16px;background:#fcfdff;min-width:0}
+.kernel-grid{display:grid;grid-template-columns:repeat(var(--kernel-columns,4),minmax(0,1fr));gap:12px;margin:22px 0}.kernel-card{--accent:#2364d2;border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:10px;padding:17px 16px;background:#fcfdff;min-width:0}
 .routed{--accent:#d85b43}.shared{--accent:#7856ad}.reduce{--accent:#0d8d7b}.kernel-tag{color:var(--accent);font-size:10px;font-weight:650}.kernel-card h3{margin:7px 0 10px;font-size:20px}.kernel-card p{font-size:12px;line-height:1.9;color:#63758a;margin:0 0 14px}.kernel-focus{border-top:1px solid #e9edf4;padding-top:11px;font-size:11px;color:#78899d;line-height:1.8}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}.mini{background:#f6f9fc;border:1px solid #e7edf4;border-radius:10px;padding:18px}.mini h3{font-size:17px}.mini h3 span{font-size:11px;color:#6b7e93;margin-left:10px;font-weight:500}.mini p{font-size:12px;color:var(--muted)}
 code{font-family:ui-monospace,monospace;font-size:.88em;overflow-wrap:anywhere}
@@ -67,7 +67,17 @@ main { max-width:1400px; }
 <aside class="sidebar"><a class="brand" href="../../../index.html">NOTES</a><p class="sidebar-model">GLM-5.3-Flash<span>MEASUREMENT PROTOCOL</span></p>
 <nav class="side-nav" aria-label="测评方法目录"><a href="#method-1">01 · 先对齐“测的是什么”</a><a href="#method-2">02 · 输入与 49 个采样点</a><a href="#method-3">03 · H200 实际怎么执行</a><a href="#method-4">04 · H200 计时窗口与重复方式</a><a href="#method-5">05 · Zeus 实际怎么执行</a><a href="#method-6">06 · 量化、Router 与 Shared 的差异</a><a href="#method-7">07 · 延迟与吞吐怎么汇总</a><a href="#method-8">08 · PR #643 固定基线</a><a href="#method-9">09 · 验证覆盖与未覆盖的部分</a><a href="#method-10">10 · 算法侧怎样与真实推理核对</a><a href="#method-11">11 · 后续优化的对比约定与入口</a></nav><div class="sidebar-foot"><a href="2026-11-02-moe-ffn-throughput.html">← 返回交互曲线</a><p>固定基线 · 2026-11-05</p></div></aside>
 <main><article class="methodology"><h1>GLM-5.3-Flash：MoE 测评口径与 PR #643 基线</h1>
-<p>更新：2026-11-05。面向算法侧复核与后续 kernel 优化；表格固定到本次合入基线。</p>
+<p>固定基线：2026-11-05。面向算法侧复核与后续 kernel 优化；下方 PR #643 表格保持历史值。</p>
+<blockquote>
+<p><strong>当前主页已切换 Shared DP16 新流程，本文第 05～07 节仍描述 PR #643 固定基线。</strong>
+新版在每个 rank 上用本地 BF16 token 执行融合 Router+Shared（完整 I2048，两个 core 各 I1024），
+一次 gather 传输 FP8 hidden、BF16 路由权重及 INT32 IDs；随后执行 Routed、owner-local Shared 注入的 Reduce。
+本次显式选择 <code>parity_masks</code> 全 batch 合组；SGLang 默认 IDs 模式未改。
+新版整体周期为 <code>Σ层[max_owner(Router+Shared) + max_rank(Routed+Reduce)]</code>，
+阶段只实测 Router+Shared、Routed、Reduce 三项，不能把融合 launch 拆成两个独立实测耗时。
+49 点采样、四卡归一化和排除通信等边界不变；H200 保留原测量。
+最新源码、资格和完整结果见<a href="2026-11-02-moe-ffn-throughput.html#protocol">主页</a>；旧版本不换新编译器重测。</p>
+</blockquote>
 <blockquote>
 <p><strong>当前曲线表示：固定输入下，42 层 MoE 组件计算的四卡等效吞吐。</strong>
 H200 用真实 GPU CUDA event 测时，Zeus 用 CycleSim 周期按 400 MHz 换算。

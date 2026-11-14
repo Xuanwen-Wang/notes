@@ -8,6 +8,7 @@ import re
 import sys
 
 from sampling_policy import INCLUDED_STEPS, write_csv
+import dp16_report
 
 import matplotlib
 matplotlib.use('Agg')
@@ -18,7 +19,8 @@ sys.path.insert(0, str(ROOT.parents[1]))
 from scripts.site_utils import write_article
 
 COLORS = {'zeus': '#2364d2', 'h200': '#0d8d7b', 'router': '#2364d2',
-          'routed': '#d85b43', 'shared': '#7856ad', 'reduce': '#0d8d7b', 'reference': '#8492a6'}
+          'routed': '#d85b43', 'shared': '#7856ad', 'reduce': '#0d8d7b', 'reference': '#8492a6',
+          'router_shared': '#7856ad', 'previous': '#8492a6'}
 plt.rcParams.update({'font.family': 'Noto Sans CJK JP', 'font.size': 11,
                      'axes.spines.top': False, 'axes.spines.right': False,
                      'axes.edgecolor': '#b9c7d7', 'text.color': '#172b48',
@@ -55,9 +57,11 @@ def chart(name, lines, ylabel, title, band=None, linear=False, labels=False, ini
     ax.set_title(title, loc='left', fontsize=14, pad=40, weight='bold')
     for key, label, xs, ys in lines:
         ax.plot(xs, ys, color=COLORS[key], linewidth=2.5, marker='o', markersize=5,
-                markerfacecolor='white', markeredgewidth=2, label=label, linestyle='--' if key == 'reference' else '-')
+                markerfacecolor='white', markeredgewidth=2, label=label, linestyle='--' if key in ('reference', 'previous') else '-')
         if labels:
             for index, (x, y) in enumerate(zip(xs, ys)):
+                if key == 'previous' and index not in (0, len(xs)-1):
+                    continue
                 below = len(lines) == 2 and y < next(line[3][index] for line in lines if line[0] != key)
                 ax.annotate(f'{y:,.1f}', (x, y), xytext=(0, -18 if below else 10),
                             textcoords='offset points', ha='center', fontsize=8.5, color=COLORS[key])
@@ -118,7 +122,7 @@ def chart(name, lines, ylabel, title, band=None, linear=False, labels=False, ini
     svg = '\n'.join(line.rstrip() for line in svg.splitlines()) + '\n'
     (assets / f'{name}.svg').write_text(svg)
     plt.close(fig)
-    series = [dict(key=k, label=label, x=list(xs), y=list(ys), color=COLORS[k], dashed=k == 'reference')
+    series = [dict(key=k, label=label, x=list(xs), y=list(ys), color=COLORS[k], dashed=k in ('reference', 'previous'))
               for k, label, xs, ys in lines]
     if linear:
         series.append(dict(key='linear', label='线性参考 BS / 16', x=list(lines[0][2]),
@@ -157,11 +161,21 @@ def build():
     for r in kz:
         assert math.isclose(r['tokens_s_card'], r['batch_size'] * 1e8 / r['cycles'], rel_tol=1e-12)
     f = d['zeus_population']
-    population_chart = chart('population-comparison', [
+    dp16 = d['protocol']['flow'] == 'owner_router_shared_dp16_fp8_transport'
+    population_lines = [
         ('h200', 'H200 · EP4', xs, [r['tokens_s_card'] for r in h]),
-        ('zeus', 'Zeus · EP4 × TP4', xs, [r['tokens_s_card'] for r in kz])],
+        ('zeus', 'Zeus · EP4 × TP4', xs, [r['tokens_s_card'] for r in kz])]
+    if dp16:
+        population_lines.append(('previous', '旧 Notes · PR674 自动 PE', xs,
+                                 [r['baseline']['tokens_s_card'] for r in d['dp16_revision']['rows']]))
+    population_chart = chart('population-comparison', population_lines,
         'tokens/s/card', '49 个 decode step 采样点汇总 · H200 与 Zeus MoE 吞吐', labels=True,
-        initial_batch=f['selected_batch_size'], ratio=('zeus', 'h200'))
+        initial_batch=f['selected_batch_size'], ratio=('zeus', 'h200'),
+        initial_visible=('h200', 'zeus') if dp16 else None)
+    if dp16:
+        overall_comparison, stage_comparison = dp16_report.comparison(d, table)
+        population_chart += ('<details class="data-details"><summary>本轮相对上一版 Notes：15 档完整对比</summary>'
+                             + overall_comparison + '</details>')
     population_table = table(
         ['总 batch', '均摊 batch/card', 'H200 · ms', 'H200 · tokens/s/card', 'Zeus · ms', 'Zeus · tokens/s/card'],
         [[r['batch_size'], f"{r['batch_per_card']:g}", f"{r['mean_ms']:.4f}", f"{r['tokens_s_card']:.1f}",
@@ -177,7 +191,9 @@ def build():
          for label, obj in [('H200', d['h200']['selection']), ('Zeus', f)]],
         '行：执行平台；列：只用 train 选择的四卡总 batch，以及该档在 validation / test 上的单卡吞吐。每批均保留七步。')
     assert f['measurement_mode'] == 'timing_only'
-    if f.get('evidence_type') == 'qualified_owner_router_campaign':
+    if dp16:
+        evidence = dp16_report.evidence(d)
+    elif f.get('evidence_type') == 'qualified_owner_router_campaign':
         q = d['qualification']['current_full_mode']
         assert q['source_commit'] == f['source_commit'] and q['passed']
         eq = d['qualification']['source_equivalence']
@@ -257,7 +273,8 @@ def build():
                 f"{f['baseline_comparison_cases']:,} 个时序 case 与完整基线一致，不移作 step017 数值验证。</p>"
                 "<p>时序模式保持真实 Router，仅在已获资格的 Routed/Shared 路径省略 PE 数值乘加；"
                     "时序输出及下游 Reduce 不具备数值资格，时序 case 数不能计为数值 PASS。</p>")
-    stages = ('router', 'routed', 'shared', 'reduce')
+    stages = dp16_report.STAGES if dp16 else ('router', 'routed', 'shared', 'reduce')
+    label = dp16_report.label
     # Keep the model-token numerator and all four cards for every stage, including Shared.
     # Invert the pooled 42-layer stage time, not the mean of per-sample reciprocal times.
     hz = d['protocol']['frequency_mhz'] * 1e6
@@ -281,55 +298,59 @@ def build():
         values = stage_rates[stage]
         peak = max(range(len(kz)), key=lambda i: values[i])
         worst = min(range(1, len(kz)), key=lambda i: values[i] / values[i - 1])
-        peak_rows.append([stage.title(), f"BS{kz[peak]['batch_size']} · {values[peak]:,.1f}",
+        peak_rows.append([label(stage), f"BS{kz[peak]['batch_size']} · {values[peak]:,.1f}",
             f'{values[-1]:,.1f}', f'{(values[-1] / values[peak] - 1) * 100:+.2f}%',
             f"BS{kz[worst - 1]['batch_size']} → BS{kz[worst]['batch_size']} · {(values[worst] / values[worst - 1] - 1) * 100:+.2f}%"])
     write_csv(ROOT / 'data/kernel-throughput.csv', throughput_export)
     throughput = chart('kernel-throughput',
-        [(s, s.title(), xs, stage_rates[s]) for s in stages], 'tokens/s/card（阶段等效）',
+        [(s, label(s), xs, stage_rates[s]) for s in stages], 'tokens/s/card（阶段等效）',
         '各个 kernel 的吞吐率 · 大 batch 是否进入平台期？', initial_batch=128,
-        initial_visible=('routed', 'shared', 'reduce'), zero_baseline=False)
+        initial_visible=stages if dp16 else ('routed', 'shared', 'reduce'), zero_baseline=False)
     throughput += ('<p class="reading-note">口径：<code>总 BS × 400,000,000 ÷ 该阶段 42 层平均 cycles ÷ 4</code>。'
         '各层先取该阶段最慢 rank（Router 取最慢 owner），累加 42 层，再对 49 个采样点取平均时间。'
         '分子只计模型输入 token，不乘 Top-K 或层数；Shared 也按四卡归一化。</p>'
         '<p class="reading-note">曲线走平表示增加 batch 后该阶段的单位卡处理速率不再明显提高；'
-        '向下表示时间增长超过 token 数增长。默认隐藏吞吐数量级较大的 Router，可勾选或点「只看」检查；'
+        '向下表示时间增长超过 token 数增长。可勾选曲线或点「只看」检查；'
         '交互图默认放大纵轴范围，突出变化趋势；可勾选「纵轴从 0 开始」比较绝对比例。'
-        '下载图保留从零开始的完整四条曲线。</p>'
+        '下载图保留从零开始的完整阶段曲线。</p>'
         '<div class="note">这是仅计某一阶段耗时的等效吞吐，用于定位扩展性问题；'
-        '不代表完整 MoE 吞吐或已经测得的流水线容量，四阶段不能相加。'
+        '不代表完整 MoE 吞吐或已经测得的流水线容量，各阶段吞吐不能相加。'
         '不同阶段的最慢 rank 可能不同，判断实际瓶颈还需结合下方耗时图。</div>')
     throughput += table(['阶段', '扫描峰值 · BS / tokens/s/card', 'BS128 · tokens/s/card',
         'BS128 相对峰值', '最大相邻档回落'], peak_rows,
-        '行：四个 kernel 阶段；列：当前 15 档扫描峰值、BS128 等效吞吐、相对峰值变化，以及最大相邻 batch 回落。未测档位不作推断。')
+        '行：各 kernel 阶段；列：当前 15 档扫描峰值、BS128 等效吞吐、相对峰值变化，以及最大相邻 batch 回落。未测档位不作推断。')
     throughput += '<details class="data-details"><summary>查看 15 档阶段吞吐与相邻档变化</summary>' + table(
-        ['总 batch'] + [label for s in stages for label in (s.title() + ' · tokens/s/card', s.title() + ' · 相邻档变化')],
+        ['总 batch'] + [column for s in stages for column in (label(s) + ' · tokens/s/card', label(s) + ' · 相邻档变化')],
         throughput_rows, '行：四卡总 batch；每阶段两列：42 层阶段等效吞吐与相对上一档的吞吐变化。'
         '负值表示回落，BS16 无前一档。全部基于同一套 49 个采样点。') + '</details>'
     # Describe observed scaling only; adjacent drops cannot by themselves identify hardware saturation.
     i32, i40, i48 = (xs.index(bs) for bs in (32, 40, 48))
+    shared_stage = 'router_shared' if dp16 else 'shared'
     throughput += (f'<p class="reading-note"><b>关键档位变化：</b>Routed 在 BS32 → BS40 的吞吐变化为 '
         f'{(stage_rates["routed"][i40] / stage_rates["routed"][i32] - 1) * 100:+.1f}%，'
         f'BS128 相对 BS32 为 {(stage_rates["routed"][-1] / stage_rates["routed"][i32] - 1) * 100:+.1f}%；'
         f'Reduce 在 BS40 → BS48 为 {(stage_rates["reduce"][i48] / stage_rates["reduce"][i40] - 1) * 100:+.1f}%。'
-        f'Shared 从 BS32 到 BS128，batch 增至 4 倍，吞吐变化为 '
-        f'{(stage_rates["shared"][-1] / stage_rates["shared"][i32] - 1) * 100:+.1f}%。'
+        f'{label(shared_stage)} 从 BS32 到 BS128，batch 增至 4 倍，吞吐变化为 '
+        f'{(stage_rates[shared_stage][-1] / stage_rates[shared_stage][i32] - 1) * 100:+.1f}%。'
         'Router 的相对变化需结合绝对耗时判断，不能仅凭百分比认定主瓶颈；'
         '这些曲线不能单独区分 kernel 调度、编译器或硬件带宽原因。</p>')
+    if dp16:
+        throughput += ('<details class="data-details"><summary>各阶段相对旧 Notes 的吞吐变化</summary>'
+                       + stage_comparison + '</details>')
     absolute = chart('kernel-time',
-        [(s, s.title(), xs, [r['stages'][s] / 42 / 400 for r in kz]) for s in stages],
+        [(s, label(s), xs, [r['stages'][s] / 42 / 400 for r in kz]) for s in stages],
         '平均每层耗时（μs）', '各阶段耗时 · 哪个阶段最耗时？')
     growth = chart('kernel-growth',
-        [(s, s.title(), xs, [r['stages'][s] / kz[0]['stages'][s] for r in kz]) for s in stages],
+        [(s, label(s), xs, [r['stages'][s] / kz[0]['stages'][s] for r in kz]) for s in stages],
         '周期增长倍数（BS16 = 1）', '相对增长 · 是否超过 batch 的线性增长？', linear=True)
     normalized = chart('kernel-per-token',
-        [(s, s.title(), xs, [r['stages'][s] / kz[0]['stages'][s] / (r['batch_size'] / 16) for r in kz]) for s in stages]
+        [(s, label(s), xs, [r['stages'][s] / kz[0]['stages'][s] / (r['batch_size'] / 16) for r in kz]) for s in stages]
         + [('reference', 'BS16 单 token 成本 = 1', xs, [1] * len(xs))],
         '单 token 周期比（BS16 = 1）', '单 token 成本 · batch 增大后是否更高效？')
-    kt = table(['总 batch', 'Router · μs/层', 'Routed · μs/层', 'Shared · μs/层', 'Reduce · μs/层', 'Routed / BS16', '线性参考'],
+    kt = table(['总 batch'] + [label(s) + ' · μs/层' for s in stages] + ['Routed / BS16', '线性参考'],
         [[r['batch_size']] + [f"{r['stages'][s] / 42 / 400:.3f}" for s in stages]
          + [f"{r['stages']['routed']/kz[0]['stages']['routed']:.3f}×", f"{r['batch_size']/16:.2f}×"] for r in kz],
-        '行：四卡总 batch；列：49 点平均的单层阶段耗时（μs）、Routed 周期倍数及 batch 倍数。Shared 仅 EP0，逐阶段独立取最大 rank。')
+        '行：四卡总 batch；列：49 点平均的单层阶段耗时（μs）、Routed 周期倍数及 batch 倍数。逐阶段独立取最大 rank。')
     kernel = (absolute + '<p class="reading-note">纵轴是平均每层微秒数：各阶段逐层独立取最大 rank，累加 42 层后取 49 点平均，再除以 42。'
               '各阶段的最慢 rank 可能不同，不能把它们相加当成完整 MoE 时间。</p>'
               + growth + '<p class="reading-note">纵轴 = 当前 batch 的阶段平均 cycles ÷ BS16 的阶段平均 cycles；'
@@ -388,6 +409,16 @@ def build():
                      'Router 为 calibrated sigmoid。四卡总 BS16–128 的 493,920 个时序 case 全部完成；'
                      '最佳档位为 BS32，1,134.6 tokens/s/card。相对上一版扫描峰值提高 15.7%。')
     current_history = ''
+    if dp16:
+        latest_update = dp16_report.update_text(d)
+        version = f"versions/{d['updated'].replace('-', '')}-{source[:8]}"
+        current_history = (f'<div class="timeline"><div><time>{html.escape(d["updated"])}</time><p>'
+            '<b>Shared DP16 / FP8 transport 与全 batch M4</b><br>' + latest_update +
+            f'<a href="{version}/data/benchmark.json">本轮固定快照</a> · '
+            '<a href="data/dp16-comparison.csv">与上一版 Notes 对照 CSV</a>。</p></div></div>'
+            '<div class="timeline"><div><time>2026-11-09</time><p><b>上一版：自动 PE 配置 / EP0 Shared</b><br>'
+            '测量源码 0d68686a，493,920 个时序 case，峰值 BS128：1,113.6 tokens/s/card。'
+            '<a href="versions/20261109-0d68686a/data/benchmark.json">固定快照</a>；本轮直接引用该结果，未用新编译器重跑。</p></div></div>')
     if d.get('flow_revision', {}).get('kind') == 'four_kernel_and_compiler':
         changes = [r['throughput_increase_pct'] for r in d['flow_revision']['rows']]
         old_peak = max(r['baseline']['tokens_s_card'] for r in d['flow_revision']['rows'])
@@ -432,6 +463,8 @@ def build():
         SOURCE_SHORT=source[:12], DATA=json.dumps(page_data, ensure_ascii=False).replace('<', '\\u003c'),
         REVISION_TABLE=revision, HISTORY_TABLES=historical,
         LATEST_UPDATE=latest_update, CURRENT_HISTORY=current_history,
+        KERNEL_INTRO=(ROOT / ('kernel-dp16.template' if dp16 else 'kernel-ep0.template')).read_text(),
+        ZEUS_METHOD=dp16_report.method(dp16),
         PR_URL=html.escape(d.get('publication', {}).get('pull_request_url',
                            'https://github.com/DarronTam/torch_zeus/pull/643'), quote=True),
         H200_BEST=f"{best_h['tokens_s_card']:,.1f}", H200_BEST_BS=str(best_h['batch_size']), H200_BEST_CARD=f"{best_h['batch_size']/4:g}",

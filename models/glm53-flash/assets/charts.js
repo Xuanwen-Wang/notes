@@ -204,7 +204,7 @@
           if (labels && (!mobile || i % skip === 0 || i === xs.length - 1)) {
             // Separate the two throughput labels and keep endpoint labels inside the plot.
             const anchor = i === 0 ? 'start' : i === xs.length - 1 ? 'end' : 'middle';
-            const peer = config.series.length === 2 ? config.series.find(s => s.key !== series.key) : null;
+            const peer = visible.length === 2 ? visible.find(s => s.key !== series.key) : null;
             const offset = peer && series.y[i] < peer.y[i] ? 18 : -10;
             group.append(node('text', { x: plot.x(x), y: plot.y(series.y[i]) + offset,
               'text-anchor': anchor, fill: series.color, class: 'point-value' }, pointLabel(series.y[i])));
