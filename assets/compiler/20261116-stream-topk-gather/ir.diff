@@ -1,0 +1,970 @@
+--- off/after-stream.mlir
++++ on/after-stream.mlir
+@@ -344,106 +344,106 @@
+     memref.dealloc %alloc_55 : memref<1x1x1x32xf32>
+     memref.dealloc %alloc_43 : memref<1x1x1x320xf32>
+     zeus_high.vp %alloc_44, %alloc_56 desc(%94, %106) {op_type = "topk_step", modules = [{name = "msk", cmps = 1 : i64, mode = "cmp_mat_tree_c_w_h_msk_out", mskrc = true, tkv = 7 : i64, tkvo = true, topk = 8 : i64}], tensor_mode = 1 : i64, topk_k = 8 : i64, topk_step_index = 7 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x32xf32>
+-    %subview_69 = memref.subview %alloc_59[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>
+-    %subview_70 = memref.subview %alloc_57[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
+-    zeus_high.gather %alloc_29, idx %subview_69, out %subview_70, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
+-    memref.dealloc %alloc_59 : memref<1x1x1x8xi32>
+-    memref.dealloc %alloc_58 : memref<1x1x1x32xf32>
+-    %subview_71 = memref.subview %alloc_62[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>
+-    %subview_72 = memref.subview %alloc_60[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
+-    zeus_high.gather %alloc_30, idx %subview_71, out %subview_72, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
+-    memref.dealloc %alloc_62 : memref<1x1x1x8xi32>
+-    memref.dealloc %alloc_61 : memref<1x1x1x32xf32>
+-    %subview_73 = memref.subview %alloc_65[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>
+-    %subview_74 = memref.subview %alloc_63[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
+-    zeus_high.gather %alloc_31, idx %subview_73, out %subview_74, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
+-    memref.dealloc %alloc_65 : memref<1x1x1x8xi32>
+-    memref.dealloc %alloc_64 : memref<1x1x1x32xf32>
+-    %subview_75 = memref.subview %alloc_68[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>
+-    %subview_76 = memref.subview %alloc_66[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
+-    zeus_high.gather %alloc_32, idx %subview_75, out %subview_76, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
+-    memref.dealloc %alloc_68 : memref<1x1x1x8xi32>
+-    memref.dealloc %alloc_67 : memref<1x1x1x32xf32>
+     memref.dealloc %alloc_56 : memref<1x1x1x32xf32>
+     memref.dealloc %alloc_44 : memref<1x1x1x320xf32>
+-    %subview_77 = memref.subview %alloc_9[0, 0, 0, 0] [1, 1, 1, 32] [1, 1, 1, 1] : memref<1x1x4x32xi32> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1]>>
+-    %cast_78 = memref.cast %subview_77 : memref<1x1x1x32xi32, strided<[128, 128, 32, 1]>> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>>
+-    %subview_79 = memref.subview %alloc_9[0, 0, 1, 0] [1, 1, 1, 32] [1, 1, 1, 1] : memref<1x1x4x32xi32> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 32>>
+-    %cast_80 = memref.cast %subview_79 : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 32>> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>>
+-    %subview_81 = memref.subview %alloc_9[0, 0, 2, 0] [1, 1, 1, 32] [1, 1, 1, 1] : memref<1x1x4x32xi32> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 64>>
+-    %cast_82 = memref.cast %subview_81 : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 64>> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>>
+-    %subview_83 = memref.subview %alloc_9[0, 0, 3, 0] [1, 1, 1, 32] [1, 1, 1, 1] : memref<1x1x4x32xi32> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 96>>
+-    %cast_84 = memref.cast %subview_83 : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 96>> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>>
+-    %119 = zeus_high.create_fmap_desc %cast_78 {offset = 0, tensor_shape = [1, 1, 4, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %120 = zeus_high.create_fmap_desc %cast_80 {offset = 0, tensor_shape = [1, 1, 4, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %121 = zeus_high.create_fmap_desc %cast_82 {offset = 0, tensor_shape = [1, 1, 4, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %122 = zeus_high.create_fmap_desc %cast_84 {offset = 0, tensor_shape = [1, 1, 4, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %subview_85 = memref.subview %alloc_3[0, 0, 0, 0] [1, 1, 1, 320] [1, 1, 1, 1] : memref<1x1x4x320xbf16> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1]>>
+-    %cast_86 = memref.cast %subview_85 : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1]>> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>
+-    %subview_87 = memref.subview %alloc_3[0, 0, 1, 0] [1, 1, 1, 320] [1, 1, 1, 1] : memref<1x1x4x320xbf16> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: 320>>
+-    %cast_88 = memref.cast %subview_87 : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: 320>> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>
+-    %subview_89 = memref.subview %alloc_3[0, 0, 2, 0] [1, 1, 1, 320] [1, 1, 1, 1] : memref<1x1x4x320xbf16> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: 640>>
+-    %cast_90 = memref.cast %subview_89 : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: 640>> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>
+-    %subview_91 = memref.subview %alloc_3[0, 0, 3, 0] [1, 1, 1, 320] [1, 1, 1, 1] : memref<1x1x4x320xbf16> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: 960>>
+-    %cast_92 = memref.cast %subview_91 : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: 960>> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>
+-    %123 = zeus_high.create_fmap_desc %cast_86 {offset = 0, tensor_shape = [1, 1, 4, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %124 = zeus_high.create_fmap_desc %cast_88 {offset = 0, tensor_shape = [1, 1, 4, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %125 = zeus_high.create_fmap_desc %cast_90 {offset = 0, tensor_shape = [1, 1, 4, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %126 = zeus_high.create_fmap_desc %cast_92 {offset = 0, tensor_shape = [1, 1, 4, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %subview_69 = memref.subview %alloc_9[0, 0, 0, 0] [1, 1, 1, 32] [1, 1, 1, 1] : memref<1x1x4x32xi32> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1]>>
++    %cast_70 = memref.cast %subview_69 : memref<1x1x1x32xi32, strided<[128, 128, 32, 1]>> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>>
++    %subview_71 = memref.subview %alloc_9[0, 0, 1, 0] [1, 1, 1, 32] [1, 1, 1, 1] : memref<1x1x4x32xi32> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 32>>
++    %cast_72 = memref.cast %subview_71 : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 32>> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>>
++    %subview_73 = memref.subview %alloc_9[0, 0, 2, 0] [1, 1, 1, 32] [1, 1, 1, 1] : memref<1x1x4x32xi32> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 64>>
++    %cast_74 = memref.cast %subview_73 : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 64>> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>>
++    %subview_75 = memref.subview %alloc_9[0, 0, 3, 0] [1, 1, 1, 32] [1, 1, 1, 1] : memref<1x1x4x32xi32> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 96>>
++    %cast_76 = memref.cast %subview_75 : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 96>> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>>
++    %119 = zeus_high.create_fmap_desc %cast_70 {offset = 0, tensor_shape = [1, 1, 4, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %120 = zeus_high.create_fmap_desc %cast_72 {offset = 0, tensor_shape = [1, 1, 4, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %121 = zeus_high.create_fmap_desc %cast_74 {offset = 0, tensor_shape = [1, 1, 4, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %122 = zeus_high.create_fmap_desc %cast_76 {offset = 0, tensor_shape = [1, 1, 4, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %subview_77 = memref.subview %alloc_3[0, 0, 0, 0] [1, 1, 1, 320] [1, 1, 1, 1] : memref<1x1x4x320xbf16> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1]>>
++    %cast_78 = memref.cast %subview_77 : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1]>> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>
++    %subview_79 = memref.subview %alloc_3[0, 0, 1, 0] [1, 1, 1, 320] [1, 1, 1, 1] : memref<1x1x4x320xbf16> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: 320>>
++    %cast_80 = memref.cast %subview_79 : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: 320>> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>
++    %subview_81 = memref.subview %alloc_3[0, 0, 2, 0] [1, 1, 1, 320] [1, 1, 1, 1] : memref<1x1x4x320xbf16> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: 640>>
++    %cast_82 = memref.cast %subview_81 : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: 640>> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>
++    %subview_83 = memref.subview %alloc_3[0, 0, 3, 0] [1, 1, 1, 320] [1, 1, 1, 1] : memref<1x1x4x320xbf16> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: 960>>
++    %cast_84 = memref.cast %subview_83 : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: 960>> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>
++    %123 = zeus_high.create_fmap_desc %cast_78 {offset = 0, tensor_shape = [1, 1, 4, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %124 = zeus_high.create_fmap_desc %cast_80 {offset = 0, tensor_shape = [1, 1, 4, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %125 = zeus_high.create_fmap_desc %cast_82 {offset = 0, tensor_shape = [1, 1, 4, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %126 = zeus_high.create_fmap_desc %cast_84 {offset = 0, tensor_shape = [1, 1, 4, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>> -> !zeus_high.fmap_desc
+     %127 = zeus_high.set_pos %123 [0, 0, %c0, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+     %128 = zeus_high.set_pos %124 [0, 0, %c1, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+     %129 = zeus_high.set_pos %125 [0, 0, %c2, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+     %130 = zeus_high.set_pos %126 [0, 0, %c3, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
++    %alloc_85 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
++    %alloc_86 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
++    %alloc_87 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
++    %alloc_88 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
++    %131 = zeus_high.create_fmap_desc %alloc_85 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
++    %132 = zeus_high.create_fmap_desc %alloc_86 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
++    %133 = zeus_high.create_fmap_desc %alloc_87 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
++    %134 = zeus_high.create_fmap_desc %alloc_88 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
++    zeus_high.vp %cast_78, %alloc_85 desc(%127, %131) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
++    zeus_high.vp %cast_80, %alloc_86 desc(%128, %132) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
++    zeus_high.vp %cast_82, %alloc_87 desc(%129, %133) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
++    zeus_high.vp %cast_84, %alloc_88 desc(%130, %134) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
++    %subview_89 = memref.subview %alloc_59[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>
++    %subview_90 = memref.subview %alloc_57[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
++    zeus_high.gather %alloc_29, idx %subview_89, out %subview_90, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
++    memref.dealloc %alloc_59 : memref<1x1x1x8xi32>
++    memref.dealloc %alloc_58 : memref<1x1x1x32xf32>
++    %alloc_91 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
++    %alloc_92 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
+     %alloc_93 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
+     %alloc_94 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
+-    %alloc_95 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
+-    %alloc_96 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
+-    %131 = zeus_high.create_fmap_desc %alloc_93 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+-    %132 = zeus_high.create_fmap_desc %alloc_94 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+-    %133 = zeus_high.create_fmap_desc %alloc_95 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+-    %134 = zeus_high.create_fmap_desc %alloc_96 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+-    zeus_high.vp %cast_86, %alloc_93 desc(%127, %131) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
+-    zeus_high.vp %cast_88, %alloc_94 desc(%128, %132) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
+-    zeus_high.vp %cast_90, %alloc_95 desc(%129, %133) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
+-    zeus_high.vp %cast_92, %alloc_96 desc(%130, %134) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
++    %135 = zeus_high.create_fmap_desc %alloc_91 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
++    %136 = zeus_high.create_fmap_desc %alloc_92 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
++    %137 = zeus_high.create_fmap_desc %alloc_93 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
++    %138 = zeus_high.create_fmap_desc %alloc_94 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
++    zeus_high.vp %cast_78, %alloc_91 desc(%127, %135) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = -8.000000e+01 : f32}, {name = "sum0", mode = "sum_0_x_add_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
++    zeus_high.vp %cast_80, %alloc_92 desc(%128, %136) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = -8.000000e+01 : f32}, {name = "sum0", mode = "sum_0_x_add_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
++    zeus_high.vp %cast_82, %alloc_93 desc(%129, %137) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = -8.000000e+01 : f32}, {name = "sum0", mode = "sum_0_x_add_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
++    zeus_high.vp %cast_84, %alloc_94 desc(%130, %138) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = -8.000000e+01 : f32}, {name = "sum0", mode = "sum_0_x_add_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
++    %subview_95 = memref.subview %alloc_62[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>
++    %subview_96 = memref.subview %alloc_60[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
++    zeus_high.gather %alloc_30, idx %subview_95, out %subview_96, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
++    memref.dealloc %alloc_62 : memref<1x1x1x8xi32>
++    memref.dealloc %alloc_61 : memref<1x1x1x32xf32>
+     %alloc_97 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
+     %alloc_98 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
+     %alloc_99 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
+     %alloc_100 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
+-    %135 = zeus_high.create_fmap_desc %alloc_97 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+-    %136 = zeus_high.create_fmap_desc %alloc_98 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+-    %137 = zeus_high.create_fmap_desc %alloc_99 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+-    %138 = zeus_high.create_fmap_desc %alloc_100 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+-    zeus_high.vp %cast_86, %alloc_97 desc(%127, %135) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = -8.000000e+01 : f32}, {name = "sum0", mode = "sum_0_x_add_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
+-    zeus_high.vp %cast_88, %alloc_98 desc(%128, %136) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = -8.000000e+01 : f32}, {name = "sum0", mode = "sum_0_x_add_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
+-    zeus_high.vp %cast_90, %alloc_99 desc(%129, %137) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = -8.000000e+01 : f32}, {name = "sum0", mode = "sum_0_x_add_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
+-    zeus_high.vp %cast_92, %alloc_100 desc(%130, %138) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = -8.000000e+01 : f32}, {name = "sum0", mode = "sum_0_x_add_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
+-    %alloc_101 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
+-    %alloc_102 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
+-    %alloc_103 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
+-    %alloc_104 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
+-    %139 = zeus_high.create_fmap_desc %alloc_101 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+-    %140 = zeus_high.create_fmap_desc %alloc_102 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+-    %141 = zeus_high.create_fmap_desc %alloc_103 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+-    %142 = zeus_high.create_fmap_desc %alloc_104 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
++    %139 = zeus_high.create_fmap_desc %alloc_97 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
++    %140 = zeus_high.create_fmap_desc %alloc_98 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
++    %141 = zeus_high.create_fmap_desc %alloc_99 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
++    %142 = zeus_high.create_fmap_desc %alloc_100 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+     zeus_high.vp %alloc_13, %alloc_13 desc(%42, %42) {op_type = "sigmoid", modules = [{name = "prg_l1", mode = "prg_l1_load", segn = 1 : i64}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x192xf32>, memref<1x1x1x192xf32>
+     zeus_high.vp %alloc_13, %alloc_13 desc(%42, %42) {op_type = "sigmoid", modules = [{name = "prg_l1", mode = "prg_l1_load", segn = 1 : i64}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x192xf32>, memref<1x1x1x192xf32>
+     zeus_high.vp %alloc_13, %alloc_13 desc(%42, %42) {op_type = "sigmoid", modules = [{name = "prg_l1", mode = "prg_l1_load", segn = 1 : i64}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x192xf32>, memref<1x1x1x192xf32>
+     zeus_high.vp %alloc_13, %alloc_13 desc(%42, %42) {op_type = "sigmoid", modules = [{name = "prg_l1", mode = "prg_l1_load", segn = 1 : i64}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x192xf32>, memref<1x1x1x192xf32>
+-    zeus_high.vp %cast_86, %alloc_101 desc(%127, %139) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "max", mode = "cmp_mat_two_x_c", scalar_val = -1.040000e+02 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
+-    zeus_high.vp %cast_88, %alloc_102 desc(%128, %140) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "max", mode = "cmp_mat_two_x_c", scalar_val = -1.040000e+02 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
+-    zeus_high.vp %cast_90, %alloc_103 desc(%129, %141) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "max", mode = "cmp_mat_two_x_c", scalar_val = -1.040000e+02 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
+-    zeus_high.vp %cast_92, %alloc_104 desc(%130, %142) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "max", mode = "cmp_mat_two_x_c", scalar_val = -1.040000e+02 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
++    %subview_101 = memref.subview %alloc_65[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>
++    %subview_102 = memref.subview %alloc_63[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
++    zeus_high.gather %alloc_31, idx %subview_101, out %subview_102, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
++    memref.dealloc %alloc_65 : memref<1x1x1x8xi32>
++    memref.dealloc %alloc_64 : memref<1x1x1x32xf32>
++    zeus_high.vp %cast_78, %alloc_97 desc(%127, %139) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "max", mode = "cmp_mat_two_x_c", scalar_val = -1.040000e+02 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
++    zeus_high.vp %cast_80, %alloc_98 desc(%128, %140) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "max", mode = "cmp_mat_two_x_c", scalar_val = -1.040000e+02 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
++    zeus_high.vp %cast_82, %alloc_99 desc(%129, %141) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "max", mode = "cmp_mat_two_x_c", scalar_val = -1.040000e+02 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
++    zeus_high.vp %cast_84, %alloc_100 desc(%130, %142) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "max", mode = "cmp_mat_two_x_c", scalar_val = -1.040000e+02 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
++    %subview_103 = memref.subview %alloc_68[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>
++    %subview_104 = memref.subview %alloc_66[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
++    zeus_high.gather %alloc_32, idx %subview_103, out %subview_104, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
++    memref.dealloc %alloc_68 : memref<1x1x1x8xi32>
++    memref.dealloc %alloc_67 : memref<1x1x1x32xf32>
+     memref.dealloc %alloc_3 : memref<1x1x4x320xbf16>
+     memref.dealloc %alloc_13 : memref<1x1x1x192xf32>
+-    zeus_high.vp %alloc_93, %alloc_93 desc(%131, %131) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}, {name = "precal", mode = "neg_x"}, {name = "mul_l0", mode = "mul_l0_x_c", scalar_val = 1.44269502 : f32}, {name = "flr_l0", fgdm = 1 : i64, mode = "flr_l0_s_x"}, {name = "sum1_l0", mode = "sum_1_l0_x_minus_s"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 1 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_left"}, {name = "postcal", mode = "qk_x_add_qb", qb = 1.000000e+00 : f32, qk = 1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_94, %alloc_94 desc(%132, %132) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}, {name = "precal", mode = "neg_x"}, {name = "mul_l0", mode = "mul_l0_x_c", scalar_val = 1.44269502 : f32}, {name = "flr_l0", fgdm = 1 : i64, mode = "flr_l0_s_x"}, {name = "sum1_l0", mode = "sum_1_l0_x_minus_s"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 1 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_left"}, {name = "postcal", mode = "qk_x_add_qb", qb = 1.000000e+00 : f32, qk = 1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_95, %alloc_95 desc(%133, %133) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}, {name = "precal", mode = "neg_x"}, {name = "mul_l0", mode = "mul_l0_x_c", scalar_val = 1.44269502 : f32}, {name = "flr_l0", fgdm = 1 : i64, mode = "flr_l0_s_x"}, {name = "sum1_l0", mode = "sum_1_l0_x_minus_s"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 1 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_left"}, {name = "postcal", mode = "qk_x_add_qb", qb = 1.000000e+00 : f32, qk = 1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_96, %alloc_96 desc(%134, %134) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}, {name = "precal", mode = "neg_x"}, {name = "mul_l0", mode = "mul_l0_x_c", scalar_val = 1.44269502 : f32}, {name = "flr_l0", fgdm = 1 : i64, mode = "flr_l0_s_x"}, {name = "sum1_l0", mode = "sum_1_l0_x_minus_s"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 1 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_left"}, {name = "postcal", mode = "qk_x_add_qb", qb = 1.000000e+00 : f32, qk = 1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_101, %alloc_101 desc(%139, %139) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = -8.000000e+01 : f32}, {name = "sum0_l0", mode = "sum_0_l0_x_add_c", scalar_val = 15.9423857 : f32}, {name = "mul_l0", mode = "mul_l0_x_c", scalar_val = 1.44269502 : f32}, {name = "flr_l0", fgdm = 1 : i64, mode = "flr_l0_s_x"}, {name = "sum1_l0", mode = "sum_1_l0_x_minus_s"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 1 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_left"}, {name = "postcal", mode = "qk_x_add_qb", qb = 0.000000e+00 : f32, qk = 1.1920929E-7 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_102, %alloc_102 desc(%140, %140) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = -8.000000e+01 : f32}, {name = "sum0_l0", mode = "sum_0_l0_x_add_c", scalar_val = 15.9423857 : f32}, {name = "mul_l0", mode = "mul_l0_x_c", scalar_val = 1.44269502 : f32}, {name = "flr_l0", fgdm = 1 : i64, mode = "flr_l0_s_x"}, {name = "sum1_l0", mode = "sum_1_l0_x_minus_s"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 1 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_left"}, {name = "postcal", mode = "qk_x_add_qb", qb = 0.000000e+00 : f32, qk = 1.1920929E-7 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_103, %alloc_103 desc(%141, %141) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = -8.000000e+01 : f32}, {name = "sum0_l0", mode = "sum_0_l0_x_add_c", scalar_val = 15.9423857 : f32}, {name = "mul_l0", mode = "mul_l0_x_c", scalar_val = 1.44269502 : f32}, {name = "flr_l0", fgdm = 1 : i64, mode = "flr_l0_s_x"}, {name = "sum1_l0", mode = "sum_1_l0_x_minus_s"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 1 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_left"}, {name = "postcal", mode = "qk_x_add_qb", qb = 0.000000e+00 : f32, qk = 1.1920929E-7 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_104, %alloc_104 desc(%142, %142) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = -8.000000e+01 : f32}, {name = "sum0_l0", mode = "sum_0_l0_x_add_c", scalar_val = 15.9423857 : f32}, {name = "mul_l0", mode = "mul_l0_x_c", scalar_val = 1.44269502 : f32}, {name = "flr_l0", fgdm = 1 : i64, mode = "flr_l0_s_x"}, {name = "sum1_l0", mode = "sum_1_l0_x_minus_s"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 1 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_left"}, {name = "postcal", mode = "qk_x_add_qb", qb = 0.000000e+00 : f32, qk = 1.1920929E-7 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_85, %alloc_85 desc(%131, %131) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}, {name = "precal", mode = "neg_x"}, {name = "mul_l0", mode = "mul_l0_x_c", scalar_val = 1.44269502 : f32}, {name = "flr_l0", fgdm = 1 : i64, mode = "flr_l0_s_x"}, {name = "sum1_l0", mode = "sum_1_l0_x_minus_s"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 1 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_left"}, {name = "postcal", mode = "qk_x_add_qb", qb = 1.000000e+00 : f32, qk = 1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_86, %alloc_86 desc(%132, %132) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}, {name = "precal", mode = "neg_x"}, {name = "mul_l0", mode = "mul_l0_x_c", scalar_val = 1.44269502 : f32}, {name = "flr_l0", fgdm = 1 : i64, mode = "flr_l0_s_x"}, {name = "sum1_l0", mode = "sum_1_l0_x_minus_s"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 1 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_left"}, {name = "postcal", mode = "qk_x_add_qb", qb = 1.000000e+00 : f32, qk = 1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_87, %alloc_87 desc(%133, %133) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}, {name = "precal", mode = "neg_x"}, {name = "mul_l0", mode = "mul_l0_x_c", scalar_val = 1.44269502 : f32}, {name = "flr_l0", fgdm = 1 : i64, mode = "flr_l0_s_x"}, {name = "sum1_l0", mode = "sum_1_l0_x_minus_s"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 1 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_left"}, {name = "postcal", mode = "qk_x_add_qb", qb = 1.000000e+00 : f32, qk = 1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_88, %alloc_88 desc(%134, %134) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}, {name = "precal", mode = "neg_x"}, {name = "mul_l0", mode = "mul_l0_x_c", scalar_val = 1.44269502 : f32}, {name = "flr_l0", fgdm = 1 : i64, mode = "flr_l0_s_x"}, {name = "sum1_l0", mode = "sum_1_l0_x_minus_s"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 1 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_left"}, {name = "postcal", mode = "qk_x_add_qb", qb = 1.000000e+00 : f32, qk = 1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_97, %alloc_97 desc(%139, %139) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = -8.000000e+01 : f32}, {name = "sum0_l0", mode = "sum_0_l0_x_add_c", scalar_val = 15.9423857 : f32}, {name = "mul_l0", mode = "mul_l0_x_c", scalar_val = 1.44269502 : f32}, {name = "flr_l0", fgdm = 1 : i64, mode = "flr_l0_s_x"}, {name = "sum1_l0", mode = "sum_1_l0_x_minus_s"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 1 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_left"}, {name = "postcal", mode = "qk_x_add_qb", qb = 0.000000e+00 : f32, qk = 1.1920929E-7 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_98, %alloc_98 desc(%140, %140) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = -8.000000e+01 : f32}, {name = "sum0_l0", mode = "sum_0_l0_x_add_c", scalar_val = 15.9423857 : f32}, {name = "mul_l0", mode = "mul_l0_x_c", scalar_val = 1.44269502 : f32}, {name = "flr_l0", fgdm = 1 : i64, mode = "flr_l0_s_x"}, {name = "sum1_l0", mode = "sum_1_l0_x_minus_s"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 1 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_left"}, {name = "postcal", mode = "qk_x_add_qb", qb = 0.000000e+00 : f32, qk = 1.1920929E-7 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_99, %alloc_99 desc(%141, %141) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = -8.000000e+01 : f32}, {name = "sum0_l0", mode = "sum_0_l0_x_add_c", scalar_val = 15.9423857 : f32}, {name = "mul_l0", mode = "mul_l0_x_c", scalar_val = 1.44269502 : f32}, {name = "flr_l0", fgdm = 1 : i64, mode = "flr_l0_s_x"}, {name = "sum1_l0", mode = "sum_1_l0_x_minus_s"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 1 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_left"}, {name = "postcal", mode = "qk_x_add_qb", qb = 0.000000e+00 : f32, qk = 1.1920929E-7 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_100, %alloc_100 desc(%142, %142) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = -8.000000e+01 : f32}, {name = "sum0_l0", mode = "sum_0_l0_x_add_c", scalar_val = 15.9423857 : f32}, {name = "mul_l0", mode = "mul_l0_x_c", scalar_val = 1.44269502 : f32}, {name = "flr_l0", fgdm = 1 : i64, mode = "flr_l0_s_x"}, {name = "sum1_l0", mode = "sum_1_l0_x_minus_s"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 1 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_left"}, {name = "postcal", mode = "qk_x_add_qb", qb = 0.000000e+00 : f32, qk = 1.1920929E-7 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+     %alloc_105 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x96xf32>
+     %alloc_106 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x96xf32>
+     %alloc_107 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x96xf32>
+@@ -484,41 +484,41 @@
+     %160 = zeus_high.create_fmap_desc %alloc_110 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+     %161 = zeus_high.create_fmap_desc %alloc_111 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+     %162 = zeus_high.create_fmap_desc %alloc_112 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+-    zeus_high.vp %alloc_93, %alloc_109 desc(%131, %159) {op_type = "sigmoid", modules = [{name = "dip_l0", mode = "dip_l0_e_m"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 0 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_right"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_94, %alloc_110 desc(%132, %160) {op_type = "sigmoid", modules = [{name = "dip_l0", mode = "dip_l0_e_m"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 0 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_right"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_95, %alloc_111 desc(%133, %161) {op_type = "sigmoid", modules = [{name = "dip_l0", mode = "dip_l0_e_m"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 0 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_right"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_96, %alloc_112 desc(%134, %162) {op_type = "sigmoid", modules = [{name = "dip_l0", mode = "dip_l0_e_m"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 0 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_right"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_93, %alloc_109, %alloc_93 desc(%131, %159, %131) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}, {name = "postcal", mode = "qk_x_add_qb", qb = 2.000000e+00 : f32, qk = -1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_94, %alloc_110, %alloc_94 desc(%132, %160, %132) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}, {name = "postcal", mode = "qk_x_add_qb", qb = 2.000000e+00 : f32, qk = -1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_95, %alloc_111, %alloc_95 desc(%133, %161, %133) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}, {name = "postcal", mode = "qk_x_add_qb", qb = 2.000000e+00 : f32, qk = -1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_96, %alloc_112, %alloc_96 desc(%134, %162, %134) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}, {name = "postcal", mode = "qk_x_add_qb", qb = 2.000000e+00 : f32, qk = -1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_109, %alloc_93, %alloc_109 desc(%159, %131, %159) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_85, %alloc_109 desc(%131, %159) {op_type = "sigmoid", modules = [{name = "dip_l0", mode = "dip_l0_e_m"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 0 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_right"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_86, %alloc_110 desc(%132, %160) {op_type = "sigmoid", modules = [{name = "dip_l0", mode = "dip_l0_e_m"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 0 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_right"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_87, %alloc_111 desc(%133, %161) {op_type = "sigmoid", modules = [{name = "dip_l0", mode = "dip_l0_e_m"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 0 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_right"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_88, %alloc_112 desc(%134, %162) {op_type = "sigmoid", modules = [{name = "dip_l0", mode = "dip_l0_e_m"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 0 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_right"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_85, %alloc_109, %alloc_85 desc(%131, %159, %131) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}, {name = "postcal", mode = "qk_x_add_qb", qb = 2.000000e+00 : f32, qk = -1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_86, %alloc_110, %alloc_86 desc(%132, %160, %132) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}, {name = "postcal", mode = "qk_x_add_qb", qb = 2.000000e+00 : f32, qk = -1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_87, %alloc_111, %alloc_87 desc(%133, %161, %133) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}, {name = "postcal", mode = "qk_x_add_qb", qb = 2.000000e+00 : f32, qk = -1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_88, %alloc_112, %alloc_88 desc(%134, %162, %134) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}, {name = "postcal", mode = "qk_x_add_qb", qb = 2.000000e+00 : f32, qk = -1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_109, %alloc_85, %alloc_109 desc(%159, %131, %159) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    memref.dealloc %alloc_85 : memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_110, %alloc_86, %alloc_110 desc(%160, %132, %160) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    memref.dealloc %alloc_86 : memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_111, %alloc_87, %alloc_111 desc(%161, %133, %161) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    memref.dealloc %alloc_87 : memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_112, %alloc_88, %alloc_112 desc(%162, %134, %162) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    memref.dealloc %alloc_88 : memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_97, %alloc_91, %alloc_97 desc(%139, %135, %139) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y_where_a_0"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_98, %alloc_92, %alloc_98 desc(%140, %136, %140) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y_where_a_0"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_99, %alloc_93, %alloc_99 desc(%141, %137, %141) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y_where_a_0"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_100, %alloc_94, %alloc_100 desc(%142, %138, %142) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y_where_a_0"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_109, %alloc_91, %alloc_109 desc(%159, %135, %159) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y_where_0_b"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    memref.dealloc %alloc_91 : memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_110, %alloc_92, %alloc_110 desc(%160, %136, %160) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y_where_0_b"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    memref.dealloc %alloc_92 : memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_111, %alloc_93, %alloc_111 desc(%161, %137, %161) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y_where_0_b"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+     memref.dealloc %alloc_93 : memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_110, %alloc_94, %alloc_110 desc(%160, %132, %160) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_112, %alloc_94, %alloc_112 desc(%162, %138, %162) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y_where_0_b"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+     memref.dealloc %alloc_94 : memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_111, %alloc_95, %alloc_111 desc(%161, %133, %161) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    memref.dealloc %alloc_95 : memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_112, %alloc_96, %alloc_112 desc(%162, %134, %162) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    memref.dealloc %alloc_96 : memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_101, %alloc_97, %alloc_101 desc(%139, %135, %139) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y_where_a_0"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_102, %alloc_98, %alloc_102 desc(%140, %136, %140) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y_where_a_0"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_103, %alloc_99, %alloc_103 desc(%141, %137, %141) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y_where_a_0"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_104, %alloc_100, %alloc_104 desc(%142, %138, %142) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y_where_a_0"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_109, %alloc_97, %alloc_109 desc(%159, %135, %159) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y_where_0_b"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    memref.dealloc %alloc_97 : memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_110, %alloc_98, %alloc_110 desc(%160, %136, %160) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y_where_0_b"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    memref.dealloc %alloc_98 : memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_111, %alloc_99, %alloc_111 desc(%161, %137, %161) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y_where_0_b"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    memref.dealloc %alloc_99 : memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_112, %alloc_100, %alloc_112 desc(%162, %138, %162) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y_where_0_b"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    memref.dealloc %alloc_100 : memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_101, %alloc_109, %alloc_101 desc(%139, %159, %139) {op_type = "sigmoid", modules = [{name = "sum0", mode = "sum_0_x_add_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_97, %alloc_109, %alloc_97 desc(%139, %159, %139) {op_type = "sigmoid", modules = [{name = "sum0", mode = "sum_0_x_add_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+     memref.dealloc %alloc_109 : memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_102, %alloc_110, %alloc_102 desc(%140, %160, %140) {op_type = "sigmoid", modules = [{name = "sum0", mode = "sum_0_x_add_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_98, %alloc_110, %alloc_98 desc(%140, %160, %140) {op_type = "sigmoid", modules = [{name = "sum0", mode = "sum_0_x_add_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+     memref.dealloc %alloc_110 : memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_103, %alloc_111, %alloc_103 desc(%141, %161, %141) {op_type = "sigmoid", modules = [{name = "sum0", mode = "sum_0_x_add_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_99, %alloc_111, %alloc_99 desc(%141, %161, %141) {op_type = "sigmoid", modules = [{name = "sum0", mode = "sum_0_x_add_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+     memref.dealloc %alloc_111 : memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_104, %alloc_112, %alloc_104 desc(%142, %162, %142) {op_type = "sigmoid", modules = [{name = "sum0", mode = "sum_0_x_add_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_100, %alloc_112, %alloc_100 desc(%142, %162, %142) {op_type = "sigmoid", modules = [{name = "sum0", mode = "sum_0_x_add_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+     memref.dealloc %alloc_112 : memref<1x1x1x320xf32>
+     %alloc_113 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
+     %alloc_114 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
+@@ -528,10 +528,10 @@
+     %164 = zeus_high.create_fmap_desc %alloc_114 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+     %165 = zeus_high.create_fmap_desc %alloc_115 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+     %166 = zeus_high.create_fmap_desc %alloc_116 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+-    zeus_high.vp %alloc_101, %alloc, %alloc_113 desc(%139, %5, %163) {op_type = "add", modules = [{name = "sum0", mode = "sum_0_x_add_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_102, %alloc, %alloc_114 desc(%140, %5, %164) {op_type = "add", modules = [{name = "sum0", mode = "sum_0_x_add_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_103, %alloc, %alloc_115 desc(%141, %5, %165) {op_type = "add", modules = [{name = "sum0", mode = "sum_0_x_add_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_104, %alloc, %alloc_116 desc(%142, %5, %166) {op_type = "add", modules = [{name = "sum0", mode = "sum_0_x_add_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_97, %alloc, %alloc_113 desc(%139, %5, %163) {op_type = "add", modules = [{name = "sum0", mode = "sum_0_x_add_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_98, %alloc, %alloc_114 desc(%140, %5, %164) {op_type = "add", modules = [{name = "sum0", mode = "sum_0_x_add_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_99, %alloc, %alloc_115 desc(%141, %5, %165) {op_type = "add", modules = [{name = "sum0", mode = "sum_0_x_add_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_100, %alloc, %alloc_116 desc(%142, %5, %166) {op_type = "add", modules = [{name = "sum0", mode = "sum_0_x_add_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+     %alloc_117 = memref.alloc() {alignment = 16 : i64, zeus.l2_alias_byte_offset = 0 : i64, zeus.l2_alias_of = @topk_packet_destination_1, zeus.l2_alias_tag = "topk_packet_1_lane0"} : memref<1x1x1x32xf32>
+     %alloc_118 = memref.alloc() {alignment = 16 : i64, zeus.l2_alias_byte_offset = 128 : i64, zeus.l2_alias_of = @topk_packet_destination_1, zeus.l2_alias_tag = "topk_packet_1_lane1"} : memref<1x1x1x32xf32>
+     %alloc_119 = memref.alloc() {alignment = 16 : i64, zeus.l2_alias_byte_offset = 256 : i64, zeus.l2_alias_of = @topk_packet_destination_1, zeus.l2_alias_tag = "topk_packet_1_lane2"} : memref<1x1x1x32xf32>
+@@ -642,112 +642,112 @@
+     memref.dealloc %alloc_119 : memref<1x1x1x32xf32>
+     memref.dealloc %alloc_115 : memref<1x1x1x320xf32>
+     zeus_high.vp %alloc_116, %alloc_120 desc(%166, %170) {op_type = "topk_step", modules = [{name = "msk", cmps = 1 : i64, mode = "cmp_mat_tree_c_w_h_msk_out", mskrc = true, tkv = 7 : i64, tkvo = true, topk = 8 : i64}], tensor_mode = 1 : i64, topk_k = 8 : i64, topk_step_index = 7 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x32xf32>
+-    %subview_149 = memref.subview %alloc_139[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>
+-    %subview_150 = memref.subview %alloc_137[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
+-    zeus_high.gather %alloc_101, idx %subview_149, out %subview_150, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
++    memref.dealloc %alloc_120 : memref<1x1x1x32xf32>
++    memref.dealloc %alloc_116 : memref<1x1x1x320xf32>
++    %alloc_149 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x1xf32>
++    %alloc_150 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x1xf32>
++    %alloc_151 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x1xf32>
++    %alloc_152 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x1xf32>
++    %191 = zeus_high.create_fmap_desc %alloc_149 {offset = 0, tensor_shape = [1, 1, 1, 1], tile_shape = [1, 1, 1, 1]} : memref<1x1x1x1xf32> -> !zeus_high.fmap_desc
++    %192 = zeus_high.create_fmap_desc %alloc_150 {offset = 0, tensor_shape = [1, 1, 1, 1], tile_shape = [1, 1, 1, 1]} : memref<1x1x1x1xf32> -> !zeus_high.fmap_desc
++    %193 = zeus_high.create_fmap_desc %alloc_151 {offset = 0, tensor_shape = [1, 1, 1, 1], tile_shape = [1, 1, 1, 1]} : memref<1x1x1x1xf32> -> !zeus_high.fmap_desc
++    %194 = zeus_high.create_fmap_desc %alloc_152 {offset = 0, tensor_shape = [1, 1, 1, 1], tile_shape = [1, 1, 1, 1]} : memref<1x1x1x1xf32> -> !zeus_high.fmap_desc
++    zeus_high.vp %alloc_57, %alloc_149 desc(%107, %191) {op_type = "rsqrt", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "sqr", scsq = 1 : i64}], tensor_mode = 1 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x8xf32>, memref<1x1x1x1xf32>
++    zeus_high.vp %alloc_60, %alloc_150 desc(%110, %192) {op_type = "rsqrt", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "sqr", scsq = 1 : i64}], tensor_mode = 1 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x8xf32>, memref<1x1x1x1xf32>
++    zeus_high.vp %alloc_63, %alloc_151 desc(%113, %193) {op_type = "rsqrt", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "sqr", scsq = 1 : i64}], tensor_mode = 1 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x8xf32>, memref<1x1x1x1xf32>
++    zeus_high.vp %alloc_66, %alloc_152 desc(%116, %194) {op_type = "rsqrt", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "sqr", scsq = 1 : i64}], tensor_mode = 1 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x8xf32>, memref<1x1x1x1xf32>
++    %subview_153 = memref.subview %alloc_139[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>
++    %subview_154 = memref.subview %alloc_137[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
++    zeus_high.gather %alloc_97, idx %subview_153, out %subview_154, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
+     memref.dealloc %alloc_139 : memref<1x1x1x8xi32>
+     memref.dealloc %alloc_138 : memref<1x1x1x32xf32>
+-    %subview_151 = memref.subview %alloc_142[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>
+-    %subview_152 = memref.subview %alloc_140[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
+-    zeus_high.gather %alloc_102, idx %subview_151, out %subview_152, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
++    zeus_high.vp %alloc_149, %alloc_149 desc(%191, %191) {op_type = "mul", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "mul_sc", mode = "mul_sc_x_x"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64, zeus.vp_feedback_write = "group_mul"} : memref<1x1x1x1xf32>, memref<1x1x1x1xf32>
++    memref.dealloc %alloc_149 : memref<1x1x1x1xf32>
++    zeus_high.vp %alloc_150, %alloc_150 desc(%192, %192) {op_type = "mul", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "mul_sc", mode = "mul_sc_x_x"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64, zeus.vp_feedback_write = "group_mul"} : memref<1x1x1x1xf32>, memref<1x1x1x1xf32>
++    memref.dealloc %alloc_150 : memref<1x1x1x1xf32>
++    zeus_high.vp %alloc_151, %alloc_151 desc(%193, %193) {op_type = "mul", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "mul_sc", mode = "mul_sc_x_x"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64, zeus.vp_feedback_write = "group_mul"} : memref<1x1x1x1xf32>, memref<1x1x1x1xf32>
++    memref.dealloc %alloc_151 : memref<1x1x1x1xf32>
++    zeus_high.vp %alloc_152, %alloc_152 desc(%194, %194) {op_type = "mul", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "mul_sc", mode = "mul_sc_x_x"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64, zeus.vp_feedback_write = "group_mul"} : memref<1x1x1x1xf32>, memref<1x1x1x1xf32>
++    %subview_155 = memref.subview %alloc_142[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>
++    %subview_156 = memref.subview %alloc_140[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
++    zeus_high.gather %alloc_98, idx %subview_155, out %subview_156, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
+     memref.dealloc %alloc_142 : memref<1x1x1x8xi32>
+     memref.dealloc %alloc_141 : memref<1x1x1x32xf32>
+-    %subview_153 = memref.subview %alloc_145[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>
+-    %subview_154 = memref.subview %alloc_143[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
+-    zeus_high.gather %alloc_103, idx %subview_153, out %subview_154, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
+-    memref.dealloc %alloc_145 : memref<1x1x1x8xi32>
+-    memref.dealloc %alloc_144 : memref<1x1x1x32xf32>
+-    %subview_155 = memref.subview %alloc_148[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>
+-    %subview_156 = memref.subview %alloc_146[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
+-    zeus_high.gather %alloc_104, idx %subview_155, out %subview_156, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
+-    memref.dealloc %alloc_148 : memref<1x1x1x8xi32>
+-    memref.dealloc %alloc_147 : memref<1x1x1x32xf32>
+-    memref.dealloc %alloc_120 : memref<1x1x1x32xf32>
+-    memref.dealloc %alloc_116 : memref<1x1x1x320xf32>
+-    %alloc_157 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x1xf32>
+-    %alloc_158 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x1xf32>
+-    %alloc_159 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x1xf32>
+-    %alloc_160 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x1xf32>
+-    %191 = zeus_high.create_fmap_desc %alloc_157 {offset = 0, tensor_shape = [1, 1, 1, 1], tile_shape = [1, 1, 1, 1]} : memref<1x1x1x1xf32> -> !zeus_high.fmap_desc
+-    %192 = zeus_high.create_fmap_desc %alloc_158 {offset = 0, tensor_shape = [1, 1, 1, 1], tile_shape = [1, 1, 1, 1]} : memref<1x1x1x1xf32> -> !zeus_high.fmap_desc
+-    %193 = zeus_high.create_fmap_desc %alloc_159 {offset = 0, tensor_shape = [1, 1, 1, 1], tile_shape = [1, 1, 1, 1]} : memref<1x1x1x1xf32> -> !zeus_high.fmap_desc
+-    %194 = zeus_high.create_fmap_desc %alloc_160 {offset = 0, tensor_shape = [1, 1, 1, 1], tile_shape = [1, 1, 1, 1]} : memref<1x1x1x1xf32> -> !zeus_high.fmap_desc
+-    zeus_high.vp %alloc_57, %alloc_157 desc(%107, %191) {op_type = "rsqrt", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "sqr", scsq = 1 : i64}], tensor_mode = 1 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x8xf32>, memref<1x1x1x1xf32>
+-    zeus_high.vp %alloc_60, %alloc_158 desc(%110, %192) {op_type = "rsqrt", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "sqr", scsq = 1 : i64}], tensor_mode = 1 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x8xf32>, memref<1x1x1x1xf32>
+-    zeus_high.vp %alloc_63, %alloc_159 desc(%113, %193) {op_type = "rsqrt", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "sqr", scsq = 1 : i64}], tensor_mode = 1 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x8xf32>, memref<1x1x1x1xf32>
+-    zeus_high.vp %alloc_66, %alloc_160 desc(%116, %194) {op_type = "rsqrt", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "sqr", scsq = 1 : i64}], tensor_mode = 1 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x8xf32>, memref<1x1x1x1xf32>
+-    zeus_high.vp %alloc_157, %alloc_157 desc(%191, %191) {op_type = "mul", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "mul_sc", mode = "mul_sc_x_x"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64, zeus.vp_feedback_write = "group_mul"} : memref<1x1x1x1xf32>, memref<1x1x1x1xf32>
+-    memref.dealloc %alloc_157 : memref<1x1x1x1xf32>
+-    zeus_high.vp %alloc_158, %alloc_158 desc(%192, %192) {op_type = "mul", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "mul_sc", mode = "mul_sc_x_x"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64, zeus.vp_feedback_write = "group_mul"} : memref<1x1x1x1xf32>, memref<1x1x1x1xf32>
+-    memref.dealloc %alloc_158 : memref<1x1x1x1xf32>
+-    zeus_high.vp %alloc_159, %alloc_159 desc(%193, %193) {op_type = "mul", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "mul_sc", mode = "mul_sc_x_x"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64, zeus.vp_feedback_write = "group_mul"} : memref<1x1x1x1xf32>, memref<1x1x1x1xf32>
+-    memref.dealloc %alloc_159 : memref<1x1x1x1xf32>
+-    zeus_high.vp %alloc_160, %alloc_160 desc(%194, %194) {op_type = "mul", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "mul_sc", mode = "mul_sc_x_x"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64, zeus.vp_feedback_write = "group_mul"} : memref<1x1x1x1xf32>, memref<1x1x1x1xf32>
+-    memref.dealloc %alloc_160 : memref<1x1x1x1xf32>
+-    %subview_161 = memref.subview %alloc_6[0, 0, 0, 0] [1, 1, 1, 8] [1, 1, 1, 1] : memref<1x1x4x8xbf16> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1]>>
+-    %cast_162 = memref.cast %subview_161 : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1]>> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
+-    %subview_163 = memref.subview %alloc_6[0, 0, 1, 0] [1, 1, 1, 8] [1, 1, 1, 1] : memref<1x1x4x8xbf16> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 8>>
+-    %cast_164 = memref.cast %subview_163 : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 8>> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
+-    %subview_165 = memref.subview %alloc_6[0, 0, 2, 0] [1, 1, 1, 8] [1, 1, 1, 1] : memref<1x1x4x8xbf16> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 16>>
+-    %cast_166 = memref.cast %subview_165 : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 16>> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
+-    %subview_167 = memref.subview %alloc_6[0, 0, 3, 0] [1, 1, 1, 8] [1, 1, 1, 1] : memref<1x1x4x8xbf16> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 24>>
+-    %cast_168 = memref.cast %subview_167 : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 24>> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
+-    %195 = zeus_high.create_fmap_desc %cast_162 {offset = 0, tensor_shape = [1, 1, 4, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %196 = zeus_high.create_fmap_desc %cast_164 {offset = 0, tensor_shape = [1, 1, 4, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %197 = zeus_high.create_fmap_desc %cast_166 {offset = 0, tensor_shape = [1, 1, 4, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %198 = zeus_high.create_fmap_desc %cast_168 {offset = 0, tensor_shape = [1, 1, 4, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>> -> !zeus_high.fmap_desc
++    memref.dealloc %alloc_152 : memref<1x1x1x1xf32>
++    %subview_157 = memref.subview %alloc_6[0, 0, 0, 0] [1, 1, 1, 8] [1, 1, 1, 1] : memref<1x1x4x8xbf16> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1]>>
++    %cast_158 = memref.cast %subview_157 : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1]>> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
++    %subview_159 = memref.subview %alloc_6[0, 0, 1, 0] [1, 1, 1, 8] [1, 1, 1, 1] : memref<1x1x4x8xbf16> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 8>>
++    %cast_160 = memref.cast %subview_159 : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 8>> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
++    %subview_161 = memref.subview %alloc_6[0, 0, 2, 0] [1, 1, 1, 8] [1, 1, 1, 1] : memref<1x1x4x8xbf16> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 16>>
++    %cast_162 = memref.cast %subview_161 : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 16>> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
++    %subview_163 = memref.subview %alloc_6[0, 0, 3, 0] [1, 1, 1, 8] [1, 1, 1, 1] : memref<1x1x4x8xbf16> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 24>>
++    %cast_164 = memref.cast %subview_163 : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 24>> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
++    %195 = zeus_high.create_fmap_desc %cast_158 {offset = 0, tensor_shape = [1, 1, 4, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %196 = zeus_high.create_fmap_desc %cast_160 {offset = 0, tensor_shape = [1, 1, 4, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %197 = zeus_high.create_fmap_desc %cast_162 {offset = 0, tensor_shape = [1, 1, 4, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %198 = zeus_high.create_fmap_desc %cast_164 {offset = 0, tensor_shape = [1, 1, 4, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>> -> !zeus_high.fmap_desc
+     %199 = zeus_high.set_pos %195 [0, 0, %c0, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+     %200 = zeus_high.set_pos %196 [0, 0, %c1, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+     %201 = zeus_high.set_pos %197 [0, 0, %c2, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+     %202 = zeus_high.set_pos %198 [0, 0, %c3, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+-    zeus_high.vp %alloc_57, %arg7, %cast_162 desc(%107, %199) {op_type = "mul", modules = [{name = "mul", mode = "mul_x_r"}, {name = "postcal", mode = "mul_runtime_scalar"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64, zeus.truncf_output = unit, zeus.vp_feedback_read = "group_mul", zeus.vp_feedback_write = "none"} : memref<1x1x1x8xf32>, f32, memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
++    zeus_high.vp %alloc_57, %arg7, %cast_158 desc(%107, %199) {op_type = "mul", modules = [{name = "mul", mode = "mul_x_r"}, {name = "postcal", mode = "mul_runtime_scalar"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64, zeus.truncf_output = unit, zeus.vp_feedback_read = "group_mul", zeus.vp_feedback_write = "none"} : memref<1x1x1x8xf32>, f32, memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
+     memref.dealloc %alloc_57 : memref<1x1x1x8xf32>
+-    zeus_high.vp %alloc_60, %arg7, %cast_164 desc(%110, %200) {op_type = "mul", modules = [{name = "mul", mode = "mul_x_r"}, {name = "postcal", mode = "mul_runtime_scalar"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64, zeus.truncf_output = unit, zeus.vp_feedback_read = "group_mul", zeus.vp_feedback_write = "none"} : memref<1x1x1x8xf32>, f32, memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
++    zeus_high.vp %alloc_60, %arg7, %cast_160 desc(%110, %200) {op_type = "mul", modules = [{name = "mul", mode = "mul_x_r"}, {name = "postcal", mode = "mul_runtime_scalar"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64, zeus.truncf_output = unit, zeus.vp_feedback_read = "group_mul", zeus.vp_feedback_write = "none"} : memref<1x1x1x8xf32>, f32, memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
+     memref.dealloc %alloc_60 : memref<1x1x1x8xf32>
+-    zeus_high.vp %alloc_63, %arg7, %cast_166 desc(%113, %201) {op_type = "mul", modules = [{name = "mul", mode = "mul_x_r"}, {name = "postcal", mode = "mul_runtime_scalar"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64, zeus.truncf_output = unit, zeus.vp_feedback_read = "group_mul", zeus.vp_feedback_write = "none"} : memref<1x1x1x8xf32>, f32, memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
++    zeus_high.vp %alloc_63, %arg7, %cast_162 desc(%113, %201) {op_type = "mul", modules = [{name = "mul", mode = "mul_x_r"}, {name = "postcal", mode = "mul_runtime_scalar"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64, zeus.truncf_output = unit, zeus.vp_feedback_read = "group_mul", zeus.vp_feedback_write = "none"} : memref<1x1x1x8xf32>, f32, memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
+     memref.dealloc %alloc_63 : memref<1x1x1x8xf32>
+-    zeus_high.vp %alloc_66, %arg7, %cast_168 desc(%116, %202) {op_type = "mul", modules = [{name = "mul", mode = "mul_x_r"}, {name = "postcal", mode = "mul_runtime_scalar"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64, zeus.truncf_output = unit, zeus.vp_feedback_read = "group_mul", zeus.vp_feedback_write = "none"} : memref<1x1x1x8xf32>, f32, memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
++    zeus_high.vp %alloc_66, %arg7, %cast_164 desc(%116, %202) {op_type = "mul", modules = [{name = "mul", mode = "mul_x_r"}, {name = "postcal", mode = "mul_runtime_scalar"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64, zeus.truncf_output = unit, zeus.vp_feedback_read = "group_mul", zeus.vp_feedback_write = "none"} : memref<1x1x1x8xf32>, f32, memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
++    %subview_165 = memref.subview %alloc_145[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>
++    %subview_166 = memref.subview %alloc_143[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
++    zeus_high.gather %alloc_99, idx %subview_165, out %subview_166, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
++    memref.dealloc %alloc_145 : memref<1x1x1x8xi32>
++    memref.dealloc %alloc_144 : memref<1x1x1x32xf32>
+     memref.dealloc %alloc_66 : memref<1x1x1x8xf32>
+-    %subview_169 = memref.subview %alloc_10[0, 0, 0, 0] [1, 1, 1, 32] [1, 1, 1, 1] : memref<1x1x4x32xi32> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1]>>
+-    %cast_170 = memref.cast %subview_169 : memref<1x1x1x32xi32, strided<[128, 128, 32, 1]>> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>>
+-    %subview_171 = memref.subview %alloc_10[0, 0, 1, 0] [1, 1, 1, 32] [1, 1, 1, 1] : memref<1x1x4x32xi32> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 32>>
+-    %cast_172 = memref.cast %subview_171 : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 32>> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>>
+-    %subview_173 = memref.subview %alloc_10[0, 0, 2, 0] [1, 1, 1, 32] [1, 1, 1, 1] : memref<1x1x4x32xi32> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 64>>
+-    %cast_174 = memref.cast %subview_173 : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 64>> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>>
+-    %subview_175 = memref.subview %alloc_10[0, 0, 3, 0] [1, 1, 1, 32] [1, 1, 1, 1] : memref<1x1x4x32xi32> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 96>>
+-    %cast_176 = memref.cast %subview_175 : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 96>> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>>
+-    %203 = zeus_high.create_fmap_desc %cast_170 {offset = 0, tensor_shape = [1, 1, 4, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %204 = zeus_high.create_fmap_desc %cast_172 {offset = 0, tensor_shape = [1, 1, 4, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %205 = zeus_high.create_fmap_desc %cast_174 {offset = 0, tensor_shape = [1, 1, 4, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %206 = zeus_high.create_fmap_desc %cast_176 {offset = 0, tensor_shape = [1, 1, 4, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %subview_177 = memref.subview %alloc_5[0, 0, 0, 0] [1, 1, 1, 320] [1, 1, 1, 1] : memref<1x1x4x320xbf16> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1]>>
+-    %cast_178 = memref.cast %subview_177 : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1]>> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>
+-    %subview_179 = memref.subview %alloc_5[0, 0, 1, 0] [1, 1, 1, 320] [1, 1, 1, 1] : memref<1x1x4x320xbf16> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: 320>>
+-    %cast_180 = memref.cast %subview_179 : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: 320>> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>
+-    %subview_181 = memref.subview %alloc_5[0, 0, 2, 0] [1, 1, 1, 320] [1, 1, 1, 1] : memref<1x1x4x320xbf16> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: 640>>
+-    %cast_182 = memref.cast %subview_181 : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: 640>> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>
+-    %subview_183 = memref.subview %alloc_5[0, 0, 3, 0] [1, 1, 1, 320] [1, 1, 1, 1] : memref<1x1x4x320xbf16> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: 960>>
+-    %cast_184 = memref.cast %subview_183 : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: 960>> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>
+-    %207 = zeus_high.create_fmap_desc %cast_178 {offset = 0, tensor_shape = [1, 1, 4, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %208 = zeus_high.create_fmap_desc %cast_180 {offset = 0, tensor_shape = [1, 1, 4, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %209 = zeus_high.create_fmap_desc %cast_182 {offset = 0, tensor_shape = [1, 1, 4, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %210 = zeus_high.create_fmap_desc %cast_184 {offset = 0, tensor_shape = [1, 1, 4, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %subview_167 = memref.subview %alloc_10[0, 0, 0, 0] [1, 1, 1, 32] [1, 1, 1, 1] : memref<1x1x4x32xi32> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1]>>
++    %cast_168 = memref.cast %subview_167 : memref<1x1x1x32xi32, strided<[128, 128, 32, 1]>> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>>
++    %subview_169 = memref.subview %alloc_10[0, 0, 1, 0] [1, 1, 1, 32] [1, 1, 1, 1] : memref<1x1x4x32xi32> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 32>>
++    %cast_170 = memref.cast %subview_169 : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 32>> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>>
++    %subview_171 = memref.subview %alloc_10[0, 0, 2, 0] [1, 1, 1, 32] [1, 1, 1, 1] : memref<1x1x4x32xi32> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 64>>
++    %cast_172 = memref.cast %subview_171 : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 64>> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>>
++    %subview_173 = memref.subview %alloc_10[0, 0, 3, 0] [1, 1, 1, 32] [1, 1, 1, 1] : memref<1x1x4x32xi32> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 96>>
++    %cast_174 = memref.cast %subview_173 : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 96>> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>>
++    %203 = zeus_high.create_fmap_desc %cast_168 {offset = 0, tensor_shape = [1, 1, 4, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %204 = zeus_high.create_fmap_desc %cast_170 {offset = 0, tensor_shape = [1, 1, 4, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %205 = zeus_high.create_fmap_desc %cast_172 {offset = 0, tensor_shape = [1, 1, 4, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %206 = zeus_high.create_fmap_desc %cast_174 {offset = 0, tensor_shape = [1, 1, 4, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %subview_175 = memref.subview %alloc_5[0, 0, 0, 0] [1, 1, 1, 320] [1, 1, 1, 1] : memref<1x1x4x320xbf16> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1]>>
++    %cast_176 = memref.cast %subview_175 : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1]>> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>
++    %subview_177 = memref.subview %alloc_5[0, 0, 1, 0] [1, 1, 1, 320] [1, 1, 1, 1] : memref<1x1x4x320xbf16> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: 320>>
++    %cast_178 = memref.cast %subview_177 : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: 320>> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>
++    %subview_179 = memref.subview %alloc_5[0, 0, 2, 0] [1, 1, 1, 320] [1, 1, 1, 1] : memref<1x1x4x320xbf16> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: 640>>
++    %cast_180 = memref.cast %subview_179 : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: 640>> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>
++    %subview_181 = memref.subview %alloc_5[0, 0, 3, 0] [1, 1, 1, 320] [1, 1, 1, 1] : memref<1x1x4x320xbf16> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: 960>>
++    %cast_182 = memref.cast %subview_181 : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: 960>> to memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>
++    %207 = zeus_high.create_fmap_desc %cast_176 {offset = 0, tensor_shape = [1, 1, 4, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %208 = zeus_high.create_fmap_desc %cast_178 {offset = 0, tensor_shape = [1, 1, 4, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %209 = zeus_high.create_fmap_desc %cast_180 {offset = 0, tensor_shape = [1, 1, 4, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %210 = zeus_high.create_fmap_desc %cast_182 {offset = 0, tensor_shape = [1, 1, 4, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>> -> !zeus_high.fmap_desc
+     %211 = zeus_high.set_pos %207 [0, 0, %c0, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+     %212 = zeus_high.set_pos %208 [0, 0, %c1, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+     %213 = zeus_high.set_pos %209 [0, 0, %c2, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+     %214 = zeus_high.set_pos %210 [0, 0, %c3, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
++    %alloc_183 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
++    %alloc_184 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
+     %alloc_185 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
+     %alloc_186 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
+-    %alloc_187 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
+-    %alloc_188 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
+-    %215 = zeus_high.create_fmap_desc %alloc_185 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+-    %216 = zeus_high.create_fmap_desc %alloc_186 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+-    %217 = zeus_high.create_fmap_desc %alloc_187 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+-    %218 = zeus_high.create_fmap_desc %alloc_188 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+-    zeus_high.vp %cast_178, %alloc_185 desc(%211, %215) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
+-    zeus_high.vp %cast_180, %alloc_186 desc(%212, %216) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
+-    zeus_high.vp %cast_182, %alloc_187 desc(%213, %217) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
+-    zeus_high.vp %cast_184, %alloc_188 desc(%214, %218) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
++    %215 = zeus_high.create_fmap_desc %alloc_183 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
++    %216 = zeus_high.create_fmap_desc %alloc_184 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
++    %217 = zeus_high.create_fmap_desc %alloc_185 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
++    %218 = zeus_high.create_fmap_desc %alloc_186 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
++    zeus_high.vp %cast_176, %alloc_183 desc(%211, %215) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
++    zeus_high.vp %cast_178, %alloc_184 desc(%212, %216) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
++    zeus_high.vp %cast_180, %alloc_185 desc(%213, %217) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
++    zeus_high.vp %cast_182, %alloc_186 desc(%214, %218) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
++    %subview_187 = memref.subview %alloc_148[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>
++    %subview_188 = memref.subview %alloc_146[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
++    zeus_high.gather %alloc_100, idx %subview_187, out %subview_188, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
++    memref.dealloc %alloc_148 : memref<1x1x1x8xi32>
++    memref.dealloc %alloc_147 : memref<1x1x1x32xf32>
+     %alloc_189 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
+     %alloc_190 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
+     %alloc_191 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
+@@ -756,10 +756,10 @@
+     %220 = zeus_high.create_fmap_desc %alloc_190 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+     %221 = zeus_high.create_fmap_desc %alloc_191 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+     %222 = zeus_high.create_fmap_desc %alloc_192 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+-    zeus_high.vp %cast_178, %alloc_189 desc(%211, %219) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = -8.000000e+01 : f32}, {name = "sum0", mode = "sum_0_x_add_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
+-    zeus_high.vp %cast_180, %alloc_190 desc(%212, %220) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = -8.000000e+01 : f32}, {name = "sum0", mode = "sum_0_x_add_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
+-    zeus_high.vp %cast_182, %alloc_191 desc(%213, %221) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = -8.000000e+01 : f32}, {name = "sum0", mode = "sum_0_x_add_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
+-    zeus_high.vp %cast_184, %alloc_192 desc(%214, %222) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = -8.000000e+01 : f32}, {name = "sum0", mode = "sum_0_x_add_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
++    zeus_high.vp %cast_176, %alloc_189 desc(%211, %219) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = -8.000000e+01 : f32}, {name = "sum0", mode = "sum_0_x_add_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
++    zeus_high.vp %cast_178, %alloc_190 desc(%212, %220) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = -8.000000e+01 : f32}, {name = "sum0", mode = "sum_0_x_add_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
++    zeus_high.vp %cast_180, %alloc_191 desc(%213, %221) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = -8.000000e+01 : f32}, {name = "sum0", mode = "sum_0_x_add_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
++    zeus_high.vp %cast_182, %alloc_192 desc(%214, %222) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = -8.000000e+01 : f32}, {name = "sum0", mode = "sum_0_x_add_c", scalar_val = 8.000000e+01 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
+     %alloc_193 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
+     %alloc_194 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
+     %alloc_195 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x320xf32>
+@@ -772,16 +772,16 @@
+     zeus_high.vp %alloc_14, %alloc_14 desc(%46, %46) {op_type = "sigmoid", modules = [{name = "prg_l1", mode = "prg_l1_load", segn = 1 : i64}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x192xf32>, memref<1x1x1x192xf32>
+     zeus_high.vp %alloc_14, %alloc_14 desc(%46, %46) {op_type = "sigmoid", modules = [{name = "prg_l1", mode = "prg_l1_load", segn = 1 : i64}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x192xf32>, memref<1x1x1x192xf32>
+     zeus_high.vp %alloc_14, %alloc_14 desc(%46, %46) {op_type = "sigmoid", modules = [{name = "prg_l1", mode = "prg_l1_load", segn = 1 : i64}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x192xf32>, memref<1x1x1x192xf32>
+-    zeus_high.vp %cast_178, %alloc_193 desc(%211, %223) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "max", mode = "cmp_mat_two_x_c", scalar_val = -1.040000e+02 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
+-    zeus_high.vp %cast_180, %alloc_194 desc(%212, %224) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "max", mode = "cmp_mat_two_x_c", scalar_val = -1.040000e+02 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
+-    zeus_high.vp %cast_182, %alloc_195 desc(%213, %225) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "max", mode = "cmp_mat_two_x_c", scalar_val = -1.040000e+02 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
+-    zeus_high.vp %cast_184, %alloc_196 desc(%214, %226) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "max", mode = "cmp_mat_two_x_c", scalar_val = -1.040000e+02 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
++    zeus_high.vp %cast_176, %alloc_193 desc(%211, %223) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "max", mode = "cmp_mat_two_x_c", scalar_val = -1.040000e+02 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
++    zeus_high.vp %cast_178, %alloc_194 desc(%212, %224) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "max", mode = "cmp_mat_two_x_c", scalar_val = -1.040000e+02 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
++    zeus_high.vp %cast_180, %alloc_195 desc(%213, %225) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "max", mode = "cmp_mat_two_x_c", scalar_val = -1.040000e+02 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
++    zeus_high.vp %cast_182, %alloc_196 desc(%214, %226) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "max", mode = "cmp_mat_two_x_c", scalar_val = -1.040000e+02 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xbf16, strided<[1280, 1280, 320, 1], offset: ?>>, memref<1x1x1x320xf32>
+     memref.dealloc %alloc_5 : memref<1x1x4x320xbf16>
+     memref.dealloc %alloc_14 : memref<1x1x1x192xf32>
+-    zeus_high.vp %alloc_185, %alloc_185 desc(%215, %215) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}, {name = "precal", mode = "neg_x"}, {name = "mul_l0", mode = "mul_l0_x_c", scalar_val = 1.44269502 : f32}, {name = "flr_l0", fgdm = 1 : i64, mode = "flr_l0_s_x"}, {name = "sum1_l0", mode = "sum_1_l0_x_minus_s"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 1 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_left"}, {name = "postcal", mode = "qk_x_add_qb", qb = 1.000000e+00 : f32, qk = 1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_186, %alloc_186 desc(%216, %216) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}, {name = "precal", mode = "neg_x"}, {name = "mul_l0", mode = "mul_l0_x_c", scalar_val = 1.44269502 : f32}, {name = "flr_l0", fgdm = 1 : i64, mode = "flr_l0_s_x"}, {name = "sum1_l0", mode = "sum_1_l0_x_minus_s"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 1 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_left"}, {name = "postcal", mode = "qk_x_add_qb", qb = 1.000000e+00 : f32, qk = 1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_187, %alloc_187 desc(%217, %217) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}, {name = "precal", mode = "neg_x"}, {name = "mul_l0", mode = "mul_l0_x_c", scalar_val = 1.44269502 : f32}, {name = "flr_l0", fgdm = 1 : i64, mode = "flr_l0_s_x"}, {name = "sum1_l0", mode = "sum_1_l0_x_minus_s"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 1 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_left"}, {name = "postcal", mode = "qk_x_add_qb", qb = 1.000000e+00 : f32, qk = 1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_188, %alloc_188 desc(%218, %218) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}, {name = "precal", mode = "neg_x"}, {name = "mul_l0", mode = "mul_l0_x_c", scalar_val = 1.44269502 : f32}, {name = "flr_l0", fgdm = 1 : i64, mode = "flr_l0_s_x"}, {name = "sum1_l0", mode = "sum_1_l0_x_minus_s"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 1 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_left"}, {name = "postcal", mode = "qk_x_add_qb", qb = 1.000000e+00 : f32, qk = 1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_183, %alloc_183 desc(%215, %215) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}, {name = "precal", mode = "neg_x"}, {name = "mul_l0", mode = "mul_l0_x_c", scalar_val = 1.44269502 : f32}, {name = "flr_l0", fgdm = 1 : i64, mode = "flr_l0_s_x"}, {name = "sum1_l0", mode = "sum_1_l0_x_minus_s"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 1 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_left"}, {name = "postcal", mode = "qk_x_add_qb", qb = 1.000000e+00 : f32, qk = 1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_184, %alloc_184 desc(%216, %216) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}, {name = "precal", mode = "neg_x"}, {name = "mul_l0", mode = "mul_l0_x_c", scalar_val = 1.44269502 : f32}, {name = "flr_l0", fgdm = 1 : i64, mode = "flr_l0_s_x"}, {name = "sum1_l0", mode = "sum_1_l0_x_minus_s"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 1 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_left"}, {name = "postcal", mode = "qk_x_add_qb", qb = 1.000000e+00 : f32, qk = 1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_185, %alloc_185 desc(%217, %217) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}, {name = "precal", mode = "neg_x"}, {name = "mul_l0", mode = "mul_l0_x_c", scalar_val = 1.44269502 : f32}, {name = "flr_l0", fgdm = 1 : i64, mode = "flr_l0_s_x"}, {name = "sum1_l0", mode = "sum_1_l0_x_minus_s"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 1 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_left"}, {name = "postcal", mode = "qk_x_add_qb", qb = 1.000000e+00 : f32, qk = 1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_186, %alloc_186 desc(%218, %218) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = 8.000000e+01 : f32}, {name = "precal", mode = "neg_x"}, {name = "mul_l0", mode = "mul_l0_x_c", scalar_val = 1.44269502 : f32}, {name = "flr_l0", fgdm = 1 : i64, mode = "flr_l0_s_x"}, {name = "sum1_l0", mode = "sum_1_l0_x_minus_s"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 1 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_left"}, {name = "postcal", mode = "qk_x_add_qb", qb = 1.000000e+00 : f32, qk = 1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+     zeus_high.vp %alloc_193, %alloc_193 desc(%223, %223) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = -8.000000e+01 : f32}, {name = "sum0_l0", mode = "sum_0_l0_x_add_c", scalar_val = 15.9423857 : f32}, {name = "mul_l0", mode = "mul_l0_x_c", scalar_val = 1.44269502 : f32}, {name = "flr_l0", fgdm = 1 : i64, mode = "flr_l0_s_x"}, {name = "sum1_l0", mode = "sum_1_l0_x_minus_s"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 1 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_left"}, {name = "postcal", mode = "qk_x_add_qb", qb = 0.000000e+00 : f32, qk = 1.1920929E-7 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+     zeus_high.vp %alloc_194, %alloc_194 desc(%224, %224) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = -8.000000e+01 : f32}, {name = "sum0_l0", mode = "sum_0_l0_x_add_c", scalar_val = 15.9423857 : f32}, {name = "mul_l0", mode = "mul_l0_x_c", scalar_val = 1.44269502 : f32}, {name = "flr_l0", fgdm = 1 : i64, mode = "flr_l0_s_x"}, {name = "sum1_l0", mode = "sum_1_l0_x_minus_s"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 1 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_left"}, {name = "postcal", mode = "qk_x_add_qb", qb = 0.000000e+00 : f32, qk = 1.1920929E-7 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+     zeus_high.vp %alloc_195, %alloc_195 desc(%225, %225) {op_type = "sigmoid", modules = [{name = "cmt", cmps = "min", mode = "cmp_mat_two_x_c", scalar_val = -8.000000e+01 : f32}, {name = "sum0_l0", mode = "sum_0_l0_x_add_c", scalar_val = 15.9423857 : f32}, {name = "mul_l0", mode = "mul_l0_x_c", scalar_val = 1.44269502 : f32}, {name = "flr_l0", fgdm = 1 : i64, mode = "flr_l0_s_x"}, {name = "sum1_l0", mode = "sum_1_l0_x_minus_s"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 1 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_left"}, {name = "postcal", mode = "qk_x_add_qb", qb = 0.000000e+00 : f32, qk = 1.1920929E-7 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+@@ -826,22 +826,22 @@
+     %244 = zeus_high.create_fmap_desc %alloc_202 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+     %245 = zeus_high.create_fmap_desc %alloc_203 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+     %246 = zeus_high.create_fmap_desc %alloc_204 {offset = 0, tensor_shape = [1, 1, 1, 320], tile_shape = [1, 1, 1, 320]} : memref<1x1x1x320xf32> -> !zeus_high.fmap_desc
+-    zeus_high.vp %alloc_185, %alloc_201 desc(%215, %243) {op_type = "sigmoid", modules = [{name = "dip_l0", mode = "dip_l0_e_m"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 0 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_right"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_186, %alloc_202 desc(%216, %244) {op_type = "sigmoid", modules = [{name = "dip_l0", mode = "dip_l0_e_m"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 0 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_right"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_187, %alloc_203 desc(%217, %245) {op_type = "sigmoid", modules = [{name = "dip_l0", mode = "dip_l0_e_m"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 0 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_right"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_188, %alloc_204 desc(%218, %246) {op_type = "sigmoid", modules = [{name = "dip_l0", mode = "dip_l0_e_m"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 0 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_right"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_185, %alloc_201, %alloc_185 desc(%215, %243, %215) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}, {name = "postcal", mode = "qk_x_add_qb", qb = 2.000000e+00 : f32, qk = -1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_186, %alloc_202, %alloc_186 desc(%216, %244, %216) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}, {name = "postcal", mode = "qk_x_add_qb", qb = 2.000000e+00 : f32, qk = -1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_187, %alloc_203, %alloc_187 desc(%217, %245, %217) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}, {name = "postcal", mode = "qk_x_add_qb", qb = 2.000000e+00 : f32, qk = -1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_188, %alloc_204, %alloc_188 desc(%218, %246, %218) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}, {name = "postcal", mode = "qk_x_add_qb", qb = 2.000000e+00 : f32, qk = -1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_201, %alloc_185, %alloc_201 desc(%243, %215, %243) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_183, %alloc_201 desc(%215, %243) {op_type = "sigmoid", modules = [{name = "dip_l0", mode = "dip_l0_e_m"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 0 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_right"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_184, %alloc_202 desc(%216, %244) {op_type = "sigmoid", modules = [{name = "dip_l0", mode = "dip_l0_e_m"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 0 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_right"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_185, %alloc_203 desc(%217, %245) {op_type = "sigmoid", modules = [{name = "dip_l0", mode = "dip_l0_e_m"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 0 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_right"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_186, %alloc_204 desc(%218, %246) {op_type = "sigmoid", modules = [{name = "dip_l0", mode = "dip_l0_e_m"}, {name = "prg_l1", cgfs = 0 : i64, mode = "prg_l1_x", segn = 0 : i64}, {name = "mul_l1", mode = "mul_l1_x_k"}, {name = "sum1_l1", mode = "sum_1_l1_x_add_b"}, {name = "shf_l1", mode = "shf_l1_x_s_right"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_183, %alloc_201, %alloc_183 desc(%215, %243, %215) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}, {name = "postcal", mode = "qk_x_add_qb", qb = 2.000000e+00 : f32, qk = -1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_184, %alloc_202, %alloc_184 desc(%216, %244, %216) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}, {name = "postcal", mode = "qk_x_add_qb", qb = 2.000000e+00 : f32, qk = -1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_185, %alloc_203, %alloc_185 desc(%217, %245, %217) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}, {name = "postcal", mode = "qk_x_add_qb", qb = 2.000000e+00 : f32, qk = -1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_186, %alloc_204, %alloc_186 desc(%218, %246, %218) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}, {name = "postcal", mode = "qk_x_add_qb", qb = 2.000000e+00 : f32, qk = -1.000000e+00 : f32}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_201, %alloc_183, %alloc_201 desc(%243, %215, %243) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    memref.dealloc %alloc_183 : memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_202, %alloc_184, %alloc_202 desc(%244, %216, %244) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    memref.dealloc %alloc_184 : memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_203, %alloc_185, %alloc_203 desc(%245, %217, %245) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+     memref.dealloc %alloc_185 : memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_202, %alloc_186, %alloc_202 desc(%244, %216, %244) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
++    zeus_high.vp %alloc_204, %alloc_186, %alloc_204 desc(%246, %218, %246) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+     memref.dealloc %alloc_186 : memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_203, %alloc_187, %alloc_203 desc(%245, %217, %245) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    memref.dealloc %alloc_187 : memref<1x1x1x320xf32>
+-    zeus_high.vp %alloc_204, %alloc_188, %alloc_204 desc(%246, %218, %246) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+-    memref.dealloc %alloc_188 : memref<1x1x1x320xf32>
+     zeus_high.vp %alloc_193, %alloc_189, %alloc_193 desc(%223, %219, %223) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y_where_a_0"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+     zeus_high.vp %alloc_194, %alloc_190, %alloc_194 desc(%224, %220, %224) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y_where_a_0"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+     zeus_high.vp %alloc_195, %alloc_191, %alloc_195 desc(%225, %221, %225) {op_type = "sigmoid", modules = [{name = "mul", mode = "mul_x_y_where_a_0"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x320xf32>, memref<1x1x1x320xf32>
+@@ -893,24 +893,24 @@
+     zeus_high.vp %alloc_208, %alloc_212 desc(%250, %254) {op_type = "topk_step", modules = [{name = "msk", cmps = 1 : i64, mode = "cmp_mat_tree_c_w_h_msk", mskrc = false, tkv = 1 : i64, tkvo = false, topk = 8 : i64}], tensor_mode = 1 : i64, topk_k = 8 : i64, topk_step_index = 1 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x32xf32>
+     %subview_213 = memref.subview %alloc_133[0, 0, 0, 4] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1], offset: 4>>
+     %subview_214 = memref.subview %alloc_137[0, 0, 0, 4] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1], offset: 4>>
+-    zeus_high.gather %alloc_101, idx %subview_213, out %subview_214, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1], offset: 4>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1], offset: 4>>
++    zeus_high.gather %alloc_97, idx %subview_213, out %subview_214, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1], offset: 4>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1], offset: 4>>
+     memref.dealloc %alloc_133 : memref<1x1x1x8xi32>
+-    memref.dealloc %alloc_101 : memref<1x1x1x320xf32>
++    memref.dealloc %alloc_97 : memref<1x1x1x320xf32>
+     %subview_215 = memref.subview %alloc_134[0, 0, 0, 4] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1], offset: 4>>
+     %subview_216 = memref.subview %alloc_140[0, 0, 0, 4] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1], offset: 4>>
+-    zeus_high.gather %alloc_102, idx %subview_215, out %subview_216, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1], offset: 4>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1], offset: 4>>
++    zeus_high.gather %alloc_98, idx %subview_215, out %subview_216, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1], offset: 4>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1], offset: 4>>
+     memref.dealloc %alloc_134 : memref<1x1x1x8xi32>
+-    memref.dealloc %alloc_102 : memref<1x1x1x320xf32>
++    memref.dealloc %alloc_98 : memref<1x1x1x320xf32>
+     %subview_217 = memref.subview %alloc_135[0, 0, 0, 4] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1], offset: 4>>
+     %subview_218 = memref.subview %alloc_143[0, 0, 0, 4] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1], offset: 4>>
+-    zeus_high.gather %alloc_103, idx %subview_217, out %subview_218, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1], offset: 4>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1], offset: 4>>
++    zeus_high.gather %alloc_99, idx %subview_217, out %subview_218, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1], offset: 4>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1], offset: 4>>
+     memref.dealloc %alloc_135 : memref<1x1x1x8xi32>
+-    memref.dealloc %alloc_103 : memref<1x1x1x320xf32>
++    memref.dealloc %alloc_99 : memref<1x1x1x320xf32>
+     %subview_219 = memref.subview %alloc_136[0, 0, 0, 4] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1], offset: 4>>
+     %subview_220 = memref.subview %alloc_146[0, 0, 0, 4] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1], offset: 4>>
+-    zeus_high.gather %alloc_104, idx %subview_219, out %subview_220, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1], offset: 4>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1], offset: 4>>
++    zeus_high.gather %alloc_100, idx %subview_219, out %subview_220, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1], offset: 4>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1], offset: 4>>
+     memref.dealloc %alloc_136 : memref<1x1x1x8xi32>
+-    memref.dealloc %alloc_104 : memref<1x1x1x320xf32>
++    memref.dealloc %alloc_100 : memref<1x1x1x320xf32>
+     %alloc_221 = memref.alloc() {alignment = 16 : i64, zeus.l2_alias_byte_offset = 0 : i64, zeus.l2_alias_of = @topk_packet_2_lane0, zeus.topk_pair_id = 2 : i64} : memref<1x1x1x32xi32>
+     %alloc_222 = memref.alloc() {alignment = 16 : i64, zeus.l2_alias_byte_offset = 0 : i64, zeus.l2_alias_of = @topk_packet_2_lane1, zeus.topk_pair_id = 2 : i64} : memref<1x1x1x32xi32>
+     %alloc_223 = memref.alloc() {alignment = 16 : i64, zeus.l2_alias_byte_offset = 0 : i64, zeus.l2_alias_of = @topk_packet_2_lane2, zeus.topk_pair_id = 2 : i64} : memref<1x1x1x32xi32>
+@@ -935,34 +935,10 @@
+     zeus_high.vp %alloc_206, %alloc_210 desc(%248, %252) {op_type = "topk_step", modules = [{name = "msk", cmps = 1 : i64, mode = "cmp_mat_tree_c_w_h_msk", mskrc = false, tkv = 2 : i64, tkvo = false, topk = 8 : i64}], tensor_mode = 1 : i64, topk_k = 8 : i64, topk_step_index = 2 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x32xf32>
+     zeus_high.vp %alloc_207, %alloc_211 desc(%249, %253) {op_type = "topk_step", modules = [{name = "msk", cmps = 1 : i64, mode = "cmp_mat_tree_c_w_h_msk", mskrc = false, tkv = 2 : i64, tkvo = false, topk = 8 : i64}], tensor_mode = 1 : i64, topk_k = 8 : i64, topk_step_index = 2 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x32xf32>
+     zeus_high.vp %alloc_208, %alloc_212 desc(%250, %254) {op_type = "topk_step", modules = [{name = "msk", cmps = 1 : i64, mode = "cmp_mat_tree_c_w_h_msk", mskrc = false, tkv = 2 : i64, tkvo = false, topk = 8 : i64}], tensor_mode = 1 : i64, topk_k = 8 : i64, topk_step_index = 2 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x32xf32>
+-    %alloc_229 = memref.alloc() {alignment = 128 : i64} : memref<1x1x1x8xf32>
+-    %263 = zeus_high.create_fmap_desc %alloc_229 {offset = 0, tensor_shape = [1, 1, 1, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xf32> -> !zeus_high.fmap_desc
+-    %alloc_230 = memref.alloc() {alignment = 128 : i64, zeus.l2_alias_tag = "topk_stream_8"} : memref<1x1x1x32xf32>
+-    %264 = zeus_high.create_fmap_desc %alloc_230 {offset = 0, tensor_shape = [1, 1, 1, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xf32> -> !zeus_high.fmap_desc
+-    %alloc_231 = memref.alloc() {alignment = 16 : i64, zeus.l2_alias_byte_offset = 64 : i64, zeus.l2_alias_of = @topk_stream_8} : memref<1x1x1x8xi32>
+-    %265 = zeus_high.create_fmap_desc %alloc_231 {offset = 0, tensor_shape = [1, 1, 1, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xi32> -> !zeus_high.fmap_desc
+-    zeus_high.vp %alloc_205, %alloc_230 desc(%247, %264) {op_type = "topk_step", modules = [{name = "msk", cmps = 1 : i64, mode = "cmp_mat_tree_c_w_h_msk_out", mskrc = false, tkv = 3 : i64, tkvo = true, topk = 8 : i64}], tensor_mode = 1 : i64, topk_k = 8 : i64, topk_step_index = 3 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x32xf32>
+-    %alloc_232 = memref.alloc() {alignment = 128 : i64} : memref<1x1x1x8xf32>
+-    %266 = zeus_high.create_fmap_desc %alloc_232 {offset = 0, tensor_shape = [1, 1, 1, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xf32> -> !zeus_high.fmap_desc
+-    %alloc_233 = memref.alloc() {alignment = 128 : i64, zeus.l2_alias_tag = "topk_stream_9"} : memref<1x1x1x32xf32>
+-    %267 = zeus_high.create_fmap_desc %alloc_233 {offset = 0, tensor_shape = [1, 1, 1, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xf32> -> !zeus_high.fmap_desc
+-    %alloc_234 = memref.alloc() {alignment = 16 : i64, zeus.l2_alias_byte_offset = 64 : i64, zeus.l2_alias_of = @topk_stream_9} : memref<1x1x1x8xi32>
+-    %268 = zeus_high.create_fmap_desc %alloc_234 {offset = 0, tensor_shape = [1, 1, 1, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xi32> -> !zeus_high.fmap_desc
+-    zeus_high.vp %alloc_206, %alloc_233 desc(%248, %267) {op_type = "topk_step", modules = [{name = "msk", cmps = 1 : i64, mode = "cmp_mat_tree_c_w_h_msk_out", mskrc = false, tkv = 3 : i64, tkvo = true, topk = 8 : i64}], tensor_mode = 1 : i64, topk_k = 8 : i64, topk_step_index = 3 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x32xf32>
+-    %alloc_235 = memref.alloc() {alignment = 128 : i64} : memref<1x1x1x8xf32>
+-    %269 = zeus_high.create_fmap_desc %alloc_235 {offset = 0, tensor_shape = [1, 1, 1, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xf32> -> !zeus_high.fmap_desc
+-    %alloc_236 = memref.alloc() {alignment = 128 : i64, zeus.l2_alias_tag = "topk_stream_10"} : memref<1x1x1x32xf32>
+-    %270 = zeus_high.create_fmap_desc %alloc_236 {offset = 0, tensor_shape = [1, 1, 1, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xf32> -> !zeus_high.fmap_desc
+-    %alloc_237 = memref.alloc() {alignment = 16 : i64, zeus.l2_alias_byte_offset = 64 : i64, zeus.l2_alias_of = @topk_stream_10} : memref<1x1x1x8xi32>
+-    %271 = zeus_high.create_fmap_desc %alloc_237 {offset = 0, tensor_shape = [1, 1, 1, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xi32> -> !zeus_high.fmap_desc
+-    zeus_high.vp %alloc_207, %alloc_236 desc(%249, %270) {op_type = "topk_step", modules = [{name = "msk", cmps = 1 : i64, mode = "cmp_mat_tree_c_w_h_msk_out", mskrc = false, tkv = 3 : i64, tkvo = true, topk = 8 : i64}], tensor_mode = 1 : i64, topk_k = 8 : i64, topk_step_index = 3 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x32xf32>
+-    %alloc_238 = memref.alloc() {alignment = 128 : i64} : memref<1x1x1x8xf32>
+-    %272 = zeus_high.create_fmap_desc %alloc_238 {offset = 0, tensor_shape = [1, 1, 1, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xf32> -> !zeus_high.fmap_desc
+-    %alloc_239 = memref.alloc() {alignment = 128 : i64, zeus.l2_alias_tag = "topk_stream_11"} : memref<1x1x1x32xf32>
+-    %273 = zeus_high.create_fmap_desc %alloc_239 {offset = 0, tensor_shape = [1, 1, 1, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xf32> -> !zeus_high.fmap_desc
+-    %alloc_240 = memref.alloc() {alignment = 16 : i64, zeus.l2_alias_byte_offset = 64 : i64, zeus.l2_alias_of = @topk_stream_11} : memref<1x1x1x8xi32>
+-    %274 = zeus_high.create_fmap_desc %alloc_240 {offset = 0, tensor_shape = [1, 1, 1, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xi32> -> !zeus_high.fmap_desc
+-    zeus_high.vp %alloc_208, %alloc_239 desc(%250, %273) {op_type = "topk_step", modules = [{name = "msk", cmps = 1 : i64, mode = "cmp_mat_tree_c_w_h_msk_out", mskrc = false, tkv = 3 : i64, tkvo = true, topk = 8 : i64}], tensor_mode = 1 : i64, topk_k = 8 : i64, topk_step_index = 3 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x32xf32>
++    zeus_high.vp %alloc_205, %alloc_209 desc(%247, %251) {op_type = "topk_step", modules = [{name = "msk", cmps = 1 : i64, mode = "cmp_mat_tree_c_w_h_msk", mskrc = false, tkv = 3 : i64, tkvo = false, topk = 8 : i64}], tensor_mode = 1 : i64, topk_k = 8 : i64, topk_step_index = 3 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x32xf32>
++    zeus_high.vp %alloc_206, %alloc_210 desc(%248, %252) {op_type = "topk_step", modules = [{name = "msk", cmps = 1 : i64, mode = "cmp_mat_tree_c_w_h_msk", mskrc = false, tkv = 3 : i64, tkvo = false, topk = 8 : i64}], tensor_mode = 1 : i64, topk_k = 8 : i64, topk_step_index = 3 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x32xf32>
++    zeus_high.vp %alloc_207, %alloc_211 desc(%249, %253) {op_type = "topk_step", modules = [{name = "msk", cmps = 1 : i64, mode = "cmp_mat_tree_c_w_h_msk", mskrc = false, tkv = 3 : i64, tkvo = false, topk = 8 : i64}], tensor_mode = 1 : i64, topk_k = 8 : i64, topk_step_index = 3 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x32xf32>
++    zeus_high.vp %alloc_208, %alloc_212 desc(%250, %254) {op_type = "topk_step", modules = [{name = "msk", cmps = 1 : i64, mode = "cmp_mat_tree_c_w_h_msk", mskrc = false, tkv = 3 : i64, tkvo = false, topk = 8 : i64}], tensor_mode = 1 : i64, topk_k = 8 : i64, topk_step_index = 3 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x32xf32>
+     zeus_high.vp %alloc_205, %alloc_209 desc(%247, %251) {op_type = "topk_step", modules = [{name = "msk", cmps = 1 : i64, mode = "cmp_mat_tree_c_w_h_msk", mskrc = false, tkv = 4 : i64, tkvo = false, topk = 8 : i64}], tensor_mode = 1 : i64, topk_k = 8 : i64, topk_step_index = 4 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x32xf32>
+     zeus_high.vp %alloc_206, %alloc_210 desc(%248, %252) {op_type = "topk_step", modules = [{name = "msk", cmps = 1 : i64, mode = "cmp_mat_tree_c_w_h_msk", mskrc = false, tkv = 4 : i64, tkvo = false, topk = 8 : i64}], tensor_mode = 1 : i64, topk_k = 8 : i64, topk_step_index = 4 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x32xf32>
+     zeus_high.vp %alloc_207, %alloc_211 desc(%249, %253) {op_type = "topk_step", modules = [{name = "msk", cmps = 1 : i64, mode = "cmp_mat_tree_c_w_h_msk", mskrc = false, tkv = 4 : i64, tkvo = false, topk = 8 : i64}], tensor_mode = 1 : i64, topk_k = 8 : i64, topk_step_index = 4 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x32xf32>
+@@ -985,198 +961,178 @@
+     memref.dealloc %alloc_211 : memref<1x1x1x32xf32>
+     memref.dealloc %alloc_207 : memref<1x1x1x320xf32>
+     zeus_high.vp %alloc_208, %alloc_212 desc(%250, %254) {op_type = "topk_step", modules = [{name = "msk", cmps = 1 : i64, mode = "cmp_mat_tree_c_w_h_msk_out", mskrc = true, tkv = 7 : i64, tkvo = true, topk = 8 : i64}], tensor_mode = 1 : i64, topk_k = 8 : i64, topk_step_index = 7 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x32xf32>
+-    %subview_241 = memref.subview %alloc_231[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>
+-    %subview_242 = memref.subview %alloc_229[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
+-    zeus_high.gather %alloc_193, idx %subview_241, out %subview_242, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
+-    memref.dealloc %alloc_231 : memref<1x1x1x8xi32>
+-    memref.dealloc %alloc_230 : memref<1x1x1x32xf32>
+-    %subview_243 = memref.subview %alloc_234[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>
+-    %subview_244 = memref.subview %alloc_232[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
+-    zeus_high.gather %alloc_194, idx %subview_243, out %subview_244, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
+-    memref.dealloc %alloc_234 : memref<1x1x1x8xi32>
+-    memref.dealloc %alloc_233 : memref<1x1x1x32xf32>
+-    %subview_245 = memref.subview %alloc_237[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>
+-    %subview_246 = memref.subview %alloc_235[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
+-    zeus_high.gather %alloc_195, idx %subview_245, out %subview_246, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
+-    memref.dealloc %alloc_237 : memref<1x1x1x8xi32>
+-    memref.dealloc %alloc_236 : memref<1x1x1x32xf32>
+-    %subview_247 = memref.subview %alloc_240[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>
+-    %subview_248 = memref.subview %alloc_238[0, 0, 0, 0] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
+-    zeus_high.gather %alloc_196, idx %subview_247, out %subview_248, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1]>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1]>>
+-    memref.dealloc %alloc_240 : memref<1x1x1x8xi32>
+-    memref.dealloc %alloc_239 : memref<1x1x1x32xf32>
+     memref.dealloc %alloc_212 : memref<1x1x1x32xf32>
+     memref.dealloc %alloc_208 : memref<1x1x1x320xf32>
+-    %alloc_249 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x1xf32>
+-    %alloc_250 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x1xf32>
+-    %alloc_251 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x1xf32>
+-    %alloc_252 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x1xf32>
+-    %275 = zeus_high.create_fmap_desc %alloc_249 {offset = 0, tensor_shape = [1, 1, 1, 1], tile_shape = [1, 1, 1, 1]} : memref<1x1x1x1xf32> -> !zeus_high.fmap_desc
+-    %276 = zeus_high.create_fmap_desc %alloc_250 {offset = 0, tensor_shape = [1, 1, 1, 1], tile_shape = [1, 1, 1, 1]} : memref<1x1x1x1xf32> -> !zeus_high.fmap_desc
+-    %277 = zeus_high.create_fmap_desc %alloc_251 {offset = 0, tensor_shape = [1, 1, 1, 1], tile_shape = [1, 1, 1, 1]} : memref<1x1x1x1xf32> -> !zeus_high.fmap_desc
+-    %278 = zeus_high.create_fmap_desc %alloc_252 {offset = 0, tensor_shape = [1, 1, 1, 1], tile_shape = [1, 1, 1, 1]} : memref<1x1x1x1xf32> -> !zeus_high.fmap_desc
+-    zeus_high.vp %alloc_137, %alloc_249 desc(%179, %275) {op_type = "rsqrt", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "sqr", scsq = 1 : i64}], tensor_mode = 1 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x8xf32>, memref<1x1x1x1xf32>
+-    zeus_high.vp %alloc_140, %alloc_250 desc(%182, %276) {op_type = "rsqrt", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "sqr", scsq = 1 : i64}], tensor_mode = 1 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x8xf32>, memref<1x1x1x1xf32>
+-    zeus_high.vp %alloc_143, %alloc_251 desc(%185, %277) {op_type = "rsqrt", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "sqr", scsq = 1 : i64}], tensor_mode = 1 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x8xf32>, memref<1x1x1x1xf32>
+-    zeus_high.vp %alloc_146, %alloc_252 desc(%188, %278) {op_type = "rsqrt", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "sqr", scsq = 1 : i64}], tensor_mode = 1 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x8xf32>, memref<1x1x1x1xf32>
+-    zeus_high.vp %alloc_249, %alloc_249 desc(%275, %275) {op_type = "mul", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "mul_sc", mode = "mul_sc_x_x"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64, zeus.vp_feedback_write = "group_mul"} : memref<1x1x1x1xf32>, memref<1x1x1x1xf32>
+-    memref.dealloc %alloc_249 : memref<1x1x1x1xf32>
+-    zeus_high.vp %alloc_250, %alloc_250 desc(%276, %276) {op_type = "mul", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "mul_sc", mode = "mul_sc_x_x"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64, zeus.vp_feedback_write = "group_mul"} : memref<1x1x1x1xf32>, memref<1x1x1x1xf32>
+-    memref.dealloc %alloc_250 : memref<1x1x1x1xf32>
+-    zeus_high.vp %alloc_251, %alloc_251 desc(%277, %277) {op_type = "mul", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "mul_sc", mode = "mul_sc_x_x"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64, zeus.vp_feedback_write = "group_mul"} : memref<1x1x1x1xf32>, memref<1x1x1x1xf32>
+-    memref.dealloc %alloc_251 : memref<1x1x1x1xf32>
+-    zeus_high.vp %alloc_252, %alloc_252 desc(%278, %278) {op_type = "mul", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "mul_sc", mode = "mul_sc_x_x"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64, zeus.vp_feedback_write = "group_mul"} : memref<1x1x1x1xf32>, memref<1x1x1x1xf32>
+-    memref.dealloc %alloc_252 : memref<1x1x1x1xf32>
+-    %subview_253 = memref.subview %alloc_7[0, 0, 0, 0] [1, 1, 1, 8] [1, 1, 1, 1] : memref<1x1x4x8xbf16> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1]>>
+-    %cast_254 = memref.cast %subview_253 : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1]>> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
+-    %subview_255 = memref.subview %alloc_7[0, 0, 1, 0] [1, 1, 1, 8] [1, 1, 1, 1] : memref<1x1x4x8xbf16> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 8>>
+-    %cast_256 = memref.cast %subview_255 : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 8>> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
+-    %subview_257 = memref.subview %alloc_7[0, 0, 2, 0] [1, 1, 1, 8] [1, 1, 1, 1] : memref<1x1x4x8xbf16> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 16>>
+-    %cast_258 = memref.cast %subview_257 : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 16>> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
+-    %subview_259 = memref.subview %alloc_7[0, 0, 3, 0] [1, 1, 1, 8] [1, 1, 1, 1] : memref<1x1x4x8xbf16> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 24>>
+-    %cast_260 = memref.cast %subview_259 : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 24>> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
+-    %279 = zeus_high.create_fmap_desc %cast_254 {offset = 0, tensor_shape = [1, 1, 4, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %280 = zeus_high.create_fmap_desc %cast_256 {offset = 0, tensor_shape = [1, 1, 4, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %281 = zeus_high.create_fmap_desc %cast_258 {offset = 0, tensor_shape = [1, 1, 4, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %282 = zeus_high.create_fmap_desc %cast_260 {offset = 0, tensor_shape = [1, 1, 4, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %283 = zeus_high.set_pos %279 [0, 0, %c0, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+-    %284 = zeus_high.set_pos %280 [0, 0, %c1, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+-    %285 = zeus_high.set_pos %281 [0, 0, %c2, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+-    %286 = zeus_high.set_pos %282 [0, 0, %c3, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+-    zeus_high.vp %alloc_137, %arg7, %cast_254 desc(%179, %283) {op_type = "mul", modules = [{name = "mul", mode = "mul_x_r"}, {name = "postcal", mode = "mul_runtime_scalar"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64, zeus.truncf_output = unit, zeus.vp_feedback_read = "group_mul", zeus.vp_feedback_write = "none"} : memref<1x1x1x8xf32>, f32, memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
++    %alloc_229 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x1xf32>
++    %alloc_230 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x1xf32>
++    %alloc_231 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x1xf32>
++    %alloc_232 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x1xf32>
++    %263 = zeus_high.create_fmap_desc %alloc_229 {offset = 0, tensor_shape = [1, 1, 1, 1], tile_shape = [1, 1, 1, 1]} : memref<1x1x1x1xf32> -> !zeus_high.fmap_desc
++    %264 = zeus_high.create_fmap_desc %alloc_230 {offset = 0, tensor_shape = [1, 1, 1, 1], tile_shape = [1, 1, 1, 1]} : memref<1x1x1x1xf32> -> !zeus_high.fmap_desc
++    %265 = zeus_high.create_fmap_desc %alloc_231 {offset = 0, tensor_shape = [1, 1, 1, 1], tile_shape = [1, 1, 1, 1]} : memref<1x1x1x1xf32> -> !zeus_high.fmap_desc
++    %266 = zeus_high.create_fmap_desc %alloc_232 {offset = 0, tensor_shape = [1, 1, 1, 1], tile_shape = [1, 1, 1, 1]} : memref<1x1x1x1xf32> -> !zeus_high.fmap_desc
++    zeus_high.vp %alloc_137, %alloc_229 desc(%179, %263) {op_type = "rsqrt", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "sqr", scsq = 1 : i64}], tensor_mode = 1 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x8xf32>, memref<1x1x1x1xf32>
++    zeus_high.vp %alloc_140, %alloc_230 desc(%182, %264) {op_type = "rsqrt", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "sqr", scsq = 1 : i64}], tensor_mode = 1 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x8xf32>, memref<1x1x1x1xf32>
++    zeus_high.vp %alloc_143, %alloc_231 desc(%185, %265) {op_type = "rsqrt", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "sqr", scsq = 1 : i64}], tensor_mode = 1 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x8xf32>, memref<1x1x1x1xf32>
++    zeus_high.vp %alloc_146, %alloc_232 desc(%188, %266) {op_type = "rsqrt", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "sqr", scsq = 1 : i64}], tensor_mode = 1 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x8xf32>, memref<1x1x1x1xf32>
++    zeus_high.vp %alloc_229, %alloc_229 desc(%263, %263) {op_type = "mul", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "mul_sc", mode = "mul_sc_x_x"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64, zeus.vp_feedback_write = "group_mul"} : memref<1x1x1x1xf32>, memref<1x1x1x1xf32>
++    memref.dealloc %alloc_229 : memref<1x1x1x1xf32>
++    zeus_high.vp %alloc_230, %alloc_230 desc(%264, %264) {op_type = "mul", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "mul_sc", mode = "mul_sc_x_x"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64, zeus.vp_feedback_write = "group_mul"} : memref<1x1x1x1xf32>, memref<1x1x1x1xf32>
++    memref.dealloc %alloc_230 : memref<1x1x1x1xf32>
++    zeus_high.vp %alloc_231, %alloc_231 desc(%265, %265) {op_type = "mul", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "mul_sc", mode = "mul_sc_x_x"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64, zeus.vp_feedback_write = "group_mul"} : memref<1x1x1x1xf32>, memref<1x1x1x1xf32>
++    memref.dealloc %alloc_231 : memref<1x1x1x1xf32>
++    zeus_high.vp %alloc_232, %alloc_232 desc(%266, %266) {op_type = "mul", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "mul_sc", mode = "mul_sc_x_x"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64, zeus.vp_feedback_write = "group_mul"} : memref<1x1x1x1xf32>, memref<1x1x1x1xf32>
++    memref.dealloc %alloc_232 : memref<1x1x1x1xf32>
++    %subview_233 = memref.subview %alloc_7[0, 0, 0, 0] [1, 1, 1, 8] [1, 1, 1, 1] : memref<1x1x4x8xbf16> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1]>>
++    %cast_234 = memref.cast %subview_233 : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1]>> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
++    %subview_235 = memref.subview %alloc_7[0, 0, 1, 0] [1, 1, 1, 8] [1, 1, 1, 1] : memref<1x1x4x8xbf16> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 8>>
++    %cast_236 = memref.cast %subview_235 : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 8>> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
++    %subview_237 = memref.subview %alloc_7[0, 0, 2, 0] [1, 1, 1, 8] [1, 1, 1, 1] : memref<1x1x4x8xbf16> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 16>>
++    %cast_238 = memref.cast %subview_237 : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 16>> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
++    %subview_239 = memref.subview %alloc_7[0, 0, 3, 0] [1, 1, 1, 8] [1, 1, 1, 1] : memref<1x1x4x8xbf16> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 24>>
++    %cast_240 = memref.cast %subview_239 : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 24>> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
++    %267 = zeus_high.create_fmap_desc %cast_234 {offset = 0, tensor_shape = [1, 1, 4, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %268 = zeus_high.create_fmap_desc %cast_236 {offset = 0, tensor_shape = [1, 1, 4, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %269 = zeus_high.create_fmap_desc %cast_238 {offset = 0, tensor_shape = [1, 1, 4, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %270 = zeus_high.create_fmap_desc %cast_240 {offset = 0, tensor_shape = [1, 1, 4, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %271 = zeus_high.set_pos %267 [0, 0, %c0, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
++    %272 = zeus_high.set_pos %268 [0, 0, %c1, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
++    %273 = zeus_high.set_pos %269 [0, 0, %c2, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
++    %274 = zeus_high.set_pos %270 [0, 0, %c3, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
++    zeus_high.vp %alloc_137, %arg7, %cast_234 desc(%179, %271) {op_type = "mul", modules = [{name = "mul", mode = "mul_x_r"}, {name = "postcal", mode = "mul_runtime_scalar"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64, zeus.truncf_output = unit, zeus.vp_feedback_read = "group_mul", zeus.vp_feedback_write = "none"} : memref<1x1x1x8xf32>, f32, memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
+     memref.dealloc %alloc_137 : memref<1x1x1x8xf32>
+-    zeus_high.vp %alloc_140, %arg7, %cast_256 desc(%182, %284) {op_type = "mul", modules = [{name = "mul", mode = "mul_x_r"}, {name = "postcal", mode = "mul_runtime_scalar"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64, zeus.truncf_output = unit, zeus.vp_feedback_read = "group_mul", zeus.vp_feedback_write = "none"} : memref<1x1x1x8xf32>, f32, memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
++    zeus_high.vp %alloc_140, %arg7, %cast_236 desc(%182, %272) {op_type = "mul", modules = [{name = "mul", mode = "mul_x_r"}, {name = "postcal", mode = "mul_runtime_scalar"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64, zeus.truncf_output = unit, zeus.vp_feedback_read = "group_mul", zeus.vp_feedback_write = "none"} : memref<1x1x1x8xf32>, f32, memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
+     memref.dealloc %alloc_140 : memref<1x1x1x8xf32>
+-    zeus_high.vp %alloc_143, %arg7, %cast_258 desc(%185, %285) {op_type = "mul", modules = [{name = "mul", mode = "mul_x_r"}, {name = "postcal", mode = "mul_runtime_scalar"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64, zeus.truncf_output = unit, zeus.vp_feedback_read = "group_mul", zeus.vp_feedback_write = "none"} : memref<1x1x1x8xf32>, f32, memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
++    zeus_high.vp %alloc_143, %arg7, %cast_238 desc(%185, %273) {op_type = "mul", modules = [{name = "mul", mode = "mul_x_r"}, {name = "postcal", mode = "mul_runtime_scalar"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64, zeus.truncf_output = unit, zeus.vp_feedback_read = "group_mul", zeus.vp_feedback_write = "none"} : memref<1x1x1x8xf32>, f32, memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
+     memref.dealloc %alloc_143 : memref<1x1x1x8xf32>
+-    zeus_high.vp %alloc_146, %arg7, %cast_260 desc(%188, %286) {op_type = "mul", modules = [{name = "mul", mode = "mul_x_r"}, {name = "postcal", mode = "mul_runtime_scalar"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64, zeus.truncf_output = unit, zeus.vp_feedback_read = "group_mul", zeus.vp_feedback_write = "none"} : memref<1x1x1x8xf32>, f32, memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
++    zeus_high.vp %alloc_146, %arg7, %cast_240 desc(%188, %274) {op_type = "mul", modules = [{name = "mul", mode = "mul_x_r"}, {name = "postcal", mode = "mul_runtime_scalar"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64, zeus.truncf_output = unit, zeus.vp_feedback_read = "group_mul", zeus.vp_feedback_write = "none"} : memref<1x1x1x8xf32>, f32, memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
+     memref.dealloc %alloc_146 : memref<1x1x1x8xf32>
+-    %subview_261 = memref.subview %alloc_11[0, 0, 0, 0] [1, 1, 1, 32] [1, 1, 1, 1] : memref<1x1x4x32xi32> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1]>>
+-    %cast_262 = memref.cast %subview_261 : memref<1x1x1x32xi32, strided<[128, 128, 32, 1]>> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>>
+-    %subview_263 = memref.subview %alloc_11[0, 0, 1, 0] [1, 1, 1, 32] [1, 1, 1, 1] : memref<1x1x4x32xi32> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 32>>
+-    %cast_264 = memref.cast %subview_263 : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 32>> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>>
+-    %subview_265 = memref.subview %alloc_11[0, 0, 2, 0] [1, 1, 1, 32] [1, 1, 1, 1] : memref<1x1x4x32xi32> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 64>>
+-    %cast_266 = memref.cast %subview_265 : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 64>> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>>
+-    %subview_267 = memref.subview %alloc_11[0, 0, 3, 0] [1, 1, 1, 32] [1, 1, 1, 1] : memref<1x1x4x32xi32> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 96>>
+-    %cast_268 = memref.cast %subview_267 : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 96>> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>>
+-    %287 = zeus_high.create_fmap_desc %cast_262 {offset = 0, tensor_shape = [1, 1, 4, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %288 = zeus_high.create_fmap_desc %cast_264 {offset = 0, tensor_shape = [1, 1, 4, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %289 = zeus_high.create_fmap_desc %cast_266 {offset = 0, tensor_shape = [1, 1, 4, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %290 = zeus_high.create_fmap_desc %cast_268 {offset = 0, tensor_shape = [1, 1, 4, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %subview_269 = memref.subview %alloc_225[0, 0, 0, 4] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1], offset: 4>>
+-    %subview_270 = memref.subview %alloc_229[0, 0, 0, 4] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1], offset: 4>>
+-    zeus_high.gather %alloc_193, idx %subview_269, out %subview_270, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1], offset: 4>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1], offset: 4>>
++    %subview_241 = memref.subview %alloc_11[0, 0, 0, 0] [1, 1, 1, 32] [1, 1, 1, 1] : memref<1x1x4x32xi32> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1]>>
++    %cast_242 = memref.cast %subview_241 : memref<1x1x1x32xi32, strided<[128, 128, 32, 1]>> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>>
++    %subview_243 = memref.subview %alloc_11[0, 0, 1, 0] [1, 1, 1, 32] [1, 1, 1, 1] : memref<1x1x4x32xi32> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 32>>
++    %cast_244 = memref.cast %subview_243 : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 32>> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>>
++    %subview_245 = memref.subview %alloc_11[0, 0, 2, 0] [1, 1, 1, 32] [1, 1, 1, 1] : memref<1x1x4x32xi32> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 64>>
++    %cast_246 = memref.cast %subview_245 : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 64>> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>>
++    %subview_247 = memref.subview %alloc_11[0, 0, 3, 0] [1, 1, 1, 32] [1, 1, 1, 1] : memref<1x1x4x32xi32> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 96>>
++    %cast_248 = memref.cast %subview_247 : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: 96>> to memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>>
++    %275 = zeus_high.create_fmap_desc %cast_242 {offset = 0, tensor_shape = [1, 1, 4, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %276 = zeus_high.create_fmap_desc %cast_244 {offset = 0, tensor_shape = [1, 1, 4, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %277 = zeus_high.create_fmap_desc %cast_246 {offset = 0, tensor_shape = [1, 1, 4, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %278 = zeus_high.create_fmap_desc %cast_248 {offset = 0, tensor_shape = [1, 1, 4, 32], tile_shape = [1, 1, 1, 32]} : memref<1x1x1x32xi32, strided<[128, 128, 32, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %alloc_249 = memref.alloc() {alignment = 128 : i64} : memref<1x1x1x8xf32>
++    %alloc_250 = memref.alloc() {alignment = 128 : i64} : memref<1x1x1x8xf32>
++    %alloc_251 = memref.alloc() {alignment = 128 : i64} : memref<1x1x1x8xf32>
++    %alloc_252 = memref.alloc() {alignment = 128 : i64} : memref<1x1x1x8xf32>
++    %279 = zeus_high.create_fmap_desc %alloc_249 {offset = 0, tensor_shape = [1, 1, 1, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xf32> -> !zeus_high.fmap_desc
++    %280 = zeus_high.create_fmap_desc %alloc_250 {offset = 0, tensor_shape = [1, 1, 1, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xf32> -> !zeus_high.fmap_desc
++    %281 = zeus_high.create_fmap_desc %alloc_251 {offset = 0, tensor_shape = [1, 1, 1, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xf32> -> !zeus_high.fmap_desc
++    %282 = zeus_high.create_fmap_desc %alloc_252 {offset = 0, tensor_shape = [1, 1, 1, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xf32> -> !zeus_high.fmap_desc
++    zeus_high.gather %alloc_193, idx %alloc_225, out %alloc_249, k 8 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x8xi32>, memref<1x1x1x8xf32>
+     memref.dealloc %alloc_225 : memref<1x1x1x8xi32>
+     memref.dealloc %alloc_193 : memref<1x1x1x320xf32>
+-    %alloc_271 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x1xf32>
+-    %291 = zeus_high.create_fmap_desc %alloc_271 {offset = 0, tensor_shape = [1, 1, 1, 1], tile_shape = [1, 1, 1, 1]} : memref<1x1x1x1xf32> -> !zeus_high.fmap_desc
+-    zeus_high.vp %alloc_229, %alloc_271 desc(%263, %291) {op_type = "rsqrt", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "sqr", scsq = 1 : i64}], tensor_mode = 1 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x8xf32>, memref<1x1x1x1xf32>
+-    %subview_272 = memref.subview %alloc_226[0, 0, 0, 4] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1], offset: 4>>
+-    %subview_273 = memref.subview %alloc_232[0, 0, 0, 4] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1], offset: 4>>
+-    zeus_high.gather %alloc_194, idx %subview_272, out %subview_273, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1], offset: 4>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1], offset: 4>>
++    %alloc_253 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x1xf32>
++    %283 = zeus_high.create_fmap_desc %alloc_253 {offset = 0, tensor_shape = [1, 1, 1, 1], tile_shape = [1, 1, 1, 1]} : memref<1x1x1x1xf32> -> !zeus_high.fmap_desc
++    zeus_high.vp %alloc_249, %alloc_253 desc(%279, %283) {op_type = "rsqrt", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "sqr", scsq = 1 : i64}], tensor_mode = 1 : i64, zeus.parallel_executor_lane = 0 : i64} : memref<1x1x1x8xf32>, memref<1x1x1x1xf32>
++    zeus_high.gather %alloc_194, idx %alloc_226, out %alloc_250, k 8 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x8xi32>, memref<1x1x1x8xf32>
+     memref.dealloc %alloc_226 : memref<1x1x1x8xi32>
+     memref.dealloc %alloc_194 : memref<1x1x1x320xf32>
+-    %alloc_274 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x1xf32>
+-    %292 = zeus_high.create_fmap_desc %alloc_274 {offset = 0, tensor_shape = [1, 1, 1, 1], tile_shape = [1, 1, 1, 1]} : memref<1x1x1x1xf32> -> !zeus_high.fmap_desc
+-    zeus_high.vp %alloc_232, %alloc_274 desc(%266, %292) {op_type = "rsqrt", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "sqr", scsq = 1 : i64}], tensor_mode = 1 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x8xf32>, memref<1x1x1x1xf32>
+-    %subview_275 = memref.subview %alloc_227[0, 0, 0, 4] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1], offset: 4>>
+-    %subview_276 = memref.subview %alloc_235[0, 0, 0, 4] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1], offset: 4>>
+-    zeus_high.gather %alloc_195, idx %subview_275, out %subview_276, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1], offset: 4>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1], offset: 4>>
++    %alloc_254 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x1xf32>
++    %284 = zeus_high.create_fmap_desc %alloc_254 {offset = 0, tensor_shape = [1, 1, 1, 1], tile_shape = [1, 1, 1, 1]} : memref<1x1x1x1xf32> -> !zeus_high.fmap_desc
++    zeus_high.vp %alloc_250, %alloc_254 desc(%280, %284) {op_type = "rsqrt", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "sqr", scsq = 1 : i64}], tensor_mode = 1 : i64, zeus.parallel_executor_lane = 1 : i64} : memref<1x1x1x8xf32>, memref<1x1x1x1xf32>
++    zeus_high.gather %alloc_195, idx %alloc_227, out %alloc_251, k 8 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x8xi32>, memref<1x1x1x8xf32>
+     memref.dealloc %alloc_227 : memref<1x1x1x8xi32>
+     memref.dealloc %alloc_195 : memref<1x1x1x320xf32>
+-    %alloc_277 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x1xf32>
+-    %293 = zeus_high.create_fmap_desc %alloc_277 {offset = 0, tensor_shape = [1, 1, 1, 1], tile_shape = [1, 1, 1, 1]} : memref<1x1x1x1xf32> -> !zeus_high.fmap_desc
+-    zeus_high.vp %alloc_235, %alloc_277 desc(%269, %293) {op_type = "rsqrt", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "sqr", scsq = 1 : i64}], tensor_mode = 1 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x8xf32>, memref<1x1x1x1xf32>
+-    %subview_278 = memref.subview %alloc_228[0, 0, 0, 4] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xi32> to memref<1x1x1x4xi32, strided<[8, 8, 8, 1], offset: 4>>
+-    %subview_279 = memref.subview %alloc_238[0, 0, 0, 4] [1, 1, 1, 4] [1, 1, 1, 1] : memref<1x1x1x8xf32> to memref<1x1x1x4xf32, strided<[8, 8, 8, 1], offset: 4>>
+-    zeus_high.gather %alloc_196, idx %subview_278, out %subview_279, k 4 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x4xi32, strided<[8, 8, 8, 1], offset: 4>>, memref<1x1x1x4xf32, strided<[8, 8, 8, 1], offset: 4>>
++    %alloc_255 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x1xf32>
++    %285 = zeus_high.create_fmap_desc %alloc_255 {offset = 0, tensor_shape = [1, 1, 1, 1], tile_shape = [1, 1, 1, 1]} : memref<1x1x1x1xf32> -> !zeus_high.fmap_desc
++    zeus_high.vp %alloc_251, %alloc_255 desc(%281, %285) {op_type = "rsqrt", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "sqr", scsq = 1 : i64}], tensor_mode = 1 : i64, zeus.parallel_executor_lane = 2 : i64} : memref<1x1x1x8xf32>, memref<1x1x1x1xf32>
++    zeus_high.gather %alloc_196, idx %alloc_228, out %alloc_252, k 8 {index_lower_bound = 0 : i64, index_upper_bound = 320 : i64} : memref<1x1x1x320xf32>, memref<1x1x1x8xi32>, memref<1x1x1x8xf32>
+     memref.dealloc %alloc_228 : memref<1x1x1x8xi32>
+     memref.dealloc %alloc_196 : memref<1x1x1x320xf32>
+-    %alloc_280 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x1xf32>
+-    %294 = zeus_high.create_fmap_desc %alloc_280 {offset = 0, tensor_shape = [1, 1, 1, 1], tile_shape = [1, 1, 1, 1]} : memref<1x1x1x1xf32> -> !zeus_high.fmap_desc
+-    zeus_high.vp %alloc_238, %alloc_280 desc(%272, %294) {op_type = "rsqrt", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "sqr", scsq = 1 : i64}], tensor_mode = 1 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x8xf32>, memref<1x1x1x1xf32>
+-    zeus_high.vp %alloc_271, %alloc_271 desc(%291, %291) {op_type = "mul", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "mul_sc", mode = "mul_sc_x_x"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64, zeus.vp_feedback_write = "group_mul"} : memref<1x1x1x1xf32>, memref<1x1x1x1xf32>
+-    memref.dealloc %alloc_271 : memref<1x1x1x1xf32>
+-    zeus_high.vp %alloc_274, %alloc_274 desc(%292, %292) {op_type = "mul", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "mul_sc", mode = "mul_sc_x_x"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64, zeus.vp_feedback_write = "group_mul"} : memref<1x1x1x1xf32>, memref<1x1x1x1xf32>
+-    memref.dealloc %alloc_274 : memref<1x1x1x1xf32>
+-    zeus_high.vp %alloc_277, %alloc_277 desc(%293, %293) {op_type = "mul", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "mul_sc", mode = "mul_sc_x_x"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64, zeus.vp_feedback_write = "group_mul"} : memref<1x1x1x1xf32>, memref<1x1x1x1xf32>
+-    memref.dealloc %alloc_277 : memref<1x1x1x1xf32>
+-    zeus_high.vp %alloc_280, %alloc_280 desc(%294, %294) {op_type = "mul", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "mul_sc", mode = "mul_sc_x_x"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64, zeus.vp_feedback_write = "group_mul"} : memref<1x1x1x1xf32>, memref<1x1x1x1xf32>
+-    memref.dealloc %alloc_280 : memref<1x1x1x1xf32>
+-    %subview_281 = memref.subview %alloc_8[0, 0, 0, 0] [1, 1, 1, 8] [1, 1, 1, 1] : memref<1x1x4x8xbf16> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1]>>
+-    %cast_282 = memref.cast %subview_281 : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1]>> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
+-    %subview_283 = memref.subview %alloc_8[0, 0, 1, 0] [1, 1, 1, 8] [1, 1, 1, 1] : memref<1x1x4x8xbf16> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 8>>
+-    %cast_284 = memref.cast %subview_283 : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 8>> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
+-    %subview_285 = memref.subview %alloc_8[0, 0, 2, 0] [1, 1, 1, 8] [1, 1, 1, 1] : memref<1x1x4x8xbf16> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 16>>
+-    %cast_286 = memref.cast %subview_285 : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 16>> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
+-    %subview_287 = memref.subview %alloc_8[0, 0, 3, 0] [1, 1, 1, 8] [1, 1, 1, 1] : memref<1x1x4x8xbf16> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 24>>
+-    %cast_288 = memref.cast %subview_287 : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 24>> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
+-    %295 = zeus_high.create_fmap_desc %cast_282 {offset = 0, tensor_shape = [1, 1, 4, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %296 = zeus_high.create_fmap_desc %cast_284 {offset = 0, tensor_shape = [1, 1, 4, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %297 = zeus_high.create_fmap_desc %cast_286 {offset = 0, tensor_shape = [1, 1, 4, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %298 = zeus_high.create_fmap_desc %cast_288 {offset = 0, tensor_shape = [1, 1, 4, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>> -> !zeus_high.fmap_desc
+-    %299 = zeus_high.set_pos %295 [0, 0, %c0, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+-    %300 = zeus_high.set_pos %296 [0, 0, %c1, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+-    %301 = zeus_high.set_pos %297 [0, 0, %c2, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+-    %302 = zeus_high.set_pos %298 [0, 0, %c3, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+-    zeus_high.vp %alloc_229, %arg7, %cast_282 desc(%263, %299) {op_type = "mul", modules = [{name = "mul", mode = "mul_x_r"}, {name = "postcal", mode = "mul_runtime_scalar"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64, zeus.truncf_output = unit, zeus.vp_feedback_read = "group_mul", zeus.vp_feedback_write = "none"} : memref<1x1x1x8xf32>, f32, memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
+-    memref.dealloc %alloc_229 : memref<1x1x1x8xf32>
+-    zeus_high.vp %alloc_232, %arg7, %cast_284 desc(%266, %300) {op_type = "mul", modules = [{name = "mul", mode = "mul_x_r"}, {name = "postcal", mode = "mul_runtime_scalar"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64, zeus.truncf_output = unit, zeus.vp_feedback_read = "group_mul", zeus.vp_feedback_write = "none"} : memref<1x1x1x8xf32>, f32, memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
+-    memref.dealloc %alloc_232 : memref<1x1x1x8xf32>
+-    zeus_high.vp %alloc_235, %arg7, %cast_286 desc(%269, %301) {op_type = "mul", modules = [{name = "mul", mode = "mul_x_r"}, {name = "postcal", mode = "mul_runtime_scalar"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64, zeus.truncf_output = unit, zeus.vp_feedback_read = "group_mul", zeus.vp_feedback_write = "none"} : memref<1x1x1x8xf32>, f32, memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
+-    memref.dealloc %alloc_235 : memref<1x1x1x8xf32>
+-    zeus_high.vp %alloc_238, %arg7, %cast_288 desc(%272, %302) {op_type = "mul", modules = [{name = "mul", mode = "mul_x_r"}, {name = "postcal", mode = "mul_runtime_scalar"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64, zeus.truncf_output = unit, zeus.vp_feedback_read = "group_mul", zeus.vp_feedback_write = "none"} : memref<1x1x1x8xf32>, f32, memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
+-    memref.dealloc %alloc_238 : memref<1x1x1x8xf32>
+-    %303 = arith.muli %arg12, %c32_i32 : i32
++    %alloc_256 = memref.alloc() {alignment = 16 : i64} : memref<1x1x1x1xf32>
++    %286 = zeus_high.create_fmap_desc %alloc_256 {offset = 0, tensor_shape = [1, 1, 1, 1], tile_shape = [1, 1, 1, 1]} : memref<1x1x1x1xf32> -> !zeus_high.fmap_desc
++    zeus_high.vp %alloc_252, %alloc_256 desc(%282, %286) {op_type = "rsqrt", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "sqr", scsq = 1 : i64}], tensor_mode = 1 : i64, zeus.parallel_executor_lane = 3 : i64} : memref<1x1x1x8xf32>, memref<1x1x1x1xf32>
++    zeus_high.vp %alloc_253, %alloc_253 desc(%283, %283) {op_type = "mul", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "mul_sc", mode = "mul_sc_x_x"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64, zeus.vp_feedback_write = "group_mul"} : memref<1x1x1x1xf32>, memref<1x1x1x1xf32>
++    memref.dealloc %alloc_253 : memref<1x1x1x1xf32>
++    zeus_high.vp %alloc_254, %alloc_254 desc(%284, %284) {op_type = "mul", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "mul_sc", mode = "mul_sc_x_x"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64, zeus.vp_feedback_write = "group_mul"} : memref<1x1x1x1xf32>, memref<1x1x1x1xf32>
++    memref.dealloc %alloc_254 : memref<1x1x1x1xf32>
++    zeus_high.vp %alloc_255, %alloc_255 desc(%285, %285) {op_type = "mul", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "mul_sc", mode = "mul_sc_x_x"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64, zeus.vp_feedback_write = "group_mul"} : memref<1x1x1x1xf32>, memref<1x1x1x1xf32>
++    memref.dealloc %alloc_255 : memref<1x1x1x1xf32>
++    zeus_high.vp %alloc_256, %alloc_256 desc(%286, %286) {op_type = "mul", modules = [{name = "smt", mode = "sum_mat_tree_c"}, {name = "mul_sc", mode = "mul_sc_x_x"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64, zeus.vp_feedback_write = "group_mul"} : memref<1x1x1x1xf32>, memref<1x1x1x1xf32>
++    memref.dealloc %alloc_256 : memref<1x1x1x1xf32>
++    %subview_257 = memref.subview %alloc_8[0, 0, 0, 0] [1, 1, 1, 8] [1, 1, 1, 1] : memref<1x1x4x8xbf16> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1]>>
++    %cast_258 = memref.cast %subview_257 : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1]>> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
++    %subview_259 = memref.subview %alloc_8[0, 0, 1, 0] [1, 1, 1, 8] [1, 1, 1, 1] : memref<1x1x4x8xbf16> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 8>>
++    %cast_260 = memref.cast %subview_259 : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 8>> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
++    %subview_261 = memref.subview %alloc_8[0, 0, 2, 0] [1, 1, 1, 8] [1, 1, 1, 1] : memref<1x1x4x8xbf16> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 16>>
++    %cast_262 = memref.cast %subview_261 : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 16>> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
++    %subview_263 = memref.subview %alloc_8[0, 0, 3, 0] [1, 1, 1, 8] [1, 1, 1, 1] : memref<1x1x4x8xbf16> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 24>>
++    %cast_264 = memref.cast %subview_263 : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: 24>> to memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
++    %287 = zeus_high.create_fmap_desc %cast_258 {offset = 0, tensor_shape = [1, 1, 4, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %288 = zeus_high.create_fmap_desc %cast_260 {offset = 0, tensor_shape = [1, 1, 4, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %289 = zeus_high.create_fmap_desc %cast_262 {offset = 0, tensor_shape = [1, 1, 4, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %290 = zeus_high.create_fmap_desc %cast_264 {offset = 0, tensor_shape = [1, 1, 4, 8], tile_shape = [1, 1, 1, 8]} : memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>> -> !zeus_high.fmap_desc
++    %291 = zeus_high.set_pos %287 [0, 0, %c0, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
++    %292 = zeus_high.set_pos %288 [0, 0, %c1, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
++    %293 = zeus_high.set_pos %289 [0, 0, %c2, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
++    %294 = zeus_high.set_pos %290 [0, 0, %c3, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
++    zeus_high.vp %alloc_249, %arg7, %cast_258 desc(%279, %291) {op_type = "mul", modules = [{name = "mul", mode = "mul_x_r"}, {name = "postcal", mode = "mul_runtime_scalar"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 0 : i64, zeus.truncf_output = unit, zeus.vp_feedback_read = "group_mul", zeus.vp_feedback_write = "none"} : memref<1x1x1x8xf32>, f32, memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
++    memref.dealloc %alloc_249 : memref<1x1x1x8xf32>
++    zeus_high.vp %alloc_250, %arg7, %cast_260 desc(%280, %292) {op_type = "mul", modules = [{name = "mul", mode = "mul_x_r"}, {name = "postcal", mode = "mul_runtime_scalar"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 1 : i64, zeus.truncf_output = unit, zeus.vp_feedback_read = "group_mul", zeus.vp_feedback_write = "none"} : memref<1x1x1x8xf32>, f32, memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
++    memref.dealloc %alloc_250 : memref<1x1x1x8xf32>
++    zeus_high.vp %alloc_251, %arg7, %cast_262 desc(%281, %293) {op_type = "mul", modules = [{name = "mul", mode = "mul_x_r"}, {name = "postcal", mode = "mul_runtime_scalar"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 2 : i64, zeus.truncf_output = unit, zeus.vp_feedback_read = "group_mul", zeus.vp_feedback_write = "none"} : memref<1x1x1x8xf32>, f32, memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
++    memref.dealloc %alloc_251 : memref<1x1x1x8xf32>
++    zeus_high.vp %alloc_252, %arg7, %cast_264 desc(%282, %294) {op_type = "mul", modules = [{name = "mul", mode = "mul_x_r"}, {name = "postcal", mode = "mul_runtime_scalar"}], tensor_mode = 0 : i64, zeus.parallel_executor_lane = 3 : i64, zeus.truncf_output = unit, zeus.vp_feedback_read = "group_mul", zeus.vp_feedback_write = "none"} : memref<1x1x1x8xf32>, f32, memref<1x1x1x8xbf16, strided<[32, 32, 8, 1], offset: ?>>
++    memref.dealloc %alloc_252 : memref<1x1x1x8xf32>
++    %295 = arith.muli %arg12, %c32_i32 : i32
++    %296 = arith.index_cast %295 : i32 to index
++    %297 = zeus_high.create_fmap_desc %arg4 {offset = 0, tensor_shape = [1, 1, %c4, %c8], tile_shape = [1, 1, 4, 8], dynamic_byte_offset = %296} : memref<*xi32> -> !zeus_high.fmap_desc
++    %298 = zeus_high.update_tile %297 [1, 1, %c4, %c8] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
++    %299 = zeus_high.set_pos %298 [0, 0, 0, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
++    %300 = zeus_high.update_tile %34 [1, 1, 4, 8] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
++    %301 = zeus_high.update_tile %300 [1, 1, %c4, %c8] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
++    %302 = zeus_high.set_pos %301 [0, 0, 0, 16] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
++    zeus_high.store %alloc_9, %arg4 desc(%302, %299) : memref<1x1x4x32xi32>, memref<*xi32>
++    memref.dealloc %alloc_9 : memref<1x1x4x32xi32>
++    %303 = arith.muli %8, %c8_i32 : i32
+     %304 = arith.index_cast %303 : i32 to index
+     %305 = zeus_high.create_fmap_desc %arg4 {offset = 0, tensor_shape = [1, 1, %c4, %c8], tile_shape = [1, 1, 4, 8], dynamic_byte_offset = %304} : memref<*xi32> -> !zeus_high.fmap_desc
+     %306 = zeus_high.update_tile %305 [1, 1, %c4, %c8] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+     %307 = zeus_high.set_pos %306 [0, 0, 0, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+-    %308 = zeus_high.update_tile %34 [1, 1, 4, 8] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
++    %308 = zeus_high.update_tile %35 [1, 1, 4, 8] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+     %309 = zeus_high.update_tile %308 [1, 1, %c4, %c8] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+     %310 = zeus_high.set_pos %309 [0, 0, 0, 16] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+-    zeus_high.store %alloc_9, %arg4 desc(%310, %307) : memref<1x1x4x32xi32>, memref<*xi32>
+-    memref.dealloc %alloc_9 : memref<1x1x4x32xi32>
+-    %311 = arith.muli %8, %c8_i32 : i32
++    zeus_high.store %alloc_10, %arg4 desc(%310, %307) : memref<1x1x4x32xi32>, memref<*xi32>
++    memref.dealloc %alloc_10 : memref<1x1x4x32xi32>
++    %311 = arith.muli %10, %c8_i32 : i32
+     %312 = arith.index_cast %311 : i32 to index
+     %313 = zeus_high.create_fmap_desc %arg4 {offset = 0, tensor_shape = [1, 1, %c4, %c8], tile_shape = [1, 1, 4, 8], dynamic_byte_offset = %312} : memref<*xi32> -> !zeus_high.fmap_desc
+     %314 = zeus_high.update_tile %313 [1, 1, %c4, %c8] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+     %315 = zeus_high.set_pos %314 [0, 0, 0, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+-    %316 = zeus_high.update_tile %35 [1, 1, 4, 8] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
++    %316 = zeus_high.update_tile %36 [1, 1, 4, 8] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+     %317 = zeus_high.update_tile %316 [1, 1, %c4, %c8] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+     %318 = zeus_high.set_pos %317 [0, 0, 0, 16] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+-    zeus_high.store %alloc_10, %arg4 desc(%318, %315) : memref<1x1x4x32xi32>, memref<*xi32>
+-    memref.dealloc %alloc_10 : memref<1x1x4x32xi32>
+-    %319 = arith.muli %10, %c8_i32 : i32
+-    %320 = arith.index_cast %319 : i32 to index
+-    %321 = zeus_high.create_fmap_desc %arg4 {offset = 0, tensor_shape = [1, 1, %c4, %c8], tile_shape = [1, 1, 4, 8], dynamic_byte_offset = %320} : memref<*xi32> -> !zeus_high.fmap_desc
+-    %322 = zeus_high.update_tile %321 [1, 1, %c4, %c8] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
++    zeus_high.store %alloc_11, %arg4 desc(%318, %315) : memref<1x1x4x32xi32>, memref<*xi32>
++    memref.dealloc %alloc_11 : memref<1x1x4x32xi32>
++    %319 = zeus_high.create_fmap_desc %arg3 {offset = 0, tensor_shape = [1, 1, %c4, %c8], tile_shape = [1, 1, 4, 8], dynamic_byte_offset = %296} : memref<*xbf16> -> !zeus_high.fmap_desc
++    %320 = zeus_high.update_tile %319 [1, 1, %c4, %c8] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
++    %321 = zeus_high.set_pos %320 [0, 0, 0, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
++    %322 = zeus_high.update_tile %31 [1, 1, %c4, %c8] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+     %323 = zeus_high.set_pos %322 [0, 0, 0, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+-    %324 = zeus_high.update_tile %36 [1, 1, 4, 8] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
++    zeus_high.store %alloc_6, %arg3 desc(%323, %321) : memref<1x1x4x8xbf16>, memref<*xbf16>
++    memref.dealloc %alloc_6 : memref<1x1x4x8xbf16>
++    %324 = zeus_high.create_fmap_desc %arg3 {offset = 0, tensor_shape = [1, 1, %c4, %c8], tile_shape = [1, 1, 4, 8], dynamic_byte_offset = %304} : memref<*xbf16> -> !zeus_high.fmap_desc
+     %325 = zeus_high.update_tile %324 [1, 1, %c4, %c8] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+-    %326 = zeus_high.set_pos %325 [0, 0, 0, 16] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+-    zeus_high.store %alloc_11, %arg4 desc(%326, %323) : memref<1x1x4x32xi32>, memref<*xi32>
+-    memref.dealloc %alloc_11 : memref<1x1x4x32xi32>
+-    %327 = zeus_high.create_fmap_desc %arg3 {offset = 0, tensor_shape = [1, 1, %c4, %c8], tile_shape = [1, 1, 4, 8], dynamic_byte_offset = %304} : memref<*xbf16> -> !zeus_high.fmap_desc
+-    %328 = zeus_high.update_tile %327 [1, 1, %c4, %c8] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+-    %329 = zeus_high.set_pos %328 [0, 0, 0, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+-    %330 = zeus_high.update_tile %31 [1, 1, %c4, %c8] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
++    %326 = zeus_high.set_pos %325 [0, 0, 0, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
++    %327 = zeus_high.update_tile %32 [1, 1, %c4, %c8] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
++    %328 = zeus_high.set_pos %327 [0, 0, 0, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
++    zeus_high.store %alloc_7, %arg3 desc(%328, %326) : memref<1x1x4x8xbf16>, memref<*xbf16>
++    memref.dealloc %alloc_7 : memref<1x1x4x8xbf16>
++    %329 = zeus_high.create_fmap_desc %arg3 {offset = 0, tensor_shape = [1, 1, %c4, %c8], tile_shape = [1, 1, 4, 8], dynamic_byte_offset = %312} : memref<*xbf16> -> !zeus_high.fmap_desc
++    %330 = zeus_high.update_tile %329 [1, 1, %c4, %c8] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+     %331 = zeus_high.set_pos %330 [0, 0, 0, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+-    zeus_high.store %alloc_6, %arg3 desc(%331, %329) : memref<1x1x4x8xbf16>, memref<*xbf16>
+-    memref.dealloc %alloc_6 : memref<1x1x4x8xbf16>
+-    %332 = zeus_high.create_fmap_desc %arg3 {offset = 0, tensor_shape = [1, 1, %c4, %c8], tile_shape = [1, 1, 4, 8], dynamic_byte_offset = %312} : memref<*xbf16> -> !zeus_high.fmap_desc
+-    %333 = zeus_high.update_tile %332 [1, 1, %c4, %c8] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+-    %334 = zeus_high.set_pos %333 [0, 0, 0, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+-    %335 = zeus_high.update_tile %32 [1, 1, %c4, %c8] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+-    %336 = zeus_high.set_pos %335 [0, 0, 0, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+-    zeus_high.store %alloc_7, %arg3 desc(%336, %334) : memref<1x1x4x8xbf16>, memref<*xbf16>
+-    memref.dealloc %alloc_7 : memref<1x1x4x8xbf16>
+-    %337 = zeus_high.create_fmap_desc %arg3 {offset = 0, tensor_shape = [1, 1, %c4, %c8], tile_shape = [1, 1, 4, 8], dynamic_byte_offset = %320} : memref<*xbf16> -> !zeus_high.fmap_desc
+-    %338 = zeus_high.update_tile %337 [1, 1, %c4, %c8] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+-    %339 = zeus_high.set_pos %338 [0, 0, 0, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+-    %340 = zeus_high.update_tile %33 [1, 1, %c4, %c8] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+-    %341 = zeus_high.set_pos %340 [0, 0, 0, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
+-    zeus_high.store %alloc_8, %arg3 desc(%341, %339) : memref<1x1x4x8xbf16>, memref<*xbf16>
++    %332 = zeus_high.update_tile %33 [1, 1, %c4, %c8] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
++    %333 = zeus_high.set_pos %332 [0, 0, 0, 0] : !zeus_high.fmap_desc -> !zeus_high.fmap_desc
++    zeus_high.store %alloc_8, %arg3 desc(%333, %331) : memref<1x1x4x8xbf16>, memref<*xbf16>
+     memref.dealloc %alloc_8 : memref<1x1x4x8xbf16>
+     return
+   }

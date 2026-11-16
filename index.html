@@ -30,22 +30,22 @@ main{min-width:0}.eyebrow{font:11px var(--mono);letter-spacing:1.6px;color:var(-
 <aside class="sidebar" aria-label="笔记分类"><div class="sidebar-inner">
   <p class="rail-label">THE NOTEBOOK</p>
   <nav class="nav-items" aria-label="按分类筛选">
-    <button class="nav-item" data-filter="all" aria-pressed="true"><span class="nav-icon" aria-hidden="true">▦</span>全部笔记<span class="nav-count">16</span></button>
+    <button class="nav-item" data-filter="all" aria-pressed="true"><span class="nav-icon" aria-hidden="true">▦</span>全部笔记<span class="nav-count">17</span></button>
     <button class="nav-item" data-filter="deployment" aria-pressed="false"><span class="nav-icon" aria-hidden="true">◇</span>模型部署<span class="nav-count">6</span></button>
-    <button class="nav-item" data-filter="compiler" aria-pressed="false"><span class="nav-icon" aria-hidden="true">⌘</span>TritonShared<span class="nav-count">6</span></button>
+    <button class="nav-item" data-filter="compiler" aria-pressed="false"><span class="nav-icon" aria-hidden="true">⌘</span>TritonShared<span class="nav-count">7</span></button>
     <button class="nav-item" data-filter="hardware" aria-pressed="false"><span class="nav-icon" aria-hidden="true">⊞</span>Zeus518硬件<span class="nav-count">3</span></button>
     <button class="nav-item" data-filter="tools" aria-pressed="false"><span class="nav-icon" aria-hidden="true">↗</span>工具<span class="nav-count">1</span></button>
   </nav>
   <div class="rail-note"><strong>沿着数据流，理解细节。</strong><p>模型部署、编译与硬件，<br>以及解决实际问题的工具。<br>图解、源码与实践记录。</p></div>
-  <div class="rail-bottom">16 NOTES / 4 TOPICS<br>持续整理，随时查阅。</div>
+  <div class="rail-bottom">17 NOTES / 4 TOPICS<br>持续整理，随时查阅。</div>
 </div></aside>
 <main id="main">
-  <div class="intro"><div><div class="eyebrow">ENGINEERING NOTES</div><h1>技术笔记</h1><p>模型、编译、硬件与工具。把实现细节，整理成可读的笔记。</p></div><div class="intro-number"><b>16</b><span>篇笔记 · 4 个主题</span></div></div>
+  <div class="intro"><div><div class="eyebrow">ENGINEERING NOTES</div><h1>技术笔记</h1><p>模型、编译、硬件与工具。把实现细节，整理成可读的笔记。</p></div><div class="intro-number"><b>17</b><span>篇笔记 · 4 个主题</span></div></div>
   <a class="featured" href="./articles/hardware/2026-10-15-ldg-bandwidth-explained.html">
     <div class="feature-copy"><div class="feature-label"><span>深入阅读</span><span>硬件架构图解</span></div><h2><small>Zeus518硬件</small>LDG 带宽：<br>从 RTL 到 2.14 TB/s</h2><p>沿着一次权重读取，理解并行 MC、credit 与稳态供数带宽。</p><span class="read-link">阅读图解<span aria-hidden="true">↗</span></span></div>
     <div class="feature-visual" aria-hidden="true"><div class="visual-label">WEIGHT DATA PATH</div><div class="bandwidth">2.14<span>TB/s</span></div><div class="visual-caption">设计稳态估算 · 每核 · 400 MHz</div><div class="visual-flow"><b>DRAM</b><span>→</span><b>WL1</b><span>→</span><b>PE</b></div><div class="visual-foot">256 MC · 15 credits · 23 cycles</div></div>
   </a>
-  <div class="toolbar"><div class="results-title">文章目录<span id="result-count" role="status" aria-live="polite">16 篇</span></div><label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><span class="sr-only">搜索笔记</span><input id="search" type="search" placeholder="搜索标题、关键词…" autocomplete="off"></label></div>
+  <div class="toolbar"><div class="results-title">文章目录<span id="result-count" role="status" aria-live="polite">17 篇</span></div><label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><span class="sr-only">搜索笔记</span><input id="search" type="search" placeholder="搜索标题、关键词…" autocomplete="off"></label></div>
   <noscript><p>全部文章可直接阅读；分类筛选与搜索需要启用 JavaScript。</p></noscript>
   <div id="articles"><section class="category" data-category="deployment" aria-labelledby="heading-deployment">
   <div class="section-heading"><div><span class="section-index">01</span><h2 id="heading-deployment">模型部署</h2><span class="section-count">06</span></div><p>按模型梳理数据流、并行策略与性能方案，保留可核对的验证边界。</p></div>
@@ -76,8 +76,12 @@ main{min-width:0}.eyebrow{font:11px var(--mono);letter-spacing:1.6px;color:var(-
 </article></div>
 </section>
 <section class="category" data-category="compiler" aria-labelledby="heading-compiler">
-  <div class="section-heading"><div><span class="section-index">02</span><h2 id="heading-compiler">编译与算子</h2><span class="section-count">06</span></div><p>从 IR 变换到 kernel 实现，沿着编译管线理解优化。</p></div>
-  <div class="note-list"><article class="note" data-search="TritonShared - Sigmoid 与 SiLU：拟合算法、Lowering 与真实指令 对照 fast、balanced、accurate、cascade_add 与直接 SiLU 拟合，沿着系数、VP 配方和 12 组真实机器码，核对精度与代价。 Sigmoid SiLU LUT VP 数值精度">
+  <div class="section-heading"><div><span class="section-index">02</span><h2 id="heading-compiler">编译与算子</h2><span class="section-count">07</span></div><p>从 IR 变换到 kernel 实现，沿着编译管线理解优化。</p></div>
+  <div class="note-list"><article class="note" data-search="TritonShared - StreamTopKGather：让 TopK、Gather 与 VP 交错执行 用 GLM5.3Flash Router 的真实编译与双核 CycleSim trace，解释前缀快照、VP 波次交错和末组排空；附逐指令交互图与 752 cycles 的实测分账。 Compiler Pass TopK Gather VP Router CycleSim">
+  <div class="note-main"><h3><a href="./articles/compiler/2026-11-16-stream-topk-gather.html">TritonShared - StreamTopKGather：让 TopK、Gather 与 VP 交错执行</a></h3>
+  <p>用 GLM5.3Flash Router 的真实编译与双核 CycleSim trace，解释前缀快照、VP 波次交错和末组排空；附逐指令交互图与 752 cycles 的实测分账。</p><div class="tags"><span>Compiler Pass</span><span>TopK</span><span>Gather</span><span>VP</span><span>Router</span><span>CycleSim</span></div></div>
+  <div class="note-meta"><time datetime="2026-11-16">2026-11-16</time><span aria-hidden="true" class="arrow">↗</span></div>
+</article><article class="note" data-search="TritonShared - Sigmoid 与 SiLU：拟合算法、Lowering 与真实指令 对照 fast、balanced、accurate、cascade_add 与直接 SiLU 拟合，沿着系数、VP 配方和 12 组真实机器码，核对精度与代价。 Sigmoid SiLU LUT VP 数值精度">
   <div class="note-main"><h3><a href="./articles/compiler/2026-10-30-sigmoid-silu-fitting.html">TritonShared - Sigmoid 与 SiLU：拟合算法、Lowering 与真实指令</a></h3>
   <p>对照 fast、balanced、accurate、cascade_add 与直接 SiLU 拟合，沿着系数、VP 配方和 12 组真实机器码，核对精度与代价。</p><div class="tags"><span>Sigmoid</span><span>SiLU</span><span>LUT</span><span>VP</span><span>数值精度</span></div></div>
   <div class="note-meta"><time datetime="2026-10-30">2026-10-30</time><span aria-hidden="true" class="arrow">↗</span></div>

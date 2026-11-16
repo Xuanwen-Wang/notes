@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="用 GLM5.3Flash Router 的真实编译与双核 CycleSim trace，解释 StreamTopKGather 的前缀快照、波次交错、末组排空，以及 752 cycles 的实测收益。">
+<meta name="theme-color" content="#213e45">
+<title>TritonShared - StreamTopKGather：让 TopK、Gather 与 VP 交错执行</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='9' fill='%23213e45'/%3E%3Cpath d='M8 12h16M16 20h16M8 28h16' stroke='%23edbf83' stroke-width='4'/%3E%3C/svg%3E">
+<style>
+:root{--ink:#213e45;--muted:#65777a;--paper:#fcfcf8;--line:#dbe3de;--green:#23715e;--blue:#377ca2;--red:#bd4b52;--gold:#b57632}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:25px}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.85 system-ui,-apple-system,"Segoe UI","Noto Sans CJK SC","Microsoft YaHei",sans-serif}a{color:var(--green);text-underline-offset:4px}a:hover{color:var(--gold)}.layout{max-width:1490px;margin:auto;display:grid;grid-template-columns:215px minmax(0,1120px);gap:46px;padding:0 32px}.rail{position:sticky;top:0;height:100vh;overflow:auto;padding:40px 15px 40px 0;border-right:1px solid var(--line)}.rail nav{margin-top:36px}.rail nav a{display:block;text-decoration:none;font-size:13px;padding:9px;color:var(--muted);border-radius:5px}.rail nav a:hover{background:#e9f0e9;color:var(--ink)}.rail .note{font-size:12px;margin-top:30px}main{min-width:0;padding:50px 0 80px}.eyebrow{color:var(--gold);font:12px ui-monospace,monospace;letter-spacing:.15em}h1{font-size:45px;line-height:1.28;letter-spacing:-.04em;margin:22px 0}h1 span{color:var(--green)}.intro{font-size:19px;color:var(--muted);max-width:850px}.pills{display:flex;gap:9px;flex-wrap:wrap;margin:22px 0}.pills span{font-size:12px;border:1px solid var(--line);border-radius:20px;padding:4px 12px;background:white}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;border-radius:12px;background:var(--ink);color:white;padding:25px 30px;margin:28px 0}.metrics strong{display:block;font:34px ui-monospace,monospace}.metrics small{color:#c7d8d8;font-size:13px}.section{padding:43px 0;border-bottom:1px solid var(--line)}h2{font-size:28px;line-height:1.4;margin:0 0 20px}h2 small{font:12px ui-monospace,monospace;color:var(--gold);display:block;margin-bottom:9px}h3{font-size:20px;margin:30px 0 12px}p{margin:14px 0}.note,figcaption{font-size:13px;color:var(--muted);line-height:1.8}.callout{background:#edf3ed;border-left:3px solid var(--green);padding:18px 22px;border-radius:0 7px 7px 0;margin:22px 0}.callout.warm{background:#f7efe4;border-color:var(--gold)}code{font:13px/1.7 ui-monospace,"SFMono-Regular",Consolas,monospace;background:#eaf0ec;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}pre{background:#193038;color:#e3eeea;padding:22px;border-radius:9px;overflow:auto;font:12px/1.8 ui-monospace,Consolas,monospace}pre code{background:transparent;color:inherit;padding:0;white-space:pre;overflow-wrap:normal;font:inherit}.cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:22px 0}.card{padding:21px;border:1px solid var(--line);background:white;border-radius:9px}.card h3{margin:0 0 9px}.card p{margin:0;font-size:14px}.table-scroll{overflow:auto;margin:22px 0;border:1px solid var(--line);border-radius:8px}table{border-collapse:collapse;width:100%;font-size:13px;line-height:1.7}th,td{padding:12px 15px;text-align:left;border-bottom:1px solid var(--line)}th{background:#ecf1ed;white-space:nowrap}tbody tr:last-child td{border:0}figure{margin:26px 0}figure img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:8px;background:white}figcaption{margin-top:12px}.figlabel{color:var(--gold);font-weight:700;margin-right:8px}.diagram{width:100%;height:auto;display:block;background:#fff;border:1px solid var(--line);border-radius:10px}.svg-wrap{overflow:auto}.svg-wrap svg{min-width:740px}.diagram text{font-family:system-ui,"Microsoft YaHei",sans-serif;fill:var(--ink)}.code-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.code-grid>div{min-width:0}.controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:15px;background:#edf2ee;border:1px solid var(--line);border-bottom:0;border-radius:9px 9px 0 0}button,select{font:inherit;font-size:13px;padding:8px 12px;color:var(--ink);background:white;border:1px solid #bdccc4;border-radius:6px}button{cursor:pointer}button:hover{background:#e0ece4}:focus-visible{outline:3px solid var(--gold);outline-offset:3px}#explorer{background:#fff;border:1px solid var(--line);overflow:auto}#explorer svg{display:block;min-width:830px;width:100%}#eventDetail{font:13px/1.8 ui-monospace,Consolas,monospace;border:1px solid var(--line);border-top:0;padding:16px;min-height:100px;border-radius:0 0 9px 9px;background:#f2f5f1;overflow-wrap:anywhere}.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;margin:12px 0}.legend i{display:inline-block;width:11px;height:11px;margin-right:6px;border-radius:2px}.downloads{display:flex;gap:12px;flex-wrap:wrap}.downloads a{font-size:13px;padding:9px 13px;border:1px solid var(--line);border-radius:6px;background:white}details{border:1px solid var(--line);border-radius:8px;padding:15px;margin:18px 0}summary{cursor:pointer;font-weight:600}.hashes{font:11px/1.8 ui-monospace,Consolas,monospace;overflow-wrap:anywhere}footer{padding:30px 0;color:var(--muted);font-size:13px}@media(max-width:1050px){.layout{display:block;padding:0 24px;max-width:950px}.rail{position:static;height:auto;padding:20px 0;border:0}.rail nav,.rail .note{display:none}main{padding-top:12px}h1{font-size:37px}}@media(max-width:600px){.layout{padding:0 17px}h1{font-size:30px}.intro{font-size:16px}.metrics{padding:20px 17px;gap:12px}.metrics strong{font-size:23px}.metrics small{font-size:11px}.cards,.code-grid{grid-template-columns:1fr}.section{padding:33px 0}h2{font-size:24px}th,td{padding:10px}pre{padding:15px;font-size:11px}}@media print{.rail,.controls,#explorer,#eventDetail,.legend,.downloads{display:none}.layout{display:block;max-width:none;padding:0}main{padding:0}body{font-size:11pt;background:white}h1{font-size:28pt}.section{break-inside:auto}figure,.card,table{break-inside:avoid}a{color:inherit}pre{white-space:pre-wrap;background:#f1f3ef;color:#172c31}.metrics{background:#edf2ed;color:#172c31}.metrics small{color:#52676d}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="rail"><a href="../../index.html">← 技术笔记 / 编译器</a><nav aria-label="文章目录">
+<a href="#result">01 · 实测结果与边界</a><a href="#problem">02 · Router 为什么需要 Gather</a><a href="#mechanism">03 · 前缀快照与分段发布</a><a href="#policy">04 · 开关改变了什么</a><a href="#timeline">05 · 亲自看实际时间轴</a><a href="#a-frontier">06 · A → B：让下一组提前</a><a href="#b-frontier">07 · B → C：上一组也能重叠</a><a href="#terminal">08 · 末组为何不拆</a><a href="#cycles">09 · 752 cycles 从哪来</a><a href="#safety">10 · 正确性与准入</a><a href="#evidence">11 · 源码、数据与复现</a>
+</nav><p class="note">2026-11-16<br>真实 Router 编译<br>双核 CycleSim 完整数值运行<br>静态顺序 × 动态时间轴</p></aside>
+<main>
+<div class="eyebrow">TRITON SHARED / COMPILER PASS STUDY</div>
+<h1>StreamTopKGather<br><span>让 TopK、Gather 与 VP<br>在同一条流水中交错</span></h1>
+<p class="intro">TopK 已经够快，为什么 Router 还会停下来？瓶颈的一部分藏在 CT 取分数、VP 等下一批指令的交界。这个 pass 通过“提前发布一半结果 + 按完整 VP 波次穿插 Gather”，把可以并行的工作接起来。</p>
+<div class="pills"><span>GLM5.3Flash Router</span><span>T24 · E288 · H4096 · K8</span><span>2 cores · 4 VP / core</span><span>CycleSim · full numerical</span></div>
+<div class="metrics"><div><strong>−752</strong><small>慢核节省 cycles</small></div><div><strong>−6.63%</strong><small>11,338 → 10,586</small></div><div><strong>逐位一致</strong><small>192 个权重与 192 个专家 ID</small></div></div>
+<section class="section" id="result">
+<h2><small>01 / RESULT</small>先看这次真实跑出来的结果</h2>
+<p>对同一份生产 Router 源码生成 TTIR，使用同一个编译器二进制编译两次。两组共同开启 <code>--inject-sync-verify-vp-out-of-place</code>，唯一变化是 <code>--stream-topk-gather-wave-overlap</code>。随后直接组装这两份实际汇编，使用相同地址、相同输入与同一个 CycleSim 二进制运行双核 case；没有手改指令。</p>
+<figure><img src="../../assets/compiler/20261116-stream-topk-gather/latency.svg" alt="两核延迟对比：core0从11122降到10370，core1从11338降到10586 cycles"><figcaption><span class="figlabel">图 1 · 实测</span>指标为 <code>max(core0 cycles, core1 cycles)</code>。固定工作量下相当于约 1.071× kernel 吞吐；这里只测独立 Router，不代表 MoE 或完整模型吞吐。</figcaption></figure>
+<div class="callout"><strong>本页对比的是 wave-overlap OFF / ON，不是整个 StreamTopKGather pass 的有 / 无。</strong>在这条 ParallelExecutor pipeline 中，OFF 也会执行基础流式拆分；ON 在此基础上改变 Gather 的插入点，并让末组回到完整 Gather。这个区别决定了如何解释性能差值。</div>
+<p class="note">输入是固定 seed=300802 的合成 fixture：先生成 32 行 hidden，再生成 gate 和 bias，取前 24 行；不是模型录制激活。BF16 输入 / 权重，FP32 bias，输出缩放 2.5，关闭 transport、ID remap、calibrated sigmoid 与 Shared 融合。每个版本实跑一次、各含双核；两核正常结束、引擎失败为 0、mailbox 清空、trace 未截断。没有新跑 RTL/VCS、板卡或整模。</p>
+</section>
+<section class="section" id="problem">
+<h2><small>02 / PROBLEM</small>TopK 选的是带 bias 的分数，归一化用的却是原分数</h2>
+<p>每个 token 先计算 Router projection，再经过 sigmoid。选择专家时加上纠偏 bias；输出路由权重时，用选中的专家 ID 回查未加 bias 的 sigmoid 分数，然后归一化。因此 <code>TopK → Gather</code> 是真实的数据依赖，不能把 TopK 输出的 biased value 直接当最终权重。</p>
+<figure class="svg-wrap"><svg class="diagram" viewBox="0 0 1040 282" role="img" aria-labelledby="flow-title"><title id="flow-title">Router 数据流：PE生成logits，VP sigmoid分成原始分数与加bias的选择分支，TopK索引驱动CT Gather，最终VP归一化</title><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10" fill="#7a9492"/></marker></defs>
+<g fill="none" stroke="#7a9492" stroke-width="2" marker-end="url(#arrow)"><path d="M180 130H217"/><path d="M387 130H425"/><path d="M600 130H637"/><path d="M807 130H845"/><path d="M302 99V48H724V99"/><path d="M930 165V210H723"/></g>
+<rect x="20" y="100" width="160" height="65" rx="9" fill="#ece7f2"/><text x="100" y="127" text-anchor="middle" font-size="17">PE：X × Wᵀ</text><text x="100" y="151" text-anchor="middle" font-size="12">FP32 累加 → BF16 logits</text>
+<rect x="217" y="100" width="170" height="65" rx="9" fill="#e4eff6"/><text x="302" y="127" text-anchor="middle" font-size="17">VP：sigmoid</text><text x="302" y="151" text-anchor="middle" font-size="12">s = sigmoid(logits)</text>
+<rect x="425" y="100" width="175" height="65" rx="9" fill="#f3e8d6"/><text x="512" y="127" text-anchor="middle" font-size="17">VP：bias + TopK</text><text x="512" y="151" text-anchor="middle" font-size="12">I = topk(s + bias, 8)</text>
+<rect x="637" y="100" width="170" height="65" rx="9" fill="#f8e8e7"/><text x="722" y="127" text-anchor="middle" font-size="17">CT：Gather</text><text x="722" y="151" text-anchor="middle" font-size="12">r = s[I]</text>
+<rect x="845" y="100" width="175" height="65" rx="9" fill="#e5f0e8"/><text x="932" y="127" text-anchor="middle" font-size="17">VP：归一化</text><text x="932" y="151" text-anchor="middle" font-size="12">r / sum(r) × 2.5</text>
+<text x="510" y="38" text-anchor="middle" font-size="13">未加 bias 的原始分数 s</text><text x="618" y="89" text-anchor="middle" font-size="12">专家 ID</text><text x="721" y="235" font-size="13" text-anchor="middle">ST：写回 BF16 权重 + INT32 ID</text><text x="20" y="268" font-size="12">原理图，不按 cycle 比例绘制。TopK 属于 VP 工作；Gather 在本例降低为 CT 标量寻址与读写。</text>
+</svg><figcaption><span class="figlabel">图 2 · 原理</span>核心矛盾：VP 执行异步向量指令，Gather 占用 CT 发射路径。连续做完多个 Gather 后才发下一批 VP，会在引擎之间留下空档。</figcaption></figure>
+<p>这里的 Gather 不是又启动一个向量 Gather 引擎。实际汇编先把 TopK packet 的索引搬入 VReg，再逐项提取 ID、乘 4 算地址、读 FP32 score，最后写回结果 VReg。它既要等索引就绪，又会让后面的 VP 指令暂时拿不到发射机会。</p>
+<pre><code>// 实际 ON 汇编 L634 起；展示第一个索引，后续再处理 17、18、19。
+CT_VMOV_VR_[RR:R] VRx[2] RRa[15] Rb[26]      // read prefix packet
+CT_VMOVM_R_VR[I] Rx[26] VRa[2] Imme[16]     // expert ID 0
+CT_MULU_R_R_I Rx[26] Ra[26] Imme[4]         // FP32 byte offset
+CT_ADD_R_R_I Rx[26] Ra[26] Imme[116416]     // source score row
+CT_MOV_R_[R] Rx[26] Ra[26]                  // load original score
+CT_VMOVM_VR[I]_R VRx[2] Ra[26] Imme[0]     // output slot 0
+// ... indices 17, 18, 19 ...
+CT_VMOV_[RR:R]_VR ...                       // store gathered prefix</code></pre>
+</section>
+<section class="section" id="mechanism">
+<h2><small>03 / MECHANISM</small>先保存前 4 个赢家，让后 4 步继续</h2>
+<p>原生 TopK=8 展开为 8 条 <code>topk_step</code>。同一个 lane 的各步沿 Mask RAM 状态继续选下一个赢家；最终一步发布结果并释放状态。StreamTopKGather 在第 4 步（ordinal=3）额外发布一份私有快照，但不清掉 Mask RAM，因此第 5～8 步仍继续原来的 recurrence。</p>
+<figure class="svg-wrap"><svg class="diagram" viewBox="0 0 1040 310" role="img" aria-labelledby="packet-title"><title id="packet-title">TopK八步在step3发布私有prefix packet但不重置Mask RAM；step7发布最终packet并释放状态，Gather分读前四和后四</title>
+<text x="24" y="34" font-size="17" font-weight="700">一条 lane：计算仍是 8 步，改变的是“何时发布可用结果”</text>
+<g fill="#f3e8d6" stroke="#d1af7c"><rect x="24" y="62" width="106" height="48" rx="7"/><rect x="146" y="62" width="106" height="48" rx="7"/><rect x="268" y="62" width="106" height="48" rx="7"/><rect x="390" y="62" width="106" height="48" rx="7"/><rect x="512" y="62" width="106" height="48" rx="7"/><rect x="634" y="62" width="106" height="48" rx="7"/><rect x="756" y="62" width="106" height="48" rx="7"/><rect x="878" y="62" width="136" height="48" rx="7"/></g>
+<g text-anchor="middle" font-size="15"><text x="77" y="92">step 0</text><text x="199" y="92">step 1</text><text x="321" y="92">step 2</text><text x="443" y="92">step 3</text><text x="565" y="92">step 4</text><text x="687" y="92">step 5</text><text x="809" y="92">step 6</text><text x="946" y="92">step 7</text></g>
+<g fill="none" stroke="#7a9492" stroke-width="2" marker-end="url(#arrow)"><path d="M130 86H144"/><path d="M252 86H266"/><path d="M374 86H388"/><path d="M496 86H510"/><path d="M618 86H632"/><path d="M740 86H754"/><path d="M862 86H876"/><path d="M443 110V158"/><path d="M946 110V158"/></g>
+<rect x="295" y="160" width="297" height="65" rx="8" fill="#f9e7e5"/><text x="443" y="184" text-anchor="middle" font-size="14">私有 prefix packet：赢家 [0,4)</text><text x="443" y="209" text-anchor="middle" font-size="13">TKVO=1 · MSKRC=0（继续状态）</text>
+<rect x="715" y="160" width="300" height="65" rx="8" fill="#e5efe7"/><text x="865" y="184" text-anchor="middle" font-size="14">最终 packet：赢家 [0,8)</text><text x="865" y="209" text-anchor="middle" font-size="13">TKVO=1 · MSKRC=1（最终释放）</text>
+<text x="443" y="251" text-anchor="middle" font-size="14">CT Gather [0,4) 可使用早到的快照</text><text x="865" y="251" text-anchor="middle" font-size="14">原 Gather 缩为 [4,8)，保留前半结果</text><text x="24" y="289" font-size="12">packet 有 16 个 value 槽 + 16 个 index 槽；索引区偏移 64 bytes。新增独立 packet，不复用输入作 scratch。</text>
+</svg><figcaption><span class="figlabel">图 3 · 原理</span>这是结果发布与消费的流水化，不是把 TopK 改成近似算法，也不是 GPU stream。图中箭头表示依赖；实际开始时间请看后面的 trace。</figcaption></figure>
+<p>pass 将原来的 <code>Gather(K=8)</code> 分成 <code>Gather(K=4, offset=0)</code> 与 <code>Gather(K=4, offset=4)</code>。前半段使用新快照，后半段仍使用最终 packet。后半段写回保持 RMW（read-modify-write）语义，避免覆盖已经写好的前半段。</p>
+<div class="callout warm">IR 中前缀 Gather 的插入点在这一组最后一条 TopK <em>发射指令</em>之后；这不表示它必须等全部 TopK 执行完。早到的 step 3 快照让 CT 能与尚在执行的 TopK 尾部重叠。发射顺序与异步完成顺序必须分开看。</div>
+</section>
+<section class="section" id="policy">
+<h2><small>04 / POLICY</small>ON 同时启用两项策略：穿插完整波次，跳过末组拆分</h2>
+<p>T24 在本例分给两个 core，每核 12 个 token，再按 4 行分为 A、B、C 三组。一个 wave 是一条相同阶段的 VP 操作在 lane0～3 上各发射一次。pass 只在完整波次之后插 Gather，不把 CT 工作插到半个四-lane 波次中。</p>
+<div class="table-scroll"><table><thead><tr><th>层级</th><th>A / B 组</th><th>C 末组</th></tr></thead><tbody>
+<tr><td>StreamTopKGather 改写前</td><td>只在末步发布；Gather 8</td><td>Gather 8</td></tr>
+<tr><td>本次 OFF：基础流式方案</td><td>step3 多发布；四个 prefix Gather 连续插入</td><td>仍拆成 4 + 4</td></tr>
+<tr><td>本次 ON：wave-overlap</td><td>完整 VP wave → 一个 prefix Gather，交错推进</td><td>没有合格预取后继，保留 Gather 8</td></tr>
+</tbody></table></div>
+<div class="code-grid"><div><h3>OFF 的 A → B 静态顺序</h3><pre><code>issue A.TopK step0..7, all lanes
+Gather A0 prefix
+Gather A1 prefix
+Gather A2 prefix
+Gather A3 prefix
+B.sigmoid wave0, lanes0..3
+B.sigmoid wave1, lanes0..3
+B.sigmoid wave2, lanes0..3
+B.sigmoid wave3, lanes0..3
+...
+B.TopK step0, step1
+Gather A suffix, all lanes
+B.TopK step2..7</code></pre></div><div><h3>ON 的 A → B 静态顺序</h3><pre><code>issue A.TopK step0..7, all lanes
+B.sigmoid wave0, lanes0..3
+Gather A0 prefix
+B.sigmoid wave1, lanes0..3
+Gather A1 prefix
+B.sigmoid wave2, lanes0..3
+Gather A2 prefix
+B.sigmoid wave3, lanes0..3
+Gather A3 prefix
+...
+B.TopK step0, step1
+Gather A suffix, all lanes
+B.TopK step2..7</code></pre></div></div>
+<p class="note">以上是从实际 IR / 汇编抽出的调度示意，省略配置、地址计算和 MAIL。两组共同保留 <code>gather-vp-prefetch-waves=2</code>：下一组 TopK 的前两步会早于上一组 suffix Gather。这个已有机制不能再算作 wave-overlap 开关的新功能。</p>
+<p>同样不能理解为“Gather A0 必须配 B0”。A0/A1/A2/A3 是被回收分数的行；每个完整波次都向四个 VP lane 发指令。pass 维持原有 VP 操作与状态操作的相对顺序，只安排新增 prefix Gather 的位置。</p>
+</section>
+<section class="section" id="timeline">
+<h2><small>05 / TRACE EXPLORER</small>从完整 trace 看，再逐段放大</h2>
+<p>下图是这次运行的实际事件。默认展示慢核 core1，可切换 core0。鼠标悬停、点击或键盘聚焦色块，查看 native cycle、组 / lane、TopK step、Gather 范围及对应汇编行。上下两图使用同一时间原点和比例。</p>
+<div class="controls"><label>Core <select id="coreSelect"><option value="core1">core1 · 慢核</option><option value="core0">core0</option></select></label><label>窗口 <select id="windowSelect"><option value="full">全程</option><option value="a">A → B</option><option value="b">B → C</option><option value="c">末组 C</option></select></label><button type="button" id="exportSvg">导出当前 SVG</button></div>
+<div id="explorer" aria-label="开关前后实际指令时间轴"></div><div id="eventDetail" aria-live="polite">加载实际时间轴。下方静态图和表格也可独立阅读。</div>
+<div class="legend"><span><i style="background:#b57632"></i>TopK</span><span><i style="background:#377ca2"></i>sigmoid / PRG</span><span><i style="background:#528c6c"></i>归一化</span><span><i style="background:#bd4b52"></i>CT Gather 窗口</span></div>
+<p class="note">时间轴统一使用 native launch cycle。VP 条形为命令 start→done，命令流水区间允许重叠；每个 VP 的细分轨只用于避免遮挡，不能当作更多硬件实例。1200 条动态 VP 记录的 instance 已全部与编译器 lane 对齐。CT Gather 条形为第一条 CT 指令呈现到最终写回 resolved_at 的<strong>执行窗口</strong>，包括间隙 / 等待，不是 CT ALU busy。仅突出 Gather，省略其他 CT 指令。</p>
+<noscript><p class="callout">JavaScript 已关闭。下方仍提供完整静态时序图、数据表与原始数据下载。</p></noscript>
+<figure><img src="../../assets/compiler/20261116-stream-topk-gather/timeline-full.svg" alt="开关前后从0开始的双版本全程时序，含LD PE VP0到VP3 CT Gather与ST" loading="lazy"><figcaption><span class="figlabel">图 4 · 实测全程</span>原始命令数：每核 300 条 VP、3 条 PE、20 条 LD、6 条 ST，前后相同。变化集中在 CT / VP 的交界和最后一组 Gather；并未少算 projection 或少选专家。</figcaption></figure>
+</section>
+<section class="section" id="a-frontier">
+<h2><small>06 / A → B</small>下一组 sigmoid 提前 314 cycles，首个 Gather 自己却没提前</h2>
+<figure><img src="../../assets/compiler/20261116-stream-topk-gather/timeline-a.svg" alt="A到B局部时序：A的TopK不变，开启后B sigmoid与A后几个prefix Gather重叠" loading="lazy"><figcaption><span class="figlabel">图 5 · 实测 [3650,4950]</span>A.3 / A.7 表示第 4 / 8 步。A0:0+4 表示 A 组 lane0 的前 4 个 Gather。左侧 PE 条形在窗口前已经开始，裁切边不是它的起点。</figcaption></figure>
+<div class="table-scroll"><table><thead><tr><th>core1 事件</th><th>OFF cycles</th><th>ON cycles</th><th>观察</th></tr></thead><tbody>
+<tr><td>A0 step3 完成</td><td>3945</td><td>3945</td><td>前缀 packet 已可读</td></tr><tr><td>A0 prefix Gather</td><td>3949–4031</td><td>3949–4031</td><td>两组完全相同，覆盖 A0 后续 TopK 尾部</td></tr>
+<tr><td>A 所有 TopK 完成</td><td>4074</td><td>4074</td><td>TopK 本身没有变快</td></tr>
+<tr><td>A1 prefix Gather</td><td>4047–4129</td><td>4073–4155</td><td>ON 中与 B0 sigmoid 的 4099–4173 重叠 56 cycles</td></tr>
+<tr><td>B 首条 sigmoid 开始</td><td>4413</td><td>4099</td><td>提前 314</td></tr><tr><td>B TopK 开始</td><td>6069</td><td>5755</td><td>提前量保留为 314</td></tr>
+</tbody></table></div>
+<p>OFF 中 A 最后一条 TopK 完成后，异步引擎要到 4413 才接上下一段 VP，出现 339 cycles 的空档。ON 将这一段缩为 25 cycles。不是把 CT 的所有工作都消掉，而是让 CT 做后几个 Gather 时，VP 已有下一组 sigmoid 可执行。</p>
+<p><strong>静态发射提前不保证每条动态执行都紧跟。</strong>ON 第一波 B VP 指令在首个 Gather 之前发射，但 B0 真正开始于 4099，已经晚于 A0 Gather 结束的 4031。因此第一块 Gather 主要遮住 A 的 TopK 尾部，第二块以后才逐渐遮住 B 的工作。</p>
+<details><summary>对照实际 IR 与汇编位置</summary><div class="table-scroll"><table><thead><tr><th>操作</th><th>OFF：IR / ASM 行</th><th>ON：IR / ASM 行</th></tr></thead><tbody><tr><td>A0 prefix Gather</td><td>349 / 597–619</td><td>391 / 634–656</td></tr><tr><td>B sigmoid wave0</td><td>405–408 / 731、733、735、737</td><td>385–388 / 623、625、627、629</td></tr><tr><td>A1 prefix Gather</td><td>354 / 624–646</td><td>408 / 672–694</td></tr><tr><td>B sigmoid wave1</td><td>417–420 / 742、744、746、748</td><td>402–405 / 661、663、665、667</td></tr></tbody></table></div><p class="note">IR 行号取本次 <code>after-stream.mlir</code>；ASM 行号对应下载的 <code>off.S / on.S</code>，包含元数据行。</p></details>
+</section>
+<section class="section" id="b-frontier">
+<h2><small>07 / B → C</small>拿来重叠的，也可以是上一组的归一化</h2>
+<p>B 的前缀 Gather 前面，已有 A 的归一化以及 C 的分数准备。ON 依次利用这些完整波次：<strong>A rsqrt → Gather B0；A square → Gather B1；A normalize / scale → Gather B2；C sigmoid 第一波 → Gather B3。</strong></p>
+<figure><img src="../../assets/compiler/20261116-stream-topk-gather/timeline-b.svg" alt="B到C局部时序：A rsqrt square normalize与B prefix Gather交错，C sigmoid被提前" loading="lazy"><figcaption><span class="figlabel">图 6 · 实测 [5500,7450]</span>绿色是 A 的归一化，红色是 B 的 prefix Gather，蓝色随后进入 C 的 sigmoid。与其笼统地说“下一组盖住上一组”，不如直接按依赖识别哪一项工作已就绪。</figcaption></figure>
+<p>OFF 的 B TopK 全组完成于 6438，A rsqrt 要等到 6796 才开始，间隔 358 cycles。ON 的 A rsqrt 已在 6079 开始，而 B TopK 尾部到 6124 才完全结束；这两者的执行区间发生重叠。这里也不是删除 B 的数据依赖：A 的归一化只依赖 A 已经 Gather 出来的分数。</p>
+<p>C TopK 的首条开始从 8796 前移到 8212，累计领先 <strong>584 cycles</strong>。相比进入 B TopK 时的 314，又净增加 270；但不同局部操作的提前量不相同，例如 C sigmoid 首条提前 671，经过其余分数准备后只保留 584。</p>
+</section>
+<section class="section" id="terminal">
+<h2><small>08 / TERMINAL GROUP</small>没有可预取的后继，就不额外拆最后一组</h2>
+<p>分成两段有固定成本：多发一次 TopK packet、多一次 Gather 的索引装载与结果写回，suffix 还要保留已有数据。如果缺少可用的后继流水，早取一半未必值得。ON 要求识别到合格的 prefetched successor；本例 C 不满足，因此保持一次 Gather 8。</p>
+<figure><img src="../../assets/compiler/20261116-stream-topk-gather/timeline-c.svg" alt="末组C对比：OFF四加四Gather，ON每行完整Gather8，归一化和输出收尾不同" loading="lazy"><figcaption><span class="figlabel">图 7 · 实测 [8150,10550]</span>ON 红色 C0:0+8 是完整 Gather；OFF 则是四个 prefix 和四个 suffix。ON 某些局部工作延后汇合，因此不能把“某个 rsqrt 提前 987”当成 kernel 总收益。</figcaption></figure>
+<div class="table-scroll"><table><thead><tr><th>每核公共体</th><th>OFF</th><th>ON</th></tr></thead><tbody><tr><td>TopK step / VP 总指令</td><td>96 / 300</td><td>96 / 300</td></tr><tr><td>中途发布 packet（TKVO=1, MSKRC=0）</td><td>12 次</td><td>8 次</td></tr><tr><td>Gather</td><td>24 × K4</td><td>16 × K4 + 4 × K8</td></tr><tr><td>Gather 中标量 score load</td><td>96 次</td><td>96 次</td></tr><tr><td>整份公共汇编 CT VReg load / store</td><td>37 / 24</td><td>29 / 20</td></tr><tr><td>core1 动态 CT 指令</td><td>1367</td><td>1322</td></tr></tbody></table></div>
+<p>实际 C lane0 的 step3，OFF 在 <code>CGPM=230</code> 中设置 TKVO；ON 是 <code>CGPM=198</code>，仅清掉 bit5 的提前发布。最终 step7 两组仍是 <code>CGPM=239</code>，TKVO 与 MSKRC 都为 1。TopK 选择次数不变，读取的 96 个原始分数也没少；节省的是发布、搬运和排程开销。</p>
+</section>
+<section class="section" id="cycles">
+<h2><small>09 / CYCLE ACCOUNTING</small>752 cycles 可以对账，但不能把重叠面积当成可相加的收益</h2>
+<figure><img src="../../assets/compiler/20261116-stream-topk-gather/checkpoints.svg" alt="各里程碑提前量：0、314、314、584、987、752、752 cycles" loading="lazy"><figcaption><span class="figlabel">图 8 · 实测里程碑</span>“领先量”是同一语义事件 OFF 时间减 ON 时间。前移的消费者、增加的交错和最终收尾共同决定曲线；它不是独立 pass 的因果分解。</figcaption></figure>
+<div class="table-scroll"><table><thead><tr><th>core1 时间段（native cycle）</th><th>OFF 时长</th><th>ON 时长</th><th>净变化</th></tr></thead><tbody><tr><td>起点 → B TopK 开始</td><td>6069</td><td>5755</td><td>−314</td></tr><tr><td>B TopK 开始 → C TopK 开始</td><td>2727</td><td>2457</td><td>−270</td></tr><tr><td>C TopK 开始 → kernel 完成</td><td>2542</td><td>2374</td><td>−168</td></tr><tr><td><strong>合计</strong></td><td><strong>11338</strong></td><td><strong>10586</strong></td><td><strong>−752</strong></td></tr></tbody></table></div>
+<p>这张表是互不重叠的时间段分账，可以相加；它并未分别关掉“波次穿插”和“末组排空”做额外实验，因此不能把最后的 168 cycles 全部归给某一条末组指令优化。</p>
+<figure><img src="../../assets/compiler/20261116-stream-topk-gather/occupancy.svg" alt="异步引擎忙碌区间并集OFF9906 ON10041，全部无活动区间OFF1244 ON357 cycles" loading="lazy"><figcaption><span class="figlabel">图 9 · Report 区间并集</span>以 LD / PE / VP / ST 命令区间的并集定义“至少一个异步引擎活动”。不计 CT 推导时长与 MAIL 等待，也不把不同单元 busy 简单相加。异步空档少 887，活动区间并集多 135，净跨度少 752。</figcaption></figure>
+<p class="note">这里“异步引擎均无活动”不等于整芯片闲置，CT 仍可能在工作。core1 的 Report 窗口是从首次观测 CT 的 186 到最后事件 11336 / 10584，因此跨度为 11150 / 10398；native launch 总计还有前后共 188 cycles。两种口径的差值都是 752，不混用它们的绝对值或百分比分母。记录的 core period 为 2.5 ns；这只是本次模拟配置。</p>
+</section>
+<section class="section" id="safety">
+<h2><small>10 / SAFETY</small>它不是看到 TopK 后面有 Gather 就直接搬</h2>
+<div class="cards"><div class="card"><h3>识别完整 native recurrence</h3><p>需要原生 TopK 的完整 step、合法 packet / indices 关系、已放置的至少两条独立 lane；前半 Gather 大小满足 lowering 条件，K 不超过 packet 的 16 个 value 槽。不是按 kernel 名字写死。</p></div><div class="card"><h3>证明源与目标的使用边界</h3><p>closed-row 检查确认源数据在可移动区间内不被改写，目标在原 Gather 前没有外部观察者。创建独立 prefix packet；目标只按逻辑 ordinal 切 subview，suffix 保留 RMW。</p></div><div class="card"><h3>不打断 TopK 状态链</h3><p>寻找完整放置的 VP 波次；遇到下一组 TopK recurrence、控制流、显式同步或不支持的副作用边界即停下。既有 VP / state 操作不交换顺序。</p></div><div class="card"><h3>先试分配，再整体接受</h3><p>在 IR clone 上先做改写，再调用真实 AddressAllocation 验证额外快照与延长 live range 能否容纳；失败则整个方案不落到原 IR。后续同步仍由依赖证明决定。</p></div></div>
+<p>这解释了为什么开关不是越激进越好：额外快照需要 SRAM，拆分增加固定指令，后继不够独立也遮不住等待。本页固定启用 out-of-place 同步策略，是当前 Router profile 的配套设置；没有测量“仅开 wave、关闭配套策略”的新结果。</p>
+<p>本次输出检查比只看 kernel 结束更强：OFF / ON 的权重与 ID 字节完全相同；24 行 × 8 个专家的有序 ID 都等于 CPU 参考；权重按实际输出 ID 回查 sigmoid 分数后归一化，最大绝对误差为 <code>0.000975013</code>，通过现有 <code>rtol=0.005, atol=0.005</code>。这是固定 fixture 的数值资格，不推断所有输入、所有 batch 或异常浮点值均已覆盖。</p>
+</section>
+<section class="section" id="evidence">
+<h2><small>11 / EVIDENCE</small>从源码到指令，再到这次 trace</h2>
+<p>主要源码入口：<code>StreamTopKGather.cpp</code> 的 <code>analyzeGroup</code>、<code>collectPrefixAnchors</code>、<code>hasPrefetchedSuccessor</code>、<code>materializeGroup</code> 与 <code>runOnOperation</code>；pipeline 接入在 <code>ZeusHighPipeline.cpp</code>。Router 入口是 <code>sgl_moe_router_linear_biased_topk_kernel_bf16</code>，本例命中三组、每组四行的分支。</p>
+<div class="table-scroll"><table><thead><tr><th>身份</th><th>固定版本 / 摘要</th></tr></thead><tbody><tr><td>Compiler checkout</td><td><code>9b35cc1821e8e4d1c48a8f291478ee1659ff822d</code></td></tr><tr><td>Triton frontend checkout</td><td><code>b84421d189b82b0fe54aeaad873e02d4abe142d2</code></td></tr><tr><td>torch_zeus Router checkout</td><td><code>6ae99c68bc08476766b1d00e07b97b8df6a1ceeb</code></td></tr><tr><td>CycleSim checkout</td><td><code>d471c7103e7448e6045bfb294af94569cb3076ba</code></td></tr><tr><td>执行模式</td><td>完整数值；Release -O3，assertions 保留；PE values skipped=0</td></tr><tr><td>指令身份与覆盖</td><td>native PC / machine word 逐条核验；仅允许头声明的 relocation；每核 PE MAC / WL1 覆盖 3/3</td></tr></tbody></table></div>
+<details><summary>编译器、输入和模拟器的 SHA-256</summary><div class="hashes"><p>Compiler binary: 25e3e0c2d73ba6a68ed4cfd6949ef392f8bf58315ec5707b8efe3ab0210aed4d</p><p>Router source: 2dcee605b27a052ea10c54c0d0bb5509e4b5f616b06facd58406051886afaf7d</p><p>TTIR: e4c8ffe83f2bfd7352218987b2219bd268d06f0ba10bef9d24cdd760195465a0</p><p>CycleSim binary: 5104a1029a107b88d0d43b26be17137b80198ccecef152190931061ef5163894</p></div><p class="note">编译器使用已有构建，未在本次重新构建，故以二进制摘要绑定事实；不单凭 checkout SHA 反推构建来源。PolarSight 使用固定的本地 checkout 及已有本地修改，源码清单和 patch 摘要已登记在 evidence.json，前后共用同一解析器。</p></details>
+<pre><code># Same TTIR, same compiler, same remaining options:
+zeus-compiler router.ttir.mlir -S -o off.S \
+  --num-vp=4 --num-dt=4 --inject-sync-verify-vp-out-of-place
+zeus-compiler router.ttir.mlir -S -o on.S \
+  --num-vp=4 --num-dt=4 --inject-sync-verify-vp-out-of-place \
+  --stream-topk-gather-wave-overlap
+zeusv3-as off.S -o off.zbin
+zeusv3-as on.S -o on.zbin
+# Each case uses the same packed BF16 weight, page-pointer ABI,
+# GDG addresses and scalar scale. Standard AR30/AR31 relocation only.
+unset ZEUS3SIM_TIMING_ONLY_KERNELS
+ZEUS3SIM_TRACE_DIR=off/native zeus3-sim_daemon -c off/case
+ZEUS3SIM_TRACE_DIR=on/native  zeus3-sim_daemon -c on/case</code></pre>
+<p class="note">命令为流程说明，不是独立完整的 case 生成器。公开数据足以复核周期、机器码、两版汇编与本文图表；二进制运行仍需要匹配的工具链、权重布局和 init.json。本文图表生成脚本读取同目录冻结 JSON，使用 Matplotlib；不从图像像素估算周期。</p>
+<div class="downloads"><a href="../../assets/compiler/20261116-stream-topk-gather/evidence.json">身份与验证 JSON</a><a href="../../assets/compiler/20261116-stream-topk-gather/timeline.json">语义时间轴 JSON</a><a href="../../assets/compiler/20261116-stream-topk-gather/milestones.csv">里程碑 CSV</a><a href="../../assets/compiler/20261116-stream-topk-gather/off.S">OFF 实际汇编</a><a href="../../assets/compiler/20261116-stream-topk-gather/on.S">ON 实际汇编</a><a href="../../assets/compiler/20261116-stream-topk-gather/off-core1.commands.tsv">OFF native commands</a><a href="../../assets/compiler/20261116-stream-topk-gather/on-core1.commands.tsv">ON native commands</a><a href="../../assets/compiler/20261116-stream-topk-gather/plot_figures.py">图表生成脚本</a><a href="../../assets/compiler/20261116-stream-topk-gather/SHA256SUMS.txt">公开资源 SHA-256</a></div>
+<p>IR 对照：<a href="../../assets/compiler/20261116-stream-topk-gather/off.after-stream.mlir">OFF after-stream.mlir</a> · <a href="../../assets/compiler/20261116-stream-topk-gather/on.after-stream.mlir">ON after-stream.mlir</a> · <a href="../../assets/compiler/20261116-stream-topk-gather/ir.diff">IR diff</a> · <a href="../../assets/compiler/20261116-stream-topk-gather/assembly.diff">汇编 diff</a>。IR diff 仅规范化进程地址派生的 TopK symbol / pair ID，保留其等价关系；两份完整 IR 保持原样。</p>
+<p>相关背景：<a href="2026-09-14-small-row-gather-lowering-explained.html">四行 Gather 的 lowering</a> · <a href="2026-10-30-sigmoid-silu-fitting.html">Sigmoid / SiLU 拟合与 VP 指令</a>。</p>
+</section>
+<footer>发表于 2026-11-16 · 编译器 / TritonShared · 数据来自同一次固定 A/B 实验。<br>本页的原理图、实际指令 trace、数值资格与性能结论分别标注；没有用历史 RTL 结果替代这次运行。</footer>
+</main></div>
+<script src="../../assets/compiler/20261116-stream-topk-gather/timeline-data.js"></script>
+<script src="../../assets/compiler/20261116-stream-topk-gather/explorer.js"></script>
+</body></html>

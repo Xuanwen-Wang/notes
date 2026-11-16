@@ -2,6 +2,7 @@
   "updated": "2026-11-16",
   "site_url": "https://xuanwen-wang.github.io/notes/",
   "resources": [
+    "assets/compiler/20261116-stream-topk-gather",
     "assets/hardware/20261113-ldg-mc",
     "models/glm53-flash/assets",
     "models/glm53-flash/data",
@@ -11,6 +12,18 @@
     "models/deepseek-v4-flash/data"
   ],
   "articles": [
+    {
+      "id": "stream-topk-gather",
+      "file": "articles/compiler/2026-11-16-stream-topk-gather.html",
+      "category": "compiler",
+      "title": "TritonShared - StreamTopKGather：让 TopK、Gather 与 VP 交错执行",
+      "description": "用 GLM5.3Flash Router 的真实编译与双核 CycleSim trace，解释前缀快照、VP 波次交错和末组排空；附逐指令交互图与 752 cycles 的实测分账。",
+      "date": "2026-11-16",
+      "created": "2026-11-16",
+      "created_source": "article",
+      "tags": ["Compiler Pass", "TopK", "Gather", "VP", "Router", "CycleSim"],
+      "aliases": []
+    },
     {
       "id": "glm53-moe-ldg-mc-row-alignment",
       "file": "articles/hardware/2026-11-13-glm53-moe-ldg-mc-row-alignment.html",

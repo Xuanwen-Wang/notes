@@ -1,0 +1,596 @@
+{
+  "date": "2026-11-16",
+  "source": "CycleSim full numerical, not RTL/VCS or full model",
+  "kernel": "sgl_moe_router_linear_biased_topk_kernel_bf16",
+  "constants": {
+    "T": 24,
+    "E": 288,
+    "H": 4096,
+    "CORE_NUM": 2,
+    "TOKEN_BLOCK_SIZE": 2,
+    "PHYSICAL_E": 320,
+    "HAS_EXPERT_TAIL": 1,
+    "HAS_H_TAIL": 0,
+    "BLOCK_K": 4096,
+    "TOPK": 8,
+    "APPLY_SCALE": 1,
+    "SINGLE_K_BLOCK": 1,
+    "REMAP_IDS": false,
+    "CALIBRATED_SIGMOID": false,
+    "TRANSPORT_CAPACITY": 0,
+    "GROUP_WINDOW": false,
+    "GROUP_SLOT": 0,
+    "TRANSPORT_HIDDEN_BYTES": 2,
+    "FUSE_LOCAL_SHARED": false,
+    "SHARED_LIMIT": -1.0
+  },
+  "runtime_scale": 2.5,
+  "compiler_checkout": "9b35cc1821e8e4d1c48a8f291478ee1659ff822d",
+  "compiler_binary_sha256": "25e3e0c2d73ba6a68ed4cfd6949ef392f8bf58315ec5707b8efe3ab0210aed4d",
+  "compiler_note": "Existing binary bound by digest; not rebuilt in this experiment.",
+  "triton_checkout": "b84421d189b82b0fe54aeaad873e02d4abe142d2",
+  "torch_zeus_checkout": "6ae99c68bc08476766b1d00e07b97b8df6a1ceeb",
+  "kernel_source_sha256": "2dcee605b27a052ea10c54c0d0bb5509e4b5f616b06facd58406051886afaf7d",
+  "ttir_sha256": "e4c8ffe83f2bfd7352218987b2219bd268d06f0ba10bef9d24cdd760195465a0",
+  "simulator_checkout": "d471c7103e7448e6045bfb294af94569cb3076ba",
+  "simulator_binary_sha256": "5104a1029a107b88d0d43b26be17137b80198ccecef152190931061ef5163894",
+  "simulator_build": "Release -O3, assertions enabled",
+  "input_seed": 300802,
+  "input_generation": "torch CPU; 32 hidden rows, then gate, then bias",
+  "input_scope": "Deterministic synthetic kernel fixture, not recorded model activations",
+  "input_sha256": {
+    "reference.pt": "2baec61a2ae7fa39d06f67664862d53f17373aac0e12917160bc6340d78501a8",
+    "args.bin": "0d81008ec3b00b9b226119ce08981f37de3ff87298b45c27a253e9aab3bf9f64",
+    "bias.bin": "41ba94f4a86b7b5df9b1bd787e800b124a39cb69330e3fe2ea63e4062db34c79",
+    "weight.bin": "61f31fc1fad98fde61bfddabc8456dfc9633a87348b2fb4e165ed71f5e21eff9",
+    "hidden.bin": "0c76110c756810bf1735e55e120137698d3573bb80a838dc24a2c49cd9bd51c6"
+  },
+  "assembler_sha256": "98f5c8e824abda0381d3ad0ebf4994fff4ec54113097c8cefffa74109c1a2181",
+  "common_flags": [
+    "--num-vp=4",
+    "--num-dt=4",
+    "--inject-sync-verify-vp-out-of-place"
+  ],
+  "varied_flag": "--stream-topk-gather-wave-overlap",
+  "validation": {
+    "off": {
+      "cpu_weight_reference_pass": true,
+      "tolerance": {
+        "rtol": 0.005,
+        "atol": 0.005
+      },
+      "cpu_topk_set_overlap_per_row": [
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "ids_exact_ordered_cpu": true,
+      "max_abs_weight_error": 0.0009750127792358398,
+      "weights_sha256": "72769cd7f06927abcf8a7c700720f4be700fe0a5a89cd5556caa6a51327f69d2",
+      "ids_sha256": "70210a3501689ef73f3d7f6cf07207f864012e1a6240aefc02401d32bea035ca"
+    },
+    "on": {
+      "cpu_weight_reference_pass": true,
+      "tolerance": {
+        "rtol": 0.005,
+        "atol": 0.005
+      },
+      "cpu_topk_set_overlap_per_row": [
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "ids_exact_ordered_cpu": true,
+      "max_abs_weight_error": 0.0009750127792358398,
+      "weights_sha256": "72769cd7f06927abcf8a7c700720f4be700fe0a5a89cd5556caa6a51327f69d2",
+      "ids_sha256": "70210a3501689ef73f3d7f6cf07207f864012e1a6240aefc02401d32bea035ca"
+    },
+    "ab_bitwise_equal": true
+  },
+  "runs": {
+    "off": {
+      "exit_code": 0,
+      "wall_seconds": 0.2649782811058685,
+      "asm_sha256": "7554764655e623e73a2bc6ce908205acb068804ecd61c4d2747723751e471e86",
+      "zbin_sha256": "eb9c7a6a941d370f0596d0d631050808460d59c433831436d358c18383173fc1",
+      "polarsight_commit": "3e403ade1925bb8651b49709da90b661335efcc0",
+      "polarsight_local_patch_sha256": "b062df713efbc67760985b3ef9c921df82ddb97a5c1e747e5c49df25c1e917b8",
+      "polarsight_source_manifest_sha256": "6327b5791d3f3bf28677632752abb8a65fa019f2b4e09c8332d602df8d32b35f",
+      "pc_identity": {
+        "0": {
+          "changed": 0,
+          "matched": 1700
+        },
+        "1": {
+          "changed": 0,
+          "matched": 1696
+        }
+      },
+      "cores": {
+        "core0": {
+          "launch_cycles": 11122,
+          "viewer_span": 10990,
+          "viewer_t0": 130,
+          "frontend": {
+            "cycles": 11122,
+            "pe_values_skipped": 0,
+            "ct_instructions": 1371,
+            "ct_busy": 3898,
+            "ct_mail_wait": 240,
+            "fetch_head": 130,
+            "fetch_stall": 0,
+            "fetch_fills": 0,
+            "fetch_over_range": 0,
+            "predecode_stall": 1288,
+            "queue_stall": 4197,
+            "siso_wait": 0,
+            "siso_bytes": 0,
+            "drain": 857,
+            "dma_bytes": 107132,
+            "dma_failed": 0,
+            "dt_failed": 0,
+            "vp_failed": 0,
+            "pe_failed": 0,
+            "lw_failed": 0,
+            "desc_trunc": 0,
+            "desc_trunc_pi": 0,
+            "ended": 1,
+            "drain_stalled": 0,
+            "mailbox_empty": 1
+          },
+          "milestones": {
+            "launch_done": 11122,
+            "A_sigmoid_start": 1876,
+            "A_sigmoid_done": 3465,
+            "A_topk_start": 3566,
+            "A_topk_done": 3914,
+            "A_rsqrt_start": 6636,
+            "A_rsqrt_done": 6831,
+            "A_normalize_start": 6940,
+            "A_normalize_done": 7079,
+            "B_sigmoid_start": 4253,
+            "B_sigmoid_done": 5809,
+            "B_topk_start": 5909,
+            "B_topk_done": 6278,
+            "B_rsqrt_start": 9344,
+            "B_rsqrt_done": 9539,
+            "B_normalize_start": 9648,
+            "B_normalize_done": 9787,
+            "C_sigmoid_start": 7025,
+            "C_sigmoid_done": 8536,
+            "C_topk_start": 8636,
+            "C_topk_done": 9004,
+            "C_rsqrt_start": 9730,
+            "C_rsqrt_done": 10032,
+            "C_normalize_start": 10096,
+            "C_normalize_done": 10268
+          },
+          "asynchronous_busy_union": 9738,
+          "asynchronous_idle": 1252,
+          "unit_busy_union": {
+            "LD": 1583,
+            "PE": 2904,
+            "VP": 7291,
+            "ST": 1061
+          },
+          "quality": {
+            "coverage_percent": 100.0,
+            "unresolved": 0,
+            "cfg_trace_replay": {
+              "complete": true,
+              "ct_dynamic_count": 1371,
+              "ct_unique_count": 1371,
+              "ct_candidate_count": 0,
+              "exact_units": [
+                "LD",
+                "PE",
+                "ST",
+                "VP"
+              ],
+              "unit_counts": {
+                "LD": {
+                  "dynamic": 20,
+                  "replayed": 20,
+                  "exact": true
+                },
+                "PE": {
+                  "dynamic": 3,
+                  "replayed": 3,
+                  "exact": true
+                },
+                "ST": {
+                  "dynamic": 6,
+                  "replayed": 6,
+                  "exact": true
+                },
+                "VP": {
+                  "dynamic": 300,
+                  "replayed": 300,
+                  "exact": true
+                }
+              }
+            }
+          }
+        },
+        "core1": {
+          "launch_cycles": 11338,
+          "viewer_span": 11150,
+          "viewer_t0": 186,
+          "frontend": {
+            "cycles": 11338,
+            "pe_values_skipped": 0,
+            "ct_instructions": 1367,
+            "ct_busy": 3946,
+            "ct_mail_wait": 296,
+            "fetch_head": 186,
+            "fetch_stall": 0,
+            "fetch_fills": 0,
+            "fetch_over_range": 0,
+            "predecode_stall": 1288,
+            "queue_stall": 4253,
+            "siso_wait": 0,
+            "siso_bytes": 0,
+            "drain": 913,
+            "dma_bytes": 107132,
+            "dma_failed": 0,
+            "dt_failed": 0,
+            "vp_failed": 0,
+            "pe_failed": 0,
+            "lw_failed": 0,
+            "desc_trunc": 0,
+            "desc_trunc_pi": 0,
+            "ended": 1,
+            "drain_stalled": 0,
+            "mailbox_empty": 1
+          },
+          "milestones": {
+            "launch_done": 11338,
+            "A_sigmoid_start": 2036,
+            "A_sigmoid_done": 3625,
+            "A_topk_start": 3726,
+            "A_topk_done": 4074,
+            "A_rsqrt_start": 6796,
+            "A_rsqrt_done": 6991,
+            "A_normalize_start": 7100,
+            "A_normalize_done": 7239,
+            "B_sigmoid_start": 4413,
+            "B_sigmoid_done": 5969,
+            "B_topk_start": 6069,
+            "B_topk_done": 6438,
+            "B_rsqrt_start": 9504,
+            "B_rsqrt_done": 9699,
+            "B_normalize_start": 9808,
+            "B_normalize_done": 9947,
+            "C_sigmoid_start": 7185,
+            "C_sigmoid_done": 8696,
+            "C_topk_start": 8796,
+            "C_topk_done": 9164,
+            "C_rsqrt_start": 9890,
+            "C_rsqrt_done": 10192,
+            "C_normalize_start": 10256,
+            "C_normalize_done": 10428
+          },
+          "asynchronous_busy_union": 9906,
+          "asynchronous_idle": 1244,
+          "unit_busy_union": {
+            "LD": 1863,
+            "PE": 2904,
+            "VP": 7291,
+            "ST": 1117
+          },
+          "quality": {
+            "coverage_percent": 100.0,
+            "unresolved": 0,
+            "cfg_trace_replay": {
+              "complete": true,
+              "ct_dynamic_count": 1367,
+              "ct_unique_count": 1367,
+              "ct_candidate_count": 0,
+              "exact_units": [
+                "LD",
+                "PE",
+                "ST",
+                "VP"
+              ],
+              "unit_counts": {
+                "LD": {
+                  "dynamic": 20,
+                  "replayed": 20,
+                  "exact": true
+                },
+                "PE": {
+                  "dynamic": 3,
+                  "replayed": 3,
+                  "exact": true
+                },
+                "ST": {
+                  "dynamic": 6,
+                  "replayed": 6,
+                  "exact": true
+                },
+                "VP": {
+                  "dynamic": 300,
+                  "replayed": 300,
+                  "exact": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "on": {
+      "exit_code": 0,
+      "wall_seconds": 0.2650338290259242,
+      "asm_sha256": "7c155b590f15f6632d2255abb5b1316b7014bbc09a13dd9e9404004a91489b3a",
+      "zbin_sha256": "16cc04a145bd3aa24508a814af53f6d745a1015a819e30894b86a5dc0dbc9a8a",
+      "polarsight_commit": "3e403ade1925bb8651b49709da90b661335efcc0",
+      "polarsight_local_patch_sha256": "b062df713efbc67760985b3ef9c921df82ddb97a5c1e747e5c49df25c1e917b8",
+      "polarsight_source_manifest_sha256": "6327b5791d3f3bf28677632752abb8a65fa019f2b4e09c8332d602df8d32b35f",
+      "pc_identity": {
+        "0": {
+          "changed": 0,
+          "matched": 1655
+        },
+        "1": {
+          "changed": 0,
+          "matched": 1651
+        }
+      },
+      "cores": {
+        "core0": {
+          "launch_cycles": 10370,
+          "viewer_span": 10238,
+          "viewer_t0": 130,
+          "frontend": {
+            "cycles": 10370,
+            "pe_values_skipped": 0,
+            "ct_instructions": 1326,
+            "ct_busy": 3661,
+            "ct_mail_wait": 188,
+            "fetch_head": 130,
+            "fetch_stall": 0,
+            "fetch_fills": 0,
+            "fetch_over_range": 0,
+            "predecode_stall": 1282,
+            "queue_stall": 3688,
+            "siso_wait": 0,
+            "siso_bytes": 0,
+            "drain": 857,
+            "dma_bytes": 107132,
+            "dma_failed": 0,
+            "dt_failed": 0,
+            "vp_failed": 0,
+            "pe_failed": 0,
+            "lw_failed": 0,
+            "desc_trunc": 0,
+            "desc_trunc_pi": 0,
+            "ended": 1,
+            "drain_stalled": 0,
+            "mailbox_empty": 1
+          },
+          "milestones": {
+            "launch_done": 10370,
+            "A_sigmoid_start": 1876,
+            "A_sigmoid_done": 3465,
+            "A_topk_start": 3566,
+            "A_topk_done": 3914,
+            "A_rsqrt_start": 5919,
+            "A_rsqrt_done": 6069,
+            "A_normalize_start": 6223,
+            "A_normalize_done": 6362,
+            "B_sigmoid_start": 3939,
+            "B_sigmoid_done": 5495,
+            "B_topk_start": 5595,
+            "B_topk_done": 5964,
+            "B_rsqrt_start": 8357,
+            "B_rsqrt_done": 8507,
+            "B_normalize_start": 8661,
+            "B_normalize_done": 8800,
+            "C_sigmoid_start": 6354,
+            "C_sigmoid_done": 7952,
+            "C_topk_start": 8052,
+            "C_topk_done": 8420,
+            "C_rsqrt_start": 8743,
+            "C_rsqrt_done": 9280,
+            "C_normalize_start": 9344,
+            "C_normalize_done": 9516
+          },
+          "asynchronous_busy_union": 9873,
+          "asynchronous_idle": 365,
+          "unit_busy_union": {
+            "LD": 1558,
+            "PE": 2904,
+            "VP": 7439,
+            "ST": 1061
+          },
+          "quality": {
+            "coverage_percent": 100.0,
+            "unresolved": 0,
+            "cfg_trace_replay": {
+              "complete": true,
+              "ct_dynamic_count": 1326,
+              "ct_unique_count": 1326,
+              "ct_candidate_count": 0,
+              "exact_units": [
+                "LD",
+                "PE",
+                "ST",
+                "VP"
+              ],
+              "unit_counts": {
+                "LD": {
+                  "dynamic": 20,
+                  "replayed": 20,
+                  "exact": true
+                },
+                "PE": {
+                  "dynamic": 3,
+                  "replayed": 3,
+                  "exact": true
+                },
+                "ST": {
+                  "dynamic": 6,
+                  "replayed": 6,
+                  "exact": true
+                },
+                "VP": {
+                  "dynamic": 300,
+                  "replayed": 300,
+                  "exact": true
+                }
+              }
+            }
+          }
+        },
+        "core1": {
+          "launch_cycles": 10586,
+          "viewer_span": 10398,
+          "viewer_t0": 186,
+          "frontend": {
+            "cycles": 10586,
+            "pe_values_skipped": 0,
+            "ct_instructions": 1322,
+            "ct_busy": 3709,
+            "ct_mail_wait": 244,
+            "fetch_head": 186,
+            "fetch_stall": 0,
+            "fetch_fills": 0,
+            "fetch_over_range": 0,
+            "predecode_stall": 1282,
+            "queue_stall": 3744,
+            "siso_wait": 0,
+            "siso_bytes": 0,
+            "drain": 913,
+            "dma_bytes": 107132,
+            "dma_failed": 0,
+            "dt_failed": 0,
+            "vp_failed": 0,
+            "pe_failed": 0,
+            "lw_failed": 0,
+            "desc_trunc": 0,
+            "desc_trunc_pi": 0,
+            "ended": 1,
+            "drain_stalled": 0,
+            "mailbox_empty": 1
+          },
+          "milestones": {
+            "launch_done": 10586,
+            "A_sigmoid_start": 2036,
+            "A_sigmoid_done": 3625,
+            "A_topk_start": 3726,
+            "A_topk_done": 4074,
+            "A_rsqrt_start": 6079,
+            "A_rsqrt_done": 6229,
+            "A_normalize_start": 6383,
+            "A_normalize_done": 6522,
+            "B_sigmoid_start": 4099,
+            "B_sigmoid_done": 5655,
+            "B_topk_start": 5755,
+            "B_topk_done": 6124,
+            "B_rsqrt_start": 8517,
+            "B_rsqrt_done": 8667,
+            "B_normalize_start": 8821,
+            "B_normalize_done": 8960,
+            "C_sigmoid_start": 6514,
+            "C_sigmoid_done": 8112,
+            "C_topk_start": 8212,
+            "C_topk_done": 8580,
+            "C_rsqrt_start": 8903,
+            "C_rsqrt_done": 9440,
+            "C_normalize_start": 9504,
+            "C_normalize_done": 9676
+          },
+          "asynchronous_busy_union": 10041,
+          "asynchronous_idle": 357,
+          "unit_busy_union": {
+            "LD": 1838,
+            "PE": 2904,
+            "VP": 7439,
+            "ST": 1117
+          },
+          "quality": {
+            "coverage_percent": 100.0,
+            "unresolved": 0,
+            "cfg_trace_replay": {
+              "complete": true,
+              "ct_dynamic_count": 1322,
+              "ct_unique_count": 1322,
+              "ct_candidate_count": 0,
+              "exact_units": [
+                "LD",
+                "PE",
+                "ST",
+                "VP"
+              ],
+              "unit_counts": {
+                "LD": {
+                  "dynamic": 20,
+                  "replayed": 20,
+                  "exact": true
+                },
+                "PE": {
+                  "dynamic": 3,
+                  "replayed": 3,
+                  "exact": true
+                },
+                "ST": {
+                  "dynamic": 6,
+                  "replayed": 6,
+                  "exact": true
+                },
+                "VP": {
+                  "dynamic": 300,
+                  "replayed": 300,
+                  "exact": true
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
