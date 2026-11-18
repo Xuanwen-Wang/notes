@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-16",
+  "updated": "2026-11-18",
   "site_url": "https://xuanwen-wang.github.io/notes/",
   "resources": [
     "assets/compiler/20261116-stream-topk-gather",
@@ -17,8 +17,8 @@
       "file": "articles/compiler/2026-11-16-stream-topk-gather.html",
       "category": "compiler",
       "title": "TritonShared - StreamTopKGather：让 TopK、Gather 与 VP 交错执行",
-      "description": "用 GLM5.3Flash Router 的真实编译与双核 CycleSim trace，解释前缀快照、VP 波次交错和末组排空；附逐指令交互图与 752 cycles 的实测分账。",
-      "date": "2026-11-16",
+      "description": "从 ZeusV3 公共派发和 VP 队列出发，结合 GLM5.3Flash Router 汇编与双核 trace，解释提前派发一波 VP 怎样覆盖 CT Gather 时间，以及慢核节省的 752 cycles。",
+      "date": "2026-11-18",
       "created": "2026-11-16",
       "created_source": "article",
       "tags": ["Compiler Pass", "TopK", "Gather", "VP", "Router", "CycleSim"],

@@ -40,7 +40,7 @@
         let barHeight=17,y=rowY(row)-8.5;
         if(e.kind==='VP'){barHeight=21/ends[e.lane].length;y=rowY(row)-10.5+slots.get(e.pc_start)*barHeight;}
         const description=e.kind?`${mode.toUpperCase()} ${core} · ${e.group_name} lane${e.lane} · ${phases[e.phase]}${e.step!==undefined?' step'+e.step:''}${e.wave!==undefined?' wave'+e.wave:''}${e.k!==undefined?' ['+e.offset+','+(e.offset+e.k)+')':''}`:`${mode.toUpperCase()} ${core} · ${unit} · ${e.name}`;
-        const text=`${description}\n${a} → ${b} cycles · 区间长度 ${b-a}\n${e.kind?'ASM L'+e.asm_start+(e.asm_end!==e.asm_start?'–'+e.asm_end:'')+' · PC 0x'+e.pc_start.toString(16):'PC 0x'+e.pc.toString(16)}\n${isGather?'CT 首次呈现 → 最终写回 resolved_at；含间隙与等待，不是 ALU busy。':'命令 start → done；细分轨表示命令区间重叠，不是额外硬件实例。'}`;
+        const text=`${description}\n${a} → ${b} cycles · 区间长度 ${b-a}\n${e.kind?'ASM L'+e.asm_start+(e.asm_end!==e.asm_start?'–'+e.asm_end:'')+' · PC 0x'+e.pc_start.toString(16):'PC 0x'+e.pc.toString(16)}\n${isGather?'Gather 窗口含等待与间隔。逐拍阻塞需看 ct_inst_rdy 和派发握手。':'执行单元 start → done。公共派发和队列 issue 发生在 start 之前或同拍。'}`;
         const rect=node('rect',{x:x(a),y,width:Math.max(.8,(b-a)*scale),height:Math.max(2,barHeight-.6),fill,opacity:isGather?.78:.9,tabindex:0,role:'button','aria-label':description});
         rect.append(node('title',{},text));const show=()=>{detail.textContent=text;};
         rect.addEventListener('pointerenter',show);rect.addEventListener('focus',show);rect.addEventListener('click',show);

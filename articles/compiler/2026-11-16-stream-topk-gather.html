@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="用 GLM5.3Flash Router 的真实编译与双核 CycleSim trace，解释 StreamTopKGather 的前缀快照、波次交错、末组排空，以及 752 cycles 的实测收益。">
+<meta name="description" content="从 ZeusV3 的公共派发、CT 与 VP 队列读懂 StreamTopKGather。用 GLM5.3Flash Router 的实际汇编和双核 trace，追踪提前派发 VP 如何覆盖 CT Gather 时间。">
 <meta name="theme-color" content="#213e45">
 <title>TritonShared - StreamTopKGather：让 TopK、Gather 与 VP 交错执行</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='9' fill='%23213e45'/%3E%3Cpath d='M8 12h16M16 20h16M8 28h16' stroke='%23edbf83' stroke-width='4'/%3E%3C/svg%3E">
@@ -14,14 +14,36 @@
 <body>
 <div class="layout">
 <aside class="rail"><a href="../../index.html">← 技术笔记 / 编译器</a><nav aria-label="文章目录">
-<a href="#result">01 · 实测结果与边界</a><a href="#problem">02 · Router 为什么需要 Gather</a><a href="#mechanism">03 · 前缀快照与分段发布</a><a href="#policy">04 · 开关改变了什么</a><a href="#timeline">05 · 亲自看实际时间轴</a><a href="#a-frontier">06 · A → B：让下一组提前</a><a href="#b-frontier">07 · B → C：上一组也能重叠</a><a href="#terminal">08 · 末组为何不拆</a><a href="#cycles">09 · 752 cycles 从哪来</a><a href="#safety">10 · 正确性与准入</a><a href="#evidence">11 · 源码、数据与复现</a>
-</nav><p class="note">2026-11-16<br>真实 Router 编译<br>双核 CycleSim 完整数值运行<br>静态顺序 × 动态时间轴</p></aside>
+<a href="#architecture">ZeusV3 · 派发与执行</a><a href="#result">01 · 实测结果与边界</a><a href="#problem">02 · Router 为什么需要 Gather</a><a href="#mechanism">03 · 前缀快照与分段发布</a><a href="#policy">04 · 开关改变了什么</a><a href="#timeline">05 · 亲自看实际时间轴</a><a href="#a-frontier">06 · A → B：让下一组提前</a><a href="#b-frontier">07 · B → C：上一组也能重叠</a><a href="#terminal">08 · 末组为何不拆</a><a href="#cycles">09 · 752 cycles 从哪来</a><a href="#safety">10 · 正确性与准入</a><a href="#evidence">11 · 源码、数据与复现</a>
+</nav><p class="note">更新于 2026-11-18<br>实验于 2026-11-16<br>双核 CycleSim 完整数值运行</p></aside>
 <main>
 <div class="eyebrow">TRITON SHARED / COMPILER PASS STUDY</div>
 <h1>StreamTopKGather<br><span>让 TopK、Gather 与 VP<br>在同一条流水中交错</span></h1>
-<p class="intro">TopK 已经够快，为什么 Router 还会停下来？瓶颈的一部分藏在 CT 取分数、VP 等下一批指令的交界。这个 pass 通过“提前发布一半结果 + 按完整 VP 波次穿插 Gather”，把可以并行的工作接起来。</p>
+<p class="intro">让 CT 按专家 ID 取分数时，四个 VP 已经有下一组 token 的 sigmoid 可算。这就是 GLM5.3Flash Router 开启 wave-overlap 的目的。编译器把一波独立的 VP 指令排在一小段 CT Gather 前面，让向量计算覆盖部分标量取数时间。慢核上的第一组 TopK 仍在第 4074 拍结束，下一组 sigmoid 却提前了 314 拍。</p>
 <div class="pills"><span>GLM5.3Flash Router</span><span>T24 · E288 · H4096 · K8</span><span>2 cores · 4 VP / core</span><span>CycleSim · full numerical</span></div>
 <div class="metrics"><div><strong>−752</strong><small>慢核节省 cycles</small></div><div><strong>−6.63%</strong><small>11,338 → 10,586</small></div><div><strong>逐位一致</strong><small>192 个权重与 192 个专家 ID</small></div></div>
+<section class="section" id="architecture">
+<h2>ZeusV3 的一个 core 怎样同时做 Gather 和向量计算</h2>
+<p>一个 core 按程序顺序派发指令，后端有分工不同的执行单元。这个 Router 用 PE 做矩阵乘，用四个 VP 算 sigmoid、TopK 和归一化，用 LD / ST 搬运数据。CT 负责标量运算与控制。在这份汇编里，按专家 ID 回查原始分数的 Gather 展开成一串 CT 指令，逐个提取索引、计算地址、读取分数并写回。理解这项优化，需要把<strong>共享的派发入口</strong>和<strong>可异步工作的执行单元</strong>放在同一张图上看。</p>
+<figure><pre aria-label="单个 core 的指令路径"><code>同一个 core 的指令流
+        │
+        ▼
+   顺序派发 dispatch ──┬── CT 标量指令：取 ID、算地址、读分数
+        ▲             │
+        │             └── VP 预解码 → VP 队列 → issue → VP0…VP3 → done
+   ct_inst_rdy                                     ↑
+   控制派发握手                                     start（图中蓝条左端）</code></pre>
+<figcaption>图中展开 Router 的 CT 和 VP 两条路径。dispatch、issue 和 start 是同一条 VP 命令经过的三个不同位置，横向距离不表示周期。</figcaption></figure>
+<p><strong>CT 能拖住后续 VP，是因为两者共用派发入口。</strong>正常运行时，RTL 的握手条件可简写为 <code>dispatch_rdy = inst_rdy &amp; ct_inst_rdy</code>。连续的单周期 CT 指令逐条占用派发槽。遇到等待 L2 读回或 mailbox 同步的 CT 指令，<code>ct_inst_rdy</code> 还可能拉低多个周期。即使后面一条 VP 指令的数据已就绪，前端也要按序等到能派发它。</p>
+<p><strong>已经越过入口的命令，可以在 CT 忙时启动。</strong>VP 队列向执行单元发送命令称为 <code>issue</code>，取决于本队列的 mailbox、credit 和 FIFO 等条件。执行单元随后开始处理命令，trace 将这个时刻记作 <code>start</code>。把独立工作提前派发，就能让队列在 CT 取数期间继续向 VP 供给命令。</p>
+<h3>编译器怎样利用这个时间差</h3>
+<p>设 A、B 是相邻的两组 token。A 的 Gather 必须等 A 的 TopK 给出专家 ID，但 B 的 sigmoid 只需要 B 的投影结果。基础 StreamTopKGather 在选出前 4 个专家后发布索引，让 CT 可先取这 4 个分数，同时 VP 继续选后 4 个。可选的 wave-overlap 策略再调整前半段 Gather 的插入点，让 B 的独立向量工作更早通过公共入口。</p>
+<pre><code>公共前端看到的顺序（只画 A → B 交界）
+OFF   A0 取前4项 → A1 取前4项 → A2 取前4项 → A3 取前4项 → B 的第一波 VP …
+ON    B 的第一波 VP → A0 取前4项 → B 的第二波 VP → A1 取前4项 …</code></pre>
+<p>这例的一波包含同一计算阶段的四条指令，每条负责不同的一行，分别派往 VP0～VP3。等完整一波通过，再插入一行的 Gather，四个 VP 就都有机会在接下来的 CT 区间工作。pass 保留已有 VP 操作的相对顺序。对于没有合格后继工作的末组，它保留一次完整 Gather，以省去拆分和发布快照的固定开销。</p>
+<p class="note">RTL 对照位置为 <code>inst518_inst_dispatch.v:737</code>（公共派发）、<code>inst518_vp_inst_predecode.v:490</code>（接收 VP 指令）和 <code>inst518_queue_vp.v:544</code>（队列 issue 条件）。下文的周期均来自本次 Router 的 CycleSim trace。</p>
+</section>
 <section class="section" id="result">
 <h2><small>01 / RESULT</small>先看这次真实跑出来的结果</h2>
 <p>对同一份生产 Router 源码生成 TTIR，使用同一个编译器二进制编译两次。两组共同开启 <code>--inject-sync-verify-vp-out-of-place</code>，唯一变化是 <code>--stream-topk-gather-wave-overlap</code>。随后直接组装这两份实际汇编，使用相同地址、相同输入与同一个 CycleSim 二进制运行双核 case；没有手改指令。</p>
@@ -75,7 +97,7 @@ CT_VMOV_[RR:R]_VR ...                       // store gathered prefix</code></pre
 <tr><td>本次 OFF：基础流式方案</td><td>step3 多发布；四个 prefix Gather 连续插入</td><td>仍拆成 4 + 4</td></tr>
 <tr><td>本次 ON：wave-overlap</td><td>完整 VP wave → 一个 prefix Gather，交错推进</td><td>没有合格预取后继，保留 Gather 8</td></tr>
 </tbody></table></div>
-<div class="code-grid"><div><h3>OFF 的 A → B 静态顺序</h3><pre><code>issue A.TopK step0..7, all lanes
+<div class="code-grid"><div><h3>OFF 的 A → B 派发顺序</h3><pre><code>dispatch A.TopK step0..7, all lanes
 Gather A0 prefix
 Gather A1 prefix
 Gather A2 prefix
@@ -87,7 +109,7 @@ B.sigmoid wave3, lanes0..3
 ...
 B.TopK step0, step1
 Gather A suffix, all lanes
-B.TopK step2..7</code></pre></div><div><h3>ON 的 A → B 静态顺序</h3><pre><code>issue A.TopK step0..7, all lanes
+B.TopK step2..7</code></pre></div><div><h3>ON 的 A → B 派发顺序</h3><pre><code>dispatch A.TopK step0..7, all lanes
 B.sigmoid wave0, lanes0..3
 Gather A0 prefix
 B.sigmoid wave1, lanes0..3
@@ -109,7 +131,7 @@ B.TopK step2..7</code></pre></div></div>
 <div class="controls"><label>Core <select id="coreSelect"><option value="core1">core1 · 慢核</option><option value="core0">core0</option></select></label><label>窗口 <select id="windowSelect"><option value="full">全程</option><option value="a">A → B</option><option value="b">B → C</option><option value="c">末组 C</option></select></label><button type="button" id="exportSvg">导出当前 SVG</button></div>
 <div id="explorer" aria-label="开关前后实际指令时间轴"></div><div id="eventDetail" aria-live="polite">加载实际时间轴。下方静态图和表格也可独立阅读。</div>
 <div class="legend"><span><i style="background:#b57632"></i>TopK</span><span><i style="background:#377ca2"></i>sigmoid / PRG</span><span><i style="background:#528c6c"></i>归一化</span><span><i style="background:#bd4b52"></i>CT Gather 窗口</span></div>
-<p class="note">时间轴统一使用 native launch cycle。VP 条形为命令 start→done，命令流水区间允许重叠；每个 VP 的细分轨只用于避免遮挡，不能当作更多硬件实例。1200 条动态 VP 记录的 instance 已全部与编译器 lane 对齐。CT Gather 条形为第一条 CT 指令呈现到最终写回 resolved_at 的<strong>执行窗口</strong>，包括间隙 / 等待，不是 CT ALU busy。仅突出 Gather，省略其他 CT 指令。</p>
+<p class="note">横轴为 native launch cycle。<strong>蓝条左端是 VP 命令 start，右端是 done。</strong>公共 dispatch 与队列 issue 的时间点未画出。<strong>红条是整段 Gather 的观测窗口</strong>，从首条 CT 指令首次呈现，到末条写回指令的 resolved_at，包含指令之间的间隔和等待。要逐拍识别公共派发被 CT 阻塞的区间，需观察 ct_inst_rdy 与派发握手。每个 VP 的细分轨只为错开重叠的条形，全部 1200 条动态 VP 记录均已对齐编译器 lane。</p>
 <noscript><p class="callout">JavaScript 已关闭。下方仍提供完整静态时序图、数据表与原始数据下载。</p></noscript>
 <figure><img src="../../assets/compiler/20261116-stream-topk-gather/timeline-full.svg" alt="开关前后从0开始的双版本全程时序，含LD PE VP0到VP3 CT Gather与ST" loading="lazy"><figcaption><span class="figlabel">图 4 · 实测全程</span>原始命令数：每核 300 条 VP、3 条 PE、20 条 LD、6 条 ST，前后相同。变化集中在 CT / VP 的交界和最后一组 Gather；并未少算 projection 或少选专家。</figcaption></figure>
 </section>
@@ -123,7 +145,7 @@ B.TopK step2..7</code></pre></div></div>
 <tr><td>B 首条 sigmoid 开始</td><td>4413</td><td>4099</td><td>提前 314</td></tr><tr><td>B TopK 开始</td><td>6069</td><td>5755</td><td>提前量保留为 314</td></tr>
 </tbody></table></div>
 <p>OFF 中 A 最后一条 TopK 完成后，异步引擎要到 4413 才接上下一段 VP，出现 339 cycles 的空档。ON 将这一段缩为 25 cycles。不是把 CT 的所有工作都消掉，而是让 CT 做后几个 Gather 时，VP 已有下一组 sigmoid 可执行。</p>
-<p><strong>静态发射提前不保证每条动态执行都紧跟。</strong>ON 第一波 B VP 指令在首个 Gather 之前发射，但 B0 真正开始于 4099，已经晚于 A0 Gather 结束的 4031。因此第一块 Gather 主要遮住 A 的 TopK 尾部，第二块以后才逐渐遮住 B 的工作。</p>
+<p>图 5 中，ON 的第二个红块是 A1 Gather（4073～4155）。它上方先后出现三条蓝条的左端，分别在 4099、4124、4149 拍；第四条在 4174 拍开始。这四条属于 B 的<strong>第一波</strong>，其汇编位置在 A0 Gather 之前。到 A1 Gather 时，先前派发的命令才陆续在各自 VP 上启动。以 VP0 为例，它执行到 4173，与红块重叠的部分是 4099～4155，共 56 拍。这 56 拍描述两个窗口同时活动的时长，整段 A → B 节省的周期要看前后里程碑之差。</p>
 <details><summary>对照实际 IR 与汇编位置</summary><div class="table-scroll"><table><thead><tr><th>操作</th><th>OFF：IR / ASM 行</th><th>ON：IR / ASM 行</th></tr></thead><tbody><tr><td>A0 prefix Gather</td><td>349 / 597–619</td><td>391 / 634–656</td></tr><tr><td>B sigmoid wave0</td><td>405–408 / 731、733、735、737</td><td>385–388 / 623、625、627、629</td></tr><tr><td>A1 prefix Gather</td><td>354 / 624–646</td><td>408 / 672–694</td></tr><tr><td>B sigmoid wave1</td><td>417–420 / 742、744、746、748</td><td>402–405 / 661、663、665、667</td></tr></tbody></table></div><p class="note">IR 行号取本次 <code>after-stream.mlir</code>；ASM 行号对应下载的 <code>off.S / on.S</code>，包含元数据行。</p></details>
 </section>
 <section class="section" id="b-frontier">
@@ -177,7 +199,7 @@ ZEUS3SIM_TRACE_DIR=on/native  zeus3-sim_daemon -c on/case</code></pre>
 <p>IR 对照：<a href="../../assets/compiler/20261116-stream-topk-gather/off.after-stream.mlir">OFF after-stream.mlir</a> · <a href="../../assets/compiler/20261116-stream-topk-gather/on.after-stream.mlir">ON after-stream.mlir</a> · <a href="../../assets/compiler/20261116-stream-topk-gather/ir.diff">IR diff</a> · <a href="../../assets/compiler/20261116-stream-topk-gather/assembly.diff">汇编 diff</a>。IR diff 仅规范化进程地址派生的 TopK symbol / pair ID，保留其等价关系；两份完整 IR 保持原样。</p>
 <p>相关背景：<a href="2026-09-14-small-row-gather-lowering-explained.html">四行 Gather 的 lowering</a> · <a href="2026-10-30-sigmoid-silu-fitting.html">Sigmoid / SiLU 拟合与 VP 指令</a>。</p>
 </section>
-<footer>发表于 2026-11-16 · 编译器 / TritonShared · 数据来自同一次固定 A/B 实验。<br>本页的原理图、实际指令 trace、数值资格与性能结论分别标注；没有用历史 RTL 结果替代这次运行。</footer>
+<footer>发表于 2026-11-16 · 更新于 2026-11-18 · 编译器 / TritonShared<br>指令与周期来自 2026-11-16 同一组 Router A/B 实验。</footer>
 </main></div>
 <script src="../../assets/compiler/20261116-stream-topk-gather/timeline-data.js"></script>
 <script src="../../assets/compiler/20261116-stream-topk-gather/explorer.js"></script>
